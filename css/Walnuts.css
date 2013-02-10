@@ -1,0 +1,107 @@
+/* Walnut Tally Style Sheet */
+   
+    .frame {               /* previous settings in comments below */
+        position:fixed;   /* relative - IE 7 & 8 require !DOCTYPE for fixed */
+        width:  800px;  /* 960px */
+        height: 700px;  /* 960px */
+        top: 30px;
+        margin-right: auto;
+        margin-left: auto;
+        background: green;
+      }
+    
+     .walnutContainer {
+        position: relative;  /* absolute positioned elements are  ignored by other elements - like they don't exist   */
+        margin:0;
+        width: 98%;    /* 940px */
+        height:98%;   /* 940px */
+        top:  10px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid;
+		color: #EEDC82; /* flax */
+        background: #800000;  /* dark red  */
+       }
+	   
+     .content {
+       position:relative;      /* absolute */ 
+        width:  98%;           /* 900px */
+        max-height: 500px;       /*height: 750px */
+ /*       top: 160px;
+        left: 20px;   */
+        bottom: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        background: #8B0000;
+		overflow:auto;
+       }
+	   
+	.col1 {
+	/*   position:relative;       absolute */
+       float: left;    
+	   width:  350px;   /*300px */
+       height: 80%;   /* 750px  */
+       margin: 5px;
+       padding-left: 15px;
+ /*    margin-right: 5px;   
+       margin-left:  5px;
+	   top:   5px;   
+	   left: 50px; */
+	}
+	
+	.col2 {
+	/*   position:relative;       absolute */
+       float: left;    
+	   width: 350px;   /*300px */
+       height:80%;    /* 750px  */
+       margin: 5px;
+       padding-left: 15px;
+ /*    margin-right: 5px;
+       margin-left:  5px;
+	   top:    5px;   
+	   right: 50px;   */ 
+	}
+	
+	.replaceRt, .replaceLt {
+	   padding: 0;
+	   color: white;
+	}
+       
+	   
+	a.oneNut {text-decoration: none;}
+	a.oneNut:link {color:#EEDC82;}    /*  unvisited link */
+    a.oneNut:visited {color:#FFE4CD;} 
+    a.oneNut:hover {color:#FFFFFF;}  /* white on mouse over link */
+    a.oneNut:active {color:#FFD700;}  /* yellow on selected link */   
+	
+    .listH1, .listH2 {
+	   margin: 25px 0;
+	   color:#EEDC82; /* flax  */
+	   }
+
+    #hdr {  
+        float: left; 
+        width: auto; 
+        height: auto; 
+    }
+
+    img#ftr { 
+        position: absolute;
+        left: 600px;
+    }
+
+    #wtHomePage {
+        width: 700px;
+        margin-left: auto ;
+        margin-right: auto ;
+    }
+    #WTForm {
+        width: 250px ;
+        margin-left: auto ;
+        margin-right: auto ;
+        text-align: left;
+    }
+    #response {
+        font: italic 16px sans-serif;
+    }
+            

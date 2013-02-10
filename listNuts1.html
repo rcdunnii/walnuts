@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>List the Walnuts</title>
+    <link rel="stylesheet" href="/CSS/Walnuts.css"/>
+    <link href="/testScroller/newScroller/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="ajaxWalnutCoreJSON.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script src="/testScroller/newScroller/jquery.mousewheel.min.js"></script>
+    <script src="/testScroller/newScroller/jquery.mCustomScrollbar.js"></script>
+
+<!-- NOT!!!!!  WORKING!!!  custom scrollbar markups before ajax page load -->
+
+    <script type="text/javascript">
+      $(function () {
+          ajaxListNuts('admin', 0);
+          $(".content").mCustomScrollbar();
+        });
+    </script>
+<!--
+     function addLoadEvent(func) {
+         'use strict';
+         var oldonload = window.onload;
+         if (typeof window.onload !== 'function') {
+             window.onload = func;
+         } else {
+             window.onload = function () {
+                 if (oldonload) {
+                     oldonload();
+                 }
+                 func();
+             };
+         }
+     }
+    addLoadEvent(ajaxListNuts('admin', 0)); 
+    addLoadEvent($(".content").mCustomScrollbar());
+-->
+    
+</head>
+
+<body>
+
+    <div class="frame">
+ 
+        <div class="walnutContainer">
+    
+            <h1 class="listH1"><center>Walnuts Galore!</center></h1>
+            <h2 class="listH2"><center>Reviewing Our WT Database</center></h2> 
+                           <p><center><span id="spinner"></span></center></p>
+            <!-- create two columns for each walnut entry   -->
+            <div class="content">
+                <div class="col1"><p class="replaceLt"></p></div>
+                <div class="col2"><p class="replaceRt"></p> </div>
+            </div>
+        </div>
+
+  
+</body>
+
+</html>
