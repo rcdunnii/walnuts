@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>List the Walnuts</title>
+	<script type="text/javascript" src="ajaxWalnutCoreJSON.js"></script> 
+	<script type="text/css">
+		 
+		ul{
+			list-style-type: none;
+		}
+
+		#hdr {  
+		float: left; 
+		width: auto; 
+		height: auto; 
+//		background: url(/images/Walnuts/walnuts.jpg) 0 0 no-repeat #CCCC33  /* Image of Walnuts */
+		}
+		
+		img#ftr { 
+		position: absolute;
+		left: 600px;
+//		width: auto; 
+//		height: auto; 
+//		background: url(/images/Walnuts/walnuts.jpg) 0 0 no-repeat #CCCC33  /* Image of Walnuts */
+		}
+		
+	</script>
+</head>
+<!-- parameter for ajaxListNuts true if call is for admin use, false if for family use -->
+<body onload="ajaxListNuts('user')">
+	<div id="hdr"><img src="/images/Walnuts/walnuts.jpg"></div>
+	<div id="viewEditNutPage">
+	<h1><center>Walnuts Galore!</center></h1>
+	<h3><center>Reviewing Our WT Database</center></h3>
+	<div id="nutsList"></div>
+	<center><span id="loader"></span></center>		
+	</div>
+	<div><img id="ftr" src="/images/Walnuts/cracker.jpg"></div>
+</body>
+</html>
