@@ -188,7 +188,7 @@ function ajaxListNuts(user) {
             walnutEntries = JSON.parse(xhr.responseText); 
             displayPage(user, walnutEntries);
         } else {
-            document.getElementById("spinner").innerHTML = "<img src='http://localhost/images/Walnuts/ajax-loader.gif'>";
+            document.getElementById("spinner").innerHTML = "<img src='http://localhost/walnuts/images/Walnuts/ajax-loader.gif'>";
         }
     };
     xhr.open("GET", "listNuts1.php?value=" + user, true);

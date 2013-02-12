@@ -4,7 +4,7 @@
         position:fixed;   /* relative - IE 7 & 8 require !DOCTYPE for fixed */
         width:  960px;  /* 960px */
         height: 600px;  /* 960px */
-        top: 30px;
+        top: 0px;
         margin-right: auto;
         margin-left: auto;
         background: green;
@@ -13,13 +13,12 @@
      .walnutContainer {
         position: relative;  /* absolute positioned elements are  ignored by other elements - like they don't exist   */
         margin:0;
-        width: 98%;    /* 940px */
-        height:98%;   /* 940px */
-        top:  10px;
-        margin-left: auto;
-        margin-right: auto;
-        border: 1px solid;
-		color: #EEDC82; /* flax */
+        width: 96%;    /* 940px */
+        height:96%;   /* 940px */
+        top:  -10px;
+        left: 13px;
+        margin-left: 5px;
+        margin-right: 5px;
         background: #800000;  /* dark red  */
        }
 	   
@@ -27,8 +26,6 @@
        position:relative;      /* absolute */ 
         width:  85%;           /* 98%, 900px */
         max-height: 500px;       /*height: 750px */
- /*       top: 160px;
-        left: 20px;   */
         bottom: 15px;
         margin-left: auto;
         margin-right: auto;
