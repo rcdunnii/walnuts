@@ -12,7 +12,7 @@
 			return false;
 		}
 	
-		$stmt = $mysqli->prepare("SELECT * FROM nuts ORDER by SirName");
+		$stmt = $mysqli->prepare("SELECT * FROM  `nuts` ORDER BY SirName, Names");
 	
 		if ($stmt == false) 
 		{ // bind error
@@ -38,7 +38,8 @@
 			}
 			$stmt->close();
 			$mysqli->close();
-			echo json_encode($results);
+            $outPut = json_encode($results);
+		    echo $outPut;  
 		}
 
 ?>

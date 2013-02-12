@@ -1,0 +1,4 @@
+#what to not git...
+custom-scrollbar-plugin/
+ignore/
+*.bak

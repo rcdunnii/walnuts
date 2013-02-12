@@ -28,28 +28,6 @@
 		echo "fetch of row from DB failed: (" . $stmt->errno . ") " . $stmt->error;
 	}
 
-/*
-	$sql ="SELECT * FROM nuts WHERE walnutID = {$nutID}";
-		
-	$result = $mysqli->query($sql);	
-		
-	if ($mysqli->error) {
-		try {    
-			throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);    
-		} catch(Exception $e ) {
-			echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-			echo nl2br($e->getTraceAsString());
-			}
-		$mysqli->close();
-		return;
-	}
-
-	$row = $result->fetch_array(MYSQLI_ASSOC);
-	
-	$result->free();
-	
-	$mysqli->close();		
-*/
 
 	echo json_encode($row);
 	

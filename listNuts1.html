@@ -3,60 +3,47 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title>List the Walnuts</title>
-    <link rel="stylesheet" href="/CSS/Walnuts.css"/>
-    <link href="/testScroller/newScroller/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="ajaxWalnutCoreJSON.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-    <script src="/testScroller/newScroller/jquery.mousewheel.min.js"></script>
-    <script src="/testScroller/newScroller/jquery.mCustomScrollbar.js"></script>
-
-<!-- NOT!!!!!  WORKING!!!  custom scrollbar markups before ajax page load -->
-
-    <script type="text/javascript">
-      $(function () {
-          ajaxListNuts('admin', 0);
-          $(".content").mCustomScrollbar();
-        });
-    </script>
-<!--
-     function addLoadEvent(func) {
-         'use strict';
-         var oldonload = window.onload;
-         if (typeof window.onload !== 'function') {
-             window.onload = func;
-         } else {
-             window.onload = function () {
-                 if (oldonload) {
-                     oldonload();
-                 }
-                 func();
-             };
-         }
-     }
-    addLoadEvent(ajaxListNuts('admin', 0)); 
-    addLoadEvent($(".content").mCustomScrollbar());
--->
-    
+    <link rel="stylesheet" href="css/Walnuts.css" type="text/css" />
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css" type="text/css" />
 </head>
 
 <body>
 
-    <div class="frame">
- 
-        <div class="walnutContainer">
-    
-            <h1 class="listH1"><center>Walnuts Galore!</center></h1>
-            <h2 class="listH2"><center>Reviewing Our WT Database</center></h2> 
-                           <p><center><span id="spinner"></span></center></p>
-            <!-- create two columns for each walnut entry   -->
-            <div class="content">
-                <div class="col1"><p class="replaceLt"></p></div>
-                <div class="col2"><p class="replaceRt"></p> </div>
-            </div>
-        </div>
+   <div class="frame">
 
-  
+        <div class="walnutContainer">
+
+            <h1 class="listH1"><center>Walnuts Galore!</center></h1>
+            <h2 class="listH2"><center>Reviewing Our WT Database</center></h2>
+                           <p><center><span id="spinner">&nbsp;</span></center></p>
+
+                <div class="content">
+                    <div class="col1"><p class="replaceLt"></p></div>
+                    <div class="col2"><p class="replaceRt"></p> </div>
+                </div>
+
+     </div>
+
+  </div>
+    <!-- load the page with ajax call -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script src="/js/jquery.mousewheel.min.js"></script>
+    <script src="js/jquery.mCustomScrollbar.js"></script>
+    <script type="text/javascript" src="js/ajaxWalnutCoreJSON.js"></script>
+    <script type="text/javascript">
+        ajaxListNuts('admin'); // ajax call to populate page
+        (function($){
+               $(window).load(function(){
+                   $(".content").mCustomScrollbar({
+                       mouseWheel:false,
+                       scrollButtons:{
+                           enable:true
+                       }
+                    });
+                });
+        })(jQuery);
+    </script>
 </body>
 
 </html>

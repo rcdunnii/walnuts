@@ -1,4 +1,0 @@
-walnuts
-=======
-
-WalnutTally Program
