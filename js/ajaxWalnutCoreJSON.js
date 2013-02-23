@@ -122,13 +122,28 @@ function confirmDel(nutId) {
     }
 }
 
-
+/* called by displayPage to format the notes entered in addNut form */
+function formatNotesStr(noteString) {
+// inject newline every 30 chars, limit of 90 chars, always 3 newlines regardless of note length
+    'use strict';
+    var numLfInserts = 0, numLfs = 0, charArr = [], maxLfStr = "\n\n\n";
+    numLfInserts = (Math.floor(noteString.length / 30));
+	numLfs = 3 - numLfInserts;
+    if (numLfInserts) {
+        charArr = noteString.split('');
+        for (var i = 0; i < numLfInserts; i += 1) {
+            charArr.splice(((i + 1) * 30), 0, '\n');
+        }
+        noteString = charArr.join('');
+    }
+    return noteString.concat(maxLfStr.substr(0, numLfs));
+}
 
 
  /* called by ajaxListNuts() fxn below - user is who is making request, admin or gen user, target is where to start the display in database */
 function displayPage(user, nutEntries) {
     'use strict';
-    var numNuts, x, i = 0, replacementStr = "", replacementStrLt = "", replacementStrRt = "";
+    var numNuts, x, i = 0, replacementStr = "", replacementStrLt = "", replacementStrRt = "", notesStr = "";
     function isEven(value) {
         x = ((value % 2 === 0) ? true : false);
         return x;
@@ -142,17 +157,19 @@ function displayPage(user, nutEntries) {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<span id='delNutResponse'></span>" + "<br>";
         }
         replacementStr += nutEntries[i].Names + "<br>";
-        replacementStr += ((nutEntries[i].FormalNames) ? (nutEntries[i].FormalNames + "<br>") : "");
-        replacementStr += ((nutEntries[i].Children) ? (nutEntries[i].Children + "<br>") : "");
-        replacementStr += "Address: " + nutEntries[i].Addr1 + "<br>";
-        replacementStr += ((nutEntries[i].Addr2) ? "         " + (nutEntries[i].Addr2 + "<br>") : "");
+        replacementStr += ((nutEntries[i].FormalNames) ? (nutEntries[i].FormalNames + "<br>") : "<br>");
+        replacementStr += ((nutEntries[i].Children) ? (nutEntries[i].Children + "<br>") : "<br>");
+        replacementStr += "Address: " + nutEntries[i].Addr1;
+        replacementStr += ((nutEntries[i].Addr2) ? ", " + (nutEntries[i].Addr2 + "<br>") : "<br>");
         replacementStr += "         " + nutEntries[i].Addr3 + "<br>";
         replacementStr += "         " + nutEntries[i].Addr4 + "<br>";
         replacementStr += "Email 1: " + nutEntries[i].Email1 + "<br>";
         replacementStr += "      2: " + nutEntries[i].Email2 + "<br>";
         replacementStr += "Phone 1: " + nutEntries[i].Phone1 + "<br>";
         replacementStr += "      2: " + nutEntries[i].Phone2 + "<br>";
-        replacementStr += "Notes:   " + nutEntries[i].Notes + "<br>" + "</pre>" + "<br><br>";
+        // format any Notes to fit in our listNuts display properly - always print 3 newlines
+        notesStr = ((nutEntries[i].Notes) ? (formatNotesStr(nutEntries[i].Notes)) : "<br><br><br>");
+        replacementStr += "Notes:   " + notesStr + "</pre></p>";
         if (isEven(i)) {
             replacementStrLt += replacementStr;
         } else {
@@ -173,8 +190,7 @@ function ajaxListNuts(user) {
 
     // get local ajax request obj
     'use strict';
-    var walnutEntries = [];
-    var xhr = createXHR();
+    var walnutEntries = [], xhr = createXHR();
     if (!xhr) {
         return false;
     }
@@ -185,7 +201,7 @@ function ajaxListNuts(user) {
             if (target) {
                 document.getElementById("spinner").innerHTML = "";
             }
-            walnutEntries = JSON.parse(xhr.responseText); 
+            walnutEntries = JSON.parse(xhr.responseText);
             displayPage(user, walnutEntries);
         } else {
             document.getElementById("spinner").innerHTML = "<img src='http://localhost/walnuts/images/Walnuts/ajax-loader.gif'>";
@@ -252,7 +268,3 @@ function postEditedNut() {
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(editData);
 }
-
-
-
-

@@ -3,7 +3,7 @@
     .frame {               /* previous settings in comments below */
         position:fixed;   /* relative - IE 7 & 8 require !DOCTYPE for fixed */
         width:  960px;  /* 960px */
-        height: 600px;  /* 960px */
+        height: 700px;  /* 960px */
         top: 0px;
         margin-right: auto;
         margin-left: auto;
@@ -15,7 +15,7 @@
         margin:0;
         width: 96%;    /* 940px */
         height:96%;   /* 940px */
-        top:  -10px;
+        top:  -12px;
         left: 13px;
         margin-left: 5px;
         margin-right: 5px;
@@ -29,7 +29,7 @@
         bottom: 15px;
         margin-left: auto;
         margin-right: auto;
-        background: #8B0000;
+        background: #8B0000;   /* less dark red */
 		overflow:auto;
        }
 	   
@@ -67,12 +67,19 @@
 	   
 	a.oneNut {text-decoration: none;}
 	a.oneNut:link {color:#EEDC82;}    /*  unvisited link */
-    a.oneNut:visited {color:#FFE4CD;} 
+    a.oneNut:visited {color:#EEDC82;} /* visited link same color for this app as unvisited */
     a.oneNut:hover {color:#FFFFFF;}  /* white on mouse over link */
     a.oneNut:active {color:#FFD700;}  /* yellow on selected link */   
 	
-    .listH1, .listH2 {
+    .listH1 {
 	   margin: 25px 0;
+	   padding-top: 10px;
+	   color:#EEDC82; /* flax  */
+	   }
+	   
+	.listH2 {
+	   margin: 25px 0;
+	   padding-bottom: 10px;
 	   color:#EEDC82; /* flax  */
 	   }
 
