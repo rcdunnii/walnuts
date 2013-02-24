@@ -101,42 +101,50 @@ function ajaxAddNuts() {
 // document.getElementById('addNutForm').reset();
 
 }
-function confirmDel(nutId) {
-    'use strict';
-    var xhr, r = confirm("Are you sure?");
-    if (r === true) {
-        xhr = createXHR();
-        if (!xhr) {
-            return false;
-        }
-    // Create a function that will receive data sent from the server
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                document.getElementById("delNutResponse").innerHTML = xhr.responseText;
-            }
-        };
-        xhr.open("GET", "delNut.php?value=" + nutId, true);
-        xhr.send(null);
-    } else {
-        return;
-    }
-}
+
 
 /* called by displayPage to format the notes entered in addNut form */
-function formatNotesStr(noteString) {
-// inject newline every 30 chars, limit of 90 chars, always 3 newlines regardless of note length
+function insertNewLines(str) {
     'use strict';
-    var numLfInserts = 0, numLfs = 0, charArr = [], maxLfStr = "\n\n\n";
-    numLfInserts = (Math.floor(noteString.length / 30));
-	numLfs = 3 - numLfInserts;
-    if (numLfInserts) {
-        charArr = noteString.split('');
-        for (var i = 0; i < numLfInserts; i += 1) {
-            charArr.splice(((i + 1) * 30), 0, '\n');
-        }
-        noteString = charArr.join('');
+    var pos = 0,            // pos =  position of space in string
+        i = 0,                  // iterator
+        firstThirtyFlag = false,
+        secondThirtyFlag = false,
+        posOfSpaces = [],       // array to hold location of spaces in the note string where we can insert \n
+        maxLineLen = 30,        // max len of str allowed for our format display is 30 chars
+        maxLenFraction = 0,
+        maxNoteLen = 90,        // maxNoteLen
+        noteLen = str.length,   // length of the note string
+        newLineCount = 0,       // # inserted '\n'
+        newLinesNeeded = 3,     // # required '\n'
+        newLineStr = "\n\n\n";
+    if (noteLen < maxLineLen) {
+        str = str + newLineStr.substr(0, (newLinesNeeded - newLineCount));
+        return str;         // notes need no formatting - less than 30 char in len
     }
-    return noteString.concat(maxLfStr.substr(0, numLfs));
+    if (noteLen > maxNoteLen) {
+        str = str.substring(0, maxNoteLen);  //need to trim the note to 90 chars
+    }
+    // since str len > 30 chars - needs formatting - find location of spaces where we can inject newlines - ie at ~= 30 and 60 chars
+    pos = str.indexOf(' ', pos);             //find location of first space char
+    for (i = 0; pos >= 0; i += 1) {
+        posOfSpaces[i] = pos;
+        pos = str.indexOf(' ', pos + 1);     //find location of next space char
+        maxLenFraction = (pos / maxLineLen);
+        if ((maxLenFraction > 1) && (!firstThirtyFlag)) {
+            firstThirtyFlag = true;
+            str = str.substr(0, (posOfSpaces[i])) + "\n"  + str.substr((posOfSpaces[i]) + 1);
+            newLineCount += 1;
+        }
+        if ((maxLenFraction > 2) && (!secondThirtyFlag)) {
+            secondThirtyFlag = true;
+            str = str.substr(0, (posOfSpaces[i])) + "\n"  + str.substr((posOfSpaces[i]) + 1);
+            newLineCount += 1;
+            break;
+        }
+    }
+    str = str + newLineStr.substr(0, (newLinesNeeded - newLineCount));
+    return str;
 }
 
 
@@ -148,7 +156,7 @@ function displayPage(user, nutEntries) {
         x = ((value % 2 === 0) ? true : false);
         return x;
     }
-    // get # entries in database into global var numNuts
+    // get # entries in database into var numNuts
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
@@ -168,7 +176,7 @@ function displayPage(user, nutEntries) {
         replacementStr += "Phone 1: " + nutEntries[i].Phone1 + "<br>";
         replacementStr += "      2: " + nutEntries[i].Phone2 + "<br>";
         // format any Notes to fit in our listNuts display properly - always print 3 newlines
-        notesStr = ((nutEntries[i].Notes) ? (formatNotesStr(nutEntries[i].Notes)) : "<br><br><br>");
+        notesStr = ((nutEntries[i].Notes) ? (insertNewLines(nutEntries[i].Notes)) : "<br><br><br>");  // if no notes insert 3 newlines
         replacementStr += "Notes:   " + notesStr + "</pre></p>";
         if (isEven(i)) {
             replacementStrLt += replacementStr;
@@ -211,6 +219,28 @@ function ajaxListNuts(user) {
     xhr.send(null);
 }
 
+function confirmDel(nutId) {
+    'use strict';
+    var xhr, r = confirm("Are you sure?");
+    if (r === true) {
+        xhr = createXHR();
+        if (!xhr) {
+            return false;
+        }
+    // Create a function that will receive data sent from the server
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById("delNutResponse").innerHTML = xhr.responseText;
+            // on success, return to listing of walnuts - we know we are 'admin' to be here eh?
+                ajaxListNuts('admin');
+            }
+        };
+        xhr.open("GET", "delNut.php?value=" + nutId, true);
+        xhr.send(null);
+    } else {
+        return;
+    }
+}
 // next 2 fxns called by edit nut page
 function getOrigNut() {
     'use strict';

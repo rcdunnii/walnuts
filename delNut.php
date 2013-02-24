@@ -41,7 +41,8 @@
 				
 	$stmt->close();		
 	
-	header('Location: ' . $_SERVER['HTTP_REFERER']);
+	// header('Location: ' . $_SERVER['HTTP_REFERER']);
+    return; // return to caller which is javascript function confirmDel() in ajaxWalnutCoreJSON.js
 
 
 ?>
