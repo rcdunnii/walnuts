@@ -138,7 +138,7 @@
 
 	<fieldset>
 		<legend>Edit Nut Form</legend>
-	<form action="" id="editNutForm" onsubmit="postEditedNut(); return false;">
+	<form action="" id="editNutForm" onsubmit='postEditedNut(<?php echo " . $_GET[\"user\"] . " ?>); return false;'>
 		<ul>
 		<li><input type="hidden" name="walnutID" id="walnutID" ></input></li>
 		<li><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName" size=20 ></input></li>
@@ -159,7 +159,7 @@
 		<ul id="navlist">
 		<li><input type="submit" name="btn" id="submit" value="Submit"></input></li>
 		<li><input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)"></input></li> 
-		<li><input type="button" name="btn" id="home" value="Main Menu" onclick="window.location.href ='/walnuts/WTD.html';" ></input></li>
+	<!!--	<li><input type="button" name="btn" id="home" value="Back" onclick="history.go(-1);"></input></li>  -->
 		</ul>
 				<center><p><span id="editNutResponse"></p></center>
 	</form>					

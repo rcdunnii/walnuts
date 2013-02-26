@@ -14,7 +14,7 @@ function createXHR() {
     }
 }
 
-// fxn called by primary html page WT.html
+// fxn called by primary html page WTD.html - only run by admin
 function ajaxWalnutFunction() {
     'use strict';
     var xhr, i, user_input, openResult, walnutOptionChoices;// The variable that makes Ajax possible!
@@ -39,7 +39,7 @@ function ajaxWalnutFunction() {
             return false;
         }
         if (user_input === "list") {
-            openResult = window.open("http://localhost/walnuts/listNuts1.html", "_self"); /* , "scrollbars=1" */
+            openResult = window.open("http://localhost/walnuts/listNuts1.html", "_self"); // listNuts1.html only called by admin
             return false;
         }
 
@@ -64,10 +64,13 @@ function ajaxWalnutFunction() {
 }
 
 
-
-function getPostDataJSON() {
+// called by ajaxAddNuts and postEditedNut()
+function getPostDataJSON(hasID) {
     'use strict';
     var data_json = "", send_data = "";
+    if (!hasID) {
+          document.forms[0].walnutID.value = null;
+    }          
     data_json = '{"walnutID": "' + document.forms[0].walnutID.value + '","SirName":"' + document.forms[0].SirName.value + '","Names":"' + document.forms[0].Names.value + '","FormalNames":"' + document.forms[0].FormalNames.value + '","Children":"' + document.forms[0].Children.value + '","Addr1":"' + document.forms[0].Addr1.value + '","Addr2"  : "' + document.forms[0].Addr2.value + '","Addr3"  : "' + document.forms[0].Addr3.value + '","Addr4"  : "' + document.forms[0].Addr4.value + '","Email1" : "' + document.forms[0].Email1.value + '","Email2" : "' + document.forms[0].Email2.value + '","Email3" : "' + document.forms[0].Email3.value + '","Phone1" : "' + document.forms[0].Phone1.value + '","Phone2" : "' + document.forms[0].Phone2.value + '","Notes"  : "' + document.forms[0].Notes.value + '"}';
     send_data = 'value=' + data_json;
     return send_data;
@@ -93,7 +96,7 @@ function ajaxAddNuts() {
             document.getElementById("addNutResponse").innerHTML = xhr.responseText;
         }
     };
-    addData = getPostDataJSON();
+    addData = getPostDataJSON(false); // false means no walnutID in hidden field since new addition to DB and mysql assigns walnutID
     xhr.open("POST", "addNut.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(addData);
@@ -148,8 +151,8 @@ function insertNewLines(str) {
 }
 
 
- /* called by ajaxListNuts() fxn below - user is who is making request, admin or gen user, target is where to start the display in database */
-function displayPage(user, nutEntries) {
+ /* called by ajaxListNuts() fxn below - requester is who is making request, admin or user; nutEntries is arr of all walnuts */
+function displayPage(requester, nutEntries) {
     'use strict';
     var numNuts, x, i = 0, replacementStr = "", replacementStrLt = "", replacementStrRt = "", notesStr = "";
     function isEven(value) {
@@ -160,10 +163,12 @@ function displayPage(user, nutEntries) {
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
-        replacementStr =  "<p><pre><a class='oneNut'" + "href='editNut.html?value=" + nutEntries[i].walnutID + "' + title='Update'>" + nutEntries[i].SirName + "</a>";
-        if (user === 'admin') {
+        replacementStr =  "<p><pre><a class='oneNut'" + "href='editNut.html?value=" + nutEntries[i].walnutID + " + "&user=" + requester' + title='Update'>" +  nutEntries[i].SirName + "</a>";
+        if (requester === 'admin') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<span id='delNutResponse'></span>" + "<br>";
-        }
+        } else {
+            replacementStr +=  nutEntries[i].SirName + "<br>";
+        }    
         replacementStr += nutEntries[i].Names + "<br>";
         replacementStr += ((nutEntries[i].FormalNames) ? (nutEntries[i].FormalNames + "<br>") : "<br>");
         replacementStr += ((nutEntries[i].Children) ? (nutEntries[i].Children + "<br>") : "<br>");
@@ -190,11 +195,10 @@ function displayPage(user, nutEntries) {
     return;
 }
 
-// fxn called by list nuts html page - which user determines api, and recPtr is where to begin display
+// fxn called by list nuts html page - which requester determines api, and recPtr is where to begin display
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
-function ajaxListNuts(user) {
-//call php fxn to open Walnuts db and retieve/return all records for display
+function ajaxListNuts(requester) {
 
     // get local ajax request obj
     'use strict';
@@ -210,12 +214,13 @@ function ajaxListNuts(user) {
                 document.getElementById("spinner").innerHTML = "";
             }
             walnutEntries = JSON.parse(xhr.responseText);
-            displayPage(user, walnutEntries);
+            displayPage(requester, walnutEntries);
         } else {
             document.getElementById("spinner").innerHTML = "<img src='http://localhost/walnuts/images/Walnuts/ajax-loader.gif'>";
         }
     };
-    xhr.open("GET", "listNuts1.php?value=" + user, true);
+    //call php fxn to open Walnuts db and retieve/return all records for display
+    xhr.open("GET", "listNuts1.php", true);
     xhr.send(null);
 }
 
@@ -232,7 +237,7 @@ function confirmDel(nutId) {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 document.getElementById("delNutResponse").innerHTML = xhr.responseText;
             // on success, return to listing of walnuts - we know we are 'admin' to be here eh?
-                ajaxListNuts('admin');
+                ajaxListNuts('admin');                
             }
         };
         xhr.open("GET", "delNut.php?value=" + nutId, true);
@@ -241,7 +246,7 @@ function confirmDel(nutId) {
         return;
     }
 }
-// next 2 fxns called by edit nut page
+// next 2 fxns called by editNut.html page
 function getOrigNut() {
     'use strict';
     // target ID: value=# where # is 7th char
@@ -274,13 +279,14 @@ function getOrigNut() {
             document.forms.editNutForm.Notes.value = nut.Notes;
             // display page once fields are loaded
             document.getElementById('body').style.display = 'block';
+            return;
         }
     };
     xhr.open("GET", "getNut.php?value=" + nutID,  true);
     xhr.send(null);
 }
-
-function postEditedNut() {
+// called by editNut.html on submit of form
+function postEditedNut(requester) {
     'use strict';
     // get ajax request obj
     var editData, xhr = createXHR();
@@ -291,6 +297,7 @@ function postEditedNut() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById("editNutResponse").innerHTML = xhr.responseText;
+            ajaxListNuts(requester);
         }
     };
     editData = getPostDataJSON(true); // true param means form contains walnutID data in hidden input field - autoincrement value in mysql

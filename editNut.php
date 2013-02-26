@@ -1,4 +1,5 @@
 <?php
+        /* called by postEditedNut() js function in ajaxWalnutCoreJSON.js */
 		require 'db.inc';
 		
 		$mysqli=  @ new mysqli($server,$user,$password, $database);

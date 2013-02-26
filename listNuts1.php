@@ -1,8 +1,5 @@
 <?php
 		require 'db.inc';
-		// see which user (admin or not) has called this fxn
-		
-		$who = ($_GET['value']);
 		
 		// make connection to mysql server
 		$mysqli = new mysqli($server,$user,$password,$database);
