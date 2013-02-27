@@ -69,8 +69,8 @@ function getPostDataJSON(hasID) {
     'use strict';
     var data_json = "", send_data = "";
     if (!hasID) {
-          document.forms[0].walnutID.value = null;
-    }          
+        document.forms[0].walnutID.value = null;
+    }
     data_json = '{"walnutID": "' + document.forms[0].walnutID.value + '","SirName":"' + document.forms[0].SirName.value + '","Names":"' + document.forms[0].Names.value + '","FormalNames":"' + document.forms[0].FormalNames.value + '","Children":"' + document.forms[0].Children.value + '","Addr1":"' + document.forms[0].Addr1.value + '","Addr2"  : "' + document.forms[0].Addr2.value + '","Addr3"  : "' + document.forms[0].Addr3.value + '","Addr4"  : "' + document.forms[0].Addr4.value + '","Email1" : "' + document.forms[0].Email1.value + '","Email2" : "' + document.forms[0].Email2.value + '","Email3" : "' + document.forms[0].Email3.value + '","Phone1" : "' + document.forms[0].Phone1.value + '","Phone2" : "' + document.forms[0].Phone2.value + '","Notes"  : "' + document.forms[0].Notes.value + '"}';
     send_data = 'value=' + data_json;
     return send_data;
@@ -163,12 +163,13 @@ function displayPage(requester, nutEntries) {
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
-        replacementStr =  "<p><pre><a class='oneNut'" + "href='editNut.html?value=" + nutEntries[i].walnutID + " + "&user=" + requester' + title='Update'>" +  nutEntries[i].SirName + "</a>";
+   /*     replacementStr =  "<p><pre><a class='oneNut' href=\"editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\"" + "title=\"Update\">" +  nutEntries[i].SirName + "</a>"; */
+        replacementStr =  "<p><pre><a class='oneNut' href = \"editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\""  + " title='Update'>" +  nutEntries[i].SirName + "</a>";
         if (requester === 'admin') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<span id='delNutResponse'></span>" + "<br>";
         } else {
             replacementStr +=  nutEntries[i].SirName + "<br>";
-        }    
+        }
         replacementStr += nutEntries[i].Names + "<br>";
         replacementStr += ((nutEntries[i].FormalNames) ? (nutEntries[i].FormalNames + "<br>") : "<br>");
         replacementStr += ((nutEntries[i].Children) ? (nutEntries[i].Children + "<br>") : "<br>");
@@ -237,7 +238,7 @@ function confirmDel(nutId) {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 document.getElementById("delNutResponse").innerHTML = xhr.responseText;
             // on success, return to listing of walnuts - we know we are 'admin' to be here eh?
-                ajaxListNuts('admin');                
+                ajaxListNuts('admin');
             }
         };
         xhr.open("GET", "delNut.php?value=" + nutId, true);
@@ -247,10 +248,10 @@ function confirmDel(nutId) {
     }
 }
 // next 2 fxns called by editNut.html page
-function getOrigNut() {
+function getOrigNut(nutID, requester) {
     'use strict';
     // target ID: value=# where # is 7th char
-    var s, nut, xhr, nutID = window.location.search.substring(7);
+    var s, nut, xhr;
     // get ajax request obj
     xhr = createXHR();
     if (!xhr) {
@@ -279,7 +280,7 @@ function getOrigNut() {
             document.forms.editNutForm.Notes.value = nut.Notes;
             // display page once fields are loaded
             document.getElementById('body').style.display = 'block';
-            return;
+			return;
         }
     };
     xhr.open("GET", "getNut.php?value=" + nutID,  true);

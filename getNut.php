@@ -11,7 +11,7 @@
 	
 	$nutID = $_GET['value'];			
 
-	if (!($stmt = $mysqli->prepare("SELECT * FROM nuts WHERE walnutID = {$nutID}"))) {
+	if (!($stmt = $mysqli->prepare("SELECT * FROM nuts WHERE walnutID = {$nutID}"))	){
 		echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 	}
 	
