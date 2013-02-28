@@ -248,10 +248,10 @@ function confirmDel(nutId) {
     }
 }
 // next 2 fxns called by editNut.html page
-function getOrigNut(nutID, requester) {
+function getOrigNut(nutID) {
     'use strict';
     // target ID: value=# where # is 7th char
-    var s, nut, xhr;
+    var s, nut, xhr, i, frm = document.getElementById("editNutForm");
     // get ajax request obj
     xhr = createXHR();
     if (!xhr) {
@@ -263,21 +263,11 @@ function getOrigNut(nutID, requester) {
         if (xhr.readyState === 4 && xhr.status === 200) {
             s = xhr.responseText;
             nut = JSON.parse(s);
-            document.forms.editNutForm.walnutID.value = nut.walnutID;  //hidden field in form - use value for inserting update
-            document.forms.editNutForm.SirName.value = nut.SirName;
-            document.forms.editNutForm.Names.value = nut.Names;
-            document.forms.editNutForm.FormalNames.value = nut.FormalNames;
-            document.forms.editNutForm.Children.value = nut.Children;
-            document.forms.editNutForm.Addr1.value = nut.Addr1;
-            document.forms.editNutForm.Addr2.value = nut.Addr2;
-            document.forms.editNutForm.Addr3.value = nut.Addr3;
-            document.forms.editNutForm.Addr4.value = nut.Addr4;
-            document.forms.editNutForm.Email1.value = nut.Email1;
-            document.forms.editNutForm.Email2.value = nut.Email2;
-            document.forms.editNutForm.Email3.value = nut.Email3;
-            document.forms.editNutForm.Phone1.value = nut.Phone1;
-            document.forms.editNutForm.Phone2.value = nut.Phone2;
-            document.forms.editNutForm.Notes.value = nut.Notes;
+            for (i in nut) {
+                if (i in frm.elements) {
+                    frm.elements[i].value = nut[i];
+                }
+            }
             // display page once fields are loaded
             document.getElementById('body').style.display = 'block';
 			return;
@@ -298,7 +288,14 @@ function postEditedNut(requester) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById("editNutResponse").innerHTML = xhr.responseText;
-            ajaxListNuts(requester);
+            if (requester === 'admin') {
+                window.open("http://localhost/walnuts/listNuts1.html", "_self"); // listNuts1.html only called by admin
+            } else if (requester === 'user') {
+                window.open("http://localhost/walnuts/Walnuts.html", "_self"); // Walnuts.html only called by user
+            } else {
+                alert("Error: Undefined requester");
+                return;
+            }
         }
     };
     editData = getPostDataJSON(true); // true param means form contains walnutID data in hidden input field - autoincrement value in mysql

@@ -6,12 +6,13 @@
 	<title>Update Nut</title>
 	
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	
+    <link rel="stylesheet" href="css/Walnuts.css"/>	
 	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js" ></script>
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
-	<script src="/jQuery/jquery-parsequery-master/jquery.parsequery.js"></script>
-	<script type="text/javascript">
+	<script src="/jQuery/jquery-parsequery-master/jquery.parsequery.js"></script> 
+    <script>
+ 
     $.extend({
         getUrlVars: function(){
             var vars = [], hash;
@@ -29,126 +30,8 @@
         }
     });
 	</script>
-	
-	<style type="text/css">
-		html, body, #body {
-				height: 100%;
-				width: 100%;
-				padding: 0;
-				margin: 0;
-			}
-		#body {
-			display: none;
-		}
-		ul#navlist { 
-			position: relative;
-			list-style-type: none;
-			}
-		ul#navlist li {
-			display: inline;
-		}		
-		ul#navlist li input#submit{
-			position: absolute;
-			left: 5em;
-			width: 8em;
-			color: #fff;
-			background-color: #036;
-			padding: 0.2em 0.2em;
-			text-decoration: none;
-			border-right: 1px solid #fff
-		}		
-		ul#navlist li input#reset{
-			position: absolute;
-			left: 15em;
-			width: 8em;
-			color: #fff;
-			background-color: #036;
-			padding: 0.2em 0.2em;
-			text-decoration: none;
-			border-right: 1px solid #fff
-		}
-		ul#navlist li input#home{
-			position: absolute;
-			left: 25em;
-			width: 8em;
-			color: #fff;
-			background-color: #036;
-			padding: 0.2em 0.2em;
-			text-decoration: none;
-			border-right: 1px solid #fff
-		}
-		ul#navlist li input#submit:hover,
-		ul#navlist li input#reset:hover,
-		ul#navlist li input#home:hover
-		{
-			background-color: #369;
-			color: #fff;
-		}			
-		#editNutPage {
-		    width: 700px;
-			margin-left: auto ;
-			margin-right: auto ;
-		}
-		#editNutPage h1, #editNutPage h3 {
-			color: maroon;
-		}
-	    #editNutForm {	
-			text-align: left;
-			margin: 0px auto;
-			width: 90%;
-		}
-		#editNutResponse {
-			font: italic 16px sans-serif;
-			}
-		fieldset {
-			background: #F1F1F1;
-			padding: 20px;
-			width:	600px;
-			border: 1px solid #781351
-			}
-		fieldset legend {
-			color: maroon;
-			font: bold 14px arial;
-			}
-			
-		fieldset ul, fieldset li{
-<!--		float: left;  -->
-			width: 70%;
-			clear: left;
-			border:0; 
-			margin:auto; 
-			padding-bottom: 1em; 
-			text-align: left;
-			list-style:none;
-			}
-	
-		fieldset input{
-			float:left;
-			}
-			
-		fieldset label{
-			width: 100px;
-			float: left;
-			text-align: right;
-			margin-right: 0.5em;
-			font: bold 12px arial;
-			display: block
-			}		
-		input#submit {
-			float: left;
-			width: 100px;
-			margin-left: auto;
-			margin-right: auto;						
-			}
 
-		input#teser {
-			float:right;
-			width: 100px;
-			margin-left: auto;
-			margin-right: auto;						
-        }
-	
-    </style>
+
 </head>
 <body>
     <!-- this page is called by javascript function displayPage(requester, nutEntries) as editNut.html?value=walnutID&user=requester -->
@@ -156,10 +39,10 @@
 	<div id="editNutPage">
 	<h1><center>Walnuts Galore!</center></h1>
 	<h3><center>Edit Nut in Our WT Database</center></h3>
-
+    <p><center><span id="spinner">&nbsp;</span></center></p>
 	<fieldset>
 		<legend>Edit Nut Form</legend>
-	<form action="" id="editNutForm" onsubmit="postEditedNut(requester); return false;">
+	<form action="" id="editNutForm" onsubmit="postEditedNut( $.getUrlVar('user')); return false;">
 		<ul>
 		<li><input type="hidden" name="walnutID" id="walnutID" ></input></li>
 		<li><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName" size=20 ></input></li>
@@ -180,8 +63,8 @@
 		<ul id="navlist">
 		<li><input type="submit" name="btn" id="submit" value="Submit"></input></li>
 		<li><input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)"></input></li> 
-	<!--	<li><input type="button" name="btn" id="home" value="Back" onclick="history.go(-1);"></input></li>  -->
-		</ul>
+		<li><input type="button" name="btn" id="home" value="Back to List" onclick="history.go(-1);"></input></li>
+        </ul>
 				<center><p><span id="editNutResponse"></p></center>
 	</form>					
 	</fieldset>
@@ -190,8 +73,7 @@
     <script type="text/javascript">
 		$(document).ready(function() {
 		    var targetNut = $.getUrlVar('value');
-			var requester = $.getUrlVar('user');
-            getOrigNut(targetNut, requester);
+            getOrigNut(targetNut);
 		});
 	</script>
 </body>

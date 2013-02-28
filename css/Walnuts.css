@@ -108,4 +108,123 @@
     #response {
         font: italic 16px sans-serif;
     }
+     
+    	<style type="text/css">
+		html, body, #body {
+				height: 100%;
+				width: 100%;
+				padding: 0;
+				margin: 0;
+			}
+		#body {
+			display: none;
+		}
+		ul#navlist { 
+			position: relative;
+			list-style-type: none;
+			}
+		ul#navlist li {
+			display: inline;
+		}		
+		ul#navlist li input#submit{
+			position: absolute;
+			left: 5em;
+			width: 8em;
+			color: #fff;
+			background-color: #036;
+			padding: 0.2em 0.2em;
+			text-decoration: none;
+			border-right: 1px solid #fff
+		}		
+		ul#navlist li input#reset{
+			position: absolute;
+			left: 15em;
+			width: 8em;
+			color: #fff;
+			background-color: #036;
+			padding: 0.2em 0.2em;
+			text-decoration: none;
+			border-right: 1px solid #fff
+		}
+		ul#navlist li input#home{
+			position: absolute;
+			left: 25em;
+			width: 8em;
+			color: #fff;
+			background-color: #036;
+			padding: 0.2em 0.2em;
+			text-decoration: none;
+			border-right: 1px solid #fff
+		}
+		ul#navlist li input#submit:hover,
+		ul#navlist li input#reset:hover,
+		ul#navlist li input#home:hover
+		{
+			background-color: #369;
+			color: #fff;
+		}			
+		#editNutPage {
+		    width: 700px;
+			margin-left: auto ;
+			margin-right: auto ;
+		}
+		#editNutPage h1, #editNutPage h3 {
+			color: maroon;
+		}
+	    #editNutForm {	
+			text-align: left;
+			margin: 0px auto;
+			width: 90%;
+		}
+		#editNutResponse {
+			font: italic 16px sans-serif;
+		}
             
+		fieldset {
+			background: #F1F1F1;
+			padding: 20px;
+			width:	600px;
+			border: 1px solid #781351
+			}
+		fieldset legend {
+			color: maroon;
+			font: bold 14px arial;
+			}
+			
+		fieldset ul, fieldset li{
+<!--		float: left;  -->
+			width: 70%;
+			clear: left;
+			border:0; 
+			margin:auto; 
+			padding-bottom: 1em; 
+			text-align: left;
+			list-style:none;
+			}
+	
+		fieldset input{
+			float:left;
+			}
+			
+		fieldset label{
+			width: 100px;
+			float: left;
+			text-align: right;
+			margin-right: 0.5em;
+			font: bold 12px arial;
+			display: block
+			}		
+		input#submit {
+			float: left;
+			width: 100px;
+			margin-left: auto;
+			margin-right: auto;						
+			}
+
+		input#teser {
+			float:right;
+			width: 100px;
+			margin-left: auto;
+			margin-right: auto;						
+        }
+	     
