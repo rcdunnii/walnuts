@@ -277,8 +277,6 @@ function getOrigNut(nutID) {
                     frm.elements[i].value = nut[i];
                 }
             }
-            // display page once fields are loaded
-            document.getElementById('body').style.display = 'block';
 			return;
         }
     };

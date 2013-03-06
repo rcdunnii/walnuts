@@ -4,155 +4,43 @@
 <head>
 	<title>AddaNut</title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" href="css/Walnuts.css"/>	    
 	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js"></script> 
-	
-<style type="text/css">	
-
-		ul#navlist { 
-		position: relative;
-		list-style-type: none;
-		}
-		ul#navlist li {
-		display: inline;
-		}		
-		ul#navlist li input#submit{
-		position: absolute;
-		left: 0em;
-		width: 8em;
-		color: #fff;
-		background-color: #036;
-		padding: 0.2em 0.2em;
-		text-decoration: none;
-		border-right: 1px solid #fff
-		}		
-		ul#navlist li input#reset{
-		position: absolute;
-		left: 10em;
-		width: 8em;
-		color: #fff;
-		background-color: #036;
-		padding: 0.2em 0.2em;
-		text-decoration: none;
-		border-right: 1px solid #fff
-		}
-		ul#navlist li input#again{
-		position: absolute;
-		left: 20em;
-		width: 8em;
-		color: #fff;
-		background-color: #036;
-		padding: 0.2em 0.2em;
-		text-decoration: none;
-		border-right: 1px solid #fff
-		}
-		ul#navlist li input#home{
-		position: absolute;
-		left: 30em;
-		width: 8em;
-		color: #fff;
-		background-color: #036;
-		padding: 0.2em 0.2em;
-		text-decoration: none;
-		border-right: 1px solid #fff
-		}
-		ul#navlist li input#submit:hover,
-		ul#navlist li input#reset:hover,
-		ul#navlist li input#again:hover,
-		ul#navlist li input#home:hover
-		{
-		background-color: #369;
-		color: #fff;
-		}	
-		
-		#addNutPage{
-		    width: 700px;
-			margin-left: auto ;
-			margin-right: auto ;
-			}
-		#addNutPage h1, #addNutPage h3 {
-			color: maroon;
-			}
-	    #addNutForm {	
-			text-align: left;
-			margin: 0px auto;
-			width: 90%;
-		}
-		#addNutResponse {
-			font: italic 16px sans-serif;
-			}
-		fieldset {
-			background: #F1F1F1;
-			padding: 20px;
-			width:	600px;
-			border: 1px solid #781351
-			}
-		fieldset legend {
-			color: maroon;
-			font: bold 14px arial;
-			}
-			
-		fieldset ul, fieldset li{
-			width: 100%;
-			clear: left;
-			border:0; 
-			margin:auto; 
-			padding-bottom: 1em; 
-			text-align: left;
-			list-style:none;
-			}
-	
-		fieldset input{
-			float:left;
-			}
-			
-		fieldset label{
-			width: 100px;
-			float: left;
-			text-align: right;
-			margin-right: 0.5em;
-			font: bold 12px arial;
-			display: block
-			}			
-	</style>
 </head>
- <body>
-
-	<div id="addNutPage">
-	<h1><center>Walnuts Galore!</center></h1>
-	<h3><center>Adding Nut to Our WT Database</center></h3>
-
-	<fieldset>
-		<legend>Add Nut Form</legend>
-	<form action="" id="addNutForm" onsubmit="ajaxAddNuts(); return false;">
-		<ul>
-		<li><input type="hidden" name="walnutID" id="walnutID" value=NULL ></input></li>
-		<li><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName" size=20 ></input></li>
-		<li><label for="Names">Informal List</label><input type="text" name="Names" id="Names" size=50 ></input></li>
-		<li><label for="FormalNames">Formal List</label><input type="text" name="FormalNames" id="FormalNames" size=50 ></input></li>
-		<li><label for="Children">Children</label><input type="text" name="Children" id="Children" size=50 ></input></li>
-		<li><label for="Addr1">Street Address</label><input type="text" name="Addr1" id="Addr1" size=35 ></input></li>
-		<li><label for="Addr2">Apt/Suite</label><input type="text" name="Addr2" id="Addr2" size=30 ></input></li>
-		<li><label for="Addr3">City,State</label><input type="text" name="Addr3" id="Addr3" size=25 ></input></li>
-		<li><label for="Addr4">Country</label><input type="text" name="Addr4" id="Addr4" size=25 ></input></li>		
-		<li><label for="Email1">Email 1</label><input type="text" name="Email1" id="Email1" size=30 ></input></li>
-		<li><label for="Email2">Email 2</label><input type="text" name="Email2" id="Email2" size=30 ></input></li>
-		<li><label for="Email3">Email 3</label><input type="text" name="Email3" id="Email3" size=30 ></input></li>
-        <li><label for="Phone1">Phone 1</label><input type="text" name="Phone1" id="Phone1" size=30 ></input></li>
-		<li><label for="Phone2">Phone 2</label><input type="text" name="Phone2" id="Phone2" size=30 ></input></li>		
-		<li><label for="Notes">Notes</label><textarea name="Notes" id="Notes" cols="30" rows="3"></textarea></li> 
-		</ul>
-		<ul id="navlist">
-		<li><input type="submit" name="btn" id="submit" value="Submit"></input><li>
-		<li><input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)"></input></li> 
-		<li><input type="button" name="btn" id="again" value="Add Another" onclick="document.location.reload(true)"></input></li>
-		<li><input type="button" name="btn" id="home" value="Main Menu" onclick="window.location.href ='http://localhost/walnuts/WTD.html';" ></input></li>
-		</ul>
-		<center><p><span id="addNutResponse"></p></center>
-	</form>
-	</fieldset>
-	</div>
-	
-	
-	
+<body>
+    <div class="frame">
+        <div id="addNutPage">
+            <h1><center>Walnuts Galore!</center></h1>
+            <h3><center>Adding Nut to Our WT Database</center></h3>
+            <fieldset>
+                <form action="" id="addNutForm" onsubmit="ajaxAddNuts(); return false;">
+                    <ul>
+                        <li><input type="hidden" name="walnutID" id="walnutID" value=NULL ></input></li>
+                        <li><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName" size=20 ></input></li>
+                        <li><label for="Names">Informal List</label><input type="text" name="Names" id="Names" size=50 ></input></li>
+                        <li><label for="FormalNames">Formal List</label><input type="text" name="FormalNames" id="FormalNames" size=50 ></input></li>
+                        <li><label for="Children">Children</label><input type="text" name="Children" id="Children" size=50 ></input></li>
+                        <li><label for="Addr1">Street Address</label><input type="text" name="Addr1" id="Addr1" size=35 ></input></li>
+                        <li><label for="Addr2">Apt/Suite</label><input type="text" name="Addr2" id="Addr2" size=30 ></input></li>
+                        <li><label for="Addr3">City,State</label><input type="text" name="Addr3" id="Addr3" size=25 ></input></li>
+                        <li><label for="Addr4">Country</label><input type="text" name="Addr4" id="Addr4" size=25 ></input></li>		
+                        <li><label for="Email1">Email 1</label><input type="text" name="Email1" id="Email1" size=30 ></input></li>
+                        <li><label for="Email2">Email 2</label><input type="text" name="Email2" id="Email2" size=30 ></input></li>
+                        <li><label for="Email3">Email 3</label><input type="text" name="Email3" id="Email3" size=30 ></input></li>
+                        <li><label for="Phone1">Phone 1</label><input type="text" name="Phone1" id="Phone1" size=30 ></input></li>
+                        <li><label for="Phone2">Phone 2</label><input type="text" name="Phone2" id="Phone2" size=30 ></input></li>		
+                        <li><label for="Notes">Notes</label><textarea name="Notes" id="Notes" cols="30" rows="3"></textarea></li> 
+                    </ul>
+                    <ul id="navlist">
+                        <li><input type="submit" name="btn" id="submit" value="Submit"></input><li>
+                        <li><input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)"></input></li> 
+                        <li><input type="button" name="btn" id="again" value="Add Another" onclick="document.location.reload(true)"></input></li>
+                        <li><input type="button" name="btn" id="home" value="Main Menu" onclick="window.location.href ='WTD.html';" ></input></li>
+                    </ul>
+                        <center><p><span id="addNutResponse"></p></center>
+                </form>
+            </fieldset>
+        </div>
+	</div>	
 </body>
 </html>

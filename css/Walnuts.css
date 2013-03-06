@@ -1,21 +1,15 @@
 /* Walnut Tally Style Sheet */
    
     html, body {    
-    height: 100%;
-    width: 100%; 
-    background: transparent;   
-    padding: 0;
-    margin: 0;
+        height: 100%;
+        width: 100%; 
+        background: transparent;   
+        padding: 0;
+        margin: 0;
     }
     
     #body{
- /*   height: 100%;
-    width: 100%;
-    color: #FFF;  
-    background: #8B0000;    less dark red */
-    background: rgba(139, 0, 0, 0.8);
-/*    padding: 0;
-    margin: 0;  */
+        background: rgba(139, 0, 0, 0.8);
     }
  
     .frame {               /* previous settings in comments below */
@@ -107,95 +101,94 @@
 	   margin: 25px 0;
 	   padding-bottom: 10px;
 	   color:#EEDC82; /* flax  */
-	   }
-
-    #hdr {  
-    float: left; 
-    width: auto; 
-    height: auto; 
-    }
-
-    img#ftr { 
-    position: absolute;
-    left: 600px;
-    }
+	}
 
     #wtHomePage {
-    width: 700px;
-    margin-left: auto ;
-    margin-right: auto ;
+        width: 700px;
+        margin-left: auto ;
+        margin-right: auto ;
     }
+    
     #WTForm {
-    width: 250px ;
-    margin-left: auto ;
-    margin-right: auto ;
-    text-align: left;
+        width: 250px ;
+        margin-left: auto ;
+        margin-right: auto ;
+        text-align: left;
     }
     #response {
-    font: italic 16px sans-serif;
+        font: italic 16px sans-serif;
     }
     
     #navlist { 
-    position: relative;
-    background-color:transparent;
-    color: #FFF;
-    margin: 0;
-    padding: .3em 0;
-    text-align: center;
-    list-style-type: none;
+        position: relative;
+        padding: .3em 0;
+        text-align: center;
+        list-style-type: none;
     }
     
     #navlist li {
-    display: inline;
-    padding: 0 .5em;
+        padding: 0 .5em;
+        width: 8em;     
     }
 	
     #navlist li #submit{
-    position: absolute;
-    left: 5em;
-    width: 8em;
-    background-color: transparent;    
-    color: #fff;
-    padding: .1em .5em;
-    text-decoration: none;
-    border: 1px solid;
-    border-color: #cec #464 #575 #dfd;    
+        display: inline;
+        position: absolute;
+        left: 5em;
+        padding: .1em .5em;
+        text-decoration: none;
+        background-color: #8B0000;
+        color: yellow;
+        border: 1px solid;
+        border-color: #cec #464 #575 #dfd;         
     }
   
-
     #navlist li #reset{
-    position: absolute;
-    left: 15em;
-    width: 8em;
-    background-color: transparent;    
-    color: #fff;
-    padding: .1em .5em;
-    text-decoration: none;
-    border: 1px solid;
-    border-color: #cec #464 #575 #dfd;    
+        display: inline;
+        position: absolute;
+        left: 15em;
+        padding: .1em .5em;
+        text-decoration: none;
+        background-color: #8B0000;
+        color: yellow;        
+        border: 1px solid;
+        border-color: #cec #464 #575 #dfd;         
     }
     
     #navlist li #home{
-    position: absolute;
-    left: 25em;
-    width: 8em;
-    background-color: transparent;       
-    color: #fff;
-    padding: .1em .5em;
-    text-decoration: none;
-    border: 1px solid;
-    border-color: #cec #464 #575 #dfd;
+          display: inline;
+        position: absolute;
+        left: 25em;
+        padding: .1em .5em;
+        text-decoration: none;
+        background-color: #8B0000;
+        color: yellow;        
+        border: 1px solid;
+        border-color: #cec #464 #575 #dfd;         
     }
+    
+    #navlist li #again {
+          display: inline;
+        position: absolute;
+        left: 35em;
+        padding: .1em .5em;
+        text-decoration: none;
+        background-color: #8B0000;
+        color: yellow;        
+        border: 1px solid;
+        border-color: #cec #464 #575 #dfd;         
+    }    
     
     #navlist li #submit:hover,
     #navlist li #reset:hover,
-    #navlist li #home:hover
+    #navlist li #home:hover,
+    #navlist li #again:hover
       {
-    background-color: brown;
-    color: #FFF;
+        background-color: brown;
+        color: #FFF;
     }
     
-    #editNutPage , #addNutPage{
+    #editNutPage , #addNutPage {
         position: relative;  /* absolute positioned elements are  ignored by other elements - like they don't exist   */
         margin:0;
         width: 96%;    /* 940px */
@@ -207,49 +200,45 @@
         background: #800000;  /* dark red  */
     }
     
-    #editNutPage h1, #editNutPage h3 {
-    color:#EEDC82; /* flax  */
+    #editNutPage h1, #editNutPage h3, #addNutPage h1, #addNutPage h3{
+        color:#EEDC82; /* flax  */
     }
 
-    #editNutResponse {
-    font: italic 16px sans-serif;
+    #editNutResponse, #addNutResponse {
+        font: italic 16px sans-serif;
     }
         
     fieldset {
-    background: #800000;  /* dark red  */
-    color:#EEDC82; /* flax  */
-    padding: 20px;
-    border: 1px solid #781351
+        background: #800000; 
+        color:#EEDC82;
+        padding: 20px;
+        border: 0;  
     }
-    fieldset legend {
-    color:#EEDC82; /* flax  */
-    font: bold 14px arial;
-    }
-        
+       
     fieldset ul, fieldset li{
-    width: 95%;
-    clear: left;
-    border: 0;
-    margin: .2em auto;
-    test-align: left;
-    margin-left: 10px;
-    list-style:none;
+        width: 95%;
+        clear: left;
+        border: 0;
+        margin: .2em auto;
+        test-align: left;
+        margin-left: 10px;
+        list-style:none;
     }
 
     fieldset input{
-    float:left;
-    font: normal 18px serif;
+        float:left;
+        font: normal 18px serif;
     }
         
     fieldset label{
-    width: 150px;
-    float: left;
-    text-align: right;
-    margin-right: 10px;
-    font: bold 14px arial;
+        width: 150px;
+        float: left;
+        text-align: right;
+        margin-right: 10px;
+        font: bold 14px arial;
     }
    
     #Notes {
-    margin-left:0;
+        margin-left:0;
     }
      
