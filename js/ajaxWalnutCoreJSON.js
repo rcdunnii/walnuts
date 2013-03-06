@@ -168,7 +168,7 @@ function displayPage(requester, nutEntries) {
         if (requester === 'admin') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<span id='delNutResponse'></span>" + "<br>";
         } else {
-            replacementStr +=  nutEntries[i].SirName + "<br>";
+            replacementStr += "<br>";
         }
         replacementStr += nutEntries[i].Names + "<br>";
         replacementStr += ((nutEntries[i].FormalNames) ? (nutEntries[i].FormalNames + "<br>") : "<br>");
@@ -196,7 +196,7 @@ function displayPage(requester, nutEntries) {
     return;
 }
 
-// fxn called by list nuts html page - which requester determines api, and recPtr is where to begin display
+// fxn called by list nuts html page - which requester determines api
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
 function ajaxListNuts(requester) {
@@ -216,6 +216,15 @@ function ajaxListNuts(requester) {
             }
             walnutEntries = JSON.parse(xhr.responseText);
             displayPage(requester, walnutEntries);
+            $(".content").mCustomScrollbar({
+                mouseWheel:true,
+                    scrollButtons:{
+                        enable:true
+                    }
+            });
+            if (requester === 'admin') {
+                document.getElementById("mainMenu").style.display = 'block';
+            }    
         } else {
             document.getElementById("spinner").innerHTML = "<img src='http://localhost/walnuts/images/Walnuts/ajax-loader.gif'>";
         }

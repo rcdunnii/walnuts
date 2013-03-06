@@ -35,13 +35,14 @@
 </head>
 <body>
     <!-- this page is called by javascript function displayPage(requester, nutEntries) as editNut.html?value=walnutID&user=requester -->
-	<div id="body">
+<!--	<div id="body">  -->
+    <div class="frame">
 	<div id="editNutPage">
 	<h1><center>Walnuts Galore!</center></h1>
 	<h3><center>Edit Nut in Our WT Database</center></h3>
     <p><center><span id="spinner">&nbsp;</span></center></p>
 	<fieldset>
-		<legend>Edit Nut Form</legend>
+<!--		<legend>Edit Nut Form</legend>     -->
 	<form action="" id="editNutForm" onsubmit="postEditedNut( $.getUrlVar('user')); return false;">
 		<ul>
 		<li><input type="hidden" name="walnutID" id="walnutID" ></input></li>

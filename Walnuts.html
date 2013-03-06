@@ -27,23 +27,11 @@
   </div>
  
     <!-- load the page with ajax call -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-    <script src="js/jquery.mousewheel.min.js"></script>
-    <script src="js/jquery.mCustomScrollbar.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="js/ajaxWalnutCoreJSON.js"></script>
     <script type="text/javascript">
         ajaxListNuts('user'); // ajax call to populate page
-        (function($){
-               $(window).load(function(){
-                   $(".content").mCustomScrollbar({
-                       mouseWheel:true,
-                       scrollButtons:{
-                           enable:true
-                       }
-                    });
-                });
-        })(jQuery);
     </script>
 </body>
 
