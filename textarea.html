@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>Test Textarea Output</title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin:0;
+         }
+        .wrapper {
+           position: absolute;
+           width: 600px;
+           top: 0;
+           left: 25px;
+           margin-left: auto;
+           margin-right: auto;
+           background-color:#ce0;
+        }
+        ul li {
+           list-style: none;
+        }
+    </style>
+    <script type="text/javascript">
+        function printTextAreas() {
+            'use strict';
+            /*jslint browser:true */
+            var noWrapStr = document.getElementById("noWrapTA").value,
+                yesWrapStr = document.getElementById("yesWrapTA").value,
+                noWrapElem = document.getElementById("noWrapTADisplay"),
+                yesWrapElem = document.getElementById("yesWrapTADisplay");
+            noWrapElem.innerHTML = noWrapStr;
+            yesWrapElem.innerHTML = yesWrapStr;
+        }
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+	    <form action="" onsubmit="printTextAreas(); return false;">
+            <ul>
+                <li><textarea name="noWrapTA" id="noWrapTA" cols="20" rows="3" wrap="soft"></textarea></li>
+                <li><textarea name="yesWrapTA" id="yesWrapTA" cols="20" rows="3" wrap="hard"></textarea></li> 
+           </ul>
+           <input type="submit" name="submit" id="submit" />
+        </form>
+        <div class="display">
+            <p><span id="noWrapTADisplay">No wrap textarea displays here...</span></p>
+            <p>&nbsp;&nbsp;&nbsp;</p>
+            <p><span id="yesWrapTADisplay">Wrapped textarea displays here...</span></p>
+            <p>&nbsp;&nbsp;&nbsp;</p>
+            <p style="display:none;">This is a long string which I'd like to get into my clipboard to help in filling a textarea in a form in a html document but I don't know if the clipboard manager works outside of npp++</p>
+        </div>    
+    </div> 
+
+</body>
+</html>

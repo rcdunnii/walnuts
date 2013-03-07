@@ -205,6 +205,12 @@
     }
 
     #editNutResponse, #addNutResponse {
+        position: relative;
+        width: 100px;
+        margin: 0;
+        padding: 5px;
+        top: 15px;
+        left: -30px;        
         font: italic 16px sans-serif;
     }
         
