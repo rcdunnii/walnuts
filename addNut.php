@@ -42,7 +42,7 @@
 		}
 				
 		
-		echo "Added new nut...." ;
+		echo "Added a " . $f["SirName"];
 		$stmt->close();															 
 	
 		return;

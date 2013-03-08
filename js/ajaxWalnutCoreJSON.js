@@ -100,13 +100,30 @@ function ajaxAddNuts() {
     xhr.open("POST", "addNut.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(addData);
-// clear the form once sent
-// document.getElementById('addNutForm').reset();
-
 }
 
 
 /* called by displayPage to format the notes entered in addNut form */
+function wordWrap(str, width, brk, cut) {
+    'use strict';
+    brk = brk || '\n';
+    width = width || 30;
+    cut = cut || false;
+    if (!str) { return str; }
+    var regex = '.{1,' + width + '}(\\s|$)' + (cut ? '|.{' + width + '}|.+$' : '|\\S+?(\\s|$)');
+    return str.match(new RegExp(regex, 'g')).join(brk);
+}
+
+/* function addNewlines(str) {  //havent tried yet
+  var result = '';
+  while (str.length > 0) {
+    result += str.substring(0, 200) + '\n';
+    str = str.substring(200);
+  }
+  return result;
+}
+*/
+/*
 function insertNewLines(str) {
     'use strict';
     var pos = 0,            // pos =  position of space in string
@@ -120,35 +137,47 @@ function insertNewLines(str) {
         noteLen = str.length,   // length of the note string
         newLineCount = 0,       // # inserted '\n'
         newLinesNeeded = 3,     // # required '\n'
-        newLineStr = "\n\n\n";
+        newLineStr = "<br><br><br>";
+    // we want 30 char lines, at most three of them
+    // and we want three <br>'s separating the note entry from the top of the next entry
+    // if no note we need 3 <br>'s after the empty 'Note:' entry
+    // if note length < 30 chars just keep note and add three <br>'s
+    //  if note length is > 30 and < 60 chars we have two note lines and need 2 more <br>'s
+    // if note length is > 60 ( and it cant be > 90 ) we have 3 lines and need just 1 <br>    
     if (noteLen < maxLineLen) {
-        str = str + newLineStr.substr(0, (newLinesNeeded - newLineCount));
+        str += "<br><br><br>";
         return str;         // notes need no formatting - less than 30 char in len
     }
-    if (noteLen > maxNoteLen) {
-        str = str.substring(0, maxNoteLen);  //need to trim the note to 90 chars
+    if (noteLen > maxNoteLen) {  // if note > 90 chars need to trim the note to 90 chars
+        str = str.substring(0, maxNoteLen);
     }
-    // since str len > 30 chars - needs formatting - find location of spaces where we can inject newlines - ie at ~= 30 and 60 chars
+    // first see if there are any spacesin this string - str.indexOf(' ', 0) returns -1 if none
     pos = str.indexOf(' ', pos);             //find location of first space char
+    if (pos === -1) { // here if no spaces in a string which is > 30 chars, garbage
+        str = "<br><br><br>";
+        return str;
+    }
+    // since str len > one line (30 chars) needs formatting - find location of spaces where we can put  newlines - ie at ~= 30 and 60                
     for (i = 0; pos >= 0; i += 1) {
         posOfSpaces[i] = pos;
         pos = str.indexOf(' ', pos + 1);     //find location of next space char
         maxLenFraction = (pos / maxLineLen);
         if ((maxLenFraction > 1) && (!firstThirtyFlag)) {
             firstThirtyFlag = true;
-            str = str.substr(0, (posOfSpaces[i])) + "\n"  + str.substr((posOfSpaces[i]) + 1);
+            str = str.substr(0, (posOfSpaces[i])) + "<br>"  + str.substr((posOfSpaces[i]) + 1);
             newLineCount += 1;
         }
         if ((maxLenFraction > 2) && (!secondThirtyFlag)) {
             secondThirtyFlag = true;
-            str = str.substr(0, (posOfSpaces[i])) + "\n"  + str.substr((posOfSpaces[i]) + 1);
+            str = str.substr(0, (posOfSpaces[i])) + "<br>"  + str.substr((posOfSpaces[i]) + 1);
             newLineCount += 1;
             break;
         }
     }
-    str = str + newLineStr.substr(0, (newLinesNeeded - newLineCount));
+    str += newLineStr.substr(0, ((newLinesNeeded - newLineCount) * 4)); // each newline is 4 chars, '<br>', right?
     return str;
 }
+*/
 
 
  /* called by ajaxListNuts() fxn below - requester is who is making request, admin or user; nutEntries is arr of all walnuts */
@@ -166,9 +195,9 @@ function displayPage(requester, nutEntries) {
    /*     replacementStr =  "<p><pre><a class='oneNut' href=\"editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\"" + "title=\"Update\">" +  nutEntries[i].SirName + "</a>"; */
         replacementStr =  "<p><pre><a class='oneNut' href = \"editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\""  + " title='Update'>" +  nutEntries[i].SirName + "</a>";
         if (requester === 'admin') {
-            replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<span id='delNutResponse'></span>" + "<br>";
+            replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
         } else {
-            replacementStr +=  nutEntries[i].SirName + "<br>";
+            replacementStr += "<br>";
         }
         replacementStr += nutEntries[i].Names + "<br>";
         replacementStr += ((nutEntries[i].FormalNames) ? (nutEntries[i].FormalNames + "<br>") : "<br>");
@@ -182,7 +211,8 @@ function displayPage(requester, nutEntries) {
         replacementStr += "Phone 1: " + nutEntries[i].Phone1 + "<br>";
         replacementStr += "      2: " + nutEntries[i].Phone2 + "<br>";
         // format any Notes to fit in our listNuts display properly - always print 3 newlines
-        notesStr = ((nutEntries[i].Notes) ? (insertNewLines(nutEntries[i].Notes)) : "<br><br><br>");  // if no notes insert 3 newlines
+        notesStr = "Updated " + nutEntries[i].updated + "<br>";
+        notesStr += ((nutEntries[i].Notes) ? (wordWrap(nutEntries[i].Notes, 30, '<br>', false)) : "<br><br>");  // if no notes insert 2 newlines
         replacementStr += "Notes:   " + notesStr + "</pre></p>";
         if (isEven(i)) {
             replacementStrLt += replacementStr;
@@ -196,7 +226,7 @@ function displayPage(requester, nutEntries) {
     return;
 }
 
-// fxn called by list nuts html page - which requester determines api, and recPtr is where to begin display
+// fxn called by list nuts html page - which requester determines api
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
 function ajaxListNuts(requester) {
@@ -213,7 +243,15 @@ function ajaxListNuts(requester) {
             document.getElementById("spinner").innerHTML = "";			
             walnutEntries = JSON.parse(xhr.responseText);
             displayPage(requester, walnutEntries);
-			return;
+            $(".content").mCustomScrollbar({
+                mouseWheel: true,
+                scrollButtons: {
+                    enable: true
+                }
+            });
+            if (requester === 'admin') {
+                document.getElementById("mainMenu").style.display = 'block';
+            }
         } else {
             document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='http://localhost/walnuts/images/Walnuts/ajax-loader.gif'>";
         }
@@ -234,9 +272,8 @@ function confirmDel(nutId) {
     // Create a function that will receive data sent from the server
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                document.getElementById("delNutResponse").innerHTML = xhr.responseText;
             // on success, return to listing of walnuts - we know we are 'admin' to be here eh?
-                ajaxListNuts('admin');
+                window.open("listNuts1.html", "_self"); // listNuts1.html only called by admin
             }
         };
         xhr.open("GET", "delNut.php?value=" + nutId, true);
@@ -266,8 +303,6 @@ function getOrigNut(nutID) {
                     frm.elements[i].value = nut[i];
                 }
             }
-            // display page once fields are loaded
-            document.getElementsByTagName('body').style.display = 'block';
 			return;
         }
     };
@@ -287,9 +322,9 @@ function postEditedNut(requester) {
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById("editNutResponse").innerHTML = xhr.responseText;
             if (requester === 'admin') {
-                window.open("http://localhost/walnuts/listNuts1.html", "_self"); // listNuts1.html only called by admin
+                window.open("listNuts1.html", "_self"); // listNuts1.html only called by admin
             } else if (requester === 'user') {
-                window.open("http://localhost/walnuts/Walnuts.html", "_self"); // Walnuts.html only called by user
+                window.open("Walnuts.html", "_self"); // Walnuts.html only called by user
             } else {
                 alert("Error: Undefined requester");
                 return;
