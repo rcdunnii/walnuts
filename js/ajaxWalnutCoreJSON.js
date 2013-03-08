@@ -210,14 +210,12 @@ function ajaxListNuts(requester) {
     // Create a function that will receive data sent from the server
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            var target = document.getElementById("spinner");
-            if (target) {
-                document.getElementById("spinner").innerHTML = "";
-            }
+            document.getElementById("spinner").innerHTML = "";			
             walnutEntries = JSON.parse(xhr.responseText);
             displayPage(requester, walnutEntries);
+			return;
         } else {
-            document.getElementById("spinner").innerHTML = "<img src='http://localhost/walnuts/images/Walnuts/ajax-loader.gif'>";
+            document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='http://localhost/walnuts/images/Walnuts/ajax-loader.gif'>";
         }
     };
     //call php fxn to open Walnuts db and retieve/return all records for display
@@ -269,7 +267,7 @@ function getOrigNut(nutID) {
                 }
             }
             // display page once fields are loaded
-            document.getElementById('body').style.display = 'block';
+            document.getElementsByTagName('body').style.display = 'block';
 			return;
         }
     };
