@@ -2,8 +2,17 @@
    
     html, body {    
         height: 100%;
-        width: 100%; 
-        background: transparent;   
+        width: 100%;
+ /*     background:rgba(107, 43, 4, 1);       /* #8B0000;     */
+/*      background: transparent;   */
+        background: #440b02; /* Old browsers */
+        background: -moz-linear-gradient(top,  #440b02 0%, #600c00 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#440b02), color-stop(100%,#600c00)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #440b02 0%,#600c00 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #440b02 0%,#600c00 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #440b02 0%,#600c00 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #440b02 0%,#600c00 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#440b02', endColorstr='#600c00',GradientType=0 ); /* IE6-9 */
         padding: 0;
         margin: 0;
     }
@@ -20,7 +29,9 @@
         left:50%;
         margin-top: -350px;   /* http://stackoverflow.com/questions/2005954/center-element-with-positionfixed */
         margin-left: -480px;  /* BE SURE TO CHANGE margin-top and margin-left IF YOU CHANGE WIDTH AND OR HEIGHT!  MUST BE HALF OF EACH */
-        background: green;
+ /*       background:rgba(139, 0, 0, 0.9);       /* #8B0000;     */
+        background:rgba(96, 8, 8, 1);       /* #8B0000;     */
+ 
       }
     
      .walnutContainer {
@@ -32,7 +43,9 @@
         left: 13px;
         margin-left: 5px;
         margin-right: 5px;
-        background: #800000;  /* dark red  */
+        background-image: url("/images/Walnuts/Walnut1.jpg");
+        background-repeat: no-repeat;
+/*        background: #800000; */ /* dark red  */
        }
        
 	 #mainMenu {  /* used in listNuts1.html - if user is admin javascript will change display to display:block */
@@ -59,7 +72,7 @@
         bottom: 15px;
         margin-left: auto;
         margin-right: auto;
-        background: #8B0000;   /* less dark red */
+        background: transparent; /* #8B0000;   /* less dark red */
 		overflow:auto;
        }
 	   
@@ -79,7 +92,7 @@
        padding-left: 15px;
 	}
 	
-	.replaceRt, .replaceLt {
+	p#replaceRt pre, p#replaceLt pre {
 	   padding: 0;
 	   color: white;
 	}
@@ -104,12 +117,17 @@
 	   }
 
     #wtHomePage {
+        position: relative;
         width: 700px;
-        margin-left: auto ;
-        margin-right: auto ;
+        top: 30%;
+        margin-left: auto;
+        margin-right: auto;
+        color: #000;
+        background: #FFF;
     }
     
     #WTForm {
+        position: relative;
         width: 250px ;
         margin-left: auto ;
         margin-right: auto ;
@@ -134,6 +152,7 @@
     #navlist li #submit{
         display: inline;
         position: absolute;
+        height: 25px;
         left: 5em;
         padding: .1em .5em;
         text-decoration: none;
@@ -146,6 +165,7 @@
     #navlist li #reset{
         display: inline;
         position: absolute;
+        height: 25px;        
         left: 15em;
         padding: .1em .5em;
         text-decoration: none;
@@ -158,6 +178,7 @@
     #navlist li #home{
           display: inline;
         position: absolute;
+        height: 25px;        
         left: 25em;
         padding: .1em .5em;
         text-decoration: none;
@@ -170,6 +191,7 @@
     #navlist li #again {
           display: inline;
         position: absolute;
+        height: 25px;        
         left: 35em;
         padding: .1em .5em;
         text-decoration: none;
@@ -203,6 +225,12 @@
     #editNutPage h1, #editNutPage h3, #addNutPage h1, #addNutPage h3{
         color:#EEDC82; /* flax  */
     }
+    
+    #editNutForm, #addNutForm {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }    
 
     #editNutResponse, #addNutResponse {
         position: relative;
@@ -215,30 +243,44 @@
     }
         
     fieldset {
+        position: relative;
+        height: 70%;
+        top: -25px;
         background: #800000; 
         color:#EEDC82;
         padding: 20px;
         border: 0;  
     }
        
-    fieldset ul, fieldset li{
+    fieldset ul {
         width: 95%;
         clear: left;
         border: 0;
         margin: .2em auto;
-        test-align: left;
+    }
+    
+    fieldset li {
+        text-align: left;
         margin-left: 10px;
         list-style:none;
+        float: left;
+        clear: left;
+        padding: 5px;        
     }
 
     fieldset input{
+        display: block;
         float:left;
+        padding: 0;
+        height: 16px;
         font: normal 18px serif;
     }
         
     fieldset label{
-        width: 150px;
+        display: block;
+        width: 200px;
         float: left;
+        height: 16px;
         text-align: right;
         margin-right: 10px;
         font: bold 14px arial;
