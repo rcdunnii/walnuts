@@ -3,18 +3,26 @@
     html, body {    
         height: 100%;
         width: 100%;
- /*     background:rgba(107, 43, 4, 1);       /* #8B0000;     */
-/*      background: transparent;   */
-        background: #440b02; /* Old browsers */
-        background: -moz-linear-gradient(top,  #440b02 0%, #600c00 100%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#440b02), color-stop(100%,#600c00)); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top,  #440b02 0%,#600c00 100%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top,  #440b02 0%,#600c00 100%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(top,  #440b02 0%,#600c00 100%); /* IE10+ */
-        background: linear-gradient(to bottom,  #440b02 0%,#600c00 100%); /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#440b02', endColorstr='#600c00',GradientType=0 ); /* IE6-9 */
+        background: rgb(104,32,19); /* Old browsers */
+        background: -moz-linear-gradient(top,  rgba(104,32,19,1) 0%, rgba(139,69,19,1) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(104,32,19,1)), color-stop(100%,rgba(139,69,19,1))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#682013', endColorstr='#8b4513',GradientType=0 ); /* IE6-9 */
         padding: 0;
         margin: 0;
+    }
+    
+    .leftImg {
+        position: relative;
+        bottom: -550px;
+        left: 0px;
+        width:300px;
+        margin: 0;
+        padding:0;
+        
     }
     
     #body{
@@ -30,7 +38,7 @@
         margin-top: -350px;   /* http://stackoverflow.com/questions/2005954/center-element-with-positionfixed */
         margin-left: -480px;  /* BE SURE TO CHANGE margin-top and margin-left IF YOU CHANGE WIDTH AND OR HEIGHT!  MUST BE HALF OF EACH */
  /*       background:rgba(139, 0, 0, 0.9);       /* #8B0000;     */
-        background:rgba(96, 8, 8, 1);       /* #8B0000;     */
+        background:#421E13;       /* #8B0000;     */
  
       }
     
@@ -43,22 +51,37 @@
         left: 13px;
         margin-left: 5px;
         margin-right: 5px;
-        background-image: url("/images/Walnuts/Walnut1.jpg");
+        background-image: url("/walnuts/images/walnut-wood.jpg");
         background-repeat: no-repeat;
 /*        background: #800000; */ /* dark red  */
        }
-       
+     #editHint {
+        position: relative;
+        width: 300px;
+        margin: 5px 5px;
+        padding: 5px;
+        background-color: transparent;
+        color: #EEDC82; /* flax  */
+        font-weight:bold;
+        font-size: 115%;
+        left: 30%;
+        top: -30px;
+        font-family:"Times New Roman",Georgia,Serif;
+     }     
 	 #mainMenu {  /* used in listNuts1.html - if user is admin javascript will change display to display:block */
         display: none;
      }
      
-     #mainMenu a {
+    #mainMenu a {
         position: relative;
         width: 100px;
         margin: 5px 5px;
         padding: 5px;
-        background-color: #8B0000;
-        color: yellow;
+        background-color: transparent;
+        color: #FFFF00;
+        font-weight:bold;
+        font-size: 110%;
+        font-family:"Times New Roman",Georgia,Serif;
     }        
      #mainMenu a:hover{
          background-color: white;
@@ -98,12 +121,21 @@
 	}
        
 	   
-	a.oneNut {text-decoration: none;}
-	a.oneNut:link {color:#EEDC82;}    /*  unvisited link */
-    a.oneNut:visited {color:#EEDC82;} /* visited link same color for this app as unvisited */
-    a.oneNut:hover {color:#FFFFFF;}  /* white on mouse over link */
+	a.oneNut {
+      text-decoration: none;
+      font-weight:bold;
+      font-size: 110%;
+      font-family:"Times New Roman",Georgia,Serif;
+    } /* javascript generated class in ajaxWalnutCoreJSON line 140 */
+	a.oneNut:link {color:#FFFF00;}    /*  unvisited link */
+    a.oneNut:visited {color:#FFFF00;} /* visited link same color for this app as unvisited */
+    a.oneNut:hover {color:#FFFFFF;}   /* white on mouse over link */
     a.oneNut:active {color:#FFD700;}  /* yellow on selected link */   
 	
+    .updated {
+        color: yellow;
+    }
+    
     .listH1 {
        margin: 25px 0;
        padding-top: 10px;
@@ -272,7 +304,7 @@
         display: block;
         float:left;
         padding: 0;
-        height: 16px;
+        height: 20px;
         font: normal 18px serif;
     }
         
@@ -280,10 +312,10 @@
         display: block;
         width: 200px;
         float: left;
-        height: 16px;
+        height: 20px;
         text-align: right;
         margin-right: 10px;
-        font: bold 14px arial;
+        font: bold 16px arial;
     }
    
     #Notes {

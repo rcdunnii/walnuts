@@ -23,10 +23,11 @@
 			 echo "Prepare failed - addNut.php line 22: (" . $mysqli->errno . ") " . $mysqli->error;
 			return;
 		}
-
+//			print_r($f["SirName"]);
+//			return;	
 		// Bind parameters (an integer and a string). 'is' tells MySQL you're passing an integer(i) and a string(s)
-        // No values are set for the last two fields - field 16 = Created, field 17 = Updated
-
+        // Null values are set for the last two fields - field 16 = Created, field 17 = Updated
+        $f["Created"] = $f["Updated"] = null;
 		$rc = $stmt->bind_param('issssssssssssssss', $f["walnutID"],$f["SirName"],$f["Names"],$f["FormalNames"],$f["Children"],$f["Addr1"],$f["Addr2"],$f["Addr3"],$f["Addr4"],$f["Email1"],$f["Email2"],$f["Email3"],$f["Phone1"],$f["Phone2"],$f["Notes"],$f["Created"],$f["Updated"]); 
 
 		if (false === $rc) 
@@ -34,10 +35,7 @@
 			printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
 			return;
 		}
-        
-        $f["Created"] = 'NOW()';
-        $f["Updated"] = null;		
-        
+		
 		$rc = $stmt->execute();
 		
 		if (false === $rc) 

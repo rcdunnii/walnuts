@@ -71,7 +71,7 @@ function getPostDataJSON(hasID) {
     if (!hasID) {
         document.forms[0].walnutID.value = null;
     }
-    data_json = '{"walnutID": "' + document.forms[0].walnutID.value + '","SirName":"' + document.forms[0].SirName.value + '","Names":"' + document.forms[0].Names.value + '","FormalNames":"' + document.forms[0].FormalNames.value + '","Children":"' + document.forms[0].Children.value + '","Addr1":"' + document.forms[0].Addr1.value + '","Addr2"  : "' + document.forms[0].Addr2.value + '","Addr3"  : "' + document.forms[0].Addr3.value + '","Addr4"  : "' + document.forms[0].Addr4.value + '","Email1" : "' + document.forms[0].Email1.value + '","Email2" : "' + document.forms[0].Email2.value + '","Email3" : "' + document.forms[0].Email3.value + '","Phone1" : "' + document.forms[0].Phone1.value + '","Phone2" : "' + document.forms[0].Phone2.value + '","Notes"  : "' + document.forms[0].Notes.value + '"}';
+    data_json = '{"walnutID": "' + document.forms[0].walnutID.value + '","SirName":"' + document.forms[0].SirName.value + '","Names":"' + document.forms[0].Names.value + '","FormalNames":"' + document.forms[0].FormalNames.value + '","Children":"' + document.forms[0].Children.value + '","Addr1":"' + document.forms[0].Addr1.value + '","Addr2"  : "' + document.forms[0].Addr2.value + '","Addr3"  : "' + document.forms[0].Addr3.value + '","Addr4"  : "' + document.forms[0].Addr4.value + '","Email1" : "' + document.forms[0].Email1.value + '","Email2" : "' + document.forms[0].Email2.value + '","Email3" : "' + document.forms[0].Email3.value + '","Phone1" : "' + document.forms[0].Phone1.value + '","Phone2" : "' + document.forms[0].Phone2.value + '","Notes"  : "' + document.forms[0].Notes.value + '", "Created" : "", "Updated" : ""}';
     send_data = 'value=' + data_json;
     return send_data;
 }
@@ -156,7 +156,7 @@ function displayPage(requester, nutEntries) {
         replacementStr += "      2: " + nutEntries[i].Phone2 + "<br>";
         notesStr = ""; //  init after each loop
         if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
-            notesStr = "Updated " + nutEntries[i].Updated + "<br>";
+            notesStr = "<span class=\"updated\">Last Update: " + nutEntries[i].Updated + "</span><br>";
         }
         if (nutEntries[i].Notes) {
             notesStr += wordWrap(nutEntries[i].Notes, 30, '<br>', false);
@@ -206,7 +206,7 @@ function ajaxListNuts(requester) {
                 document.getElementById("mainMenu").style.display = 'block';
             }
         } else {
-            document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='http://localhost/walnuts/images/Walnuts/ajax-loader.gif'>";
+            document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='http://localhost/walnuts/images/ajax-loader.gif'>";
         }
     };
     //call php fxn to open Walnuts db and retieve/return all records for display
