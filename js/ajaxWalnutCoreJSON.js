@@ -13,6 +13,29 @@ function createXHR() {
         }
     }
 }
+//called from the displayed list of nuts when sirname is clicked in order to edit - clicked by a user - line 147
+function authenticate(walnutIDtoEdit, user) {
+    'use strict';
+    var xhr;
+    if (!('admin' === user) && !('authenticated' === user) ){ // if non-admin and non-authenticated user
+    // pop up login window to get password authorizing this edit
+       popUpElem = document.getElementbyId("login");
+       popUpElem.style.display = 'block';
+       // get ajax request obj
+        xhr = createXHR();
+        if (!xhr) {
+            return false;
+        }
+        // Create a function that will receive data sent from the server
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById("response").innerHTML = xhr.responseText;
+            }
+        };
+        xhr.open("GET", "authenticate.php?value=" + user_input,  true);
+        xhr.send(null);       
+    }
+}    
 
 // fxn called by primary html page WTD.html - only run by admin
 function ajaxWalnutFunction() {
@@ -136,8 +159,10 @@ function displayPage(requester, nutEntries) {
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
-   /*     replacementStr =  "<p><pre><a class='oneNut' href=\"editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\"" + "title=\"Update\">" +  nutEntries[i].SirName + "</a>"; */
-        replacementStr =  "<p><pre><a class='oneNut' href = \"editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\""  + " title='Update'>" +  nutEntries[i].SirName + "</a>";
+/*  
+       replacementStr =  "<p><pre><a class='oneNut' href = \"editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\""  + " title='Update'>" +  nutEntries[i].SirName + "</a>";   */
+       // see if user wanting to edit entry is logged in, otherwise login - pass along the target nut ID and the requester, user or admin
+       replacementStr =  "<p><pre><a class='oneNut' href ='#' onclick='authenticate(" + nutEntries[i].walnutID + ", &user=" + requester + ")'"  + " title='Update'>" +  nutEntries[i].SirName + "</a>";       
         if (requester === 'admin') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
         } else {
