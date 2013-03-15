@@ -134,7 +134,12 @@
 	   color: white;
 	}
        
-	   
+    .error {
+            display: none;
+            color: #a00000;
+            font-weight: bold;
+    }
+		
 	a.oneNut {
       text-decoration: none;
       font-weight:bold;

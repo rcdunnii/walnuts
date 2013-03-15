@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+   	<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js" ></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+	<script src="/jQuery/jquery-parsequery-master/jquery.parsequery.js"></script> 	
+    <script>
+    $.extend({
+        getUrlVars: function(){
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        },
+        getUrlVar: function(name){
+            return $.getUrlVars()[name];
+        }
+    });
+	</script>
+	
+	</head>
+   	<body>
+   		<div id="popUpLogin">
+            <form onsubmit="ajaxAuthenticate(this, 'login.php', 'post'); return false;">
+				<P>
+					<INPUT TYPE="hidden" name="user" id="user" value=$.getUrlVar('user')>
+					<INPUT TYPE="hidden" name="walnutID" id="walnutID" value= $.getUrlVar('value')>					
+					<LABEL for="password">Password: </LABEL>
+					<INPUT type="password" id="password" size="10" name="password">br>
+                    <div class="error" id="error1">Must be between 6 and 10 characters.</div><br>
+					<LABEL for="repassword">Repeat Password: </LABEL>
+				    <INPUT type="password" name="repassword" size="10" />
+                    <div class="error" id="error2">Must be the same as the password.</div><br>
+					<INPUT type="submit" value="Submit"><INPUT type="button" value="Cancel" onclick="document.location.reload(true)">
+            </form>
+			<div id="loginError"><p></p></center></div>                        
+		</div>
+   	</body>
+   </html>

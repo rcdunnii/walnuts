@@ -13,28 +13,134 @@ function createXHR() {
         }
     }
 }
+function HideAllErrorFields () {
+	for (var i = 1; i <= 4; i++) {
+		var field = document.getElementById ("error" + i);
+		field.style.display = "none";
+	}
+}
+
+function ShowErrorFields (idsStr) {
+	var ids = idsStr.split (",");
+	for (var i = 0; i < ids.length; i++) {
+		var field = document.getElementById ("error" + ids[i]);
+		if (field) {
+			field.style.display = "block";
+		}
+	}
+}
+
+function GetMessageBody (form) {
+    var data = "";
+    for (var i = 0; i < form.elements.length; i++) {
+        var elem = form.elements[i];
+        if (elem.name) {
+            var nodeName = elem.nodeName.toLowerCase ();
+            var type = elem.type ? elem.type.toLowerCase () : "";
+
+                // if an input:checked or input:radio is not checked, skip it
+            if (nodeName === "input" && (type === "checkbox" || type === "radio")) {
+                if (!elem.checked) {
+                    continue;
+                }
+            }
+
+            var param = "";
+                // select element is special, if no value is specified the text must be sent
+            if (nodeName === "select") {
+                for (var j = 0; j < elem.options.length; j++) {
+                    var option = elem.options[j];
+                    if (option.selected) {
+                        var valueAttr = option.getAttributeNode ("value");
+                        var value = (valueAttr && valueAttr.specified) ? option.value : option.text;
+                        if (param != "") {
+                            param += "&";
+                        }
+                        param += encodeURIComponent (elem.name) + "=" + encodeURIComponent (value);
+                    }
+                }
+            }
+            else {
+                param = encodeURIComponent (elem.name) + "=" + encodeURIComponent (elem.value);
+            }
+
+            if (data != "") {
+                data += "&";
+            }
+            data += param;                  
+        }
+    }
+    return data;
+}
+
+// returns whether the HTTP request was successful
+function IsRequestSuccessful (httpRequest) {
+        // IE: sometimes 1223 instead of 204
+    var success = (httpRequest.status == 0 || 
+        (httpRequest.status >= 200 && httpRequest.status < 300) || 
+        httpRequest.status == 304 || httpRequest.status == 1223);
+    
+    return success;
+}
+
+var registering = false;
+
+function OnReadyStateChanged (httpRequest, form) {
+	if (httpRequest.readyState == 0 || httpRequest.readyState == 4) {
+		
+		registering = false;
+		
+		// prevent memory leaks
+		httpRequest.onreadystatechange = null;
+		
+		if (IsRequestSuccessful (httpRequest)) {    // defined above
+			if (httpRequest.responseText === "ok") {    // registration is successful
+				alert ("Thank you for registering");
+				/*
+					// if redirection is required
+				location.href = "/index.php";
+				*/
+			}
+			else {  // some fields are invalid
+				ShowErrorFields (httpRequest.responseText);
+			}
+		}
+		else {
+			alert ("An error occurred while registering. Please try it again.");
+		}
+	}
+}
+
 //called from the displayed list of nuts when sirname is clicked in order to edit - clicked by a user - line 147
-function authenticate(walnutIDtoEdit, user) {
+function ajaxAuthenticate(form,url,method) {
     'use strict';
-    var xhr;
-    if (!('admin' === user) && !('authenticated' === user) ){ // if non-admin and non-authenticated user
-    // pop up login window to get password authorizing this edit
-       popUpElem = document.getElementbyId("login");
-       popUpElem.style.display = 'block';
-       // get ajax request obj
-        xhr = createXHR();
+	    if (registering) {
+            return;
+        }
+
+        // hide all error fields
+        HideAllErrorFields();
+
+        // get message data
+        var data = GetMessageBody (form);
+
+ //   if (!('admin' === user) && !('authenticated' === user) ){ // if non-admin and non-authenticated user
+        var xhr = createXHR();
         if (!xhr) {
             return false;
         }
-        // Create a function that will receive data sent from the server
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                document.getElementById("response").innerHTML = xhr.responseText;
-            }
-        };
-        xhr.open("GET", "authenticate.php?value=" + user_input,  true);
-        xhr.send(null);       
-    }
+		try {
+			xhr.open (method, url, true);   // asynchron
+			xhr.onreadystatechange = function () {OnReadyStateChanged (xhr, form)};
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.send (data);
+			}
+			catch (e) {
+			    alert ("Cannot connect to the server!");
+			return;
+		}
+
+		registering = true;
 }    
 
 // fxn called by primary html page WTD.html - only run by admin
@@ -162,7 +268,7 @@ function displayPage(requester, nutEntries) {
 /*  
        replacementStr =  "<p><pre><a class='oneNut' href = \"editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\""  + " title='Update'>" +  nutEntries[i].SirName + "</a>";   */
        // see if user wanting to edit entry is logged in, otherwise login - pass along the target nut ID and the requester, user or admin
-       replacementStr =  "<p><pre><a class='oneNut' href ='#' onclick='authenticate(" + nutEntries[i].walnutID + ", &user=" + requester + ")'"  + " title='Update'>" +  nutEntries[i].SirName + "</a>";       
+       replacementStr =  "<p><pre><a class='oneNut' href ='#' onclick=\"login.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\""  + " title='Update'>" +  nutEntries[i].SirName + "</a>";       
         if (requester === 'admin') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
         } else {
