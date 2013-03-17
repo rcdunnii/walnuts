@@ -1,54 +1,62 @@
-<?php
-
-define("ERR_INVALID_PASSWORD", "1");
-define("ERR_DIFFERENT_PASSWORDS", "2");
-
-$errors = array ();
-
-/* comment out - don't need this for this function - we only have two users, 'user' and 'admin'
-if (isset ($_POST["userName"])) {
-    $username = $_POST["userName"];
-    $len = strlen ($username);
-    if ($len < 2 || $len > 20) {
-        array_push ($errors, ERR_INVALID_USERNAME);
-    }
-    else {
-            // check the name of registered users
-        if (strcasecmp ($username, "Dottoro") == 0) {
-            array_push ($errors, ERR_EXISTING_USERNAME);
-        }
-    }
-}
-else {
-    array_push ($errors, ERR_INVALID_USERNAME);
-}
-*/
-
-if (isset ($_POST["password"])) {
-    $password = $_POST["password"];
-    $len = strlen ($password);
-    if ($len < 6 || $len > 10) {
-        array_push ($errors, ERR_INVALID_PASSWORD);
-    }
-    else {
-        if (!isset ($_POST["repassword"]) || strcmp ($password, $_POST["repassword"]) != 0) {
-            array_push ($errors, ERR_DIFFERENT_PASSWORDS);
-        }
-    }
-}
-else {
-    array_push ($errors, ERR_INVALID_PASSWORD);
-}
-
-$response = "";
-if (sizeof ($errors) > 0) {
-    $response = implode (",", $errors);
-}
-else {
-        // some db operations, save username and password ...PUT db operations here
+<?php 
+    include_once('psd.php');
     
-    $response = "ok";
-}
+    $response = "";
+    
+    if (!($_POST['value'])) {
+        echo 'Error: No data posted to login.php';			
+        return FALSE;
+    }
+ 
+    
+    $str_json = json_decode($_POST['value'], true);
+
+    
+//    $username = 'Walnut';   DELETE THIS COMMENT ONCE CODE IS WORKING
+//    $password = 'Polky';    DELETE THIS COMMENT ONCE CODE IS WORKING
+//    get stored password for aunthenticated user from hash table
+    require 'db.inc';
+		
+	$mysqli = @ new mysqli($server, $user, $password, $database);
+	
+	/* check connection */
+	if ($mysqli->connect_errno) {
+		printf("Connect failed: %s\n", $mysqli->connect_error);
+		exit();
+	}
+
+	if (!($stmt = $mysqli->prepare("SELECT Walnut FROM hash WHERE 1"))) {
+		echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+	}
+	
+	if (!$stmt->execute()) {
+		echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+	}
+	
+	if (!($res = $stmt->get_result())) {
+		echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
+	}
+	
+	/* fetch object array */
+    If (!($row = $res->fetch_assoc())) {
+		echo "fetch of row from DB failed: (" . $stmt->errno . ") " . $stmt->error;
+	}
+
+    // The first 64 characters of the hash is the salt
+    $salt = substr($row['Walnut'], 0, 64);
+
+    $hash = $salt . $str_json["password"];
+
+    // Hash the password as we did before
+    for ( $i = 0; $i < 100000; $i ++ ) {
+        $hash = hash('sha256', $hash);
+    }
+
+    $hash = $salt . $hash;
+
+    if ( $hash == $row['Walnut'] ) {
+        $response = "ok";
+    }   
     // 2 secs delay
 sleep (2);
 

@@ -1,5 +1,5 @@
 /*global XMLHttpRequest:true,ActiveXObject:true,document:true,confirm:true*/
-/*global window:true,$,alert:true*/
+/*global window:true,$,alert:true, location*/
 //fxn to create XMLHttpRequest objects
 function createXHR() {
     'use strict';
@@ -13,30 +13,15 @@ function createXHR() {
         }
     }
 }
-function HideAllErrorFields () {
-	for (var i = 1; i <= 4; i++) {
-		var field = document.getElementById ("error" + i);
-		field.style.display = "none";
-	}
-}
 
-function ShowErrorFields (idsStr) {
-	var ids = idsStr.split (",");
-	for (var i = 0; i < ids.length; i++) {
-		var field = document.getElementById ("error" + ids[i]);
-		if (field) {
-			field.style.display = "block";
-		}
-	}
-}
-
-function GetMessageBody (form) {
-    var data = "";
-    for (var i = 0; i < form.elements.length; i++) {
-        var elem = form.elements[i];
+function getMessageBody(form) {
+    'use strict';
+    var data = "", i, j, option, elem, param, nodeName, type, valueAttr, value;
+    for (i = 0; i < form.elements.length; i += 1) {
+        elem = form.elements[i];
         if (elem.name) {
-            var nodeName = elem.nodeName.toLowerCase ();
-            var type = elem.type ? elem.type.toLowerCase () : "";
+            nodeName = elem.nodeName.toLowerCase();
+            type = elem.type ? elem.type.toLowerCase() : "";
 
                 // if an input:checked or input:radio is not checked, skip it
             if (nodeName === "input" && (type === "checkbox" || type === "radio")) {
@@ -45,103 +30,109 @@ function GetMessageBody (form) {
                 }
             }
 
-            var param = "";
+            param = "";
                 // select element is special, if no value is specified the text must be sent
             if (nodeName === "select") {
-                for (var j = 0; j < elem.options.length; j++) {
-                    var option = elem.options[j];
+                for (j = 0; j < elem.options.length; j += 1) {
+                    option = elem.options[j];
                     if (option.selected) {
-                        var valueAttr = option.getAttributeNode ("value");
-                        var value = (valueAttr && valueAttr.specified) ? option.value : option.text;
-                        if (param != "") {
+                        valueAttr = option.getAttributeNode("value");
+                        value = (valueAttr && valueAttr.specified) ? option.value : option.text;
+                        if (param !== "") {
                             param += "&";
                         }
-                        param += encodeURIComponent (elem.name) + "=" + encodeURIComponent (value);
+                        param += encodeURIComponent(elem.name) + "=" + encodeURIComponent(value);
                     }
                 }
-            }
-            else {
-                param = encodeURIComponent (elem.name) + "=" + encodeURIComponent (elem.value);
+            } else {
+                param = encodeURIComponent(elem.name) + "=" + encodeURIComponent(elem.value);
             }
 
-            if (data != "") {
+            if (data !== "") {
                 data += "&";
             }
-            data += param;                  
+            data += param;
         }
     }
     return data;
 }
 
 // returns whether the HTTP request was successful
-function IsRequestSuccessful (httpRequest) {
+function isRequestSuccessful(httpRequest) {
+    'use strict';
         // IE: sometimes 1223 instead of 204
-    var success = (httpRequest.status == 0 || 
-        (httpRequest.status >= 200 && httpRequest.status < 300) || 
-        httpRequest.status == 304 || httpRequest.status == 1223);
-    
+    var success = (httpRequest.status === 0 ||
+        (httpRequest.status >= 200 && httpRequest.status < 300) ||
+        httpRequest.status === 304 || httpRequest.status === 1223);
     return success;
 }
 
 var registering = false;
 
-function OnReadyStateChanged (httpRequest, form) {
-	if (httpRequest.readyState == 0 || httpRequest.readyState == 4) {
-		
+function onReadyStateChanged(httpRequest, form) {
+    'use strict';
+    var nutID, nutUser;
+
+    nutID = form.elements.walnutID.value;
+    nutUser = form.elements.user.value;
+
+	if (httpRequest.readyState === 0 || httpRequest.readyState === 4) {
 		registering = false;
-		
 		// prevent memory leaks
 		httpRequest.onreadystatechange = null;
-		
-		if (IsRequestSuccessful (httpRequest)) {    // defined above
+
+		if (isRequestSuccessful(httpRequest)) {    // defined above
 			if (httpRequest.responseText === "ok") {    // registration is successful
-				alert ("Thank you for registering");
-				/*
+				alert("Thank you for registering");
 					// if redirection is required
-				location.href = "/index.php";
-				*/
+				location.href = "/walnuts/editNut.html?value=" + nutID + "&user=" + nutUser;
 			}
-			else {  // some fields are invalid
-				ShowErrorFields (httpRequest.responseText);
-			}
-		}
-		else {
-			alert ("An error occurred while registering. Please try it again.");
+		} else {
+			alert("An error occurred while logging in. Please try it again.");
 		}
 	}
 }
 
 //called from the displayed list of nuts when sirname is clicked in order to edit - clicked by a user - line 147
-function ajaxAuthenticate(form,url,method) {
+function ajaxAuthenticate(form, url, method) {
     'use strict';
-	    if (registering) {
-            return;
-        }
-
-        // hide all error fields
-        HideAllErrorFields();
-
+    var xhr, data, queryVars, i, pair, pw = false, data_json = "", send_data = "";
+	if (registering) {
+        return;
+    }
         // get message data
-        var data = GetMessageBody (form);
+    data = getMessageBody(form);
+    queryVars = data.split('&');
+    for (i = 0; i < queryVars.length; i += 1) {
+        pair = queryVars[i].split('=');
+        if (decodeURIComponent(pair[0]) === "password") {
+            pw = true;
+            break;
+        }
+    }
+    if (!pw) {
+        return false;
+    }
+    data_json = '{"password": "' + pair[1] + '"}';
+    send_data = 'value=' + data_json;
 
  //   if (!('admin' === user) && !('authenticated' === user) ){ // if non-admin and non-authenticated user
-        var xhr = createXHR();
-        if (!xhr) {
-            return false;
-        }
-		try {
-			xhr.open (method, url, true);   // asynchron
-			xhr.onreadystatechange = function () {OnReadyStateChanged (xhr, form)};
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.send (data);
-			}
-			catch (e) {
-			    alert ("Cannot connect to the server!");
-			return;
-		}
+    xhr = createXHR();
+    if (!xhr) {
+        return false;
+    }
+    try {
+        xhr.open(method, url, true);   // true means asynchron, where url is login.php and method is POST
+        xhr.onreadystatechange = function () {onReadyStateChanged(xhr, form); };
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send(send_data);
+    } catch (e) {
+        alert("Cannot connect to the server!");
+        return;
+    }
 
-		registering = true;
-}    
+    registering = true;
+}
 
 // fxn called by primary html page WTD.html - only run by admin
 function ajaxWalnutFunction() {
@@ -257,6 +248,7 @@ function wordWrap(str, width, brk, cut) {
 function displayPage(requester, nutEntries) {
     'use strict';
     var numNuts, x, i = 0, replacementStr = "", replacementStrLt = "", replacementStrRt = "", notesStr, b = 0, numBrks = 0, brksNeeded = 3;
+
     function isEven(value) {
         x = ((value % 2 === 0) ? true : false);
         return x;
@@ -265,10 +257,8 @@ function displayPage(requester, nutEntries) {
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
-/*  
-       replacementStr =  "<p><pre><a class='oneNut' href = \"editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\""  + " title='Update'>" +  nutEntries[i].SirName + "</a>";   */
-       // see if user wanting to edit entry is logged in, otherwise login - pass along the target nut ID and the requester, user or admin
-       replacementStr =  "<p><pre><a class='oneNut' href ='#' onclick=\"login.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\""  + " title='Update'>" +  nutEntries[i].SirName + "</a>";       
+        replacementStr = "<p><pre><a class='oneNut'" + " onclick=" + "'" + "window.location.href=" + "\"" + "https://localhost/walnuts/login.html" + "?value=" + nutEntries[i].walnutID + "&user=" + requester + "\"" + "'" + " title='Update'>" +  nutEntries[i].SirName + "</a>";
+
         if (requester === 'admin') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
         } else {
@@ -407,8 +397,8 @@ function postEditedNut(requester) {
             document.getElementById("editNutResponse").innerHTML = xhr.responseText;
             if (requester === 'admin') {
                 window.open("listNuts1.html", "_self"); // listNuts1.html only called by admin
-            } else if (requester === 'user') {
-                window.open("Walnuts.html", "_self"); // Walnuts.html only called by user
+            } else if (requester === 'Walnut') {
+                window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
             } else {
                 alert("Error: Undefined requester");
                 return;

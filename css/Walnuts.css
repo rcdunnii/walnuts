@@ -70,17 +70,24 @@
      }
 
     #popUpLogin {
-        display: none;
+  /*      display: none; */
         position: relative;
         width: 300px;
-        height: 300px;
+        height: 75px;
+        margin-right:auto;
+        margin-left: auto;
+        top:50%;
         background-color: white;
         color: black:
         margin-right: auto;
         margin-left: auto;
         border: solid 1px red;
         padding: 2px;
-    }     
+    }
+    #popUpLogin form p {
+        text-align: center;
+        padding: 2px;
+    }        
     
 	 #mainMenu {  /* used in listNuts1.html - if user is admin javascript will change display to display:block */
         display: none;
@@ -145,6 +152,8 @@
       font-weight:bold;
       font-size: 110%;
       font-family:"Times New Roman",Georgia,Serif;
+      color:#FFFF00;
+      cursor:pointer;cursor:hand;
     } /* javascript generated class in ajaxWalnutCoreJSON line 140 */
 	a.oneNut:link {color:#FFFF00;}    /*  unvisited link */
     a.oneNut:visited {color:#FFFF00;} /* visited link same color for this app as unvisited */

@@ -1,0 +1,22 @@
+replacementStr = "<p><pre><a class='oneNut'" + " onclick=" + "'" + "window.location.href=" + "\"" + "https://localhost/login.html"
+                 + "?value=" + nutEntries[i].walnutID + " &user=" + requester + "\"" + "'" + " title='Update'>" +  nutEntries[i].SirName + "</a>";
+
+"<p><pre><a class='oneNut'"
+" onclick= "
+"'"
+"window.location.href="
+"\""
+"https://localhost/login.html"
+"?value="
++ nutEntries[i].walnutID + 
+" &user="
++ requester +
+ "\""
+ "'"
+ " title='Update'>"
+ +  nutEntries[i].SirName +
+ "</a>";
+ /*  
+       replacementStr =  "<p><pre><a class='oneNut' href = \"editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "\""  + " title='Update'>" +  nutEntries[i].SirName + "</a>";   */
+       // see if user wanting to edit entry is logged in, otherwise login - pass along the target nut ID and the requester, user or admin
+/*      replacementStr =  "<p><pre><a class='oneNut' onclick=\"window.location.href= " + loginHref + nutEntries[i].walnutID + "&user=" + requester + "\""  + " title='Update'>" +  nutEntries[i].SirName + "</a>"; */
