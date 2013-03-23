@@ -57,46 +57,12 @@ function getMessageBody(form) {
     return data;
 }
 
-// returns whether the HTTP request was successful
-function isRequestSuccessful(httpRequest) {
-    'use strict';
-        // IE: sometimes 1223 instead of 204
-    var success = (httpRequest.status === 0 ||
-        (httpRequest.status >= 200 && httpRequest.status < 300) ||
-        httpRequest.status === 304 || httpRequest.status === 1223);
-    return success;
-}
-
 var registering = false;
-
-function onReadyStateChanged(httpRequest, form) {
-    'use strict';
-    var nutID, nutUser;
-
-    nutID = form.elements.walnutID.value;
-    nutUser = form.elements.user.value;
-
-	if (httpRequest.readyState === 0 || httpRequest.readyState === 4) {
-		registering = false;
-		// prevent memory leaks
-		httpRequest.onreadystatechange = null;
-
-		if (isRequestSuccessful(httpRequest)) {    // defined above
-			if (httpRequest.responseText === "ok") {    // registration is successful
-				alert("Thank you for registering");
-					// if redirection is required
-				location.href = "/walnuts/editNut.html?value=" + nutID + "&user=" + nutUser;
-			}
-		} else {
-			alert("An error occurred while logging in. Please try it again.");
-		}
-	}
-}
 
 //called from the displayed list of nuts when sirname is clicked in order to edit - clicked by a user - line 147
 function ajaxAuthenticate(form, url, method) {
     'use strict';
-    var xhr, data, queryVars, i, pair, pw = false, data_json = "", send_data = "";
+    var xhr, data, queryVars, i, pair, pw = false, data_json = "", send_data = "", nutID, nutUser;
 	if (registering) {
         return;
     }
@@ -113,19 +79,38 @@ function ajaxAuthenticate(form, url, method) {
     if (!pw) {
         return false;
     }
+
     data_json = '{"password": "' + pair[1] + '"}';
     send_data = 'value=' + data_json;
 
- //   if (!('admin' === user) && !('authenticated' === user) ){ // if non-admin and non-authenticated user
-    xhr = createXHR();
+	xhr = createXHR();
+
     if (!xhr) {
-        return false;
+	    return false;
     }
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 0 || xhr.readyState === 4) {
+		    registering = false;
+		    // prevent memory leaks
+		    xhr.onreadystatechange = null;
+
+            if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || xhr.status === 1223)) {
+				if (xhr.responseText === "ok") {    // login is successful - redirection is required
+                    nutID = form.elements.walnutID.value;  // these two are hidden vals in the login.html form
+                    nutUser = form.elements.user.value;
+					location.href = "/walnuts/editNut.html?value=" + nutID + "&user=" + nutUser;
+				}
+			} else {
+				alert("An error occurred while logging in. Please try it again.");
+			}
+	    }
+    };
+
     try {
-        xhr.open(method, url, true);   // true means asynchron, where url is login.php and method is POST
-        xhr.onreadystatechange = function () {onReadyStateChanged(xhr, form); };
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send(send_data);
+		xhr.open(method, url, true);   // true means asynchron, where url is login.php and method is POST	
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send(send_data);
     } catch (e) {
         alert("Cannot connect to the server!");
         return;
@@ -257,7 +242,7 @@ function displayPage(requester, nutEntries) {
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
-        replacementStr = "<p><pre><a class='oneNut'" + " onclick=" + "'" + "window.location.href=" + "\"" + "https://localhost/walnuts/login.html" + "?value=" + nutEntries[i].walnutID + "&user=" + requester + "\"" + "'" + " title='Update'>" +  nutEntries[i].SirName + "</a>";
+        replacementStr = "<p><pre><a class='oneNut' onclick=\"window.location.href='https://localhost/walnuts/login.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title='Update'>" +  nutEntries[i].SirName + "</a>";
 
         if (requester === 'admin') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
@@ -400,7 +385,7 @@ function postEditedNut(requester) {
             } else if (requester === 'Walnut') {
                 window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
             } else {
-                alert("Error: Undefined requester");
+                alert("Error: Undefined requester " + requester);
                 return;
             }
         }

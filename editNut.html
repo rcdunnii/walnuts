@@ -41,8 +41,8 @@
             <h1><center>Walnuts Galore!</center></h1>
             <h3><center>Edit Nut in Our WT Database</center></h3>
             <p><center><span id="spinner">&nbsp;</span></center></p>
-                <fieldset>
-                    <form action="" id="editNutForm" onsubmit="postEditedNut( $.getUrlVar('user')); return false;">
+                <fieldset>                                                   
+                    <form action="" id="editNutForm" onsubmit="postEditedNut($.getUrlVar('user') ); return false;">                   
                         <ul>
                             <li><input type="hidden" name="walnutID" id="walnutID" ></input></li>
                             <li><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName" size=20 ></input></li>

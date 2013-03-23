@@ -1,6 +1,6 @@
 <?php 
-    include_once('psd.php');
-    
+    session_start();
+
     $response = "";
     
     if (!($_POST['value'])) {
@@ -55,10 +55,17 @@
     $hash = $salt . $hash;
 
     if ( $hash == $row['Walnut'] ) {
+	     $_SESSION["isLoggedIn"]=1;
+		 if (isset($_POST["walnutID"])) {
+            $_SESSION["walnutID"] = $_POST["walnutID"];
+		 }
+     /*     $_SESSION["user"] = $_POST["user"];	*/	 		 
+        //setting a varable so that later i know  
+        // that this user i logged in  
         $response = "ok";
-    }   
-    // 2 secs delay
-sleep (2);
-
-echo ($response);
+    } else {
+       // this would destroy the session variables 
+        session_destroy();
+    }
+    echo ($response);
 ?>

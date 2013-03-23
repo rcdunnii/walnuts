@@ -1,52 +1,47 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
    	<head>
+	
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <link rel="stylesheet" href="css/Walnuts.css"/>	    
 	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js" ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="https://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
-	<script src="/jQuery/jquery-parsequery-master/jquery.parsequery.js"></script> 	
-    <script>
-    $.extend({
-        getUrlVars: function(){
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for (var i = 0; i < hashes.length; i++)
-            {
-                hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
-            }
-            return vars;
-        },
-        getUrlVar: function(name){
-            return $.getUrlVars()[name];
-        }
-    });
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+    <script type="text/javascript">
+	function getParameterByName(name)
+	{
+	  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+	  var regexS = "[\\?&]" + name + "=([^&#]*)";
+	  var regex = new RegExp(regexS);
+	  var results = regex.exec(window.location.search);
+	  if(results == null)
+		return "";
+	  else
+		return decodeURIComponent(results[1].replace(/\+/g, " "));
+	}	
 	</script>
 	
 	</head>
-   	<body>
+   	<body>  
    		<div id="popUpLogin">
             <form action="" onsubmit="ajaxAuthenticate(this, 'login.php', 'post'); return false;">
 				<p>
-					<INPUT TYPE="hidden" name="user" id="user" value="">
-					<INPUT TYPE="hidden" name="walnutID" id="walnutID" value="">					
+					<INPUT type="hidden" name="user" id="user"  />
+					<INPUT type="hidden" name="walnutID" id="walnutID"  />					
 					<LABEL for="password">Password: </LABEL>
-					<INPUT type="password" id="password" size="10" name="password"><br>                    
-					<INPUT type="submit" value="Submit">&nbsp;&nbsp;&nbsp;<INPUT type="button" value="Cancel" onclick="document.location.reload(true)">
+					<INPUT type="password" id="password" name="password" /><br>                    
+					<INPUT type="submit" value="Submit" />&nbsp;&nbsp;&nbsp;<INPUT type="button" value="Cancel" onclick="document.location.reload(true)" />
                 </p>
             </form>
 			<div id="loginError"><p></p></center></div>                        
 		</div>
         <script type="text/javascript">
-		$(document).ready(function() {
-		    var targetNut = $.getUrlVar('value');
-            var userNut   = $.getUrlVar('user');
-            document.forms[0].user.value = userNut;
-            document.forms[0].walnutID.value = targetNut;            
-		});
-	</script>
+			$(document).ready(function() {
+				var targetNut = getParameterByName('value');
+				var userNut = getParameterByName('user');
+				document.forms[0].user.value = userNut;
+				document.forms[0].walnutID.value = targetNut;            
+			});
+	    </script>
    	</body>
    </html>
