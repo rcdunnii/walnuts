@@ -82,9 +82,7 @@ function onReadyStateChanged(httpRequest, form) {
 		httpRequest.onreadystatechange = null;
 
 		if (isRequestSuccessful(httpRequest)) {    // defined above
-			if (httpRequest.responseText === "ok") {    // registration is successful
-				alert("Thank you for registering");
-					// if redirection is required
+			if (httpRequest.responseText === "ok") {    // login is successful so redirection is required
 				location.href = "/walnuts/editNut.html?value=" + nutID + "&user=" + nutUser;
 			}
 		} else {

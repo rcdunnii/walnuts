@@ -12,20 +12,20 @@
 	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
 	<script src="/jQuery/jquery-parsequery-master/jquery.parsequery.js"></script> 
     <script>
- 
+
     $.extend({
-        getUrlVars: function(){
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for (var i = 0; i < hashes.length; i++)
-            {
+        getUrlVars: function () {
+            'use strict';
+            var vars = [], hash, i, hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (i = 0; i < hashes.length; i += 1) {
                 hash = hashes[i].split('=');
                 vars.push(hash[0]);
                 vars[hash[0]] = hash[1];
             }
             return vars;
         },
-        getUrlVar: function(name){
+        getUrlVar: function (name) {
+            'use strict';
             return $.getUrlVars()[name];
         }
     });
@@ -34,7 +34,10 @@
 
 </head>
 <body>
-    <!-- this page is called by javascript function displayPage(requester, nutEntries) as editNut.html?value=walnutID&user=requester -->
+<?php
+ //your php code here
+ ?>
+    <!-- this page is called by javascript function ajaxWalnutCoreJSON line # 86 as editNut.html?value=walnutID&user=requester -->
 
     <div class="frame">
         <div id="editNutPage">
@@ -42,37 +45,42 @@
             <h3><center>Edit Nut in Our WT Database</center></h3>
             <p><center><span id="spinner">&nbsp;</span></center></p>
                 <fieldset>
-                    <form action="" id="editNutForm" onsubmit="postEditedNut( $.getUrlVar('user')); return false;">
+ <!--                   <form action="" id="editNutForm" onsubmit="postEditedNut( $.getUrlVar('user')); return false;">  -->
+ <!-- <?php echo \"postEditedNut(".$_GET['user']."); return false;\"?>   -->
+                        <?php global $user = $_GET['user']; ?>
+                        <form action="" id="editNutForm" onsubmit="postEditedNut(<?php echo $user;?>); return false" >
                         <ul>
-                            <li><input type="hidden" name="walnutID" id="walnutID" ></input></li>
-                            <li><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName" size=20 ></input></li>
-                            <li><label for="Names">Informal List</label><input type="text" name="Names" id="Names" size=50 ></input></li>
-                            <li><label for="FormalNames">Formal List</label><input type="text" name="FormalNames" id="FormalNames" size=50 ></input></li>
-                            <li><label for="Children">Children</label><input type="text" name="Children" id="Children" size=50 ></input></li>
-                            <li><label for="Addr1">Street Address</label><input type="text" name="Addr1" id="Addr1" size=35 ></input></li>
-                            <li><label for="Addr2">Apt/Suite</label><input type="text" name="Addr2" id="Addr2" size=35 ></input></li>
-                            <li><label for="Addr3">City,State</label><input type="text" name="Addr3" id="Addr3" size=35 ></input></li>
-                            <li><label for="Addr4">Country</label><input type="text" name="Addr4" id="Addr4" size=35 ></input></li>		
-                            <li><label for="Email1">Email 1</label><input type="text" name="Email1" id="Email1" size=30 ></input></li>
-                            <li><label for="Email2">Email 2</label><input type="text" name="Email2" id="Email2" size=30 ></input></li>
-                            <li><label for="Email3">Email 3</label><input type="text" name="Email3" id="Email3" size=30 ></input></li>
-                            <li><label for="Phone1">Phone 1</label><input type="text" name="Phone1" id="Phone1" size=30 ></input></li>
-                            <li><label for="Phone2">Phone 2</label><input type="text" name="Phone2" id="Phone2" size=30 ></input></li>		
+                            <li><input type="hidden" name="walnutID" id="walnutID"/></li>
+                            <li><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName" size=20 /></li>
+                            <li><label for="Names">Informal List</label><input type="text" name="Names" id="Names" size=50 /></li>
+                            <li><label for="FormalNames">Formal List</label><input type="text" name="FormalNames" id="FormalNames" size=50 /></li>
+                            <li><label for="Children">Children</label><input type="text" name="Children" id="Children" size=50 /></li>
+                            <li><label for="Addr1">Street Address</label><input type="text" name="Addr1" id="Addr1" size=35 /></li>
+                            <li><label for="Addr2">Apt/Suite</label><input type="text" name="Addr2" id="Addr2" size=35 /></li>
+                            <li><label for="Addr3">City,State</label><input type="text" name="Addr3" id="Addr3" size=35 /></li>
+                            <li><label for="Addr4">Country</label><input type="text" name="Addr4" id="Addr4" size=35 /></li>		
+                            <li><label for="Email1">Email 1</label><input type="text" name="Email1" id="Email1" size=30 /></li>
+                            <li><label for="Email2">Email 2</label><input type="text" name="Email2" id="Email2" size=30 /></li>
+                            <li><label for="Email3">Email 3</label><input type="text" name="Email3" id="Email3" size=30 /></li>
+                            <li><label for="Phone1">Phone 1</label><input type="text" name="Phone1" id="Phone1" size=30 /></li>
+                            <li><label for="Phone2">Phone 2</label><input type="text" name="Phone2" id="Phone2" size=30 /></li>		
                             <li><label for="Notes">Notes</label><textarea name="Notes" id="Notes" cols="30" rows="3"></textarea></li> 
                         </ul>
                         <ul id="navlist">
-                            <li><input type="submit" name="btn" id="submit" value="Submit"></input></li>
-                            <li><input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)"></input></li> 
-                            <li><input type="button" name="btn" id="home" value="Back to List" onclick="history.go(-1);"></input></li>
+                            <li><input type="submit" name="btn" id="submit" value="Submit"/></li>
+                            <li><input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true);"/></li> 
+                            <li><input type="button" name="btn" id="home" value="Back to List" onclick="history.go(-1);"/></li>
                         </ul>
-                                <center><p><span id="editNutResponse"></p></center>
+                                <center><p><span id="editNutResponse"></span></p></center>
                     </form>					
                 </fieldset>
         </div>
 	</div>
     <script type="text/javascript">
-		$(document).ready(function() {
-		    var targetNut = $.getUrlVar('value');
+		$(document).ready(function () {
+            'use strict';
+/* 		    var targetNut = $.getUrlVar('value'); */
+            var targetNut = "<?php echo $_GET['value']; ?>";
             getOrigNut(targetNut);
 		});
 	</script>
