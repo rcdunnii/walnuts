@@ -1,6 +1,8 @@
 <?php 
-    include_once('psd.php');
+    session_start();
     
+    $_SESSION["isLoggedIn"] = 0;
+
     $response = "";
     
     if (!($_POST['value'])) {
@@ -55,10 +57,12 @@
     $hash = $salt . $hash;
 
     if ( $hash == $row['Walnut'] ) {
+	    $_SESSION["isLoggedIn"]=1;		 
         $response = "ok";
-    }   
-    // 2 secs delay
-sleep (2);
-
-echo ($response);
+    } else {
+       // this would destroy the session variables
+        $response = false;
+        session_destroy();
+    }
+    echo ($response);
 ?>

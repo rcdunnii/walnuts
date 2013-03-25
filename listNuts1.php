@@ -1,6 +1,14 @@
 <?php
+        session_start();
+
+        if (!isset($_SESSION["isLoggedIn"])) {
+            $_SESSION["isLoggedIn"] = 0;
+        }
+        
 		require 'db.inc';
-		
+		 
+ 
+        
 		// make connection to mysql server
 		$mysqli = new mysqli($server,$user,$password,$database);
 		if ($mysqli->connect_errno) {
