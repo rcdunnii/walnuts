@@ -257,29 +257,57 @@ function wordWrap(str, width, brk, cut) {
     var regex = '.{1,' + width + '}(\\s|$)' + (cut ? '|.{' + width + '}|.+$' : '|\\S+?(\\s|$)');
     return str.match(new RegExp(regex, 'g')).join(brk);
 }
+/*
+ // called by checkLoginStatus
+function processXhr(respTxt) {
+    respTxt = respTxt.toString().toLowerCase();
+    return respTxt;
+}
+ //called by displayPage() fxn below
+function checkLoginStatus() {
+    'use strict';
+    var xhr, isLoggedIn;
+
+ // get ajax request obj
+    xhr = createXHR();
+    if (!xhr) {
+        return false;
+    }
+    // Create a function that will receive data sent from the server
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            fxn(xhr.responseText); // returns string 'true' or 'false'
+        }
+    };
+    xhr.open("GET", "checkLoginStatus.php", true);
+    xhr.send(null);
+}
+*/
+function isEven(value) {
+        x = ((value % 2 === 0) ? true : false);
+        return x;
+}
 
  /* called by ajaxListNuts() fxn below - requester is who is making request, admin or user; nutEntries is arr of all walnuts */
 function displayPage(requester, nutEntries) {
     'use strict';
     var numNuts, x, i = 0,
         replacementStr = "", replacementStrLt = "", replacementStrRt = "", loginStr = "", noLoginStr = "", onClickStr = "",
-        notesStr, b = 0, numBrks = 0, brksNeeded = 3, phpLoggedIn;
-        // string used to call login script if user not yet logged in
+        notesStr, b = 0, numBrks = 0, brksNeeded = 3, loggedIn = 'false';
+
+    // string used to call login script if user not yet logged in
     loginStr = "\"window.location.href='https://localhost/walnuts/login.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ";
     // string used to bypass login if user already logged in - go right to edit page directly
     noLoginStr = "\"window.location.href='https://localhost/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ";
-    // phpLoggedIn = "<?php $_SESSION['isLoggedIn']; ?>";
-    <?php echo 'var phpLoggedIn = "'.$_SESSION['isLoggedIn'];.'";';
-    if (phpLoggedIn) {
+    loggedIn = checkLoginStatus();
+    if (loggedIn === "true") {
         onClickStr =  noLoginStr;
-    } else {
+    } else if (loggedIn === "false"){
         onClickStr = loginStr;
+    } else {
+        alert("login status is befuddled - line 299 ajaxWalnutCoreJSON.js - loggedIn = " + loggedIn);
     }
 
-    function isEven(value) {
-        x = ((value % 2 === 0) ? true : false);
-        return x;
-    }
     // get # entries in database into var numNuts
     numNuts = nutEntries.length;
 

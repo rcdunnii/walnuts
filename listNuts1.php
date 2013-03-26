@@ -1,10 +1,12 @@
 <?php
         session_start();
-
+ 
         if (!isset($_SESSION["isLoggedIn"])) {
-            $_SESSION["isLoggedIn"] = 0;
+            $_SESSION["isLoggedIn"] = false;
+        } else {
+            $_SESSION["isLoggedIn"] = true;
         }
-        
+ 
 		require 'db.inc';
 		 
  

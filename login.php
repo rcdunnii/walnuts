@@ -1,7 +1,7 @@
 <?php 
     session_start();
     
-    $_SESSION["isLoggedIn"] = 0;
+    $_SESSION["isLoggedIn"] = false;
 
     $response = "";
     
@@ -57,12 +57,11 @@
     $hash = $salt . $hash;
 
     if ( $hash == $row['Walnut'] ) {
-	    $_SESSION["isLoggedIn"]=1;		 
+	    $_SESSION["isLoggedIn"] = true;		 
         $response = "ok";
     } else {
        // this would destroy the session variables
         $response = false;
-        session_destroy();
     }
     echo ($response);
 ?>
