@@ -8,8 +8,8 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <link rel="stylesheet" href="css/Walnuts.css"/>	
 	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js" ></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
 </head>
 <body>
 
@@ -44,7 +44,7 @@
                         <ul id="navlist">
                             <li><input type="submit" name="btn" id="submit" value="Submit"/></li>
                             <li><input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true);"/></li> 
-                            <li><input type="button" name="btn" id="home" value="Back to List" onclick="history.go(-1);"/></li>
+                            <li><input type="button" name="btn" id="home" value="Cancel" onclick="history.go(-1); return false"/></li>
                         </ul>
                                 <center><p><span id="editNutResponse"></span></p></center>
                     </form>					

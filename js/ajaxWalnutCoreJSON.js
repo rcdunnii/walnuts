@@ -1,5 +1,5 @@
 /*global XMLHttpRequest:true,ActiveXObject:true,document:true,confirm:true*/
-/*global window:true,$,alert:true, location*/
+/*global window:true,$,alert:true, location,escape */
 //fxn to create XMLHttpRequest objects
 function createXHR() {
     'use strict';
@@ -58,19 +58,82 @@ function getMessageBody(form) {
 }
 
 var registering = false;
+/*
+// called from 
+function createCookie(name, value, days) {
+    'use strict';
+    var date = new Date(), expires;
+	if (days) {
+		date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+		expires = "; expires=" + date.toGMTString();
+	} else {
+        expires = "";
+    }
+	document.cookie = name + "=" + value + expires + "; path=/walnuts" + ;
+}
+*/
 
-//called from the displayed list of nuts when sirname is clicked in order to edit - clicked by a user - line 147
+function setExpiration(cookieLife) {
+    'use strict';
+    var today = new Date(), expr;
+    expr = new Date(today.getTime() + cookieLife * 24 * 60 * 60 * 1000);
+    return expr.toGMTString();
+}
+
+function createCookie(name, value, expires, path, domain, secure) {
+    'use strict';
+    var date = new Date();
+	document.cookie = name + "=" + escape(value) + "; ";
+
+	if (expires) {
+		expires = setExpiration(expires);
+		document.cookie += "expires=" + expires + "; ";
+	}
+	if (path) {
+		document.cookie += "path=" + path + "; ";
+	}
+	if (domain) {
+		document.cookie += "domain=" + domain + "; ";
+	}
+	if (secure) {
+		document.cookie += "secure; ";
+	}
+}
+
+
+function readCookie(name) {
+    'use strict';
+    var nameEQ, ca, i, c;
+
+	nameEQ = name + "=";
+	ca = document.cookie.split(';');
+	for (i = 0; i < ca.length; i += 1) {
+		c = ca[i];
+		while (c.charAt(0) === ' ') {
+            c = c.substring(1, c.length);
+        }
+		if (c.indexOf(nameEQ) === 0) {
+            return c.substring(nameEQ.length, c.length);
+        }
+	}
+	return null;
+}
+
+//called from login.html on submit
 function ajaxAuthenticate(form, url, method) {
     'use strict';
     var xhr,
         data,
         queryVars,
-        i, pair,
+        i,
+        pair,
         pw = false,
         data_json = "",
         send_data = "",
-        nutID, nutUser,
-        errorElem = document.getElementById("loginError");
+        nutID,
+        nutUser,
+        errorElem = document.getElementById("loginError"),
+        popUpElem = document.getElementById("popUpImg");
 
 	if (registering) {
         return;
@@ -109,11 +172,13 @@ function ajaxAuthenticate(form, url, method) {
 
             if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || xhr.status === 1223)) {
 				if (xhr.responseText === "ok") {    // login is successful - redirection is required
+                    createCookie('nutCookie', 'loggedIn', '60000', '', '', 1);
                     nutID = form.elements.walnutID.value;  // these two are hidden vals in the login.html form
                     nutUser = form.elements.user.value;
 					location.href = "/walnuts/editNut.html?value=" + nutID + "&user=" + nutUser;
 				} else {
                     errorElem.innerHTML = "Login Error - Try again !";
+                    popUpElem.style.display = "none";
                 }
 			} else {
 				alert("An error occurred while logging in. Please try it again.");
@@ -154,11 +219,11 @@ function ajaxWalnutFunction() {
             }
         }
         if (user_input === "add") {
-            openResult = window.open("http://localhost/walnuts/addNut.html", "_self");
+            openResult = window.open("https://localhost/walnuts/addNut.html", "_self");
             return false;
         }
         if (user_input === "list") {
-            openResult = window.open("http://localhost/walnuts/listNuts1.html", "_self"); // listNuts1.html only called by admin
+            openResult = window.open("https://localhost/walnuts/listNuts1.html", "_self"); // listNuts1.html only called by admin
             return false;
         }
 
@@ -257,42 +322,10 @@ function wordWrap(str, width, brk, cut) {
     var regex = '.{1,' + width + '}(\\s|$)' + (cut ? '|.{' + width + '}|.+$' : '|\\S+?(\\s|$)');
     return str.match(new RegExp(regex, 'g')).join(brk);
 }
-/*
- // called by checkLoginStatus
-function processXhr(respTxt) {
-    respTxt = respTxt.toString().toLowerCase();
-    return respTxt;
-}
-*/
- //called by displayPage() fxn below
-function checkLoginStatus(clkObj) {
-    'use strict';
-    var xhr;
-
- // get ajax request obj
-    xhr = createXHR();
-    if (!xhr) {
-        return false;
-    }
-    // Create a function that will receive data sent from the server
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            if (xhr.responseText == "true") {			// returns string 'true' or 'false'
-                clkObj.onClickStr = clkObj.noLoginStr;
-            }
-            if (xhr.responseText == "false") {
-                clkObj.onClickStr = clkObj.loginStr;
-            }
-        }
-	};
-    xhr.open("GET", "checkLoginStatus.php", true);
-    xhr.send(null);
-}
 
 function isEven(value) {
     'use strict';
 	var x;
-	
 	x = ((value % 2 === 0) ? true : false);
 	return x;
 }
@@ -301,33 +334,30 @@ function isEven(value) {
 function displayPage(requester, nutEntries) {
     'use strict';
     var numNuts, x, i = 0,
-        replacementStr = "", replacementStrLt = "", replacementStrRt = "", loginStr = "", noLoginStr = "", onClickStr = "",
-        notesStr, b = 0, numBrks = 0, brksNeeded = 3, loggedIn = 'false',
-		onClickObj = {loginStr:"\"window.location.href='https://localhost/walnuts/login.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ",
-		               noLoginStr:"\"window.location.href='https://localhost/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ",
-					   onClickStr:""};
-/*
-    // string used to call login script if user not yet logged in
+        replacementStr = "", replacementStrLt = "", replacementStrRt = "", onClickHTML = "",
+        notesStr, b = 0, numBrks = 0, brksNeeded = 3, loggedInStatus = 'false',
+        onClickObj = { loginStr: "login.html", noLoginStr: "editNut.html" };
+
+/*  onClickObj above has 2 strings:
+  1) string used to call login page if user not yet logged in
     loginStr = "\"window.location.href='https://localhost/walnuts/login.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ";
-    // string used to bypass login if user already logged in - go right to edit page directly
+  2) string used to bypass login if user already logged in - go right to edit page directly
     noLoginStr = "\"window.location.href='https://localhost/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ";
-
-    checkLoginStatus(onClickObj);
-    if (loggedIn === "true") {
-        onClickStr =  noLoginStr;
-    } else if (loggedIn === "false"){
-        onClickStr = loginStr;
-    } else {
-        alert("login status is befuddled - line 299 ajaxWalnutCoreJSON.js - loggedIn = " + loggedIn);
-    }
 */
+    loggedInStatus = readCookie('nutCookie');
+    if (loggedInStatus) {
+        onClickHTML =  onClickObj.noLoginStr;  // here if already logged in, so go right to edit nut fxn
+    } else if (loggedInStatus === null) {
+        onClickHTML = onClickObj.loginStr;     // here if not... so log in
+    } else {
+        alert("login status is befuddled - line 3199 ajaxWalnutCoreJSON.js - loggedInStatus = " + loggedInStatus);
+    }
 
-    checkLoginStatus(onClickObj);
     // get # entries in database into var numNuts
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
-        replacementStr = "<p><pre><a class='oneNut' onclick= " + onClickStr + "title='Update'>" +  nutEntries[i].SirName + "</a>";
+        replacementStr = "<p><pre><a class='oneNut' onclick= \"window.location.href='https://localhost/walnuts/" + onClickHTML + "?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
 
         if (requester === 'admin') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
@@ -397,7 +427,7 @@ function ajaxListNuts(requester) {
                 document.getElementById("mainMenu").style.display = 'block';
             }
         } else {
-            document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='http://localhost/walnuts/images/ajax-loader.gif'>";
+            document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='https://localhost/walnuts/images/ajax-loader.gif'>";
         }
     };
     //call php fxn to open Walnuts db and retieve/return all records for display
