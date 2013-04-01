@@ -1,6 +1,7 @@
 /* Walnut Tally Style Sheet */
    
-    html, body {    
+    html, body {
+        position: absolute;    
         height: 100%;
         width: 100%;
         background: rgb(104,32,19); /* Old browsers */
@@ -15,20 +16,22 @@
         margin: 0;
     }
     
+    
     .leftImg {
-        position: relative;
-        bottom: -550px;
-        left: 0px;
+        position: absolute;
+        bottom: -15px;
+        left: 5px;
         width:300px;
         margin: 0;
         padding:0;
         
     }
-    
+ 
+/* 
     #body{
         background: rgba(139, 0, 0, 0.8);
     }
- 
+ */
     .frame {               /* previous settings in comments below */
         position:fixed;   /* relative - IE 7 & 8 require !DOCTYPE for fixed */
         width:  960px;  /* 960px */
@@ -70,10 +73,9 @@
      }
 
     #popUpLogin {
-  /*      display: none; */
         position: relative;
         width: 300px;
-        height: 100px;
+        height: 175px;
         margin-right:auto;
         margin-left: auto;
         text-align: center;
@@ -85,6 +87,14 @@
         border: solid 1px red;
         padding: 2px;
     }
+    
+    #popUpImg {
+       position: absolute;
+       top: 15%;
+       left:44%;
+       display:none;
+    }
+    
     p#loginError  {
         text-align: center;
         padding: 2px;
@@ -156,7 +166,7 @@
       font-size: 110%;
       font-family:"Times New Roman",Georgia,Serif;
       color:#FFFF00;
-      cursor:pointer;cursor:hand;
+      cursor:pointer;
     } /* javascript generated class in ajaxWalnutCoreJSON line 140 */
 	a.oneNut:link {color:#FFFF00;}    /*  unvisited link */
     a.oneNut:visited {color:#FFFF00;} /* visited link same color for this app as unvisited */
