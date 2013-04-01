@@ -263,7 +263,7 @@ function processXhr(respTxt) {
     respTxt = respTxt.toString().toLowerCase();
     return respTxt;
 }
-*/
+
  //called by displayPage() fxn below
 function checkLoginStatus(clkObj) {
     'use strict';
@@ -278,21 +278,21 @@ function checkLoginStatus(clkObj) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             if (xhr.responseText == "true") {			// returns string 'true' or 'false'
-                clkObj.onClickStr = clkObj.noLoginStr;
+                clkObj.clickStr = clkObj.noLoginStr;
             }
             if (xhr.responseText == "false") {
-                clkObj.onClickStr = clkObj.loginStr;
+                clkObj.clickStr = clkObj.loginStr;
             }
         }
 	};
     xhr.open("GET", "checkLoginStatus.php", true);
     xhr.send(null);
 }
-
+*/
 function isEven(value) {
     'use strict';
 	var x;
-	
+
 	x = ((value % 2 === 0) ? true : false);
 	return x;
 }
@@ -301,33 +301,35 @@ function isEven(value) {
 function displayPage(requester, nutEntries) {
     'use strict';
     var numNuts, x, i = 0,
-        replacementStr = "", replacementStrLt = "", replacementStrRt = "", loginStr = "", noLoginStr = "", onClickStr = "",
+        replacementStr = "", replacementStrLt = "", replacementStrRt = "", loginStr = "", noLoginStr = "", clickStr = "",
         notesStr, b = 0, numBrks = 0, brksNeeded = 3, loggedIn = 'false',
-		onClickObj = {loginStr:"\"window.location.href='https://localhost/walnuts/login.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ",
-		               noLoginStr:"\"window.location.href='https://localhost/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ",
-					   onClickStr:""};
+		clkObj = {loginStr: "\"window.location.href='https://localhost/walnuts/login.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ",
+		               noLoginStr: "\"window.location.href='https://localhost/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" "};
 /*
     // string used to call login script if user not yet logged in
     loginStr = "\"window.location.href='https://localhost/walnuts/login.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ";
     // string used to bypass login if user already logged in - go right to edit page directly
     noLoginStr = "\"window.location.href='https://localhost/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ";
 
-    checkLoginStatus(onClickObj);
+    checkLoginStatus(clickObj);
     if (loggedIn === "true") {
-        onClickStr =  noLoginStr;
+        clickStr =  noLoginStr;
     } else if (loggedIn === "false"){
-        onClickStr = loginStr;
+        clickStr = loginStr;
     } else {
         alert("login status is befuddled - line 299 ajaxWalnutCoreJSON.js - loggedIn = " + loggedIn);
     }
-*/
 
-    checkLoginStatus(onClickObj);
+
+    checkLoginStatus(clickObj);
+*/
+    loggedIn =  "<?php echo $_SESSION['isloggedIn']; ?>";
+    clickStr = loggedIn ? clkObj.noLoginStr : clkObj.loginStr;
     // get # entries in database into var numNuts
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
-        replacementStr = "<p><pre><a class='oneNut' onclick= " + onClickStr + "title='Update'>" +  nutEntries[i].SirName + "</a>";
+        replacementStr = "<p><pre><a class='oneNut' onclick= " + clickStr + "title='Update'>" +  nutEntries[i].SirName + "</a>";
 
         if (requester === 'admin') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
