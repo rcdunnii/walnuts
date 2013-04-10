@@ -143,19 +143,23 @@ function ajaxAuthenticate(form, url, method) {
 
     // get message data
     data = getMessageBody(form);
+    data_json = '{';
     queryVars = data.split('&');
     for (i = 0; i < queryVars.length; i += 1) {
         pair = queryVars[i].split('=');
-        if (decodeURIComponent(pair[0]) === "password") {
+        if ((decodeURIComponent(pair[0]) === "password") && (decodeURIComponent(pair[1]))) {
             pw = true;
-            break;
+            data_json += '"' + pair[0] + '" : "' + pair[1] + '"';
+        }
+        if (decodeURIComponent(pair[0]) === "captcha_code") {
+            data_json += ',"' + pair[0] + '" : "' + pair[1] + '"';
         }
     }
     if (!pw) {
         return false;
     }
 
-    data_json = '{"password": "' + pair[1] + '"}';
+    data_json += '}';
     send_data = 'value=' + data_json;
 
 	xhr = createXHR();
@@ -177,7 +181,7 @@ function ajaxAuthenticate(form, url, method) {
                     nutUser = form.elements.user.value;
 					location.href = "/walnuts/editNut.html?value=" + nutID + "&user=" + nutUser;
 				} else {
-                    errorElem.innerHTML = "Login Error - Try again !";
+                    errorElem.innerHTML = xhr.responseText;
                     popUpElem.style.display = "none";
                 }
 			} else {

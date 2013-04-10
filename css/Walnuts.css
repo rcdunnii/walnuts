@@ -27,12 +27,7 @@
         
     }
  
-/* 
-    #body{
-        background: rgba(139, 0, 0, 0.8);
-    }
- */
-    .frame {               /* previous settings in comments below */
+.frame {               /* previous settings in comments below */
         position:fixed;   /* relative - IE 7 & 8 require !DOCTYPE for fixed */
         width:  960px;  /* 960px */
         height: 700px;  /* 960px */
@@ -56,8 +51,8 @@
         margin-right: 5px;
         background-image: url("/walnuts/images/walnut-wood.jpg");
         background-repeat: no-repeat;
-/*        background: #800000; */ /* dark red  */
        }
+       
      #editHint {
         position: relative;
         width: 300px;
@@ -75,13 +70,13 @@
     #popUpLogin {
         position: relative;
         width: 300px;
-        height: 175px;
+        height: 315px;
         margin-right:auto;
         margin-left: auto;
         text-align: center;
-        top:50%;
+        top:35%;
         background-color: white;
-        color: black:
+        color: black;
         margin-right: auto;
         margin-left: auto;
         border: solid 1px red;
@@ -90,16 +85,17 @@
     
     #popUpImg {
        position: absolute;
-       top: 15%;
+       top: 5%;
        left:44%;
        display:none;
     }
     
     p#loginError  {
         text-align: center;
-        padding: 2px;
+        color: red;
         position:relative;
-        bottom: 15px;
+        bottom: 3px;
+        margin: 0;
     }        
     
 	 #mainMenu {  /* used in listNuts1.html - if user is admin javascript will change display to display:block */
@@ -161,7 +157,7 @@
     }
 		
 	a.oneNut {
-      text-decoration: none;
+      text-decoration: underline;
       font-weight:bold;
       font-size: 110%;
       font-family:"Times New Roman",Georgia,Serif;

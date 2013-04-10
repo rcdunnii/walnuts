@@ -6,31 +6,33 @@
     <link rel="stylesheet" href="css/Walnuts.css"/>	    
 	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js" ></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.1.1.min.js"></script>    	
+	<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
     <script type="text/javascript">
         function popItUp() {
             'use strict';
             var elem = document.getElementById("popUpImg");
             elem.style.display = "block";
-        }
-        </script>
+        }       
+    </script>
 	</head>
-   	<body>  
+   	<body>
+        <div id="popUpImg"><img src="images/Polky.jpg" target="_self" width="143" height="214"/></div>    
    		<div id="popUpLogin">
             <form action="" onsubmit="ajaxAuthenticate(this, 'https://localhost/walnuts/login.php', 'post'); return false;">
-				<p>
+				<p>                    
 					<INPUT type="hidden" name="user" id="user"  />
 					<INPUT type="hidden" name="walnutID" id="walnutID"  />					
 					<LABEL for="password">Password: </LABEL>
-					<INPUT type="password" id="password" name="password" /><br /><br />
-					<INPUT type="submit" value="Submit" />&nbsp;&nbsp;&nbsp;<INPUT type="button" value="Cancel" onclick="history.go(-1); return false" />
-                </p>
+					<INPUT type="password" id="password" name="password" /><br /><br />	
+                    <LABEL for="captcha_code">Enter Security Code:</LABEL>                    
+                    <INPUT type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" /><br /> 
+                    <img id="captcha" src="/securimage/securimage_show.php" alt="CAPTCHA Image" /> <br />                   
+                    <a href="#" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false">[ Different Security Image ]</a><br /><br />                                
+                   <INPUT type="submit" value="Submit" />&nbsp;&nbsp;&nbsp;<INPUT type="button" value="Cancel" onclick="history.go(-1); return false" />    </p>            
             </form>
-			<div ><a  href="#" onclick = "popItUp(); return false;">Password Hint</a>
-                  <p id="loginError"></p>
-            </div>                        
+            <p id="loginError"></p>            
+            <div class="hintLink"><a  href="#" onclick = "popItUp(); return false;">Password Hint</a></div>                                   
 		</div>
-        <div id="popUpImg"><img src="images/Polky.jpg" target="_self" width="143" height="214"/></div>
         <script type="text/javascript">
 			$(document).ready(function() {
 				var targetNut = getParameterByName('value');
