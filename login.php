@@ -1,48 +1,50 @@
-<?php 
-    session_start();
-    
-    $_SESSION["isLoggedIn"] = false;
-
-    $response = "";
+<?php
+    session_start();   
     
     if (!($_POST['value'])) {
         echo 'Error: No data posted to login.php';			
         return FALSE;
     }
  
-    
+    $response = "";
+
+    // Your code here to handle a successful verification
     $str_json = json_decode($_POST['value'], true);
 
-    
-//    $username = 'Walnut';   DELETE THIS COMMENT ONCE CODE IS WORKING
-//    $password = 'Polky';    DELETE THIS COMMENT ONCE CODE IS WORKING
-//    get stored password for aunthenticated user from hash table
+        
+    //    $username = 'Walnut';   DELETE THIS COMMENT ONCE CODE IS WORKING
+    //    $password = 'Polky';    DELETE THIS COMMENT ONCE CODE IS WORKING
+    //    get stored password for aunthenticated user from hash table
     require 'db.inc';
-		
-	$mysqli = @ new mysqli($server, $user, $password, $database);
-	
-	/* check connection */
-	if ($mysqli->connect_errno) {
-		printf("Connect failed: %s\n", $mysqli->connect_error);
-		exit();
-	}
+        
+    $mysqli = @ new mysqli($server, $user, $password, $database);
+    
+    /* check connection */
+    if ($mysqli->connect_errno) {
+        printf("Connect failed: %s\n", $mysqli->connect_error);
+        exit();
+    }
 
-	if (!($stmt = $mysqli->prepare("SELECT Walnut FROM hash WHERE 1"))) {
-		echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
-	}
-	
-	if (!$stmt->execute()) {
-		echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-	}
-	
-	if (!($res = $stmt->get_result())) {
-		echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
-	}
-	
-	/* fetch object array */
-    If (!($row = $res->fetch_assoc())) {
-		echo "fetch of row from DB failed: (" . $stmt->errno . ") " . $stmt->error;
-	}
+    if (!($stmt = $mysqli->prepare("SELECT Walnut FROM hash WHERE 1"))) {
+        echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+        exit();
+    }
+        
+    if (!$stmt->execute()) {
+        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        exit();
+    }
+    
+    if (!($res = $stmt->get_result())) {
+        echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
+        exit();
+    }
+    
+    /* fetch object array */
+    if (!($row = $res->fetch_assoc())) {
+        echo "fetch of row from DB failed: (" . $stmt->errno . ") " . $stmt->error;
+        exit();
+    }
 
     // The first 64 characters of the hash is the salt
     $salt = substr($row['Walnut'], 0, 64);
@@ -53,15 +55,24 @@
     for ( $i = 0; $i < 100000; $i ++ ) {
         $hash = hash('sha256', $hash);
     }
-
     $hash = $salt . $hash;
-
-    if ( $hash == $row['Walnut'] ) {
-	    $_SESSION["isLoggedIn"] = true;		 
-        $response = "ok";
+    if ( $hash == $row['Walnut'] ) {              
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/securimage/securimage.php';           
+        $securimage = new Securimage();           
+        if (isset($str_json["captcha_code"])){           
+            $captcha_code = $str_json["captcha_code"];               
+            if ($securimage->check($captcha_code) == false) {               
+                $response = "Incorrect security code - try again.<br /><br />";                   
+            } else {
+                $_SESSION["isLoggedIn"] = true;           
+                $response = "ok";
+            }    
+        } else {           
+            $response = "Enter Security Code!";
+        }          
     } else {
        // this would destroy the session variables
-        $response = false;
+        $response = "Password incorrect - try again.";
     }
-    echo ($response);
+    echo ($response);   
 ?>
