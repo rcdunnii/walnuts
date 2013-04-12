@@ -58,20 +58,6 @@ function getMessageBody(form) {
 }
 
 var registering = false;
-/*
-// called from 
-function createCookie(name, value, days) {
-    'use strict';
-    var date = new Date(), expires;
-	if (days) {
-		date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-		expires = "; expires=" + date.toGMTString();
-	} else {
-        expires = "";
-    }
-	document.cookie = name + "=" + value + expires + "; path=/walnuts" + ;
-}
-*/
 
 function setExpiration(cookieLife) {
     'use strict';
@@ -156,6 +142,8 @@ function ajaxAuthenticate(form, url, method) {
         }
     }
     if (!pw) {
+	    errorElem.innerHTML = "Password incorrect!";
+        popUpElem.style.display = "none";
         return false;
     }
 
@@ -177,9 +165,7 @@ function ajaxAuthenticate(form, url, method) {
             if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || xhr.status === 1223)) {
 				if (xhr.responseText === "ok") {    // login is successful - redirection is required
                     createCookie('nutCookie', 'loggedIn', '60000', '', '', 1);
-                    nutID = form.elements.walnutID.value;  // these two are hidden vals in the login.html form
-                    nutUser = form.elements.user.value;
-					location.href = "/walnuts/editNut.html?value=" + nutID + "&user=" + nutUser;
+					window.location.href = "Walnuts.html";				
 				} else {
                     errorElem.innerHTML = xhr.responseText;
                     popUpElem.style.display = "none";
@@ -227,7 +213,7 @@ function ajaxWalnutFunction() {
             return false;
         }
         if (user_input === "list") {
-            openResult = window.open("https://localhost/walnuts/listNuts1.html", "_self"); // listNuts1.html only called by admin
+            openResult = window.open("https://localhost/walnuts/listNuts.html", "_self"); // listNuts.html only called by admin
             return false;
         }
 
@@ -339,30 +325,14 @@ function displayPage(requester, nutEntries) {
     'use strict';
     var numNuts, x, i = 0,
         replacementStr = "", replacementStrLt = "", replacementStrRt = "", onClickHTML = "",
-        notesStr, b = 0, numBrks = 0, brksNeeded = 3, loggedInStatus = 'false',
-        onClickObj = { loginStr: "login.html", noLoginStr: "editNut.html" };
-
-/*  onClickObj above has 2 strings:
-  1) string used to call login page if user not yet logged in
-    loginStr = "\"window.location.href='https://localhost/walnuts/login.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ";
-  2) string used to bypass login if user already logged in - go right to edit page directly
-    noLoginStr = "\"window.location.href='https://localhost/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" ";
-*/
-    loggedInStatus = readCookie('nutCookie');
-    if (loggedInStatus) {
-        onClickHTML =  onClickObj.noLoginStr;  // here if already logged in, so go right to edit nut fxn
-    } else if (loggedInStatus === null) {
-        onClickHTML = onClickObj.loginStr;     // here if not... so log in
-    } else {
-        alert("login status is befuddled - line 3199 ajaxWalnutCoreJSON.js - loggedInStatus = " + loggedInStatus);
-    }
+        notesStr, b = 0, numBrks = 0, brksNeeded = 3;
 
     // get # entries in database into var numNuts
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
 
-        replacementStr = "<p><pre><a class='oneNut' onclick= \"window.location.href='https://localhost/walnuts/" + onClickHTML + "?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
+        replacementStr = "<p><pre><a class='oneNut' onclick= \"window.location.href='https://localhost/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
 
         if (requester === 'admin') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
@@ -436,7 +406,7 @@ function ajaxListNuts(requester) {
         }
     };
     //call php fxn to open Walnuts db and retieve/return all records for display
-    xhr.open("GET", "listNuts1.php", true);
+    xhr.open("GET", "listNuts.php", true);
     xhr.send(null);
 }
 
@@ -452,7 +422,7 @@ function confirmDel(nutId) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
             // on success, return to listing of walnuts - we know we are 'admin' to be here eh?
-                window.open("listNuts1.html", "_self"); // listNuts1.html only called by admin
+                window.open("listNuts.html", "_self"); // listNuts.html only called by admin
             }
         };
         xhr.open("GET", "delNut.php?value=" + nutId, true);
@@ -506,7 +476,7 @@ function postEditedNut() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById("editNutResponse").innerHTML = xhr.responseText;
             if (requester === 'admin') {
-                window.open("listNuts1.html", "_self"); // listNuts1.html only called by admin
+                window.open("listNuts.html", "_self"); // listNuts.html only called by admin
             } else if (requester === 'Walnut') {
                 window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
             } else {

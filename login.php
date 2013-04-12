@@ -56,23 +56,22 @@
         $hash = hash('sha256', $hash);
     }
     $hash = $salt . $hash;
-    if ( $hash == $row['Walnut'] ) {              
-        include_once $_SERVER['DOCUMENT_ROOT'] . '/securimage/securimage.php';           
-        $securimage = new Securimage();           
-        if (isset($str_json["captcha_code"])){           
-            $captcha_code = $str_json["captcha_code"];               
-            if ($securimage->check($captcha_code) == false) {               
-                $response = "Incorrect security code - try again.<br /><br />";                   
+    if ( $hash == $row['Walnut'] ) {
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/securimage/securimage.php';
+        $securimage = new Securimage();
+        if (isset($str_json["captcha_code"])){
+            $captcha_code = $str_json["captcha_code"];
+            if ($securimage->check($captcha_code) == false) {
+                $response = "Incorrect security code - try again.<br /><br />";
             } else {
-                $_SESSION["isLoggedIn"] = true;           
                 $response = "ok";
-            }    
-        } else {           
+            }
+        } else {
             $response = "Enter Security Code!";
-        }          
+        }
     } else {
        // this would destroy the session variables
         $response = "Password incorrect - try again.";
     }
-    echo ($response);   
+    echo ($response);
 ?>

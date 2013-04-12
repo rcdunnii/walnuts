@@ -27,7 +27,7 @@
         
     }
  
-.frame {               /* previous settings in comments below */
+    .frame {               /* previous settings in comments below */
         position:fixed;   /* relative - IE 7 & 8 require !DOCTYPE for fixed */
         width:  960px;  /* 960px */
         height: 700px;  /* 960px */
@@ -35,38 +35,42 @@
         left:50%;
         margin-top: -350px;   /* http://stackoverflow.com/questions/2005954/center-element-with-positionfixed */
         margin-left: -480px;  /* BE SURE TO CHANGE margin-top and margin-left IF YOU CHANGE WIDTH AND OR HEIGHT!  MUST BE HALF OF EACH */
- /*       background:rgba(139, 0, 0, 0.9);       /* #8B0000;     */
         background:#421E13;       /* #8B0000;     */
  
-      }
+    }
     
-     .walnutContainer {
-        position: relative;  /* absolute positioned elements are  ignored by other elements - like they don't exist   */
-        margin:0;
-        width: 96%;    /* 940px */
-        height:96%;   /* 940px */
-        top:  -12px;
-        left: 13px;
-        margin-left: 5px;
-        margin-right: 5px;
-        background-image: url("/walnuts/images/walnut-wood.jpg");
-        background-repeat: no-repeat;
-       }
+    .walnutContainer {
+		position: relative;  /* absolute positioned elements are  ignored by other elements - like they don't exist   */
+		margin:0;
+		width: 96%;    /* 940px */
+		height:96%;   /* 940px */
+		top:  -12px;
+		left: 13px;
+		margin-left: 5px;
+		margin-right: 5px;
+		background-image: url("/walnuts/images/walnut-wood.jpg");
+		background-repeat: no-repeat;
+    }
        
-     #editHint {
-        position: relative;
-        width: 300px;
-        margin: 5px 5px;
-        padding: 5px;
-        background-color: transparent;
-        color: #EEDC82; /* flax  */
-        font-weight:bold;
-        font-size: 115%;
-        left: 30%;
-        top: -30px;
-        font-family:"Times New Roman",Georgia,Serif;
-     }
-
+	#editHint {
+		position: relative;
+		width: 300px;
+		margin: 5px 5px;
+		padding: 5px;
+		background-color: transparent;
+		color: #EEDC82; /* flax  */
+		font-weight:bold;
+		font-size: 115%;
+		left: 30%;
+		top: -30px;
+		font-family:"Times New Roman",Georgia,Serif;
+	}
+	
+    #editHint p span {
+	    color:#FFFF00;
+		text-decoration:underline;
+	}
+	
     #popUpLogin {
         position: relative;
         width: 300px;
