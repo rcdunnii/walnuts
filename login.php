@@ -1,11 +1,12 @@
 <?php
     session_start();   
-    
+    /*
     if (!($_POST['value'])) {
         echo 'Error: No data posted to login.php';			
         return FALSE;
     }
- 
+     */
+     
     $response = "";
 
     // Your code here to handle a successful verification

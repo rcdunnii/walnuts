@@ -15,22 +15,23 @@
 		});
     </script>
 	</head>
-    <body>
-        <div id="popUpImg"><img src="images/Polky.jpg" target="_self" width="143" height="214" alt="" /></div>    
+    <body class="loginBkGnd">
+        <div id="popUpImg"><img src="images/Polky.png" target="_self" width="143" height="214" alt="" /></div>    
         <div id="popUpLogin">
 		                          <div><p><center><span id="spinner">&nbsp;</span></center></p></div>
-            <form action="" onsubmit="ajaxAuthenticate(this, 'https://localhost/walnuts/login.php', 'post'); return false;">
+            <form action="" onsubmit="ajaxAuthenticate(this, '/walnuts/login.php', 'post'); return false;">
 				<p>                    				
 					<label for="password">Password: </label>
 					<input type="password" id="password" name="password" /><br /><br />	
-                    <label for="captcha_code">Enter Security Code:</label>                    
-                    <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" /><br /> 
+                    <label for="captcha_code">Security Code:</label>                    
+                    <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" value="" /><br /><br /> 
                     <img id="captcha" src="/securimage/securimage_show.php" alt="CAPTCHA Image" /> <br />                   
-                    <a href="#" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false">[ Different Security Image ]</a><br /><br />                                
-                   <input type="submit" value="Submit" />&nbsp;&nbsp;&nbsp;<input type="button" value="Cancel" onclick="history.go(-1); return false;" />    </p>            
+                    <a href="#" class="securityLink" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false">[ Different Security Image ]</a><br /><br />                                
+                   <div id="wrapper"><input id="submitID" type="submit" value="Submit" /></div>
+                </p>            
             </form>
-            <p id="loginError"></p>            
-            <div ><a id="hintLink" href="#">Password Hint</a></div>                                   
+            <center><p id="loginError"></p></center>            
+            <div id="hintWrapper"><a id="hintLink" href="#">Password Hint</a></div>                                   
 		</div>      
     </body>
 </html>

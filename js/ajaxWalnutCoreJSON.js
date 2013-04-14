@@ -119,7 +119,8 @@ function ajaxAuthenticate(form, url, method) {
         nutID,
         nutUser,
         errorElem = document.getElementById("loginError"),
-        popUpElem = document.getElementById("popUpImg");
+        popUpElem = document.getElementById("popUpImg"),
+        hintLinkElem = document.getElementById("hintLink");
 
 	if (registering) {
         return;
@@ -144,6 +145,7 @@ function ajaxAuthenticate(form, url, method) {
     if (!pw) {
 	    errorElem.innerHTML = "Password incorrect!";
         popUpElem.style.display = "none";
+        hintLinkElem.style.display = "block";                
         return false;
     }
 
