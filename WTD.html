@@ -26,7 +26,10 @@
 	    <div><center><p><span id="response">Select button above, then press Go!</span></center></div> 
 	
 	</div>
-	
-
+	<script type="text/javascript">
+	    if (readCookie('foxyCookie') == null) {
+		    window.location.href = "wtdLogin.html";
+        }
+    </script>
 </body>
 </html>

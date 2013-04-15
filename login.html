@@ -16,11 +16,12 @@
     </script>
 	</head>
     <body class="loginBkGnd">
-        <div id="popUpImg"><img src="images/Polky.png" target="_self" width="143" height="214" alt="" /></div>    
         <div id="popUpLogin">
-		                          <div><p><center><span id="spinner">&nbsp;</span></center></p></div>
+		    <div><p><center><span id="spinner">&nbsp;</span></center></p></div>
+            <div id="popUpImg"><img src="images/Polky.png" target="_self" width="143" height="214" alt="" /></div>    
             <form action="" onsubmit="ajaxAuthenticate(this, '/walnuts/login.php', 'post'); return false;">
-				<p>                    				
+				<p>
+                    <input type="hidden" name="user" id="user" value="Walnut" />
 					<label for="password">Password: </label>
 					<input type="password" id="password" name="password" /><br /><br />	
                     <label for="captcha_code">Security Code:</label>                    

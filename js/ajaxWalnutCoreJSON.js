@@ -113,11 +113,10 @@ function ajaxAuthenticate(form, url, method) {
         queryVars,
         i,
         pair,
+        currentUser,
         pw = false,
         data_json = "",
         send_data = "",
-        nutID,
-        nutUser,
         errorElem = document.getElementById("loginError"),
         popUpElem = document.getElementById("popUpImg"),
         hintLinkElem = document.getElementById("hintLink");
@@ -140,6 +139,9 @@ function ajaxAuthenticate(form, url, method) {
         }
         if (decodeURIComponent(pair[0]) === "captcha_code") {
             data_json += ',"' + pair[0] + '" : "' + pair[1] + '"';
+        }
+        if (decodeURIComponent(pair[0]) === "user") {
+            currentUser = decodeURIComponent(pair[1]);
         }
     }
     if (!pw) {
@@ -166,8 +168,16 @@ function ajaxAuthenticate(form, url, method) {
 
             if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || xhr.status === 1223)) {
 				if (xhr.responseText === "ok") {    // login is successful - redirection is required
-                    createCookie('nutCookie', 'loggedIn', '60000', '', '', 1);
-					window.location.href = "Walnuts.html";				
+                    if (currentUser == "Walnut") {
+                        createCookie('nutCookie', 'loggedIn', '60000', '', '', 1);
+                        window.location.href = "Walnuts.html";
+                    } else if (currentUser == "Foxy") {
+                        createCookie('foxyCookie', 'loggedIn', '60000', '', '', 1);
+                        window.location.href = "WTD.html";
+                    } else {
+                        alert("Unknown User Error");
+                        return false;
+                    }                    
 				} else {
                     errorElem.innerHTML = xhr.responseText;
                     popUpElem.style.display = "none";
@@ -190,7 +200,7 @@ function ajaxAuthenticate(form, url, method) {
     registering = true;
 }
 
-// fxn called by primary html page WTD.html - only run by admin
+// fxn called by primary html page WTD.html - only run by Foxy
 function ajaxWalnutFunction() {
     'use strict';
     var xhr, i, user_input, openResult, walnutOptionChoices;// The variable that makes Ajax possible!
@@ -215,7 +225,7 @@ function ajaxWalnutFunction() {
             return false;
         }
         if (user_input === "list") {
-            openResult = window.open("https://localhost/walnuts/listNuts.html", "_self"); // listNuts.html only called by admin
+            openResult = window.open("https://localhost/walnuts/listNuts.html", "_self"); // listNuts.html only called by Foxy
             return false;
         }
 
@@ -322,7 +332,7 @@ function isEven(value) {
 	return x;
 }
 
- /* called by ajaxListNuts() fxn below - requester is who is making request, admin or user; nutEntries is arr of all walnuts */
+ /* called by ajaxListNuts() fxn below - requester is who is making request, Foxy or user; nutEntries is arr of all walnuts */
 function displayPage(requester, nutEntries) {
     'use strict';
     var numNuts, x, i = 0,
@@ -336,7 +346,7 @@ function displayPage(requester, nutEntries) {
 
         replacementStr = "<p><pre><a class='oneNut' onclick= \"window.location.href='https://localhost/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
 
-        if (requester === 'admin') {
+        if (requester === 'Foxy') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
         } else {
             replacementStr += "<br>";
@@ -400,7 +410,7 @@ function ajaxListNuts(requester) {
                     enable: true
                 }
             });
-            if (requester === 'admin') {
+            if (requester === 'Foxy') {
                 document.getElementById("mainMenu").style.display = 'block';
             }
         } else {
@@ -423,8 +433,8 @@ function confirmDel(nutId) {
     // Create a function that will receive data sent from the server
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-            // on success, return to listing of walnuts - we know we are 'admin' to be here eh?
-                window.open("listNuts.html", "_self"); // listNuts.html only called by admin
+            // on success, return to listing of walnuts - we know we are 'Foxy' to be here eh?
+                window.open("listNuts.html", "_self"); // listNuts.html only called by Foxy
             }
         };
         xhr.open("GET", "delNut.php?value=" + nutId, true);
@@ -477,8 +487,8 @@ function postEditedNut() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById("editNutResponse").innerHTML = xhr.responseText;
-            if (requester === 'admin') {
-                window.open("listNuts.html", "_self"); // listNuts.html only called by admin
+            if (requester === 'Foxy') {
+                window.open("listNuts.html", "_self"); // listNuts.html only called by Foxy
             } else if (requester === 'Walnut') {
                 window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
             } else {
