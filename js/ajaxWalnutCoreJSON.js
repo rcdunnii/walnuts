@@ -414,7 +414,7 @@ function ajaxListNuts(requester) {
                 document.getElementById("mainMenu").style.display = 'block';
             }
         } else {
-            document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='https://localhost/walnuts/images/ajax-loader.gif'>";
+            document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='/walnuts/images/ajax-loader.gif'>";
         }
     };
     //call php fxn to open Walnuts db and retieve/return all records for display

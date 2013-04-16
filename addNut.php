@@ -1,6 +1,8 @@
 <?php
 		require 'db.inc';
-		
+        
+		include_once($_SERVER["DOCUMENT_ROOT"] . "/walnuts/functions.php");
+        
 		$mysqli = @ new mysqli($server, $user, $password, $database);
 		
 		/* check connection */
@@ -45,8 +47,11 @@
 			printf("execute: %s %d\n",$stmt->error,$stmt->errno);
 			return;
 		}
-			
-		printf("Added %s" , $f["SirName"]);
+        
+		$notification = (IsNullOrEmptyString($f["Names"])) ? $f["SirName"] : $f["Names"];
+        
+		printf("Added %s" , $notification);
+        
 		$stmt->close();															 
 	
 		return;

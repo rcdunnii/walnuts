@@ -16,6 +16,10 @@
         margin: 0;
     }
     
+    textarea#Notes {
+        font: normal 18px serif;
+    }
+    
     .loginBkGnd {
         background-image: url("/walnuts/images/WalnutTallyOpener.png");
         background-repeat: no-repeat;
@@ -136,9 +140,9 @@
         left: 47px;
     }
     
-	 #mainMenu {  /* used in listNuts1.html - if user is admin javascript will change display to display:block */
+    #mainMenu {  /* used in listNuts1.html - if user is admin javascript will change display to display:block */
         display: none;
-     }
+    }
      
     #mainMenu a {
         position: relative;
@@ -346,10 +350,11 @@
         width: 100px;
         margin: 0;
         padding: 5px;
-        top: 15px;
-        left: -30px;        
-        font: italic 16px sans-serif;
-    }
+        top: 570px;
+        left: -208px;        
+        font: italic 800 18px sans-serif;
+    } 
+    
         
     fieldset {
         position: relative;

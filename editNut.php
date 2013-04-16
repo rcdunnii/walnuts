@@ -1,7 +1,9 @@
 <?php
         /* called by postEditedNut() js function in ajaxWalnutCoreJSON.js */
 		require 'db.inc';
-		
+        
+		include_once($_SERVER["DOCUMENT_ROOT"] . "/walnuts/functions.php");	
+        
 		$mysqli=  @ new mysqli($server,$user,$password, $database);
 		
 		/* check connection */
@@ -42,8 +44,10 @@
 		}
 								
 		$stmt->close();															 
-		
-		echo 'Success: edited walnutID ' . $f["walnutID"];    // id or edited record
+        
+		$notification = (IsNullOrEmptyString($f["Names"])) ? $f["SirName"] : $f["Names"];
+        
+		printf("Edited %s" , $notification);
 			
 		return;									
 
