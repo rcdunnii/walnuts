@@ -1,5 +1,5 @@
 <?php
-		$server = "walnuts.db.10714003.hostedresource.com";
+		$server = "localhost";
 		$user = "walnuts";
 		$password = "Noyer#2013";
 		$database = "walnuts";
