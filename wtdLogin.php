@@ -65,8 +65,7 @@
             $response = "Enter Security Code!";
         }
     } else {
- /*       $response = "Password incorrect - try again.";   */
-          $response =  $salt;
+       $response = "Password incorrect - try again."; 
     }
     echo ($response);
 ?>
