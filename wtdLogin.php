@@ -6,9 +6,6 @@
     // Your code here to handle a successful verification
     $str_json = json_decode($_POST['value'], true);
 
-        
-    //    $username = 'Foxy';   DELETE THIS COMMENT ONCE CODE IS WORKING
-    //    $password = 'Cynthia';    DELETE THIS COMMENT ONCE CODE IS WORKING
     //    get stored password for aunthenticated user from hash table
     require 'db.inc';
         

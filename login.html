@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="css/Walnuts.css"/>	    
 	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js" ></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<!--	<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>  -->
     <script type="text/javascript">
 		$(document).ready(function () {
 			$("#hintLink").click(function () {
@@ -19,7 +18,7 @@
         <div id="popUpLogin">
 		    <div><p><center><span id="spinner">&nbsp;</span></center></p></div>
             <div id="popUpImg"><img src="images/Polky.png" target="_self" width="143" height="214" alt="" /></div>    
-            <form action="" onsubmit="ajaxAuthenticate(this, '/walnuts/login.php', 'post'); return false;">
+            <form action="" onsubmit="ajaxAuthenticate(this, 'login.php', 'post'); return false;">
 				<p>
                     <input type="hidden" name="user" id="user" value="Walnut" />
 					<label for="password">Password: </label>
