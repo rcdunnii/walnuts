@@ -7,8 +7,10 @@
     $str_json = json_decode($_POST['value'], true);
 
     //    get stored password for aunthenticated user from hash table
-    require 'db.inc';
-        
+    require 'dbFoxy.inc';
+    // $username = 'Foxy';
+    // $password = 'Cynthia';  login password goes here - NOTE: different than mysql walnuts db password for user Foxy which is 'Noyer#6358'
+    
     $mysqli = @ new mysqli($server, $user, $password, $database);
     
     /* check connection */

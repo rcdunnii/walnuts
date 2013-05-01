@@ -21,7 +21,7 @@
     }
     
     .loginBkGnd {
-        background-image: url("/walnuts/images/WalnutTallyOpener.gif");
+        background-image: url("../images/WalnutTallyOpener.gif");
         background-repeat: no-repeat;
         background-position-x: 75%;
         background-position-y: 67%;
@@ -59,7 +59,7 @@
 		left: 13px;
 		margin-left: 5px;
 		margin-right: 5px;
-		background-image: url("/walnuts/images/walnut-wood.jpg");
+		background-image: url("../images/walnut-wood.jpg");
 		background-repeat: no-repeat;
     }
     #wrapper {
