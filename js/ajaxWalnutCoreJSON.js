@@ -182,6 +182,7 @@ function ajaxAuthenticate(form, fxn, method) {
 				} else {
                     errorElem.innerHTML = xhr.responseText;
                     popUpElem.style.display = "none";
+                    hintLinkElem.style.display = "block";                
                 }
 			} else {
 				alert("An error occurred while logging in. Please try it again.");
