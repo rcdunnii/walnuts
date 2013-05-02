@@ -106,7 +106,7 @@ function readCookie(name) {
 }
 
 //called from login.html on submit
-function ajaxAuthenticate(form, url, method) {
+function ajaxAuthenticate(form, fxn, method) {
     'use strict';
     var xhr,
         data,
@@ -114,6 +114,7 @@ function ajaxAuthenticate(form, url, method) {
         i,
         pair,
         currentUser,
+        url = "",
         pw = false,
         data_json = "",
         send_data = "",
@@ -181,6 +182,7 @@ function ajaxAuthenticate(form, url, method) {
 				} else {
                     errorElem.innerHTML = xhr.responseText;
                     popUpElem.style.display = "none";
+                    hintLinkElem.style.display = "block";                
                 }
 			} else {
 				alert("An error occurred while logging in. Please try it again.");
@@ -189,6 +191,8 @@ function ajaxAuthenticate(form, url, method) {
     };
 
     try {
+/*        url = 'https://' + location.host + '/walnuts/' + fxn;   */
+        url =  fxn;        
 		xhr.open(method, url, true);   // true means asynchron, where url is login.php and method is POST	
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send(send_data);
@@ -203,7 +207,7 @@ function ajaxAuthenticate(form, url, method) {
 // fxn called by primary html page WTD.html - only run by Foxy
 function ajaxWalnutFunction() {
     'use strict';
-    var xhr, i, user_input, openResult, walnutOptionChoices;// The variable that makes Ajax possible!
+    var xhr, i, user_input, openResult, walnutOptionChoices, theHost;// The variable that makes Ajax possible!
 
 // first get user radio button choice
     walnutOptionChoices = document.getElementsByName("walnuts");
@@ -213,7 +217,8 @@ function ajaxWalnutFunction() {
             break;
         }
     }
-
+    // production or development ?
+    theHost = location.host;
     if (user_input) {
         if (user_input === "deleteDB") {
             if (!(confirm("Are you sure you REALLY want to delete walnuts database?"))) {
@@ -221,11 +226,11 @@ function ajaxWalnutFunction() {
             }
         }
         if (user_input === "add") {
-            openResult = window.open("https://localhost/walnuts/addNut.html", "_self");
+            openResult = window.open("https://" + theHost + "/addNut.html", "_self");
             return false;
         }
         if (user_input === "list") {
-            openResult = window.open("https://localhost/walnuts/listNuts.html", "_self"); // listNuts.html only called by Foxy
+            openResult = window.open("https://" + theHost + "/listNuts.html", "_self"); // listNuts.html only called by Foxy
             return false;
         }
 
@@ -337,14 +342,16 @@ function displayPage(requester, nutEntries) {
     'use strict';
     var numNuts, x, i = 0,
         replacementStr = "", replacementStrLt = "", replacementStrRt = "", onClickHTML = "",
-        notesStr, b = 0, numBrks = 0, brksNeeded = 3;
-
+        notesStr, b = 0, numBrks = 0, brksNeeded = 3, theHost = '';
+    // development or production ?
+    theHost = location.host;
     // get # entries in database into var numNuts
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
 
-        replacementStr = "<p><pre><a class='oneNut' onclick= \"window.location.href='https://localhost/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
+ /*       replacementStr = "<p><pre><a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>"; */
+        replacementStr = "<p><pre><a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
 
         if (requester === 'Foxy') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
@@ -414,7 +421,7 @@ function ajaxListNuts(requester) {
                 document.getElementById("mainMenu").style.display = 'block';
             }
         } else {
-            document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='/walnuts/images/ajax-loader.gif'>";
+            document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='../images/ajax-loader.gif'>";
         }
     };
     //call php fxn to open Walnuts db and retieve/return all records for display

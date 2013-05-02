@@ -1,20 +1,17 @@
 <?php
     session_start();   
-    /*
+   
     if (!($_POST['value'])) {
         echo 'Error: No data posted to login.php';			
         return FALSE;
-    }
-     */
+    }     
+     
      
     $response = "";
 
     // Your code here to handle a successful verification
     $str_json = json_decode($_POST['value'], true);
 
-        
-    //    $username = 'Walnut';   DELETE THIS COMMENT ONCE CODE IS WORKING
-    //    $password = 'Polky';    DELETE THIS COMMENT ONCE CODE IS WORKING
     //    get stored password for aunthenticated user from hash table
     require 'db.inc';
         

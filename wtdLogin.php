@@ -6,12 +6,11 @@
     // Your code here to handle a successful verification
     $str_json = json_decode($_POST['value'], true);
 
-        
-    //    $username = 'Foxy';   DELETE THIS COMMENT ONCE CODE IS WORKING
-    //    $password = 'Cynthia';    DELETE THIS COMMENT ONCE CODE IS WORKING
     //    get stored password for aunthenticated user from hash table
-    require 'db.inc';
-        
+    require 'dbFoxy.inc';
+    // $username = 'Foxy';
+    // $password = 'Cynthia';  login password goes here - NOTE: different than mysql walnuts db password for user Foxy which is 'Noyer#6358'
+    
     $mysqli = @ new mysqli($server, $user, $password, $database);
     
     /* check connection */
@@ -65,8 +64,7 @@
             $response = "Enter Security Code!";
         }
     } else {
- /*       $response = "Password incorrect - try again.";   */
-          $response =  $salt;
+       $response = "Password incorrect - try again."; 
     }
     echo ($response);
 ?>
