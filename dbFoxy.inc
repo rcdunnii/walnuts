@@ -1,2 +1,6 @@
-Salted__Û¼˜PÒ¢
-ßSÈı¡¿Ìâ£9÷UéWkĞ˜S·ÒnÇ›çÉ¥¾¸Ø­GS<3Wd°§„<µğ¶hÁ)Ø³Ù“ö±¬EÅÑêuFzÉ™§o#2Â+Fxiá¢ıu%óŠ—ô­û7y„è¦[8¹³I®-mèyI
+<?php
+		$server = "localhost";
+		$user = "Foxy";
+		$password = "Noyer#6358";
+		$database = "walnuts";
+?>

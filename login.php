@@ -6,7 +6,6 @@
         return FALSE;
     }     
      
-     
     $response = "";
 
     // Your code here to handle a successful verification
