@@ -3,8 +3,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<title>Walnut Tally Dashboard</title>
-	<link rel="stylesheet" href="css/Walnuts.css"/>	
-	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js" ></script>
+	<link rel="stylesheet" href="/css/Walnuts.css"/>	
+	<script type="text/javascript" src="/js/ajaxWalnutCoreJSON.js" ></script>
+    <script type="text/javascript">
+	    if (readCookie('foxyCookie') == null) {
+		    window.location.href = "wtdLogin.html";
+        }
+    </script>    
 </head>
 <body>
 
@@ -26,10 +31,6 @@
 	    <div><center><p><span id="response">Select button above, then press Go!</span></center></div> 
 	
 	</div>
-	<script type="text/javascript">
-	    if (readCookie('foxyCookie') == null) {
-		    window.location.href = "wtdLogin.html";
-        }
-    </script>
+	
 </body>
 </html>

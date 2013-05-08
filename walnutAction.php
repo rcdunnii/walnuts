@@ -1,9 +1,8 @@
 <?php
-	
-   function createDB() {   		
 
-		require 'db.inc';  // database info	
-		
+   
+   function createDB() {   		
+        require 'dbFoxy.inc';  // database info			
 		$mysqli = new mysqli($server, $user, $password);
 
 		/* check connection */
@@ -91,8 +90,7 @@
 	}
 	
 	function deleteDB() {
-		require 'db.inc';  // database info	
-		
+        require 'dbFoxy.inc';  // database info			
 		$mysqli = @ new mysqli($server, $user, $password, $database);
 		
 		/* check connection */
