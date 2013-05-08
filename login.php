@@ -59,7 +59,7 @@
         if (isset($str_json["captcha_code"])){
             $captcha_code = $str_json["captcha_code"];
             if ($securimage->check($captcha_code) == false) {
-                $response = "Incorrect security code - try again.<br /><br />";
+                $response = "Incorrect security code.<br />";
             } else {
                 $response = "ok";
             }

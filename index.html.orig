@@ -3,18 +3,23 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title>List the Walnuts</title>
+<<<<<<< HEAD
+    <link rel="stylesheet" href="css/Walnuts.css" type="text/css" />
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css" type="text/css" /> 
+=======
     <link rel="stylesheet" href="/css/Walnuts.css" type="text/css" />
     <link rel="stylesheet" href="/css/jquery.mCustomScrollbar.css" type="text/css" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="/js/ajaxWalnutCoreJSON.js"></script>
     <script type="text/javascript">
-	    if (readCookie('nutCookie') == "loggedIn") {            
-                ajaxListNuts("Walnut");          
+	    if (readCookie('nutCookie') == "loggedIn") {
+            ajaxListNuts("Walnut");
         } else {
 		    window.location.href = "login.html";
         }
     </script>    
+>>>>>>> c9e5c66b900fabeaa0850d7fd00e292a57e6d881
 </head>
 
 <body>
@@ -35,7 +40,21 @@
      </div>
 
   </div>
+<<<<<<< HEAD
+    <!-- load the page with ajax call -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="js/ajaxWalnutCoreJSON.js"></script>
+    <script type="text/javascript">
+	    if (readCookie('nutCookie') == "loggedIn") {
+            ajaxListNuts("Walnut");
+        } else {
+		    window.location.href = "login.html";
+        }
+    </script>
+=======
     
+>>>>>>> c9e5c66b900fabeaa0850d7fd00e292a57e6d881
 </body>
 
 </html>
