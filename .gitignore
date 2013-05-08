@@ -3,3 +3,5 @@ custom-scrollbar-plugin/
 custom-scrollbar-plugin-old/
 ignore/
 *.bak
+css/test*
+test*

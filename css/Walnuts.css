@@ -1,9 +1,9 @@
 /* Walnut Tally Style Sheet */
-   
+  
     html, body {
-        position: absolute;    
+        position: static;
         height: 100%;
-        width: 100%;
+        width: 100%;       
         background: rgb(104,32,19); /* Old browsers */
         background: -moz-linear-gradient(top,  rgba(104,32,19,1) 0%, rgba(139,69,19,1) 100%); /* FF3.6+ */
         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(104,32,19,1)), color-stop(100%,rgba(139,69,19,1))); /* Chrome,Safari4+ */
@@ -16,18 +16,59 @@
         margin: 0;
     }
     
-    textarea#Notes {
-        font: normal 18px serif;
-    }
-    
+    .loginWrapper {
+        position: absolute;
+        width: 1300px;     /*1300px;*/
+        height: 900px;
+        margin: -450px 0 0 -650px;
+        left: 50%;
+        top: 50%;
+    }   
+  
     .loginBkGnd {
-        background-image: url("/images/WalnutTallyOpener.gif");
-        background-repeat: no-repeat;
-        background-position-x: 75%;
-        background-position-y: 67%;
-        background-attachment: fixed;
+        position: absolute;    
+        background: url("/images/WalnutTallyOpener.gif") no-repeat center;
+        width: 1100px;
+        height: 715px;
+        margin: -357px 0 0 -550px;
+        left: 50%;
+        top: 50%;
     }
     
+   #popUpLogin {
+        position: relative;
+        width: 367px;
+        height: 238px;
+        top: 32%;
+        left: -21%;
+        margin: 0 auto;
+        background-color: transparent;
+        color: white;
+        border: none;
+        padding: 2px;
+    }
+    
+   #popUpImg {
+       position: absolute;
+       top: 21%;
+       left:70%;
+       display:none;
+    }
+  
+    p#loginError  {
+        position:relative;
+        text-align: left;
+        font-size: 1.2em;
+        color: red;
+        bottom: 7px;
+        left: 30px;
+        margin: 3px;
+    }
+    
+    #hintWrapper {
+        position: relative;
+        left: 47px;
+    }  
     .leftImg {
         position: absolute;
         bottom: -15px;
@@ -62,10 +103,11 @@
 		background-image: url("/images/walnut-wood.jpg");
 		background-repeat: no-repeat;
     }
-    #wrapper {
+    
+    #submitWrapper {
         position: absolute;
-        left:75px;
-        top: 280px;
+        left:68px;
+        top: 244px;
     }
      
      #submitID {
@@ -101,45 +143,15 @@
     a#hintLink:visited {color:#FFFF00;} /* visited link same color for this app as unvisited */
     a#hintLink:hover {color:#FFFFFF;}   /* white on mouse over link */
     a#hintLink:active {color:#FFD700;}  /* yellow on selected link */ 
-    
-    #popUpLogin {
-        position: relative;
-        width: 325px;
-        height: 315px;
-        text-align: left;
-        font-size: 20px;
-        top:35%;
-        left: 22%;
-        background-color: transparent;
-        color: white;
-        border: none;
-        padding: 2px;
-    }
-    
-     #popUpImg {
-       position: absolute;
-       top: 21%;
-       left:85%;
-       display:none;
-    }
        
     a#hintLink{
         display: none;
     }
-    
-    p#loginError  {
-        position:relative;
-        text-align: left;
-        color: red;
-        bottom: 7px;
-        left: 30px;
-        margin: 0;
-    }        
-    #hintWrapper {
-        position: relative;
-        left: 47px;
+      
+    textarea#Notes {
+        font: normal 18px serif;
     }
-    
+        
     #mainMenu {  /* used in listNuts1.html - if user is admin javascript will change display to display:block */
         display: none;
     }

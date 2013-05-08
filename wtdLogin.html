@@ -14,24 +14,28 @@
 		});
     </script>
 	</head>
-    <body class="loginBkGnd">
-        <div id="popUpLogin">
-		    <div><p><center><span id="spinner">&nbsp;</span></center></p></div>
-            <div id="popUpImg"><img src="/images/Cynthia.png" target="_self" width="143" height="164" alt="" /></div>    
-            <form action="" onsubmit="ajaxAuthenticate(this, 'wtdLogin.php', 'post'); return false;">
-				<p> 
-                    <input type="hidden" name="user" value="Foxy" id="user" />                
-					<label for="password">Password: </label>
-					<input type="password" id="password" name="password" /><br /><br />	
-                    <label for="captcha_code">Security Code:</label>                    
-                    <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" value="" /><br /><br /> 
-                    <img id="captcha" src="/securimage/securimage_show.php" alt="CAPTCHA Image" /> <br />                   
-                    <a href="#" class="securityLink" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false">[ Different Security Image ]</a><br /><br />                                
-                   <div id="wrapper"><input id="submitID" type="submit" value="Submit" /></div>
-                </p>            
-            </form>
-            <center><p id="loginError"></p></center>            
-            <div id="hintWrapper"><a id="hintLink" href="#">Password Hint</a></div>                                   
-		</div>      
+     <body>
+        <div class="loginWrapper">
+            <div class="loginBkGnd">
+                <div id="popUpLogin">
+                    <div><p><center><span id="spinner">&nbsp;</span></center></p></div>
+                    <div id="popUpImg"><img src="/images/Cynthia.png" target="_self" width="143" height="164" alt="" /></div>    
+                    <form action="" onsubmit="ajaxAuthenticate(this, 'wtdLogin.php', 'post'); return false;">
+                        <p> 
+                            <input type="hidden" name="user" value="Foxy" id="user" />                
+                            <label for="password">Password: </label>
+                            <input type="password" id="password" name="password" /><br /><br />	
+                            <label for="captcha_code">Security Code:</label>                    
+                            <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" value="" /><br /><br /> 
+                            <img id="captcha" src="/securimage/securimage_show.php" alt="CAPTCHA Image" /> <br />                   
+                            <a href="#" class="securityLink" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false">[ Different Security Image ]</a><br /><br />                                
+                           <div id="submitWrapper"><input id="submitID" type="submit" value="Submit" /></div>
+                        </p>            
+                    </form>
+                    <center><p id="loginError"></p></center>            
+                    <div id="hintWrapper"><a id="hintLink" href="#">Password Hint</a></div>                                   
+                </div> 
+            </div>
+        </div>
     </body>
 </html>
