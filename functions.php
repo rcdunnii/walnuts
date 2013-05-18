@@ -1,7 +1,8 @@
 <?php
 
 function IsNullOrEmptyString($informalnames){
-    return (!isset($informalnames) || trim($informalnames)==='');
+    $new = htmlspecialchars($informalnames);
+    return (!isset($new) || trim($new)==='');
 }
 
 

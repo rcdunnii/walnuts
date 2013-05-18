@@ -68,41 +68,40 @@ function setExpiration(cookieLife) {
 
 function createCookie(name, value, expires, path, domain, secure) {
     'use strict';
-    var date = new Date();
-	document.cookie = name + "=" + escape(value) + "; ";
+/*    var date = new Date(); */
+    document.cookie = name + "=" + escape(value) + "; ";
 
-	if (expires) {
-		expires = setExpiration(expires);
-		document.cookie += "expires=" + expires + "; ";
-	}
-	if (path) {
-		document.cookie += "path=" + path + "; ";
-	}
-	if (domain) {
-		document.cookie += "domain=" + domain + "; ";
-	}
-	if (secure) {
-		document.cookie += "secure; ";
-	}
+    if (expires) {
+        expires = setExpiration(expires);
+        document.cookie += "expires=" + expires + "; ";
+    }
+    if (path) {
+        document.cookie += "path=" + path + "; ";
+    }
+    if (domain) {
+        document.cookie += "domain=" + domain + "; ";
+    }
+    if (secure) {
+        document.cookie += "secure; ";
+    }
 }
-
 
 function readCookie(name) {
     'use strict';
     var nameEQ, ca, i, c;
 
-	nameEQ = name + "=";
-	ca = document.cookie.split(';');
-	for (i = 0; i < ca.length; i += 1) {
-		c = ca[i];
-		while (c.charAt(0) === ' ') {
+    nameEQ = name + "=";
+    ca = document.cookie.split(';');
+    for (i = 0; i < ca.length; i += 1) {
+        c = ca[i];
+        while (c.charAt(0) === ' ') {
             c = c.substring(1, c.length);
         }
-		if (c.indexOf(nameEQ) === 0) {
+        if (c.indexOf(nameEQ) === 0) {
             return c.substring(nameEQ.length, c.length);
         }
-	}
-	return null;
+    }
+    return null;
 }
 
 //called from login.html on submit
@@ -122,7 +121,7 @@ function ajaxAuthenticate(form, fxn, method) {
         popUpElem = document.getElementById("popUpImg"),
         hintLinkElem = document.getElementById("hintLink");
 
-	if (registering) {
+    if (registering) {
         return;
     }
 
@@ -146,56 +145,56 @@ function ajaxAuthenticate(form, fxn, method) {
         }
     }
     if (!pw) {
-	    errorElem.innerHTML = "Password incorrect!";
+        errorElem.innerHTML = "Password incorrect!";
         popUpElem.style.display = "none";
-        hintLinkElem.style.display = "block";                
+        hintLinkElem.style.display = "block";
         return false;
     }
 
     data_json += '}';
     send_data = 'value=' + data_json;
 
-	xhr = createXHR();
+    xhr = createXHR();
 
     if (!xhr) {
-	    return false;
+        return false;
     }
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 0 || xhr.readyState === 4) {
-		    registering = false;
-		    // prevent memory leaks
-		    xhr.onreadystatechange = null;
+            registering = false;
+            // prevent memory leaks
+            xhr.onreadystatechange = null;
 
             if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || xhr.status === 1223)) {
-				if (xhr.responseText === "ok") {    // login is successful - redirection is required
-                    if (currentUser == "Walnut") {
+                if (xhr.responseText === "ok") {    // login is successful - redirection is required
+                    if (currentUser === "Walnut") {
                         createCookie('nutCookie', 'loggedIn', '60000', '', '', 1);
                         window.location.href = "Walnuts.html";
-                    } else if (currentUser == "Foxy") {
+                    } else if (currentUser === "Foxy") {
                         createCookie('foxyCookie', 'loggedIn', '60000', '', '', 1);
                         window.location.href = "WTD.html";
                     } else {
                         alert("Unknown User Error");
                         return false;
-                    }                    
-				} else {
+                    }
+                } else {
                     errorElem.innerHTML = xhr.responseText;
                     popUpElem.style.display = "none";
-                    hintLinkElem.style.display = "block";                
+                    hintLinkElem.style.display = "block";
                 }
-			} else {
-				alert("An error occurred while logging in. Please try it again.");
-			}
-	    }
+            } else {
+                alert("An error occurred while logging in. Please try it again.");
+            }
+        }
     };
 
     try {
 /*        url = 'https://' + location.host + '/walnuts/' + fxn;   */
-        url =  fxn;        
-		xhr.open(method, url, true);   // true means asynchron, where url is login.php and method is POST	
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send(send_data);
+        url =  fxn;
+        xhr.open(method, url, true);   // true means asynchron, where url is login.php and method is POST
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send(send_data);
     } catch (e) {
         alert("Cannot connect to the server!");
         return;
@@ -207,7 +206,7 @@ function ajaxAuthenticate(form, fxn, method) {
 // fxn called by primary html page WTD.html - only run by Foxy
 function ajaxWalnutFunction() {
     'use strict';
-    var xhr, i, user_input, openResult, walnutOptionChoices, theHost;// The variable that makes Ajax possible!
+    var xhr, i, user_input, openResult, walnutOptionChoices, theHost;  // The variable that makes Ajax possible!
 
 // first get user radio button choice
     walnutOptionChoices = document.getElementsByName("walnuts");
@@ -253,7 +252,6 @@ function ajaxWalnutFunction() {
     xhr.open("GET", "walnutAction.php?value=" + user_input,  true);
     xhr.send(null);
 }
-
 
 // called by ajaxAddNuts and postEditedNut()
 function getPostDataJSON(hasID) {
@@ -332,17 +330,17 @@ function wordWrap(str, width, brk, cut) {
 
 function isEven(value) {
     'use strict';
-	var x;
-	x = ((value % 2 === 0) ? true : false);
-	return x;
+    var x;
+    x = ((value % 2 === 0) ? true : false);
+    return x;
 }
 
  /* called by ajaxListNuts() fxn below - requester is who is making request, Foxy or user; nutEntries is arr of all walnuts */
 function displayPage(requester, nutEntries) {
     'use strict';
-    var numNuts, x, i = 0,
-        replacementStr = "", replacementStrLt = "", replacementStrRt = "", onClickHTML = "",
-        notesStr, b = 0, numBrks = 0, brksNeeded = 3, theHost = '';
+    var numNuts, i = 0,
+        replacementStr = "", replacementStrLt = "", replacementStrRt = "",
+        notesStr, b = 0, numBrks = 0, brksNeeded = 5, theHost = '';
     // development or production ?
     theHost = location.host;
     // get # entries in database into var numNuts
@@ -350,8 +348,7 @@ function displayPage(requester, nutEntries) {
 
     for (i = 0; i < numNuts; i += 1) {
 
- /*       replacementStr = "<p><pre><a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/walnuts/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>"; */
-        replacementStr = "<p><pre><a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
+        replacementStr = "<pre><a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
 
         if (requester === 'Foxy') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + ");' title='Delete'>" + "&times;</a>" + "<br>";
@@ -369,19 +366,26 @@ function displayPage(requester, nutEntries) {
         replacementStr += "      2: " + nutEntries[i].Email2 + "<br>";
         replacementStr += "Phone 1: " + nutEntries[i].Phone1 + "<br>";
         replacementStr += "      2: " + nutEntries[i].Phone2 + "<br>";
-        notesStr = ""; //  init after each loop
+        notesStr = ""; //  inits after each loop
+        numBrks = 0;
+        
+        if (nutEntries[i].Notes.length) { // if notesStr longer than 30 chars, format for display
+            notesStr = wordWrap(nutEntries[i].Notes, 30, '<br>', true);
+ //           notesStr = notesStr.substring(0, 85); // trim to avoid 3rd nl                
+            numBrks = (notesStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
+            // format any Notes to fit in our listNuts display properly - always print 4 newlines            
+        }
+       
         if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
-            notesStr = "<span class=\"updated\">Last Update: " + nutEntries[i].Updated + "</span><br>";
+            notesStr = "<span class=\"updated\">Last Update: " + nutEntries[i].Updated + "</span><br>" + notesStr;
+            numBrks += 1; // because we've added 1 <br> in line above...
         }
-        if (nutEntries[i].Notes) {
-            notesStr += wordWrap(nutEntries[i].Notes, 30, '<br>', false);
-        }
-        numBrks = (notesStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string 
-        // format any Notes to fit in our listNuts display properly - always print 4 newlines
+        
         for (b = numBrks; b < brksNeeded; b += 1) {
             notesStr += "<br>";
         }
-        replacementStr += "Notes:   " + notesStr + "</pre></p>";
+        
+        replacementStr += "Notes:   " + notesStr + "</pre>";
         if (isEven(i)) {
             replacementStrLt += replacementStr;
         } else {
@@ -450,6 +454,7 @@ function confirmDel(nutId) {
         return;
     }
 }
+
 // next 2 fxns called by editNut.html page
 function getOrigNut(nutID) {
     'use strict';
@@ -471,12 +476,13 @@ function getOrigNut(nutID) {
                     frm.elements[i].value = nut[i];
                 }
             }
-			return;
+            return;
         }
     };
     xhr.open("GET", "getNut.php?value=" + nutID,  true);
     xhr.send(null);
 }
+
 // called by editNut.html on submit of form
 function postEditedNut() {
     'use strict';
