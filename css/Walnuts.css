@@ -284,12 +284,13 @@
         position: absolute;
         height: 25px;
         left: 1em;
+        bottom: 475px;
         padding: .1em .5em;
         text-decoration: none;
         background-color: #8B0000;
         color: yellow;
         border: 1px solid;
-        border-color: #cec #464 #575 #dfd;         
+        border-color: #cec #464 #575 #dfd;        
     }
   
     #navlist li #reset{
@@ -297,6 +298,7 @@
         position: absolute;
         height: 25px;        
         left: 10em;
+        bottom: 475px;        
         padding: .1em .5em;
         text-decoration: none;
         background-color: #8B0000;
@@ -306,10 +308,11 @@
     }
     
     #navlist li #home{
-          display: inline;
+        display: inline;
         position: absolute;
         height: 25px;        
         left: 18em;
+        bottom: 475px;        
         padding: .1em .5em;
         text-decoration: none;
         background-color: #8B0000;
@@ -341,10 +344,10 @@
     }
     
     #editNutPage , #addNutPage {
-        position: relative;  /* absolute positioned elements are  ignored by other elements - like they don't exist   */
+        position: relative;
         margin:0;
-        width: 96%;    /* 940px */
-        height:96%;   /* 940px */
+        width: 96%;
+        height:96%;
         top:  -12px;
         left: 13px;
         margin-left: 5px;
@@ -402,7 +405,7 @@
         margin-left: 10px;
         list-style:none;
         float: left;
- /*      clear: left;  */
+        clear: left;
         padding: 5px;        
     }
 
