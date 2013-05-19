@@ -201,7 +201,8 @@
        padding-right: 1px;       
 	}
 	
-	p#replaceRt pre, p#replaceLt pre {
+	p#replaceRt pre,
+    p#replaceLt pre {
 	   padding: 0;
 	   color: white;
 	}
@@ -225,23 +226,27 @@
     a.oneNut:hover {color:#FFFFFF;}   /* white on mouse over link */
     a.oneNut:active {color:#FFD700;}  /* yellow on selected link */   
 	
-    .updated {
+    .updated 
+      {
         color: yellow;
     }
     
-    .listH1 {
+    .listH1
+      {
        margin: 25px 0;
        padding-top: 10px;
        color:#EEDC82; /* flax  */
-   }
+    }
 	   
-	.listH2 {
+	.listH2
+       {
 	   margin: 25px 0;
 	   padding-bottom: 10px;
 	   color:#EEDC82; /* flax  */
-	   }
+	}
 
-    #wtHomePage {
+    #wtHomePage 
+      {
         position: relative;
         width: 700px;
         top: 30%;
@@ -251,99 +256,22 @@
         background: #FFF;
     }
     
-    #WTForm {
+    #WTForm
+      {
         position: relative;
         width: 250px ;
         margin-left: auto ;
         margin-right: auto ;
         text-align: left;
     }
-    #response {
+    #response 
+      {
         font: italic 16px sans-serif;
     }
-
-    #navlist { 
-        position: absolute;
-        width: 430px;
-        height: 25px;
-        margin: 10px;
-		top: 520px;
-		left: 190px;
-        padding: .3em 0;
-        text-align: center;
-        list-style-type: none;
-    }
     
-    #navlist li {
-        padding: 0 .5em;
-        width: 8em;     
-    }
-	
-    #navlist li #submit{
-        display: inline;
-        position: absolute;
-        height: 25px;
-        left: 1em;
-        bottom: 475px;
-        padding: .1em .5em;
-        text-decoration: none;
-        background-color: #8B0000;
-        color: yellow;
-        border: 1px solid;
-        border-color: #cec #464 #575 #dfd;        
-    }
-  
-    #navlist li #reset{
-        display: inline;
-        position: absolute;
-        height: 25px;        
-        left: 10em;
-        bottom: 475px;        
-        padding: .1em .5em;
-        text-decoration: none;
-        background-color: #8B0000;
-        color: yellow;        
-        border: 1px solid;
-        border-color: #cec #464 #575 #dfd;         
-    }
-    
-    #navlist li #home{
-        display: inline;
-        position: absolute;
-        height: 25px;        
-        left: 18em;
-        bottom: 475px;        
-        padding: .1em .5em;
-        text-decoration: none;
-        background-color: #8B0000;
-        color: yellow;        
-        border: 1px solid;
-        border-color: #cec #464 #575 #dfd;         
-    }
-    
-    #navlist li #again {
-          display: inline;
-        position: absolute;
-        height: 25px;        
-        left: 35em;
-        padding: .1em .5em;
-        text-decoration: none;
-        background-color: #8B0000;
-        color: yellow;        
-        border: 1px solid;
-        border-color: #cec #464 #575 #dfd;         
-    }    
-    
-    #navlist li #submit:hover,
-    #navlist li #reset:hover,
-    #navlist li #home:hover,
-    #navlist li #again:hover
+    #editNutPage ,
+    #addNutPage
       {
-        background-color: brown;
-        color: #FFF;
-    }
-    
-    #editNutPage , #addNutPage {
         position: relative;
         margin:0;
         width: 96%;
@@ -355,23 +283,32 @@
         background: #800000;  /* dark red  */
     }
     
-    #editNutPage h1, #editNutPage h3, #addNutPage h1, #addNutPage h3{
+    #editNutPage h1,
+    #editNutPage h3,
+    #addNutPage h1,
+    #addNutPage h3
+      {
         color:#EEDC82; /* flax  */
     }
     
-    #editNutForm, #addNutForm {
+    #editNutForm,
+    #addNutForm 
+      {
         position: relative;
         width: 100%;
         height: 100%;
     }
 
-    span#editNutResponse, span#addNutResponse {
-        position: relative;
-        width: 100px;
+    span#editNutResponse,
+    span#addNutResponse
+      {
+        position: absolute;
+        width: 500px;
+        height: 15px;
         margin: 0;
         padding: 5px;
-        top: 570px;
-        left: -208px;        
+        top: 591px;
+        left: 180px;        
         font: italic 800 18px sans-serif;
     } 
     
@@ -393,14 +330,18 @@
         border: 0;  
     }
        
-     fieldset form#editNutForm ul, fieldset form#addNutForm ul {
+     fieldset form#editNutForm ul,
+     fieldset form#addNutForm ul 
+       {
      width: 95%;
      height: 97%;
      border: 0;
      margin: 0.2em auto;
      }
      
-    fieldset form#editNutForm ul li {
+    fieldset form#editNutForm ul li,
+    fieldset form#addNutForm ul li 
+      {
         text-align: left;
         margin-left: 10px;
         list-style:none;
@@ -408,8 +349,9 @@
         clear: left;
         padding: 5px;        
     }
-
-    fieldset input{
+    
+    fieldset input
+      {
         display: block;
         float:left;
         padding: 0;
@@ -417,7 +359,8 @@
         font: normal 18px serif;
     }
         
-    fieldset label{
+    fieldset label
+      {
         display: block;
         width: 200px;
         float: left;
@@ -429,4 +372,96 @@
    
     #Notes {
         margin-left:0;
+    }
+    
+    fieldset form#addNutForm ul#navlist,
+    fieldset form#editNutForm ul#navlist    
+      { 
+        position: absolute;
+        width: 430px;
+        height: 25px;
+        margin: 10px;
+		top: 520px;
+		left: 126px;
+        padding: .3em 0;
+        text-align: center;
+        list-style-type: none;
+    }
+    
+    fieldset form#addNutForm ul#navlist li,
+    fieldset form#editNutForm ul#navlist  li   
+      {
+        padding: 0 .5em;
+        width: 8em;     
+    }
+	
+    fieldset form#addNutForm ul#navlist li #submit,
+    fieldset form#editNutForm ul#navlist li #submit       
+      {
+        display: inline;
+        position: absolute;
+        height: 25px;
+        left: 1em;
+        bottom: 0px;
+        padding: .1em .5em;
+        text-decoration: none;
+        background-color: #8B0000;
+        color: yellow;
+        border: 1px solid;
+        border-color: #cec #464 #575 #dfd;        
+    }
+  
+    fieldset form#addNutForm ul#navlist li #reset,
+    fieldset form#editNutForm ul#navlist li #reset           
+      {
+        display: inline;
+        position: absolute;
+        height: 25px;        
+        left: 10em;
+        bottom: 0px;        
+        padding: .1em .5em;
+        text-decoration: none;
+        background-color: #8B0000;
+        color: yellow;        
+        border: 1px solid;
+        border-color: #cec #464 #575 #dfd;         
+    }
+    
+    fieldset form#addNutForm ul#navlist li #home,
+    fieldset form#editNutForm ul#navlist li #home           
+      {
+        display: inline;
+        position: absolute;
+        height: 25px;        
+        left: 18em;
+        bottom: 0px;        
+        padding: .1em .5em;
+        text-decoration: none;
+        background-color: #8B0000;
+        color: yellow;        
+        border: 1px solid;
+        border-color: #cec #464 #575 #dfd;         
+    }
+    
+    fieldset form#addNutForm ul#navlist li #again {
+        display: inline;
+        position: absolute;
+        height: 25px;        
+        left: 29em;
+        bottom: 0px;        
+        padding: .1em .5em;
+        text-decoration: none;
+        background-color: #8B0000;
+        color: yellow;        
+        border: 1px solid;
+        border-color: #cec #464 #575 #dfd;         
+    }    
+    
+    fieldset form#addNutForm ul#navlist li #submit:hover,
+    fieldset form#addNutForm ul#navlist li #reset:hover,
+    fieldset form#addNutForm ul#navlist li #home:hover,
+    fieldset form#addNutForm ul#navlist li #again:hover
+      {
+        background-color: brown;
+        color: #FFF;
     }

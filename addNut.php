@@ -16,6 +16,7 @@
 			echo 'Error: No data posted to addNut.php';			
 			return FALSE;
 		}
+        
 		$str_json = urldecode($_POST['value']);
 	
 		$f = json_decode($str_json, true);         // Decode the JSON string and turn it into an array $f
@@ -49,7 +50,7 @@
 		}
         
 		$notification = (IsNullOrEmptyString($f["Names"])) ? $f["SirName"] : $f["Names"];
-        
+       
 		printf("Added %s" , $notification);
         
 		$stmt->close();															 
