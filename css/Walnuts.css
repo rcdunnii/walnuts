@@ -281,9 +281,10 @@
 	
     #navlist li #submit{
         display: inline;
-        position: absolute;
+        position: relative;
         height: 25px;
         left: 1em;
+		bottom: -35px;
         padding: .1em .5em;
         text-decoration: none;
         background-color: #8B0000;
@@ -294,9 +295,10 @@
   
     #navlist li #reset{
         display: inline;
-        position: absolute;
+        position:relative;
         height: 25px;        
         left: 10em;
+		bottom: -35px;		
         padding: .1em .5em;
         text-decoration: none;
         background-color: #8B0000;
@@ -306,10 +308,11 @@
     }
     
     #navlist li #home{
-          display: inline;
-        position: absolute;
+        display: inline;
+        position: relative;
         height: 25px;        
         left: 18em;
+		bottom: -35px;		
         padding: .1em .5em;
         text-decoration: none;
         background-color: #8B0000;
@@ -402,7 +405,7 @@
         margin-left: 10px;
         list-style:none;
         float: left;
- /*      clear: left;  */
+        clear: left;
         padding: 5px;        
     }
 
