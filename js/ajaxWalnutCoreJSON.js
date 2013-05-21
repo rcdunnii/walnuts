@@ -268,12 +268,13 @@ function getPostDataJSON(hasID) {
 function ajaxAddNuts() {
     'use strict';
     var addData, xhr, validEm = false, emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
+ /*    now using jQuery validation  
     if (document.getElementById('SirName').value.length === 0) {
         alert('Need Family Name! Try again...');
         document.forms[0].SirName.focus();
         return true;
     }
+    
     if (document.getElementById('Email1').value.length !== 0) {
         validEm = emailPattern.test(document.getElementById('Email1').value);
         if (false === validEm) {
@@ -282,6 +283,25 @@ function ajaxAddNuts() {
             return true;
         }
     }
+    
+    if (document.getElementById('Email2').value.length !== 0) {
+        validEm = emailPattern.test(document.getElementById('Email2').value);
+        if (false === validEm) {
+            alert('Invalid 2nd Email field');
+            document.forms[0].Email2.focus();
+            return true;
+        }
+    }
+    
+    if (document.getElementById('Email3').value.length !== 0) {
+        validEm = emailPattern.test(document.getElementById('Email3').value);
+        if (false === validEm) {
+            alert('Invalid 3rd Email field');
+            document.forms[0].Email3.focus();
+            return true;
+        }
+    }
+ */
     // get local ajax request obj
     xhr = createXHR();
 

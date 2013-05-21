@@ -35,7 +35,7 @@
         top: 50%;
     }
     
-   #popUpLogin {
+    #popUpLogin {
         position: relative;
         width: 367px;
         height: 238px;
@@ -48,7 +48,7 @@
         padding: 2px;
     }
     
-   #popUpImg {
+    #popUpImg {
        position: absolute;
        top: 21%;
        left:70%;
@@ -110,7 +110,7 @@
         top: 244px;
     }
      
-     #submitID {
+    #submitID {
         margin-left: auto;
         margin-right: auto;
     }
@@ -206,11 +206,19 @@
 	   padding: 0;
 	   color: white;
 	}
-       
-    .error {
-            display: none;
-            color: #a00000;
-            font-weight: bold;
+ 
+    form#addNutForm fieldset ul li label.error,
+    form#editNutForm fieldset ul li label.error
+      {
+        display: block;
+        float: left;
+        color: red;
+        height: 20px;
+        width: 200px;
+        margin-right: 10px;
+        margin-left: 10px;        
+        font: bold 16px arial;
+        text-align: left;
     }
 		
 	a.oneNut {
@@ -330,8 +338,8 @@
         border: 0;  
     }
        
-     fieldset form#editNutForm ul,
-     fieldset form#addNutForm ul 
+     form#editNutForm fieldset ul,
+     form#addNutForm fieldset ul 
        {
      width: 95%;
      height: 97%;
@@ -339,8 +347,8 @@
      margin: 0.2em auto;
      }
      
-    fieldset form#editNutForm ul li,
-    fieldset form#addNutForm ul li 
+    form#editNutForm fieldset ul li,
+    form#addNutForm fieldset ul li 
       {
         text-align: left;
         margin-left: 10px;
@@ -349,17 +357,9 @@
         clear: left;
         padding: 5px;        
     }
-    
-    fieldset input
-      {
-        display: block;
-        float:left;
-        padding: 0;
-        height: 20px;
-        font: normal 18px serif;
-    }
-        
-    fieldset label
+      
+    form#editNutForm fieldset ul li label,
+    form#addNutForm fieldset ul li  label
       {
         display: block;
         width: 200px;
@@ -369,34 +369,48 @@
         margin-right: 10px;
         font: bold 16px arial;
     }
-   
-    #Notes {
+ 
+    form#editNutForm fieldset ul li input,
+    form#addNutForm fieldset ul li input     
+      {
+        display: block;
+        float:left;
+        padding: 0;
+        height: 20px;
+        background-color:white;
+        font: normal 18px serif;
+        border: 2px inset;
+    }
+        
+    form#editNutForm fieldset ul li textarea#Notes,
+    form#addNutForm fieldset ul li textarea#Notes
+      {
         margin-left:0;
     }
     
-    fieldset form#addNutForm ul#navlist,
-    fieldset form#editNutForm ul#navlist    
+    form#addNutForm fieldset ul#navlist,
+    form#editNutForm fieldset ul#navlist    
       { 
         position: absolute;
         width: 430px;
         height: 25px;
         margin: 10px;
-		top: 520px;
+		top: 533px;
 		left: 126px;
         padding: .3em 0;
         text-align: center;
         list-style-type: none;
     }
     
-    fieldset form#addNutForm ul#navlist li,
-    fieldset form#editNutForm ul#navlist  li   
+    form#addNutForm fieldset ul#navlist li,
+    form#editNutForm fieldset ul#navlist  li   
       {
         padding: 0 .5em;
         width: 8em;     
     }
 	
-    fieldset form#addNutForm ul#navlist li #submit,
-    fieldset form#editNutForm ul#navlist li #submit       
+    form#addNutForm fieldset ul#navlist li #submit,
+    form#editNutForm fieldset ul#navlist li #submit       
       {
         display: inline;
         position: absolute;
@@ -411,8 +425,8 @@
         border-color: #cec #464 #575 #dfd;        
     }
   
-    fieldset form#addNutForm ul#navlist li #reset,
-    fieldset form#editNutForm ul#navlist li #reset           
+    form#addNutForm fieldset ul#navlist li #reset,
+    form#editNutForm fieldset ul#navlist li #reset           
       {
         display: inline;
         position: absolute;
@@ -427,8 +441,8 @@
         border-color: #cec #464 #575 #dfd;         
     }
     
-    fieldset form#addNutForm ul#navlist li #home,
-    fieldset form#editNutForm ul#navlist li #home           
+    form#addNutForm fieldset ul#navlist li #home,
+    form#editNutForm fieldset ul#navlist li #home           
       {
         display: inline;
         position: absolute;
@@ -443,7 +457,7 @@
         border-color: #cec #464 #575 #dfd;         
     }
     
-    fieldset form#addNutForm ul#navlist li #again {
+    form#addNutForm fieldset ul#navlist li #again {
         display: inline;
         position: absolute;
         height: 25px;        
@@ -457,10 +471,10 @@
         border-color: #cec #464 #575 #dfd;         
     }    
     
-    fieldset form#addNutForm ul#navlist li #submit:hover,
-    fieldset form#addNutForm ul#navlist li #reset:hover,
-    fieldset form#addNutForm ul#navlist li #home:hover,
-    fieldset form#addNutForm ul#navlist li #again:hover
+    form#addNutForm fieldset ul#navlist li #submit:hover,
+    form#addNutForm fieldset ul#navlist li #reset:hover,
+    form#addNutForm fieldset ul#navlist li #home:hover,
+    form#addNutForm fieldset ul#navlist li #again:hover
       {
         background-color: brown;
         color: #FFF;

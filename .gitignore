@@ -5,3 +5,11 @@ ignore/
 *.bak
 css/test*
 test*
+css/cmx*.css
+css/reset.css
+css/core.css
+css/screen.css
+custom-demo.html
+*.orig
+textarea.html
+validate.html

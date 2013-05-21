@@ -4,42 +4,97 @@
 <head>
 	<title>AddaNut</title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" href="css/Walnuts.css"/>	    
-	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js"></script> 
+    <link rel="stylesheet" href="css/Walnuts.css"/>	
+
+    <script src="jQuery/lib/jquery.js" type="text/javascript"></script>
+    <script src="js/jquery.validate.js" type="text/javascript"></script>  
+	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js"></script>
+    <script type="text/javascript">
+    $(function() {
+         // Handler for .ready() called.
+        $("#addNutForm").validate({
+           rules: {
+                    SirName: {
+                        required: true,
+                        minlength: 3
+                    },
+                    Addr4: "required",
+                    Email1: {
+                        required:false,
+                        email: true
+                    },
+                    Email2: {
+                        required:false,
+                        email: true
+                    },
+                    Email3: {
+                        required:false,
+                        email: true
+                    }
+           },
+           messages: {               
+                    SirName: {
+                          required: "Must include Family Name",
+                          minlength: "Name too short!" /*jQuery.format("At least{0} letters!")  */
+                    },
+                    Addr4: "Add country!",
+                    Email1:{
+ /*                       required: "Must include valid email",  */
+                        email: "Email address malformed"
+                       },
+                    Email2:{
+/*                        required: "Must include valid email",  */
+                        email: "Email address malformed"
+                       },
+                     Email3:{
+/*                        required: "Must include valid email",  */
+                        email: "Email address malformed"
+                       },              
+           },
+           debug: true,
+           submitHandler: function(form) {
+               ajaxAddNuts();
+           }
+        });       
+    });
+
+    </script>
+
 </head>
 <body>
     <div class="frame">
         <div id="addNutPage">
             <h1><center>Walnuts Galore!</center></h1>
             <h3><center>Adding Nut to Our WT Database</center></h3>
-            <fieldset>
-                <form action="" id="addNutForm" onsubmit="ajaxAddNuts(); return false;">
+ <!--               <form action="" id="addNutForm" onsubmit="ajaxAddNuts(); return false;" > -->
+            <form action="" id="addNutForm" >
+                <fieldset>
                     <ul>
                         <li><input type="hidden" name="walnutID" id="walnutID" value=NULL ></input></li>
-                        <li><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName" size=30 ></input></li>
-                        <li><label for="Names">Informal List</label><input type="text" name="Names" id="Names" size=50 ></input></li>
-                        <li><label for="FormalNames">Formal List</label><input type="text" name="FormalNames" id="FormalNames" size=50 ></input></li>
-                        <li><label for="Children">Children</label><input type="text" name="Children" id="Children" size=50 ></input></li>
-                        <li><label for="Addr1">Street Address</label><input type="text" name="Addr1" id="Addr1" size=35 ></input></li>
-                        <li><label for="Addr2">Apt/Suite</label><input type="text" name="Addr2" id="Addr2" size=10 ></input></li>
-                        <li><label for="Addr3">City,State</label><input type="text" name="Addr3" id="Addr3" size=35 ></input></li>
-                        <li><label for="Addr4">Country</label><input type="text" name="Addr4" id="Addr4" size=35 ></input></li>		
-                        <li><label for="Email1">Email 1</label><input type="text" name="Email1" id="Email1" size=30 ></input></li>
-                        <li><label for="Email2">Email 2</label><input type="text" name="Email2" id="Email2" size=30 ></input></li>
-                        <li><label for="Email3">Email 3</label><input type="text" name="Email3" id="Email3" size=30 ></input></li>
-                        <li><label for="Phone1">Phone 1</label><input type="text" name="Phone1" id="Phone1" size=40 ></input></li>
-                        <li><label for="Phone2">Phone 2</label><input type="text" name="Phone2" id="Phone2" size=40 ></input></li>		
+                        <li><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName"  size=30 /></li>
+                        <li><label for="Names">Informal List</label><input type="text" name="Names" id="Names" size=50 /></li>
+                        <li><label for="FormalNames">Formal List</label><input type="text" name="FormalNames" id="FormalNames" size=50 /></li>
+                        <li><label for="Children">Children</label><input type="text" name="Children" id="Children" size=50 /></li>
+                        <li><label for="Addr1">Street Address</label><input type="text" name="Addr1" id="Addr1" size=35 /></li>
+                        <li><label for="Addr2">Apt/Suite</label><input type="text" name="Addr2" id="Addr2" size=10 /></li>
+                        <li><label for="Addr3">City,State</label><input type="text" name="Addr3" id="Addr3" size=35 /></li>
+                        <li><label for="Addr4">Country</label><input type="text" name="Addr4" id="Addr4" size=35 /></li>		
+                        <li><label for="Email1">Email 1</label><input type="text" name="Email1" id="Email1" size=30 /></li>
+                        <li><label for="Email2">Email 2</label><input type="text" name="Email2" id="Email2" size=30 /></li>
+                        <li><label for="Email3">Email 3</label><input type="text" name="Email3" id="Email3" size=30 /></li>
+                        <li><label for="Phone1">Phone 1</label><input type="text" name="Phone1" id="Phone1" size=40 /></li>
+                        <li><label for="Phone2">Phone 2</label><input type="text" name="Phone2" id="Phone2" size=40 /></li>		
                         <li><label for="Notes">Notes</label><textarea name="Notes" id="Notes" cols="30" rows="3"></textarea></li> 
                     </ul>
                     <ul id="navlist">
-                        <li><input type="submit" name="btn" id="submit" value="Submit"></input></li>
-                        <li><input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)"></input></li> 
-                        <li><input type="button" name="btn" id="home" value="Main Menu" onclick="window.location.href ='WTD.html';" ></input></li>
-                        <li><input type="button" name="btn" id="again" value="Add Another" onclick="document.location.reload(true)"></input></li>                        
+                        <li><input type="submit" name="btn" id="submit" value="Submit"/></li>
+                        <li><input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)" /></li> 
+                        <li><input type="button" name="btn" id="home" value="Main Menu" onclick="window.location.href ='WTD.html';" /></li>
+                        <li><input type="button" name="btn" id="again" value="Add Another" onclick="document.location.reload(true)"/></li>                        
                     </ul>
                         <center><p><span id="addNutResponse"></span></p></center>
-                </form>
-            </fieldset>
+                </fieldset>
+            </form>
         </div>
 	</div>	
 </body>
