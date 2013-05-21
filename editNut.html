@@ -18,7 +18,11 @@
          // Handler for .ready() called.
         $("#editNutForm").validate({
            rules: {
-                    SirName: "required",                          
+                    SirName: {
+                        required: true,
+                        minlength: 3
+                    },
+                    Addr4: "required",                    
                     Email1: {
                         required:false,
                         email: true
@@ -33,7 +37,11 @@
                     }
            },
            messages: {               
-                    SirName: "Must include Family Name",
+                   SirName: {
+                          required: "Must include Family Name",
+                          minlength: "Name too short!" /*jQuery.format("At least{0} letters!")  */
+                    },
+                    Addr4: "Add country!",                    
                     Email1:{
  /*                       required: "Must include valid email",  */
                         email: "Email address malformed"
