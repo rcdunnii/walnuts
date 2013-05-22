@@ -13,3 +13,5 @@ custom-demo.html
 *.orig
 textarea.html
 validate.html
+*.txt
+*.sql

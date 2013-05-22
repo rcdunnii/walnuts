@@ -1,6 +1,5 @@
 <?php
-
-   
+  
    function createDB() {   		
         require 'dbFoxy.inc';  // database info			
 		$mysqli = new mysqli($server, $user, $password);
@@ -117,15 +116,44 @@
 		return;					
 	}
 	
+    function backUpWalnutDB() {
+        require 'dbFoxy.inc';    
+        $dir = "db_backup";  
+        //if the db directory doesn't exist yet, create it
+        if (!is_dir($dir))
+            mkdir($dir);  
+        //create the file name for the backup (if you want to run the update more frequently than once a day, add more specificity to the date
+        $backupfile = $dir.'/'.$database.'_'.date("m-d-Y_H-i-s").'.sql';   
+        //make the system call to mysqldump
+        exec("mysqldump --user=$user --password=$password --host=$server $database > $backupfile", $output, $result);           
+        if ($result == 0) {
+            header("Content-Description: File Transfer"); 
+            header("Content-Type: application/octet-stream"); 
+            header("Content-Disposition: attachment; filename=\"$backupfile\"");
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($backupfile));
+            ob_clean();
+            flush();            
+            readfile ($backupfile);
+        } else {
+            var_dump($output);
+            echo "$backupfile unable to be created - error # $result";
+        }
+        return;        
+    }
 	
 	if (($_REQUEST['value']) != "") {
-	   $whichWalnut = $_REQUEST['value'];
-	   if ($whichWalnut == "createDB") {
-		  createDB();
-	   } elseif ($whichWalnut == "deleteDB") {				
-		 deleteDB();
-	   } else {
-		 echo "Uh oh...";			   
+	   $whichDashBoardOpt = $_REQUEST['value'];
+	   if ($whichDashBoardOpt == "createDB") {
+           createDB();
+	   } elseif ($whichDashBoardOpt == "deleteDB") {				
+		   deleteDB();
+	   } elseif ($whichDashBoardOpt == "bkUpDB") {      
+           backUpWalnutDB();
+       } else {
+		   echo "Uh oh...";			   
 	   }  
 	} else {
 		echo "please enter choice before submitting the form!";

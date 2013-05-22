@@ -209,7 +209,7 @@ function ajaxWalnutFunction() {
     var xhr, i, user_input, openResult, walnutOptionChoices, theHost;  // The variable that makes Ajax possible!
 
 // first get user radio button choice
-    walnutOptionChoices = document.getElementsByName("walnuts");
+    walnutOptionChoices = document.getElementsByName("dashBoardOpts");
     for (i = 0; i < walnutOptionChoices.length; i += 1) {
         if (walnutOptionChoices[i].checked) {
             user_input = walnutOptionChoices[i].value;
@@ -232,7 +232,6 @@ function ajaxWalnutFunction() {
             openResult = window.open("https://" + theHost + "/listNuts.html", "_self"); // listNuts.html only called by Foxy
             return false;
         }
-
     } else {
         document.getElementById("response").innerHTML = "No choice selected - pick a button or quit!";
         return false;  // nada checked
@@ -268,40 +267,7 @@ function getPostDataJSON(hasID) {
 function ajaxAddNuts() {
     'use strict';
     var addData, xhr, validEm = false, emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
- /*    now using jQuery validation  
-    if (document.getElementById('SirName').value.length === 0) {
-        alert('Need Family Name! Try again...');
-        document.forms[0].SirName.focus();
-        return true;
-    }
-    
-    if (document.getElementById('Email1').value.length !== 0) {
-        validEm = emailPattern.test(document.getElementById('Email1').value);
-        if (false === validEm) {
-            alert('Invalid 1st Email field');
-            document.forms[0].Email1.focus();
-            return true;
-        }
-    }
-    
-    if (document.getElementById('Email2').value.length !== 0) {
-        validEm = emailPattern.test(document.getElementById('Email2').value);
-        if (false === validEm) {
-            alert('Invalid 2nd Email field');
-            document.forms[0].Email2.focus();
-            return true;
-        }
-    }
-    
-    if (document.getElementById('Email3').value.length !== 0) {
-        validEm = emailPattern.test(document.getElementById('Email3').value);
-        if (false === validEm) {
-            alert('Invalid 3rd Email field');
-            document.forms[0].Email3.focus();
-            return true;
-        }
-    }
- */
+
     // get local ajax request obj
     xhr = createXHR();
 
