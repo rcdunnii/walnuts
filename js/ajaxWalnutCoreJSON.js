@@ -252,21 +252,44 @@ function ajaxWalnutFunction() {
     xhr.send(null);
 }
 
-// called by ajaxAddNuts and postEditedNut()
-function getPostDataJSON(hasID) {
+// called by ajaxAddNuts and ajaxEditNut()
+function getPostDataJSON() {
     'use strict';
     var data_json = "", send_data = "";
-    if (!hasID) {
-        document.forms[0].walnutID.value = null;
-    }
+ 
+    $.fn.serializeObject = function() {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };               
+/*   data_json = JSON.stringify($("#addNutForm").serializeObject());      */
+    data_json = $("#nutForm").serializeObject();
+    data_json.Created = "";
+    data_json.Updated = "";    
+    data_json = JSON.stringify(data_json);
+
+
+/*
+  
     data_json = '{"walnutID": "' + document.forms[0].walnutID.value + '","SirName":"' + document.forms[0].SirName.value + '","Names":"' + document.forms[0].Names.value + '","FormalNames":"' + document.forms[0].FormalNames.value + '","Children":"' + document.forms[0].Children.value + '","Addr1":"' + document.forms[0].Addr1.value + '","Addr2"  : "' + document.forms[0].Addr2.value + '","Addr3"  : "' + document.forms[0].Addr3.value + '","Addr4"  : "' + document.forms[0].Addr4.value + '","Email1" : "' + document.forms[0].Email1.value + '","Email2" : "' + document.forms[0].Email2.value + '","Email3" : "' + document.forms[0].Email3.value + '","Phone1" : "' + document.forms[0].Phone1.value + '","Phone2" : "' + document.forms[0].Phone2.value + '","Notes"  : "' + document.forms[0].Notes.value + '", "Created" : "", "Updated" : ""}';
-    send_data = 'value=' + data_json;
+ */   
+    send_data = 'value=' + data_json; 
     return send_data;
 }
 
 function ajaxAddNuts() {
     'use strict';
-    var addData, xhr, validEm = false, emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    var addData, xhr;
 
     // get local ajax request obj
     xhr = createXHR();
@@ -280,7 +303,7 @@ function ajaxAddNuts() {
             document.getElementById("addNutResponse").innerHTML = xhr.responseText;
         }
     };
-    addData = getPostDataJSON(false); // false means no walnutID in hidden field since new addition to DB and mysql assigns walnutID
+    addData = getPostDataJSON();
     xhr.open("POST", "addNut.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     addData = encodeURI(addData);
@@ -445,7 +468,8 @@ function confirmDel(nutId) {
 function getOrigNut(nutID) {
     'use strict';
     // target ID: value=# where # is 7th char
-    var s, nut, xhr, i, frm = document.getElementById("editNutForm");
+/*    var s, nut, xhr, i, frm = document.getElementById("editNutForm");  */
+    var s, nut, xhr, i, frm = document.getElementById("nutForm");
     // get ajax request obj
     xhr = createXHR();
     if (!xhr) {
@@ -470,7 +494,7 @@ function getOrigNut(nutID) {
 }
 
 // called by editNut.html on submit of form
-function postEditedNut() {
+function ajaxEditNut() {
     'use strict';
     // get ajax request obj
     var requester,
@@ -481,8 +505,8 @@ function postEditedNut() {
         return false;
     }
 
-    requester = document.forms[0].user.value;
-
+/*     requester = document.forms[0].user.value;  */
+       requester = $("#nutForm input[name=user]").val();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById("editNutResponse").innerHTML = xhr.responseText;
@@ -496,7 +520,7 @@ function postEditedNut() {
             }
         }
     };
-    editData = getPostDataJSON(true); // true param means form contains walnutID data in hidden input field - autoincrement value in mysql
+    editData = getPostDataJSON(); 
     xhr.open("POST", "editNut.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(editData);

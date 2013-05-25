@@ -16,7 +16,8 @@
     <script type="text/javascript">
     $(function() {
          // Handler for .ready() called.
-        $("#editNutForm").validate({
+  /*      $("#editNutForm").validate({   */
+       $("#nutForm").validate({   
            rules: {
                     SirName: {
                         required: true,
@@ -43,21 +44,18 @@
                     },
                     Addr4: "Add country!",                    
                     Email1:{
- /*                       required: "Must include valid email",  */
                         email: "Email address malformed"
                        },
                     Email2:{
-/*                        required: "Must include valid email",  */
                         email: "Email address malformed"
                        },
                      Email3:{
-/*                        required: "Must include valid email",  */
                         email: "Email address malformed"
                        },              
            },
            debug: true,
            submitHandler: function(form) {
-               postEditedNut()
+               ajaxEditNut()
            }
         });       
     });
@@ -73,8 +71,8 @@
             <h1><center>Walnuts Galore!</center></h1>
             <h3><center>Edit Nut in Our WT Database</center></h3>
             <p><center><span id="spinner">&nbsp;</span></center></p>
- <!--           <form action="" id="editNutForm" onsubmit="postEditedNut(); return false;">   -->
-            <form action="" id="editNutForm" >            
+ <!--           <form action="" id="editNutForm" onsubmit="ajaxEditNut(); return false;">   -->
+            <form action="" id="nutForm" >            
                 <fieldset>                                                                 
                         <input type="hidden" name="walnutID" id="walnutID"/>
                         <input type="hidden" name="user" id="user"/>                          
