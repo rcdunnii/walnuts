@@ -252,8 +252,8 @@ function ajaxWalnutFunction() {
     xhr.send(null);
 }
 
-// called by ajaxAddNuts and ajaxEditNut()
-function getPostDataJSON() {
+// called by ajaxAddNuts() and ajaxEditNut()
+function getPostDataJSON(theForm) {
     'use strict';
     var data_json = "", send_data = "";
  
@@ -272,8 +272,7 @@ function getPostDataJSON() {
         });
         return o;
     };               
-/*   data_json = JSON.stringify($("#addNutForm").serializeObject());      */
-    data_json = $("#nutForm").serializeObject();
+    data_json = $("#" + theForm).serializeObject();
     data_json.Created = "";
     data_json.Updated = "";    
     data_json = JSON.stringify(data_json);
@@ -303,7 +302,7 @@ function ajaxAddNuts() {
             document.getElementById("addNutResponse").innerHTML = xhr.responseText;
         }
     };
-    addData = getPostDataJSON();
+    addData = getPostDataJSON("addNutForm");
     xhr.open("POST", "addNut.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     addData = encodeURI(addData);
@@ -468,8 +467,11 @@ function confirmDel(nutId) {
 function getOrigNut(nutID) {
     'use strict';
     // target ID: value=# where # is 7th char
-/*    var s, nut, xhr, i, frm = document.getElementById("editNutForm");  */
-    var s, nut, xhr, i, frm = document.getElementById("nutForm");
+    var s,
+    nut,
+    xhr,
+    key;
+    
     // get ajax request obj
     xhr = createXHR();
     if (!xhr) {
@@ -479,26 +481,26 @@ function getOrigNut(nutID) {
     // Create a function that will receive data sent from the server
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            s = xhr.responseText;
-            nut = JSON.parse(s);
-            for (i in nut) {
-                if (i in frm.elements) {
-                    frm.elements[i].value = nut[i];
-                }
-            }
+             s = xhr.responseText;
+             nut = $.parseJSON(s);
+             for (key in nut) {
+                 $("#editNutForm " + "[name='" + key + "']").val(nut[key]);
+             }           
             return;
-        }
-    };
+        };
+   };   
     xhr.open("GET", "getNut.php?value=" + nutID,  true);
     xhr.send(null);
-}
+}    
 
 // called by editNut.html on submit of form
 function ajaxEditNut() {
     'use strict';
     // get ajax request obj
-    var requester,
-        editData,
+    var xhr,
+        requester,
+        editData;
+
    // Create a function that will receive data sent from the server
         xhr = createXHR();
     if (!xhr) {
@@ -506,8 +508,8 @@ function ajaxEditNut() {
     }
 
 /*     requester = document.forms[0].user.value;  */
-       requester = $("#nutForm input[name=user]").val();
     xhr.onreadystatechange = function () {
+        requester = $("#editNutForm input[name=user]").val();
         if (xhr.readyState === 4 && xhr.status === 200) {
             document.getElementById("editNutResponse").innerHTML = xhr.responseText;
             if (requester === 'Foxy') {
@@ -520,7 +522,7 @@ function ajaxEditNut() {
             }
         }
     };
-    editData = getPostDataJSON(); 
+    editData = getPostDataJSON("editNutForm"); 
     xhr.open("POST", "editNut.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(editData);

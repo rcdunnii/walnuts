@@ -206,11 +206,9 @@
 	   padding: 0;
 	   color: white;
 	}
- /*
+ 
     form#addNutForm fieldset ul li label.error,
     form#editNutForm fieldset ul li label.error
-*/
-   form#nutForm fieldset ul li label.error 
       {
         display: block;
         float: left;
@@ -301,10 +299,8 @@
         color:#EEDC82; /* flax  */
     }
     
- /*   #editNutForm,
+    #editNutForm,
     #addNutForm
-*/
-    #nutForm    
       {
         position: relative;
         width: 100%;
@@ -342,10 +338,8 @@
         border: 0;  
     }
        
-/*     form#editNutForm fieldset ul,
-     form#addNutForm fieldset ul 
-*/
-     form#nutForm fieldset ul      
+     form#editNutForm fieldset ul,
+     form#addNutForm fieldset ul  
        {
      width: 95%;
      height: 97%;
@@ -353,10 +347,8 @@
      margin: 0.2em auto;
      }
      
- /*   form#editNutForm fieldset ul li,
+    form#editNutForm fieldset ul li,
     form#addNutForm fieldset ul li 
-*/
-     form#nutForm fieldset ul li   
       {
         text-align: left;
         margin-left: 10px;
@@ -366,10 +358,8 @@
         padding: 5px;        
     }
       
-/*    form#editNutForm fieldset ul li label,
+    form#editNutForm fieldset ul li label,
     form#addNutForm fieldset ul li  label
-*/  
-    form#nutForm fieldset ul li  label  
       {
         display: block;
         width: 200px;
@@ -380,10 +370,8 @@
         font: bold 16px arial;
     }
  
- /*   form#editNutForm fieldset ul li input,
-    form#addNutForm fieldset ul li input 
- */    
-    form#nutForm fieldset ul li input         
+    form#editNutForm fieldset ul li input,
+    form#addNutForm fieldset ul li input        
       {
         display: block;
         float:left;
@@ -394,18 +382,14 @@
         border: 2px inset;
     }
         
- /*   form#editNutForm fieldset ul li textarea#Notes,
+    form#editNutForm fieldset ul li textarea#Notes,
     form#addNutForm fieldset ul li textarea#Notes
-*/
-   form#nutForm fieldset ul li textarea#Notes
       {
         margin-left:0;
     }
     
- /*   form#addNutForm fieldset ul#navlist,
+    form#addNutForm fieldset ul#navlist,
     form#editNutForm fieldset ul#navlist
-*/ 
-  form#nutForm fieldset ul#navlist   
       { 
         position: absolute;
         width: 430px;
@@ -418,19 +402,15 @@
         list-style-type: none;
     }
     
-/*    form#addNutForm fieldset ul#navlist li,
+    form#addNutForm fieldset ul#navlist li,
     form#editNutForm fieldset ul#navlist  li
-*/ 
-   form#nutForm fieldset ul#navlist  li   
       {
         padding: 0 .5em;
         width: 8em;     
     }
 	
- /*   form#addNutForm fieldset ul#navlist li #submit,
+    form#addNutForm fieldset ul#navlist li #submit,
     form#editNutForm fieldset ul#navlist li #submit 
-*/ 
-   form#nutForm fieldset ul#navlist li #submit    
       {
         display: inline;
         position: absolute;
@@ -445,10 +425,8 @@
         border-color: #cec #464 #575 #dfd;        
     }
   
- /*   form#addNutForm fieldset ul#navlist li #reset,
+    form#addNutForm fieldset ul#navlist li #reset,
     form#editNutForm fieldset ul#navlist li #reset
-*/ 
-   form#nutForm fieldset ul#navlist li #reset   
       {
         display: inline;
         position: absolute;
@@ -463,10 +441,8 @@
         border-color: #cec #464 #575 #dfd;         
     }
     
-/*    form#addNutForm fieldset ul#navlist li #home,
-    form#editNutForm fieldset ul#navlist li #home 
-*/
-   form#nutForm fieldset ul#navlist li #home     
+    form#addNutForm fieldset ul#navlist li #home,
+    form#editNutForm fieldset ul#navlist li #home  
       {
         display: inline;
         position: absolute;
@@ -481,8 +457,7 @@
         border-color: #cec #464 #575 #dfd;         
     }
     
-  /*  form#addNutForm fieldset ul#navlist li #again  */
-   form#nutForm fieldset ul#navlist li #again  
+   form#addNutForm fieldset ul#navlist li #again 
    { 
         display: inline;
         position: absolute;
@@ -496,16 +471,11 @@
         border: 1px solid;
         border-color: #cec #464 #575 #dfd;         
     }    
- /*   
+    
     form#addNutForm fieldset ul#navlist li #submit:hover,
     form#addNutForm fieldset ul#navlist li #reset:hover,
     form#addNutForm fieldset ul#navlist li #home:hover,
-    form#addNutForm fieldset ul#navlist li #again:hover
-*/
-    form#nutForm fieldset ul#navlist li #submit:hover,
-    form#nutForm fieldset ul#navlist li #reset:hover,
-    form#nutForm fieldset ul#navlist li #home:hover,
-    form#nutForm fieldset ul#navlist li #again:hover        
+    form#addNutForm fieldset ul#navlist li #again:hover  
       {
         background-color: brown;
         color: #FFF;
