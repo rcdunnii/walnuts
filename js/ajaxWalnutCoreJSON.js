@@ -275,19 +275,22 @@ function getPostDataJSON(theForm) {
     data_json = $("#" + theForm).serializeObject();
     data_json.Created = "";
     data_json.Updated = "";    
-    data_json = JSON.stringify(data_json);
+ /*   data_json = JSON.stringify(data_json);
 
 
-/*
+
   
     data_json = '{"walnutID": "' + document.forms[0].walnutID.value + '","SirName":"' + document.forms[0].SirName.value + '","Names":"' + document.forms[0].Names.value + '","FormalNames":"' + document.forms[0].FormalNames.value + '","Children":"' + document.forms[0].Children.value + '","Addr1":"' + document.forms[0].Addr1.value + '","Addr2"  : "' + document.forms[0].Addr2.value + '","Addr3"  : "' + document.forms[0].Addr3.value + '","Addr4"  : "' + document.forms[0].Addr4.value + '","Email1" : "' + document.forms[0].Email1.value + '","Email2" : "' + document.forms[0].Email2.value + '","Email3" : "' + document.forms[0].Email3.value + '","Phone1" : "' + document.forms[0].Phone1.value + '","Phone2" : "' + document.forms[0].Phone2.value + '","Notes"  : "' + document.forms[0].Notes.value + '", "Created" : "", "Updated" : ""}';
- */   
+    
     send_data = 'value=' + data_json; 
     return send_data;
+*/ 
+    return {data: data_json};   
 }
 
 function ajaxAddNuts() {
     'use strict';
+/*    
     var addData, xhr;
 
     // get local ajax request obj
@@ -307,6 +310,25 @@ function ajaxAddNuts() {
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     addData = encodeURI(addData);
     xhr.send(addData);
+*/
+    var addData;    
+    addData = getPostDataJSON("addNutForm");
+    $.ajax({
+        type: "POST",
+        url:"addNut.php",
+        data: addData,
+        error: function() {
+            $('#addNutResponse').text("Update failed").slideDown('slow'); 
+        },
+        success: function(dataReturned) {
+           $('#addNutResponse').text(dataReturned);
+        },
+        complete: function() {
+            setTimeout(function() {
+                $('#addNutResponse'); /*.slideUp('slow'); */
+            }, 8000);
+        }
+    });
 }
 
 function getParameterByName(name) {
@@ -497,7 +519,7 @@ function getOrigNut(nutID) {
 function ajaxEditNut() {
     'use strict';
     // get ajax request obj
-    var xhr,
+/*    var xhr,
         requester,
         editData;
 
@@ -507,7 +529,6 @@ function ajaxEditNut() {
         return false;
     }
 
-/*     requester = document.forms[0].user.value;  */
     xhr.onreadystatechange = function () {
         requester = $("#editNutForm input[name=user]").val();
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -526,4 +547,32 @@ function ajaxEditNut() {
     xhr.open("POST", "editNut.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(editData);
+*/
+    var editData, requester;    
+    editData = getPostDataJSON("editNutForm");
+    $.ajax({
+        type: "POST",
+        url:"editNut.php",
+        data: editData,
+        error: function() {
+            $('#editNutResponse').text("Update failed").slideDown('slow'); 
+        },
+        success: function(dataReturned) {
+           $('#editNutResponse').text(dataReturned);
+           requester = $("#editNutForm input[name=user]").val();
+           if (requester === 'Foxy') {
+                window.open("listNuts.html", "_self"); // listNuts.html only called by Foxy
+            } else if (requester === 'Walnut') {
+                window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
+            } else {
+                alert("Error: Undefined requester " + requester);
+                return;
+            }           
+        },
+        complete: function() {
+            setTimeout(function() {
+                $('#editNutResponse'); /*.slideUp('slow'); */
+            }, 8000);
+        }
+    });    
 }

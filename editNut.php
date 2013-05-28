@@ -11,15 +11,9 @@
 			printf("Connect failed: %s\n", $mysqli->connect_error);
 			exit();
 		}
-		
-		if (!($_POST['value'])) {
-			echo 'Error: No data posted to editNut.php';			
-			return FALSE;
-		}
-		$str_json = $_POST['value'];		
-		
-		$f = json_decode($str_json, true);         // Decode the JSON string and turn it into an array $f
-		
+        
+	    $f =($_POST['data']); 
+        
 		// create a prepared statement 
 		if ( !($stmt = $mysqli->prepare("UPDATE nuts SET SirName=?, Names=?, FormalNames=?, Children=?, Addr1=?, Addr2=?, Addr3=?,Addr4=?, Email1=?, Email2=?, Email3=?, Phone1=?, Phone2=?, Notes=? WHERE walnutID=?"))) {
 			 echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
