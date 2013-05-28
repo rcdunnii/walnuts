@@ -488,7 +488,7 @@ function confirmDel(nutId) {
 // next 2 fxns called by editNut.html page
 function getOrigNut(nutID) {
     'use strict';
-    // target ID: value=# where # is 7th char
+ /*   // target ID: value=# where # is 7th char
     var s,
     nut,
     xhr,
@@ -513,8 +513,28 @@ function getOrigNut(nutID) {
    };   
     xhr.open("GET", "getNut.php?value=" + nutID,  true);
     xhr.send(null);
-}    
+*/
+    var key, valOfKey, jqxhr;    
 
+    jqxhr = $.ajax({
+        dataType: 'json',   
+        url:"getNut.php",
+        data: "value=" + nutID
+    }).done(function(dataReturned) {
+            $.each(dataReturned, function(key, valOfKey) {
+                $("#editNutForm " + "[name='" + key + "']").val(valOfKey);
+            });
+       })
+      .fail(function(dataReturned) {
+            $('#editNutResponse').text("error: " + dataReturned).slideDown('slow'); 
+        }) 
+      .always(function() {
+            setTimeout(function() {
+                $('#editNutResponse').slideUp('slow');
+            }, 8000);
+      });    
+}    
+ 
 // called by editNut.html on submit of form
 function ajaxEditNut() {
     'use strict';
@@ -571,7 +591,7 @@ function ajaxEditNut() {
         },
         complete: function() {
             setTimeout(function() {
-                $('#editNutResponse'); /*.slideUp('slow'); */
+                $('#editNutResponse').slideUp('slow');
             }, 8000);
         }
     });    
