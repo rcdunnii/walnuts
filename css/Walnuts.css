@@ -319,14 +319,18 @@
         left: 180px;        
         font: italic 800 18px sans-serif;
     } 
-    
+   
     #spinner {
         position: absolute;
-        width: 20px;
-        height: 20px;  
-        top: 110px;
+        display: none;
+        background-image: url("/images/ajax-loader.gif");
+        width: 32px;
+        height: 32px;  
+        top: 25%;
+        left: 50%;
         background-color: transparent;
     }
+
     
     fieldset {
         position: relative;

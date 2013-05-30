@@ -432,10 +432,10 @@ function displayPage(requester, nutEntries) {
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
 function ajaxListNuts(requester) {
-
-    // get local ajax request obj
-    'use strict';
-    var walnutEntries = [], xhr = createXHR();
+ /*   // get local ajax request obj
+   
+    
+    var xhr = createXHR();
     if (!xhr) {
         return false;
     }
@@ -461,10 +461,46 @@ function ajaxListNuts(requester) {
     //call php fxn to open Walnuts db and retieve/return all records for display
     xhr.open("GET", "listNuts.php", true);
     xhr.send(null);
+*/
+    'use strict';
+    
+    var walnutEntries = []; 
+    
+    var jqxhr = $.ajax({
+        type: "GET",
+        url: "listNuts.php",
+        beforeSend: function() {            
+           $("#spinner").show();
+           if (requester === 'Walnut') {
+               $("#editHint").hide();
+           }               
+        }
+    })
+      .done(function(dataReturned) {
+          $("#spinner").hide(); 
+          walnutEntries  = JSON && JSON.parse(dataReturned) || $.parseJSON(dataReturned);
+          displayPage(requester, walnutEntries);
+          $("body").removeClass("loading");          
+          $(".content").mCustomScrollbar({
+                mouseWheel: true,
+                scrollButtons: {
+                    enable: true
+                }
+            });
+            if (requester === 'Foxy') {
+                $("#mainMenu").css('display','block');
+            } else { // only 2 possible requesters - Foxy and Walnut
+                $("#editHint").show();
+            }               
+      })
+       .fail(function() {
+            alert("List Nuts failed");
+        });
 }
-
+        
 function confirmDel(nutId) {
     'use strict';
+/*
     var xhr, r = confirm("Are you sure?");
     if (r === true) {
         xhr = createXHR();
@@ -483,7 +519,22 @@ function confirmDel(nutId) {
     } else {
         return;
     }
-}
+*/
+    var jqxhr, r = confirm("Are you sure?");
+    if (r === true) {
+        jqxhr = $.ajax ({
+            type : "GET",
+            url : "delNut.php",
+            data : "value= " + nutId
+        })
+            .done(function() {
+                window.open("listNuts.html", "_self");
+            })
+            .fail(function() {
+                alert("Delete failed ID: " + nutId);
+            });            
+    }
+}    
 
 // next 2 fxns called by editNut.html page
 function getOrigNut(nutID) {
@@ -569,15 +620,16 @@ function ajaxEditNut() {
     xhr.send(editData);
 */
     var editData, requester;    
-    editData = getPostDataJSON("editNutForm");
+/*  editData = getPostDataJSON("editNutForm");    */
     $.ajax({
         type: "POST",
         url:"editNut.php",
-        data: editData,
-        error: function() {
-            $('#editNutResponse').text("Update failed").slideDown('slow'); 
+        beforeSend: function() {
+            editData = getPostDataJSON("editNutForm");
         },
-        success: function(dataReturned) {
+        data: editData
+    })
+     .done(function(dataReturned) {
            $('#editNutResponse').text(dataReturned);
            requester = $("#editNutForm input[name=user]").val();
            if (requester === 'Foxy') {
@@ -588,11 +640,13 @@ function ajaxEditNut() {
                 alert("Error: Undefined requester " + requester);
                 return;
             }           
-        },
-        complete: function() {
+        })
+      .fail(function() {
+            $('#editNutResponse').text("Update failed").slideDown('slow'); 
+        })        
+       .always(function() {
             setTimeout(function() {
                 $('#editNutResponse').slideUp('slow');
             }, 8000);
-        }
-    });    
+        });   
 }
