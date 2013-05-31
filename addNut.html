@@ -10,7 +10,9 @@
     <script src="js/jquery.validate.js" type="text/javascript"></script>  
 	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js"></script>
     <script type="text/javascript">
+
     $(function() { 
+         $('form:first *:input[type!=hidden]:first').focus();
          // Handler for .ready() called.
          $("#addNutForm").validate({ 
            rules: {
