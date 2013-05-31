@@ -257,9 +257,11 @@
       {
         position: relative;
         width: 700px;
+        height: 350px;
         top: 30%;
         margin-left: auto;
         margin-right: auto;
+        margin-top: 10px;
         color: #000;
         background: #FFF;
     }
@@ -272,10 +274,16 @@
         margin-right: auto ;
         text-align: left;
     }
-    #response 
+    
+    #response
       {
         font: italic 16px sans-serif;
     }
+    
+    .redText {
+        color: red;
+        margin: 10px;
+    }    
     
     #editNutPage ,
     #addNutPage

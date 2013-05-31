@@ -3,7 +3,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<title>Walnut Tally Dashboard</title>
-	<link rel="stylesheet" href="/css/Walnuts.css"/>	
+	<link rel="stylesheet" href="/css/Walnuts.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/jquery.lint.js"></script>	
 	<script type="text/javascript" src="/js/ajaxWalnutCoreJSON.js" ></script>
     <script type="text/javascript">
 	    if (readCookie('foxyCookie') == null) {
@@ -26,12 +28,12 @@
                     <input type="radio" id="bkUpDB"   name="dashBoardOpts" value="bkUpDB"/>Back Up WT Database!<br>                    
                     <input type="radio" id="addEntry" name="dashBoardOpts" value="add" />Add New Entry<br>
                     <input type="radio" id="listNuts" name="dashBoardOpts" value="list" />List Entries<br>
-                    <input type="submit" id="myPick" name="myPick" value="Go!" />						
+                    <input type="submit" id="myPick"  value="Go!" />						
             </form>
         </div>
-	    <div><center><p><span id="response">Select button above, then press Go!</span></center></div> 
+        <div><center><p id="response">Select button above, then press Go!</p></center></div>  
 	
 	</div>
-	
+
 </body>
 </html>
