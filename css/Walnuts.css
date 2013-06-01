@@ -88,7 +88,8 @@
         margin-top: -364px;   /* http://stackoverflow.com/questions/2005954/center-element-with-positionfixed */
         margin-left: -500px;  /* BE SURE TO CHANGE margin-top and margin-left IF YOU CHANGE WIDTH AND OR HEIGHT!  MUST BE HALF OF EACH */
         background:#421E13;
- 
+	    -moz-border-radius-bottomright: 50px;
+		border-bottom-right-radius: 50px;
     }
     
     .walnutContainer {
