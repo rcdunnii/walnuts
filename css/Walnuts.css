@@ -258,9 +258,11 @@
       {
         position: relative;
         width: 700px;
+        height: 350px;
         top: 30%;
         margin-left: auto;
         margin-right: auto;
+        margin-top: 10px;
         color: #000;
         background: #FFF;
     }
@@ -273,10 +275,16 @@
         margin-right: auto ;
         text-align: left;
     }
-    #response 
+    
+    #response
       {
         font: italic 16px sans-serif;
     }
+    
+    .redText {
+        color: red;
+        margin: 10px;
+    }    
     
     #editNutPage ,
     #addNutPage
@@ -301,7 +309,7 @@
     }
     
     #editNutForm,
-    #addNutForm 
+    #addNutForm
       {
         position: relative;
         width: 100%;
@@ -320,14 +328,18 @@
         left: 180px;        
         font: italic 800 18px sans-serif;
     } 
-    
+   
     #spinner {
         position: absolute;
-        width: 20px;
-        height: 20px;  
-        top: 110px;
+        display: none;
+        background-image: url("/images/ajax-loader.gif");
+        width: 32px;
+        height: 32px;  
+        top: 25%;
+        left: 50%;
         background-color: transparent;
     }
+
     
     fieldset {
         position: relative;
@@ -340,7 +352,7 @@
     }
        
      form#editNutForm fieldset ul,
-     form#addNutForm fieldset ul 
+     form#addNutForm fieldset ul  
        {
      width: 95%;
      height: 97%;
@@ -372,7 +384,7 @@
     }
  
     form#editNutForm fieldset ul li input,
-    form#addNutForm fieldset ul li input     
+    form#addNutForm fieldset ul li input        
       {
         display: block;
         float:left;
@@ -390,7 +402,7 @@
     }
     
     form#addNutForm fieldset ul#navlist,
-    form#editNutForm fieldset ul#navlist    
+    form#editNutForm fieldset ul#navlist
       { 
         position: absolute;
         width: 430px;
@@ -404,14 +416,14 @@
     }
     
     form#addNutForm fieldset ul#navlist li,
-    form#editNutForm fieldset ul#navlist  li   
+    form#editNutForm fieldset ul#navlist  li
       {
         padding: 0 .5em;
         width: 8em;     
     }
 	
     form#addNutForm fieldset ul#navlist li #submit,
-    form#editNutForm fieldset ul#navlist li #submit       
+    form#editNutForm fieldset ul#navlist li #submit 
       {
         display: inline;
         position: absolute;
@@ -427,7 +439,7 @@
     }
   
     form#addNutForm fieldset ul#navlist li #reset,
-    form#editNutForm fieldset ul#navlist li #reset           
+    form#editNutForm fieldset ul#navlist li #reset
       {
         display: inline;
         position: absolute;
@@ -443,7 +455,7 @@
     }
     
     form#addNutForm fieldset ul#navlist li #home,
-    form#editNutForm fieldset ul#navlist li #home           
+    form#editNutForm fieldset ul#navlist li #home  
       {
         display: inline;
         position: absolute;
@@ -458,7 +470,8 @@
         border-color: #cec #464 #575 #dfd;         
     }
     
-    form#addNutForm fieldset ul#navlist li #again {
+   form#addNutForm fieldset ul#navlist li #again 
+   { 
         display: inline;
         position: absolute;
         height: 25px;        
@@ -475,7 +488,7 @@
     form#addNutForm fieldset ul#navlist li #submit:hover,
     form#addNutForm fieldset ul#navlist li #reset:hover,
     form#addNutForm fieldset ul#navlist li #home:hover,
-    form#addNutForm fieldset ul#navlist li #again:hover
+    form#addNutForm fieldset ul#navlist li #again:hover  
       {
         background-color: brown;
         color: #FFF;

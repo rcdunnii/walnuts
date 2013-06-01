@@ -10,17 +10,9 @@
 			printf("Connect failed: %s\n", $mysqli->connect_error);
 			exit();
 		}
-					
-	      
-		if (!($_POST['value'])) {
-			echo 'Error: No data posted to addNut.php';			
-			return FALSE;
-		}
-        
-		$str_json = urldecode($_POST['value']);
-	
-		$f = json_decode($str_json, true);         // Decode the JSON string and turn it into an array $f
-			
+
+        $f =($_POST['data']);         
+                  
 		// create a prepared statement 
 		if (false === ($stmt = $mysqli->prepare("INSERT INTO nuts VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"))) {
 			 echo "Prepare failed - addNut.php line 22: (" . $mysqli->errno . ") " . $mysqli->error;

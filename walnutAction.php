@@ -18,13 +18,17 @@
 
 		if ($mysqli->error) {
 			try {    
-				throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);    
+	/*			throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);       */
+    		    throw new Exception("MySQL error $mysqli->error ", $mysqli->errno);
 			} catch(Exception $e ) {
-				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+  
+                echo "Error No: ".$e->getCode(). " - ". $e->getMessage();          
+/*				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
 				echo nl2br($e->getTraceAsString());
+*/                
 				}
 			$mysqli->close();
-			return;
+			return false;
 		}	
 		$mysqli = new mysqli($server, $user, $password, $database );
 		if ($mysqli->connect_errno) {
@@ -127,22 +131,7 @@
         //make the system call to mysqldump
         exec("mysqldump --user=$user --password=$password --host=$server $database > $backupfile", $output, $result);
         if ($result == 0) {           
- /*           header("Content-Description: File Transfer"); 
-            header("Content-Type: application/octet-stream"); 
-            header("Content-Disposition: attachment; filename=\"$backupfile\"");
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($backupfile));
-            ob_clean();
-            flush();            
-            readfile ($backupfile);
-        } else {
-            var_dump($output);
-            echo "$backupfile unable to be created - error # $result";
-        }
-*/
-            echo ("<a href=\"$backupfile\" download>Backup OK! Click to Download</a>"); 
+           echo ("<p>Backup OK!<br /><a class=\"downLoad\" href=\"$backupfile\" download>Click to Download</a>&nbsp;&nbsp;&nbsp;<a class= \"downLoad\" href=\"#\" >Skip Download</a></p>");
         } else {
             echo ("Backup failed with error # " . $result);
         }
