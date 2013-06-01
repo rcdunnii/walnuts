@@ -62,12 +62,13 @@
         color: red;
         bottom: 30px;
         left: 30px;
-        margin: 3px;
+        margin: 10px 10px;
     }
     
     #hintWrapper {
         position: relative;
-        left: 47px;
+        left: 52px;
+        margin-top: 10px;
     }  
     .leftImg {
         position: absolute;
