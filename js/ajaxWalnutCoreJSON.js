@@ -137,21 +137,22 @@ function ajaxAuthenticate(form, fxn, method) {
             pw = true;
             data_json += '"' + pair[0] + '" : "' + pair[1] + '"';
         }
+ 
         if (decodeURIComponent(pair[0]) === "captcha_code") {
-            if (decodeURIComponent(pair[0]) === "captcha_code") {
-                data_json += ',"' + pair[0] + '" : "' + pair[1] + '"';
-            }
-            if (decodeURIComponent(pair[0]) === "user") {
-                currentUser = decodeURIComponent(pair[1]);
-            }
+            data_json += ',"' + pair[0] + '" : "' + pair[1] + '"';
         }
-        if (!pw) {
-            errorElem.innerHTML = "Password incorrect!";
-            popUpElem.style.display = "none";
-            hintLinkElem.style.display = "block";
-            return false;
-        }
+        
+        if (decodeURIComponent(pair[0]) === "user") {
+            currentUser = decodeURIComponent(pair[1]);
+        }        
+     }
+    if (!pw) {
+        errorElem.innerHTML = "Password incorrect!";
+        popUpElem.style.display = "none";
+        hintLinkElem.style.display = "block";
+        return false;
     }
+   
     data_json += '}';
     send_data = 'value=' + data_json;
 
@@ -273,7 +274,7 @@ function ajaxWalnutFunction() {
                         $(".redText").remove();
                     });
             }
-            if (user_input === "createNutsBdayDB") {
+            if (user_input === "createNutsBDayDB") {
                 $("<div />")
                     .addClass("redText")
                     .text(responseData)
@@ -343,7 +344,7 @@ function ajaxAddBDay() {
     'use strict';
 
     var addBDayData;
-    addBDayData = getPostDataJSON("addBdayForm");
+    addBDayData = getPostDataJSON("addBDayForm");
     $.ajax({
         type: "POST",
         url: "addBDay.php",
@@ -398,6 +399,11 @@ function isEven(value) {
 function displayBDays(requester, nutEntries) {
     'use strict';
     var numNuts, i = 0,
+        j = 0,
+        lenSirName = 0,
+        sirNameSpace = 25,
+        spaceToFill = 0,
+        spaceStr = "",
         replacementStr = "",
         loopReplacementStr = "",
         theHost = "",
@@ -406,26 +412,35 @@ function displayBDays(requester, nutEntries) {
     theHost = location.host;
 // get # entries in database into var numNuts
     numNuts = nutEntries.length;
-    replacementStr = "<pre><br><br></pre>"; // add blank lines at top of list
+    $("#replace").append("<pre><br><br></pre>");
     for (i = 0; i < numNuts; i += 1) {
-        loopReplacementStr +=  nutEntries[i].bDayMM + "-";
-        loopReplacementStr += nutEntries[i].bDayDD + " ";
-        loopReplacementStr += "<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a> ";
-        if (requester === 'Foxy') {
-            loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\");' title='Delete'>" + " &times;</a> ";
+        loopReplacementStr += "&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
+        loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;&nbsp;&nbsp;&nbsp;";
+        loopReplacementStr += "<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
+        lenSirName = nutEntries[i].LastName.length;
+        spaceToFill = sirNameSpace - lenSirName;       
+        for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
+            spaceStr += ".";
         }
+        loopReplacementStr += spaceStr;        
         loopReplacementStr +=  nutEntries[i].FirstName + " ";
         loopReplacementStr +=  nutEntries[i].MiddleInit + " ";
-        loopReplacementStr +=  nutEntries[i].bDayYYYY + "<br></pre>";
+        loopReplacementStr +=  nutEntries[i].bDayYYYY + " ";
+        if (requester === 'Foxy') {
+            loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\");' title='Delete'>" + " &times;</a><br></pre>";
+        }        
         replacementStr += loopReplacementStr;
+        $("#replace").append(replacementStr);
         loopReplacementStr = "";
+        replacementStr = "";
     }
-    replacementStr += "<pre><br><br></pre>"; // add blank lines at end of list
-/*   document.getElementById("replace").innerHTML = replacementStr;   */
+    $("#replace").append("<pre><br><br></pre>");
+/*     replacementStr += "<pre><br><br></pre>"; // add blank lines at end of list
+    document.getElementById("replace").innerHTML = replacementStr;  
     $("#replace").html(replacementStr);
 
     innerHeight = (36 * numNuts) + 300;  //  36px is 24 px + 1.5 line height; 300 empirical.... 
-    $(".inner").height(innerHeight);
+    $(".inner").height(innerHeight); */
 
     return;
 }
@@ -648,6 +663,65 @@ function ajaxEditNut() {
         .always(function () {
             setTimeout(function () {
                 $('#editNutResponse').slideUp('slow');
+            }, 8000);
+        });
+}
+
+// called by editBDay.html on submit of form
+function ajaxEditBDay() {
+    'use strict';
+
+    var editData, requester;
+    editData = getPostDataJSON("editBDayForm");
+    $.ajax({
+        type: "POST",
+        url: "editBDay.php",
+        data: editData
+    })
+        .done(function (dataReturned) {
+            $('#editBDayResponse').text(dataReturned);
+            requester = $("#editBDayForm input[name=user]").val();
+            window.open("listBDays.html?user=" + requester, "_self"); // listNuts.html only called by Foxy          
+  /*          if (requester === 'Foxy') {
+                window.open("listBDays.html", "_self"); // listNuts.html only called by Foxy
+            } else if (requester === 'Walnut') {
+                window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
+            } else {
+                alert("Error: Undefined requester " + requester);
+                return;
+            }
+*/            
+        })
+        .fail(function () {
+            $('#editBDayResponse').text("Update failed").slideDown('slow');
+        })
+        .always(function () {
+            setTimeout(function () {
+                $('#editBDayResponse').slideUp('slow');
+            }, 8000);
+        });
+}
+
+function getOrigBDay(nutID) {
+    'use strict';
+
+    var key, valOfKey, jqxhr;
+
+    jqxhr = $.ajax({
+        dataType: 'json',
+        url: "getBDay.php",
+        data: "value=" + nutID
+    }).done(function (dataReturned) {
+        $.each(dataReturned, function (key, valOfKey) {
+            $("#editBDayForm " + "[name='" + key + "']").val(valOfKey);
+        });
+    })
+        .fail(function (dataReturned) {
+            $('#editBDayResponse').text("error: " + dataReturned).slideDown('slow');
+        })
+        .always(function () {
+            setTimeout(function () {
+                $('#editBDayResponse').slideUp('slow');
             }, 8000);
         });
 }
