@@ -15,62 +15,48 @@
     $(function() { 
          $('form:first *:input[type!=hidden]:first').focus();
          // Handler for .ready() called.
-         $("#editBDayForm").validate({ 
-           rules: {
+         jQuery.validator.messages.required = "";
+         $("form").validate({
+            onfocusout: false,
+            onkeyup: false,
+            onclidk: false,
+          rules: {
                     FirstName: {
                         required: true,
-                        minlength: 3
                     },
                     LastName: {
                         required: true,
-                        minlength: 3
                     },
                     YYYY: {
                         required: false,
-                        minlength: 4
                     },
                     bDayMM: {
                         required: true,
-                        minlength: 2
                     },
                     bDayDD: {
                         required: true,
-                        minlength: 2
                     }                   
            },
-           messages: {               
-                    FirstName: {
-                          required: "*"
-                    },
-                    LastName: {
-                          required: "*"
-                    },
-                    YYYY: {                          
-                    },
-                    bDayMM: {
-                          required: "*"
-                    },
-                    bDayDD: {
-                          required: "*"
-                    }
-           },
-           errorElement: "span",
-           wrapper: "span",  
-           errorPlacement: function(error, element) {
-                element.before(error);
-                error.addClass('css3-blink');  // add a class to the wrapper                
-                offset = element.offset();
-                error.css('left', offset.left);
-                error.css('top', offset.top - element.outerHeight()); 
-         },          
-            debug: true,
-           submitHandler: function(form) {
-               ajaxEditBDay();                 
-             }           
-        });       
+ 
+            invalidHandler: function(e, validator) {
+                var errors = validator.numberOfInvalids();
+                   if (errors) {
+                       var message = errors == 1
+                       ? 'You missed 1 field - highlighted below below'
+                       : 'You missed ' + errors + ' fields - highlighted below';
+                       $("div.error span").html(message);
+                       $("div.error").show();
+                   } else {
+                       $("div.error").hide();
+                   }
+            },
+             debug: true,
+             submitHandler: function(form) {
+                 ajaxEditBDay();                 
+             }   
+            });      
+          
     });
-
-
     </script>
 </head>
 <body>
@@ -82,6 +68,7 @@
             <div class="center"><h1>Birthday Info!</h1></div>
             <div class="center"><h3>Editing Birthday</h3></div>
             <form action="" id="editBDayForm" >
+               <div class="error"><span></span></div>            
                 <div class="center">                   
                         <input type="hidden" name="bDayID" id="bDayID"  />                         
                         <input type="hidden" name="user" id="user"  />

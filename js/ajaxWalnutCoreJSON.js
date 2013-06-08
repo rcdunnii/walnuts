@@ -137,22 +137,22 @@ function ajaxAuthenticate(form, fxn, method) {
             pw = true;
             data_json += '"' + pair[0] + '" : "' + pair[1] + '"';
         }
- 
+
         if (decodeURIComponent(pair[0]) === "captcha_code") {
             data_json += ',"' + pair[0] + '" : "' + pair[1] + '"';
         }
-        
+
         if (decodeURIComponent(pair[0]) === "user") {
             currentUser = decodeURIComponent(pair[1]);
-        }        
-     }
+        }
+    }
     if (!pw) {
         errorElem.innerHTML = "Password incorrect!";
         popUpElem.style.display = "none";
         hintLinkElem.style.display = "block";
         return false;
     }
-   
+
     data_json += '}';
     send_data = 'value=' + data_json;
 
@@ -396,12 +396,58 @@ function isEven(value) {
     return x;
 }
 
+function getMonth(numStr) {
+    var monStr = "";
+
+    switch (numStr) {
+    case "01":
+        monStr = "January";
+        break;
+    case "02":
+        monStr = "February";
+        break;
+    case "03":
+        monStr = "March";
+        break;
+    case "04":
+        monStr = "April";
+        break;
+    case "05":
+        monStr = "May";
+        break;
+    case "06":
+        monStr = "June";
+        break;
+    case "07":
+        monStr = "July";
+        break;
+    case "08":
+        monStr = "August";
+        break;
+    case "09":
+        monStr = "September";
+        break;
+    case "10":
+        monStr = "October";
+        break;
+    case "11":
+        monStr = "November";
+        break;
+    case "12":
+        monStr = "December";
+        break;
+    }
+    return monStr;
+}
+
 function displayBDays(requester, nutEntries) {
     'use strict';
     var numNuts, i = 0,
         j = 0,
         lenSirName = 0,
         sirNameSpace = 25,
+        monthName = "",
+        lastMonNumStr = "",
         spaceToFill = 0,
         spaceStr = "",
         replacementStr = "",
@@ -412,25 +458,30 @@ function displayBDays(requester, nutEntries) {
     theHost = location.host;
 // get # entries in database into var numNuts
     numNuts = nutEntries.length;
-    $("#replace").append("<pre><br><br></pre>");
+    $("#replace").append("<pre><br><center><h2>Birth Dates in Database<br><span style=\"display:inline-block\" class=\"downPointer\">&#10132;</span></h2><center></pre>");
     for (i = 0; i < numNuts; i += 1) {
-        loopReplacementStr += "&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
+        if (lastMonNumStr !== nutEntries[i].bDayMM) {
+            monthName = getMonth(nutEntries[i].bDayMM);
+            lastMonNumStr = nutEntries[i].bDayMM;
+            loopReplacementStr += "<span class='monthName'>" + monthName + "</span><br />";
+        }
+        loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
         loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;&nbsp;&nbsp;&nbsp;";
         loopReplacementStr += "<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
         lenSirName = nutEntries[i].LastName.length;
-        spaceToFill = sirNameSpace - lenSirName;       
+        spaceToFill = sirNameSpace - lenSirName;
         for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
             spaceStr += ".";
         }
-        loopReplacementStr += spaceStr;        
+        loopReplacementStr += spaceStr;
         loopReplacementStr +=  nutEntries[i].FirstName + " ";
         loopReplacementStr +=  nutEntries[i].MiddleInit + " ";
         loopReplacementStr +=  nutEntries[i].bDayYYYY + " ";
         if (requester === 'Foxy') {
             loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\");' title='Delete'>" + " &times;</a><br></pre>";
-        }        
+        }
         replacementStr += loopReplacementStr;
-        $("#replace").append(replacementStr);
+        $("#replace").append(replacementStr).css('text-align','justify');
         loopReplacementStr = "";
         replacementStr = "";
     }
