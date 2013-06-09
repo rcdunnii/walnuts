@@ -206,7 +206,7 @@ function ajaxAuthenticate(form, fxn, method) {
 }
 
 // fxn called by primary html page WTD.html - only run by Foxy
-function ajaxWalnutFunction() {
+function ajaxWalnutFunction(requester) {
     'use strict';
     var user_input,
         jqxhr,
@@ -236,7 +236,7 @@ function ajaxWalnutFunction() {
             return false;   // do not remove - otherwise goes to ajax...
         }
         if (user_input === "listBDays") {
-            window.open("https://" + theHost + "/listBDays.html", "_self");
+            window.open("https://" + theHost + "/listBDays.html?user=" + requester, "_self");
             return false;   // do not remove - otherwise goes to ajax...
         }
     } else {
@@ -478,10 +478,11 @@ function displayBDays(requester, nutEntries) {
         loopReplacementStr +=  nutEntries[i].MiddleInit + " ";
         loopReplacementStr +=  nutEntries[i].bDayYYYY + " ";
         if (requester === 'Foxy') {
-            loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\");' title='Delete'>" + " &times;</a><br></pre>";
+            loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + " &times;</a>";
         }
+        loopReplacementStr += "<br /></pre>";
         replacementStr += loopReplacementStr;
-        $("#replace").append(replacementStr).css('text-align','justify');
+        $("#replace").append(replacementStr);
         loopReplacementStr = "";
         replacementStr = "";
     }
@@ -523,6 +524,10 @@ function ajaxListBDays(requester) {
             });
             if (requester === 'Foxy') {
                 $("#mainMenu").css('display', 'block');
+                $("#listWalnuts").css('display', 'none');
+            } else {
+                $("#mainMenu").css('display', 'none');  //if user Walnut don't want admin dashboard link
+                $("#listWalnuts").css('display', 'block');                
             }
         })
         .fail(function () {
@@ -547,7 +552,7 @@ function displayPage(requester, nutEntries) {
         replacementStr = "<pre><a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
 
         if (requester === 'Foxy') {
-            replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\");' title='Delete'>" + "&times;</a>" + "<br>";
+            replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>" + "<br>";
         } else {
             replacementStr += "<br>";
         }
@@ -607,7 +612,7 @@ function ajaxListNuts(requester) {
         url: "listNuts.php",
         beforeSend: function () {
             $("#spinner").show();
-            if (requester === 'Walnut') {
+            if (requester === 'Walnut') {  // shouldn't this be Foxy ???
                 $("#editHint").hide();
             }
         }
@@ -616,7 +621,7 @@ function ajaxListNuts(requester) {
             $("#spinner").hide();
             walnutEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
             displayPage(requester, walnutEntries);
-            $("body").removeClass("loading");
+/*            $("body").removeClass("loading");     */
             $(".content").mCustomScrollbar({
                 mouseWheel: true,
                 scrollButtons: {
@@ -627,6 +632,7 @@ function ajaxListNuts(requester) {
                 $("#mainMenu").css('display', 'block');
             } else { // only 2 possible requesters - Foxy and Walnut
                 $("#editHint").show();
+                $("#bDayLink").show();
             }
         })
         .fail(function () {
@@ -634,16 +640,16 @@ function ajaxListNuts(requester) {
         });
 }
 
-function confirmDel(nutId, Name, dataBase) {
+function confirmDel(nutId, Name, dataBase,requester) {
     'use strict';
 
     var jqxhr, thisURL, thisHTML, r = confirm("Really delete " + Name + "?");
     if (dataBase === "walnuts") {
         thisURL = "delNut.php";
-        thisHTML = "listNuts.html";
+        thisHTML = "listNuts.html?user=" + requester;
     } else {
         thisURL = "delBDay.php";
-        thisHTML = "listBDays.html";
+        thisHTML = "listBDays.html?user=" + requester;
     }
     if (r === true) {
         jqxhr = $.ajax({
@@ -732,16 +738,14 @@ function ajaxEditBDay() {
         .done(function (dataReturned) {
             $('#editBDayResponse').text(dataReturned);
             requester = $("#editBDayForm input[name=user]").val();
-            window.open("listBDays.html?user=" + requester, "_self"); // listNuts.html only called by Foxy          
-  /*          if (requester === 'Foxy') {
-                window.open("listBDays.html", "_self"); // listNuts.html only called by Foxy
+            if (requester === 'Foxy') {
+                window.open("listBDays.html?user=" + requester, "_self"); // listNuts.html only called by Foxy
             } else if (requester === 'Walnut') {
                 window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
             } else {
                 alert("Error: Undefined requester " + requester);
                 return;
             }
-*/            
         })
         .fail(function () {
             $('#editBDayResponse').text("Update failed").slideDown('slow');

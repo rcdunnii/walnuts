@@ -19,7 +19,8 @@
                 position: absolute;
                 top: 10%;
                 width: 400px; 
-                left:35%;
+                left:50%;
+                margin-left: -200px;  /* http://stackoverflow.com/questions/5811957/css-jquery-center-absolute-positioned-div */
                 color: lavender;
                 text-align:center;
                 font-size: x-large;
@@ -141,10 +142,16 @@
     
     
     .messages {
+        display: block;
+        position: relative;
+        width: 100%;
+        margin-right: auto;
+        margin-right: auto;        
         text-align: center;
         font-size: 1.2em;
         color: red;
     }
+    
      .center {
         display: block;
         position: relative;
@@ -155,7 +162,6 @@
     }
     
     .center.bottom {
-        position: relative;
         top: 1em;
     }
     
@@ -196,7 +202,7 @@
     fieldset {
         float: left;
         clear: left;
-        width: 100%;
+        width: 87%;
         bottom: 1em;    
         margin: 0 0 1.5em 0;
         padding: 0;
@@ -272,7 +278,8 @@
         margin-top: 15px;
      }
  
-      #mainMenu {
+      #mainMenu ,
+      #listWalnuts{
         position: relative;
         width: 200px;
         padding: 5px;
@@ -281,14 +288,17 @@
         margin-left: auto;
      }
    
-      #mainMenu  a{      
+      #mainMenu  a,
+      #listWalnuts a{      
         background-color: transparent;
         color: #FFFF00;
         font-weight:bold;
         font-size: 150%;
         font-family:"Times New Roman",Georgia,Serif;
-    }        
-     #mainMenu a:hover{
+    }
+    
+     #mainMenu a:hover,
+     #listWalnuts a:hover {
          background-color: white;
          color:#000;
      }     

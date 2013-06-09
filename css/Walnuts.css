@@ -134,6 +134,17 @@
 		font-family:"Times New Roman",Georgia,Serif;
 	}
   
+    #bDayLink{
+        position: absolute;
+        bottom: 2em;    
+        left: 25em;
+    }
+
+    #bDayLink a {
+        color: gold;
+        font-size: 1.3em;
+    }
+
     .securityLink {
         position: relative;
         left: 25px;
