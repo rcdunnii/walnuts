@@ -445,7 +445,7 @@ function displayBDays(requester, nutEntries) {
     var numNuts, i = 0,
         j = 0,
         lenSirName = 0,
-        sirNameSpace = 25,
+        sirNameSpace = 15,
         monthName = "",
         lastMonNumStr = "",
         spaceToFill = 0,
@@ -469,7 +469,8 @@ function displayBDays(requester, nutEntries) {
         loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;&nbsp;&nbsp;&nbsp;";
         loopReplacementStr += "<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
         lenSirName = nutEntries[i].LastName.length;
-        spaceToFill = sirNameSpace - lenSirName;
+        spaceToFill = (lenSirName < 10 ) ? (10 - lenSirName) : (15 - lenSirName);
+        /*spaceToFill = sirNameSpace - lenSirName;      */
         for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
             spaceStr += ".";
         }

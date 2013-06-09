@@ -1,4 +1,7 @@
-
+    @font-face {
+        font-family: 'DejaVu Sans';
+        src: local('DejaVu Sans Mono'), url(/fonts/DejaVuSans.ttf);
+    }
     
      html, body {
                 position: fixed;
@@ -89,7 +92,7 @@
                 left: 0;
                 background-color: rgba(0,0,0,0);
                 color: #000;
-                font: normal normal bold 24px/1.5 "Times New Roman", Times, serif;                
+                font: normal normal bold 18px/1.5 "DejaVu Sans Mono","Times New Roman", Times, serif;                
        }
        .inner ul {
            list-style-type: none;
@@ -108,7 +111,7 @@
         a.oneNut {
              text-decoration: underline;
              font-weight:bold;
-             font: normal normal bold 24px/1.5 "Times New Roman", Times, serif;                
+             font: normal normal bold 18px/1.5 "DejaVu Sans Mono", "Times New Roman", Times, serif;                
              color:silver;
              cursor:pointer;
        }
