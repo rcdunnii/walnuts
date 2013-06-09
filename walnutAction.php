@@ -1,5 +1,5 @@
 <?php
-   function createNutsBdayDB() {
+   function createNutsBDayDB() {
         require 'dbFoxy.inc';  // database info			
 		$mysqli = new mysqli($server, $user, $password);
 
@@ -217,8 +217,8 @@
 		   deleteNutsDB();
 	   } elseif ($whichDashBoardOpt == "bkUpDB") {      
            backUpWalnutDB();
-       } elseif ($whichDashBoardOpt == "createNutsBdayDB") {      
-           createNutsBdayDB();           
+       } elseif ($whichDashBoardOpt == "createNutsBDayDB") {      
+           createNutsBDayDB();           
        } else {
 		   echo "Uh oh...";			   
 	   }  
