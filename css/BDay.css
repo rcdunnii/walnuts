@@ -3,7 +3,7 @@
      html, body {
                 position: fixed;
                 height: 100%;
-                width: 100%;       
+                width: 100%;
                 background: rgb(104,32,19); /* Old browsers */
                 background: -moz-linear-gradient(top,  rgba(104,32,19,1) 0%, rgba(139,69,19,1) 100%); /* FF3.6+ */
                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(104,32,19,1)), color-stop(100%,rgba(139,69,19,1))); /* Chrome,Safari4+ */
@@ -18,34 +18,22 @@
     .listBDTitle {
                 position: absolute;
                 top: 10%;
-                width: 400px;
+                width: 400px; 
                 left:35%;
                 color: lavender;
                 text-align:center;
                 font-size: x-large;
             }
- /*     div.error {
-                position: absolute;
-                width: 325px;
-                top:28%;
-                left: 28%;
-                color: white;
-       } 
-     input.error {
-                border-left: 5px solid #CC0000;
-                border-right: 5px solid #CC0000;
-                background: yellow;
-       }
- */      
+      
         #addBDayForm  label.error,
         #editBDayForm  label.error {
             display: block;
             float: left;
             color: red;
-            height: 20px;
-            width: 250px;
-            margin-right: 10px;
-            margin-left: 10px;        
+            height: 20px;    
+            width: 250px;                
+            margin-right: 10px;       
+            margin-left: 10px;                                        
             font: bold 16px arial;
             text-align: left;
     }
@@ -56,10 +44,10 @@
         display: block;
         float:left;
         padding: 0;
-        height: 20px;
+        height: 20px;        
         background-color:white;
         font: normal 18px serif;
-        border: 2px inset;
+        border: 2px inset; 
     }    
       span.downPointer {
                -webkit-transform: rotate(90deg);
@@ -131,8 +119,8 @@
     
     .frameBDay {
         position: absolute;
-        width:50em;
-        height: 50em;
+        width:43em;
+        height: 37em;
         top: 10px;
         left:30%;
         background-color: maroon;
@@ -141,11 +129,11 @@
     .editBDayPage,
     .addBDayPage {
         position: relative;
-        width: 47em;
-        height: 47em;
+        width: 95%;
+        height: 95%;
         background-color: #993300; 
-        top: 38px;
-        left: 50px;
+        top: 10px;
+        left: 0;
         margin-right: auto;
         margin-left: auto;        
     } 
@@ -189,19 +177,7 @@
         margin-right: auto;
         margin-left: auto;
      }
- /*    
-    #editBDayForm label,     
-    #addBDayForm  label {
-        margin-top: 5px;
-        color: yellow;
-    }
-    
-    #editBDayForm label.error,
-    #addBDayForm  label.error {
-        list-style-type: none;
-        color: red;
-    }
-*/
+
     span.error{
         color: red; 
     }
@@ -216,20 +192,12 @@
         left: 50%;
         background-color: transparent;
     }
- /*   
-    label {
-        float: left;
-        width: 10em;
-        margin-right: 1em;
-        display:block;
-        clear: left;
-    }
-  */ 
+ 
     fieldset {
         float: left;
         clear: left;
         width: 100%;
-        padding: bottom: 1em;    
+        bottom: 1em;    
         margin: 0 0 1.5em 0;
         padding: 0;
         border:none;
@@ -239,7 +207,6 @@
         float: left;
         clear: left;
         width: 100%;
-        padding: bottom: 1em;
         list-style-type: none;
         margin: 5px 2px;
     }
@@ -256,14 +223,7 @@
         font: bold 16px arial;
         color: yellow;
     }
-  /*   label {
-        float: left;
-        width: 10em;
-        margin-right: 1em;
-        text-align:right;
-    }
-*/    
-    
+  
     fieldset.submit {
         float: none;
         width: auto;
@@ -271,40 +231,40 @@
         padding-left: 11em;
         padding-top: 2em;
     }
- /*   label input,
-    label input.valid
-     {         
-        width:20em;
-        display:block;
-        border: 1px solid #999;
-        height: 25px;
+    
+    input#submit,
+    input#reset,
+    input#home,
+    input#again
+      {
+       margin-right:10px;
+    }
+    
+   
+    .XX     /* 2 char input box */
+       {
         font-size: 18px;
-        margin-bottom: 25px;
-        -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
-        -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
-        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+        width: 18px;
     }
     
-    label.XX input,
-    label.XX input.valid    {
-        width: 2em;
-    }
-    
-    label.inLine input ,
-    label.inLine input.valid
+    .XXXX  /* 4 char input box */
       {
-        display: block;
-        width: 5em;
-        margin-right: 5px;
-        margin-left: 2px;
+        font-size: 18px;
+        width: 36px;
     }
     
-    label.inLine.XX  input,
-    label.inLine.XX  input.valid
-      {
-        width: 2em;
-    } 
-*/
+    .XX15 /* 15 char input box */
+       {
+       font-size: 18px;
+       width: 135px;
+    }
+    
+    .XX25 /* 25 char input box */
+       {
+       font-size: 18px;
+       width: 225px;
+    }
+    
     .navlist {
         position: relative;
         width: 100%;

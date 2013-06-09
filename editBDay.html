@@ -13,43 +13,47 @@
 	<script type="text/javascript" src="js/ajaxWalnutCoreJSON.js"></script>
     <script type="text/javascript">
     $(function() { 
-         $('form:first *:input[type!=hidden]:first').focus();
+         $('#editBDayForm:first *:input[type!=hidden]:first').focus();
          // Handler for .ready() called.
-         jQuery.validator.messages.required = "";
-         $("form").validate({
-            onfocusout: false,
-            onkeyup: false,
-            onclidk: false,
+         $("#editBDayForm").validate({
           rules: {
                     FirstName: {
                         required: true,
                     },
                     LastName: {
                         required: true,
+                        minlength: 3
                     },
                     YYYY: {
                         required: false,
+                        minlength: 4
                     },
                     bDayMM: {
                         required: true,
+                        minlength: 2
                     },
                     bDayDD: {
                         required: true,
+                        minlength: 2
                     }                   
            },
- 
-            invalidHandler: function(e, validator) {
-                var errors = validator.numberOfInvalids();
-                   if (errors) {
-                       var message = errors == 1
-                       ? 'You missed 1 field - highlighted below below'
-                       : 'You missed ' + errors + ' fields - highlighted below';
-                       $("div.error span").html(message);
-                       $("div.error").show();
-                   } else {
-                       $("div.error").hide();
-                   }
-            },
+           messages : {
+                    FirstName: {
+                        required: "Must include first name"
+                    },                  
+                    LastName: {
+                        required: "Must include last name",
+                        minlength:"That's a name???!"
+                    },
+                     bDayMM: {
+                        required: "Include Birth Month (MM)",
+                        minlength:"Needs 2 characters!"
+                    },
+                     bDayDD: {
+                        required: "Include Birth Day of Month (DD)",
+                        minlength:"Needs 2 characters!"
+                    }
+                },
              debug: true,
              submitHandler: function(form) {
                  ajaxEditBDay();                 
@@ -68,25 +72,29 @@
             <div class="center"><h1>Birthday Info!</h1></div>
             <div class="center"><h3>Editing Birthday</h3></div>
             <form action="" id="editBDayForm" >
-               <div class="error"><span></span></div>            
-                <div class="center">                   
+               <fieldset> 
+                <div class="center">
+ 
                         <input type="hidden" name="bDayID" id="bDayID"  />                         
                         <input type="hidden" name="user" id="user"  />
-                        <label><span>First Name</span><input type="text" name="FirstName" size="30" /></label>
-                        <label><span>Last Name</span><input type="text" name="LastName" size="50"  /></label>
-                        <label class="XX"><span>Middle I. </span><input type="text" name="MiddleInit" size="2" /></label>
-                        <label class="inLine"><span>Born: YYYY</span><input type="text" name="bDayYYYY" size="4" /></label>
-                        <label class="inLine XX"><span>MM</span><input type="text" name="bDayMM" size="2" /></label>
-                        <label class="inLine XX"><span>DD</span><input type="text" name="bDayDD" size="2" /></label>
-                        <div class="navlist">
+                        <ul>                        
+                             <li><label for="FirstName">First Name</label><input class="XX15" type="text" name="FirstName" id="FirstName" size="30" /></li>
+                            <li><label>Last Name </label><input class="XX25" type="text" name="LastName" size="30"  /></li>
+                            <li><label>Middle I.</label><input  class="XX" type="text" name="MiddleInit" size="2" /></li>
+                            <li><label>Born: YYYY</label><input class="XXXX" type="text" name="bDayYYYY" size="4" /></li>
+                            <li><label>MM</label><input class="XX" type="text" name="bDayMM" size="2" /></li>
+                            <li><label>DD</label><input class="XX" type="text" name="bDayDD" size="2" /></li>
+                       </ul>
+                       <fieldset class="submit">                        
                             <input type="submit" name="btn" id="submit" value="Submit"/>
-                            <input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)" /> 
+                            <input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)" />
                             <input type="button" name="btn" id="home" value="Main Menu" onclick="window.location.href ='WTD.html';" />
-                        </div>                        
+                        </fieldset>
                         <div class="center bottom">
                             <p class="messages"><span id="editBDayResponse"></span></p>
                         </div>
                 </div>
+               </fieldset>  
             </form>
         </div>
 	</div>
