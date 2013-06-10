@@ -514,13 +514,6 @@ function displayBDays(requester, nutEntries, idxBy) {
         }
     }
     $("#replace").append("<pre><br><br></pre>");
-/*     replacementStr += "<pre><br><br></pre>"; // add blank lines at end of list
-    document.getElementById("replace").innerHTML = replacementStr;  
-    $("#replace").html(replacementStr);
-
-    innerHeight = (36 * numNuts) + 300;  //  36px is 24 px + 1.5 line height; 300 empirical.... 
-    $(".inner").height(innerHeight); */
-
     return;
 }
 
@@ -531,26 +524,30 @@ function ajaxListBDays(requester, indexedBy) {
     'use strict';
 
     var bDayEntries = [], jqxhr;
-
+ 
+    
     jqxhr = $.ajax({
         type: "GET",
         url: "listBDays.php?value=" + indexedBy,
         beforeSend: function () {
             $("#spinner").show();
             $("#listWalnuts").css('display', 'none');
-            $("#mainMenu").css('display', 'none'); 
+            $("#mainMenu").css('display', 'none');            
         }
-    })
+    })  
         .done(function (dataReturned) {
             $("#spinner").hide();
             bDayEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
-            displayBDays(requester, bDayEntries, indexedBy);
+            displayBDays(requester, bDayEntries, indexedBy);           
             $(".outer").mCustomScrollbar({
                 mouseWheel: true,
                 scrollButtons: {
                     enable: true
                 }
-            });
+            });                
+            $(".outer").mCustomScrollbar("update"); //update scrollbar according to newly loaded content
+            $(".outer").mCustomScrollbar("scrollTo","top",{scrollInertia:200}); //scroll to top
+                   
             if (requester === 'Foxy') {
                 $("#mainMenu").css('display', 'block');
                 $("#listWalnuts").css('display', 'none');
@@ -558,9 +555,16 @@ function ajaxListBDays(requester, indexedBy) {
                 $("#mainMenu").css('display', 'none');  //if user Walnut don't want admin dashboard link
                 $("#listWalnuts").css('display', 'block');
             }
+            $("select").change(function () {
+              var str = "", option = 0;
+              option = $("select option:selected").val('myTag');
+              str = (option == 1) ? "byDate" : "byName";
+              $("#replace").empty();
+              ajaxListBDays(requester, str); // ajax call to populate page                         
+            });            
         })
-        .fail(function () {
-            alert("List Birthdays failed");
+        .fail(function (dataReturned) {
+            alert("List Birthdays failed" + dataReturned);
         });
 }
 

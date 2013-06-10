@@ -7,12 +7,19 @@
  
 </head>
 <body>
+        <div id="sortOrder">
+            <select class="sortBy">
+                <option myTag=1 selected="selected">Sort by Date</option>
+                <option myTag=2>Sort by Name</option>
+            </select>
+         </div>
     <div class="listBDTitle"><h1>Our Birthdays</h1></div>
 	<div class="outer">
                              <center><p><span id="spinner">&nbsp;</span></p></center> 
         <div class="inner">
                    <div class="roller"><p id="replace"></p></div>            
         </div>
+       
     </div>
                 <div id="mainMenu"><center><a href="WTD.html">Main Menu</a></center></div>
                 <div id="listWalnuts"><center><a href="Walnuts.html">Walnuts List</a></center></div>                
@@ -23,8 +30,8 @@
 		$(document).ready(function () {
             var userNut = getParameterByName('user');
             orderBy = "byDate";
-            ajaxListBDays(userNut, orderBy); // ajax call to populate page            
-		});
+            ajaxListBDays(userNut, orderBy); // ajax call to populate page             
+        });
     </script>                
 </body>
 </html>

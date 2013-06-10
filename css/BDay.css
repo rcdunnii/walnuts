@@ -249,7 +249,14 @@
        margin-right:10px;
     }
     
-   
+    #sortOrder {
+        position: absolute;
+        top: 71%;
+        width: 100px;
+        left: 50%;
+        margin-left: -427px;
+    }
+    
     .XX     /* 2 char input box */
        {
         font-size: 18px;
