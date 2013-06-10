@@ -440,7 +440,7 @@ function getMonth(numStr) {
     return monStr;
 }
 
-function displayBDays(requester, nutEntries) {
+function displayBDays(requester, nutEntries, idxBy) {
     'use strict';
     var numNuts, i = 0,
         j = 0,
@@ -459,33 +459,59 @@ function displayBDays(requester, nutEntries) {
 // get # entries in database into var numNuts
     numNuts = nutEntries.length;
     $("#replace").append("<pre><br><center><h2>Birth Dates in Database<br><span style=\"display:inline-block\" class=\"downPointer\">&#10132;</span></h2><center></pre>");
-    for (i = 0; i < numNuts; i += 1) {
-        if (lastMonNumStr !== nutEntries[i].bDayMM) {
-            monthName = getMonth(nutEntries[i].bDayMM);
-            lastMonNumStr = nutEntries[i].bDayMM;
-            loopReplacementStr += "<span class='monthName'>" + monthName + "</span><br />";
+    if (idxBy == "byDate") {
+        for (i = 0; i < numNuts; i += 1) {
+            if (lastMonNumStr !== nutEntries[i].bDayMM) {
+                monthName = getMonth(nutEntries[i].bDayMM);
+                lastMonNumStr = nutEntries[i].bDayMM;
+                loopReplacementStr += "<span class='monthName'>" + monthName + "</span><br />";
+            }
+            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
+            loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;&nbsp;&nbsp;&nbsp;";
+            loopReplacementStr += "<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
+            lenSirName = nutEntries[i].LastName.length;
+            spaceToFill = (lenSirName < 10) ? (10 - lenSirName) : (15 - lenSirName);
+            /*spaceToFill = sirNameSpace - lenSirName;      */
+            for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
+                spaceStr += ".";
+            }
+            loopReplacementStr += spaceStr;
+            loopReplacementStr +=  nutEntries[i].FirstName + " ";
+            loopReplacementStr +=  nutEntries[i].MiddleInit + " ";
+            loopReplacementStr +=  nutEntries[i].bDayYYYY + " ";
+            if (requester === 'Foxy') {
+                loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + " &times;</a>";
+            }
+            loopReplacementStr += "<br />";
+            replacementStr += loopReplacementStr;
+            $("#replace").append(replacementStr);
+            loopReplacementStr = "";
+            replacementStr = "";
         }
-        loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
-        loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;&nbsp;&nbsp;&nbsp;";
-        loopReplacementStr += "<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
-        lenSirName = nutEntries[i].LastName.length;
-        spaceToFill = (lenSirName < 10 ) ? (10 - lenSirName) : (15 - lenSirName);
-        /*spaceToFill = sirNameSpace - lenSirName;      */
-        for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
-            spaceStr += ".";
+    } else {
+        for (i = 0; i < numNuts; i += 1) {
+            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
+            lenSirName = nutEntries[i].LastName.length;
+            spaceToFill = (lenSirName < 10) ? (10 - lenSirName) : (15 - lenSirName);
+            /*spaceToFill = sirNameSpace - lenSirName;      */
+            for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
+                spaceStr += ".";
+            }
+            loopReplacementStr += spaceStr;
+            loopReplacementStr +=  nutEntries[i].FirstName + " ";
+            loopReplacementStr +=  nutEntries[i].MiddleInit + " ";
+            loopReplacementStr +=  nutEntries[i].bDayYYYY + " ";
+            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
+            loopReplacementStr += nutEntries[i].bDayDD;
+            if (requester === 'Foxy') {
+                loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + " &times;</a>";
+            }
+            loopReplacementStr += "<br />";
+            replacementStr += loopReplacementStr;
+            $("#replace").append(replacementStr);
+            loopReplacementStr = "";
+            replacementStr = "";
         }
-        loopReplacementStr += spaceStr;
-        loopReplacementStr +=  nutEntries[i].FirstName + " ";
-        loopReplacementStr +=  nutEntries[i].MiddleInit + " ";
-        loopReplacementStr +=  nutEntries[i].bDayYYYY + " ";
-        if (requester === 'Foxy') {
-            loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + " &times;</a>";
-        }
-        loopReplacementStr += "<br /></pre>";
-        replacementStr += loopReplacementStr;
-        $("#replace").append(replacementStr);
-        loopReplacementStr = "";
-        replacementStr = "";
     }
     $("#replace").append("<pre><br><br></pre>");
 /*     replacementStr += "<pre><br><br></pre>"; // add blank lines at end of list
@@ -501,22 +527,24 @@ function displayBDays(requester, nutEntries) {
 // fxn called by list nuts html page - which requester determines api
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
-function ajaxListBDays(requester) {
+function ajaxListBDays(requester, indexedBy) {
     'use strict';
 
     var bDayEntries = [], jqxhr;
 
     jqxhr = $.ajax({
         type: "GET",
-        url: "listBDays.php",
+        url: "listBDays.php?value=" + indexedBy,
         beforeSend: function () {
             $("#spinner").show();
+            $("#listWalnuts").css('display', 'none');
+            $("#mainMenu").css('display', 'none'); 
         }
     })
         .done(function (dataReturned) {
             $("#spinner").hide();
             bDayEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
-            displayBDays(requester, bDayEntries);
+            displayBDays(requester, bDayEntries, indexedBy);
             $(".outer").mCustomScrollbar({
                 mouseWheel: true,
                 scrollButtons: {
@@ -528,7 +556,7 @@ function ajaxListBDays(requester) {
                 $("#listWalnuts").css('display', 'none');
             } else {
                 $("#mainMenu").css('display', 'none');  //if user Walnut don't want admin dashboard link
-                $("#listWalnuts").css('display', 'block');                
+                $("#listWalnuts").css('display', 'block');
             }
         })
         .fail(function () {
@@ -641,7 +669,7 @@ function ajaxListNuts(requester) {
         });
 }
 
-function confirmDel(nutId, Name, dataBase,requester) {
+function confirmDel(nutId, Name, dataBase, requester) {
     'use strict';
 
     var jqxhr, thisURL, thisHTML, r = confirm("Really delete " + Name + "?");

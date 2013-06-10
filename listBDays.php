@@ -8,8 +8,13 @@
 			$mysqli->close();
 			return false;
 		}
-	
-		$stmt = $mysqli->prepare("SELECT * FROM  `bdays` ORDER BY bDayMM, bDayDD");
+        
+        if ($_GET["value"] == "byDate")
+        {
+            $stmt = $mysqli->prepare("SELECT * FROM  `bdays` ORDER BY bDayMM, bDayDD");
+        } else {
+            $stmt = $mysqli->prepare("SELECT * FROM `bdays` ORDER BY LastName, FirstName");
+        }
 	
 		if ($stmt == false) 
 		{ // bind error

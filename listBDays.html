@@ -22,7 +22,8 @@
     <script type="text/javascript">
 		$(document).ready(function () {
             var userNut = getParameterByName('user');
-            ajaxListBDays(userNut); // ajax call to populate page            
+            orderBy = "byDate";
+            ajaxListBDays(userNut, orderBy); // ajax call to populate page            
 		});
     </script>                
 </body>
