@@ -136,7 +136,12 @@
 	    color:#FFFF00;
 		text-decoration:underline;
 	}
-	    
+	
+    a.securityLink {
+        position: relative;
+        left: 25px;
+    }
+	
     a.securityLink:link {color:#FFFF00;}    /*  unvisited link */
     a.securityLink:visited {color:#FFFF00;} /* visited link same color for this app as unvisited */
     a.securityLink:hover {color:#FFFFFF;}   /* white on mouse over link */
