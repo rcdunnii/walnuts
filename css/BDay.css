@@ -249,13 +249,6 @@
        margin-right:10px;
     }
     
-    #sortOrder {
-        position: absolute;
-        top: 71%;
-        width: 100px;
-        left: 50%;
-        margin-left: -427px;
-    }
     
     .XX     /* 2 char input box */
        {
@@ -288,14 +281,14 @@
         margin-top: 15px;
      }
  
-      #mainMenu ,
+      #mainMenu,
       #listWalnuts{
-        position: relative;
+        position: absolute;
         width: 200px;
         padding: 5px;
-        top:50%;
-        margin-right: auto;
-        margin-left: auto;
+        top:75%;
+		left: 50%;
+        margin-left:-100px;
      }
    
       #mainMenu  a,
@@ -311,4 +304,32 @@
      #listWalnuts a:hover {
          background-color: white;
          color:#000;
-     }     
+     }
+
+	  #sortOrder  select {
+       position: absolute;
+       top: 67%;
+/*     width: 100px;   */
+       left: 50%;
+       margin-left: -70px;		
+/*	   background: transparent;   */
+	   width: 140px;
+	   padding: 5px;
+	   font-size: 16px;
+	   line-height: 1;
+	   border: 0;
+	   border-radius: 2px;
+	   height: 26px;
+	   -webkit-appearance: none;
+   }
+    
+	.sortBy {
+	   width: 240px;
+	   height: 34px;
+	   overflow: hidden;
+	   background: url("/images/dn_arrow.png") no-repeat right #ddd;
+	   border: 1px solid #ccc;
+	   color: gold;
+	   background-color:#5A4746;
+	   cursor: pointer;
+	}

@@ -517,6 +517,7 @@ function displayBDays(requester, nutEntries, idxBy) {
     return;
 }
 
+var scrollBar = false; // gobal scrollbar exists/nonexists flag
 // fxn called by list nuts html page - which requester determines api
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
@@ -524,30 +525,33 @@ function ajaxListBDays(requester, indexedBy) {
     'use strict';
 
     var bDayEntries = [], jqxhr;
- 
-    
+
+
     jqxhr = $.ajax({
         type: "GET",
         url: "listBDays.php?value=" + indexedBy,
         beforeSend: function () {
             $("#spinner").show();
             $("#listWalnuts").css('display', 'none');
-            $("#mainMenu").css('display', 'none');            
+            $("#mainMenu").css('display', 'none');
         }
-    })  
+    })
         .done(function (dataReturned) {
             $("#spinner").hide();
             bDayEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
-            displayBDays(requester, bDayEntries, indexedBy);           
-            $(".outer").mCustomScrollbar({
-                mouseWheel: true,
-                scrollButtons: {
-                    enable: true
-                }
-            });                
-            $(".outer").mCustomScrollbar("update"); //update scrollbar according to newly loaded content
-            $(".outer").mCustomScrollbar("scrollTo","top",{scrollInertia:200}); //scroll to top
-                   
+            displayBDays(requester, bDayEntries, indexedBy);
+			if (!scrollBar) {
+				$(".outer").mCustomScrollbar({
+					mouseWheel: true,
+					scrollButtons: {
+						enable: true
+					}
+				});
+				scrollBar = true;
+			} else {
+			    $(".outer").mCustomScrollbar("update"); //update scrollbar according to newly loaded content
+				$(".outer").mCustomScrollbar("scrollTo", "top", {scrollInertia: 200}); //scroll to top
+            }
             if (requester === 'Foxy') {
                 $("#mainMenu").css('display', 'block');
                 $("#listWalnuts").css('display', 'none');
@@ -556,12 +560,12 @@ function ajaxListBDays(requester, indexedBy) {
                 $("#listWalnuts").css('display', 'block');
             }
             $("select").change(function () {
-              var str = "", option = 0;
-              option = $("select option:selected").val('myTag');
-              str = (option == 1) ? "byDate" : "byName";
-              $("#replace").empty();
-              ajaxListBDays(requester, str); // ajax call to populate page                         
-            });            
+                var str = "", option = 0;
+                option = $(".sortBy option:selected").attr('myTag');
+                str = (option == "1") ? "byDate" : "byName";
+                $("#replace").empty();
+                ajaxListBDays(requester, str); // ajax call to populate page                         
+            });
         })
         .fail(function (dataReturned) {
             alert("List Birthdays failed" + dataReturned);
