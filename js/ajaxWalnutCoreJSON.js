@@ -137,9 +137,11 @@ function ajaxAuthenticate(form, fxn, method) {
             pw = true;
             data_json += '"' + pair[0] + '" : "' + pair[1] + '"';
         }
+
         if (decodeURIComponent(pair[0]) === "captcha_code") {
             data_json += ',"' + pair[0] + '" : "' + pair[1] + '"';
         }
+
         if (decodeURIComponent(pair[0]) === "user") {
             currentUser = decodeURIComponent(pair[1]);
         }
@@ -163,7 +165,7 @@ function ajaxAuthenticate(form, fxn, method) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 0 || xhr.readyState === 4) {
             registering = false;
-            // prevent memory leaks
+        // prevent memory leaks
             xhr.onreadystatechange = null;
 
             if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || xhr.status === 1223)) {
@@ -204,7 +206,7 @@ function ajaxAuthenticate(form, fxn, method) {
 }
 
 // fxn called by primary html page WTD.html - only run by Foxy
-function ajaxWalnutFunction() {
+function ajaxWalnutFunction(requester) {
     'use strict';
     var user_input,
         jqxhr,
@@ -213,20 +215,28 @@ function ajaxWalnutFunction() {
 // first get user radio button choice
 
     user_input = $("input:checked").val();
-    // production or development ?
+// production or development ?
     theHost = location.host;
     if (user_input) {
-        if (user_input === "deleteDB") {
+        if (user_input === "deleteNutsDB") {
             if (!(confirm("Are you sure you REALLY want to delete walnuts database?"))) {
                 return false;// delete database aborted
             }
         }
-        if (user_input === "add") {
+        if (user_input === "addNut") {
             window.open("https://" + theHost + "/addNut.html", "_self");
             return false;   // do not remove - otherwise goes to ajax...
         }
-        if (user_input === "list") {
+        if (user_input === "listNuts") {
             window.open("https://" + theHost + "/listNuts.html", "_self"); // listNuts.html only called by Foxy
+            return false;   // do not remove - otherwise goes to ajax...
+        }
+        if (user_input === "addBDay") {
+            window.open("https://" + theHost + "/addBDay.html", "_self");
+            return false;   // do not remove - otherwise goes to ajax...
+        }
+        if (user_input === "listBDays") {
+            window.open("https://" + theHost + "/listBDays.html?user=" + requester, "_self");
             return false;   // do not remove - otherwise goes to ajax...
         }
     } else {
@@ -255,7 +265,16 @@ function ajaxWalnutFunction() {
                             }
                     }, ".downLoad");
             }
-            if (user_input === "createDB") {
+            if (user_input === "createNutsDB") {
+                $("<div />")
+                    .addClass("redText")
+                    .text(responseData)
+                    .appendTo("#response")
+                    .fadeOut(5000, function () {
+                        $(".redText").remove();
+                    });
+            }
+            if (user_input === "createNutsBDayDB") {
                 $("<div />")
                     .addClass("redText")
                     .text(responseData)
@@ -270,7 +289,7 @@ function ajaxWalnutFunction() {
         });
 }
 
-// called by ajaxAddNuts() and ajaxEditNut()
+// called by ajaxAddNuts(), ajaxEditNut(), ajaxAddBDay()
 function getPostDataJSON(theForm) {
     'use strict';
     var data_json = "";
@@ -290,44 +309,17 @@ function getPostDataJSON(theForm) {
         return o;
     };
     data_json = $("#" + theForm).serializeObject();
-    data_json.Created = "";
-    data_json.Updated = "";
- /*   data_json = JSON.stringify(data_json);
+    if (theForm === "addNutForm") {
+        data_json.Created = "";
+        data_json.Updated = "";
+    }
 
-
-
-  
-    data_json = '{"walnutID": "' + document.forms[0].walnutID.value + '","SirName":"' + document.forms[0].SirName.value + '","Names":"' + document.forms[0].Names.value + '","FormalNames":"' + document.forms[0].FormalNames.value + '","Children":"' + document.forms[0].Children.value + '","Addr1":"' + document.forms[0].Addr1.value + '","Addr2"  : "' + document.forms[0].Addr2.value + '","Addr3"  : "' + document.forms[0].Addr3.value + '","Addr4"  : "' + document.forms[0].Addr4.value + '","Email1" : "' + document.forms[0].Email1.value + '","Email2" : "' + document.forms[0].Email2.value + '","Email3" : "' + document.forms[0].Email3.value + '","Phone1" : "' + document.forms[0].Phone1.value + '","Phone2" : "' + document.forms[0].Phone2.value + '","Notes"  : "' + document.forms[0].Notes.value + '", "Created" : "", "Updated" : ""}';
-    
-    send_data = 'value=' + data_json; 
-    return send_data;
-*/
     return {data: data_json};
 }
 
 function ajaxAddNuts() {
     'use strict';
-/*    
-    var addData, xhr;
 
-    // get local ajax request obj
-    xhr = createXHR();
-
-    if (!xhr) {
-        return false;
-    }
-    // Create a function that will receive data sent from the server
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            document.getElementById("addNutResponse").innerHTML = xhr.responseText;
-        }
-    };
-    addData = getPostDataJSON("addNutForm");
-    xhr.open("POST", "addNut.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    addData = encodeURI(addData);
-    xhr.send(addData);
-*/
     var addData;
     addData = getPostDataJSON("addNutForm");
     $.ajax({
@@ -348,6 +340,28 @@ function ajaxAddNuts() {
     });
 }
 
+function ajaxAddBDay() {
+    'use strict';
+
+    var addBDayData;
+    addBDayData = getPostDataJSON("addBDayForm");
+    $.ajax({
+        type: "POST",
+        url: "addBDay.php",
+        data: addBDayData,
+        success: function (dataReturned) {
+            $('#addBDayResponse').text(dataReturned);
+        },
+        fail: function () {
+            $('#addBDayResponse').text("Update failed").slideDown('slow');
+        },
+        complete: function () {
+            setTimeout(function () {
+                $('#addBDayResponse'); /*.slideUp('slow'); */
+            }, 8000);
+        }
+    });
+}
 function getParameterByName(name) {
     'use strict';
     var regexS, regex, results;
@@ -382,15 +396,188 @@ function isEven(value) {
     return x;
 }
 
- /* called by ajaxListNuts() fxn below - requester is who is making request, Foxy or user; nutEntries is arr of all walnuts */
+function getMonth(numStr) {
+    var monStr = "";
+
+    switch (numStr) {
+    case "01":
+        monStr = "January";
+        break;
+    case "02":
+        monStr = "February";
+        break;
+    case "03":
+        monStr = "March";
+        break;
+    case "04":
+        monStr = "April";
+        break;
+    case "05":
+        monStr = "May";
+        break;
+    case "06":
+        monStr = "June";
+        break;
+    case "07":
+        monStr = "July";
+        break;
+    case "08":
+        monStr = "August";
+        break;
+    case "09":
+        monStr = "September";
+        break;
+    case "10":
+        monStr = "October";
+        break;
+    case "11":
+        monStr = "November";
+        break;
+    case "12":
+        monStr = "December";
+        break;
+    }
+    return monStr;
+}
+
+function displayBDays(requester, nutEntries, idxBy) {
+    'use strict';
+    var numNuts, i = 0,
+        j = 0,
+        lenSirName = 0,
+        sirNameSpace = 15,
+        monthName = "",
+        lastMonNumStr = "",
+        spaceToFill = 0,
+        spaceStr = "",
+        replacementStr = "",
+        loopReplacementStr = "",
+        theHost = "",
+        innerHeight; // height of inner div
+// development or production ?
+    theHost = location.host;
+// get # entries in database into var numNuts
+    numNuts = nutEntries.length;
+    $("#replace").append("<pre><br><center><h2>Birth Dates in Database<br><span style=\"display:inline-block\" class=\"downPointer\">&#10132;</span></h2><center></pre>");
+    if (idxBy == "byDate") {
+        for (i = 0; i < numNuts; i += 1) {
+            if (lastMonNumStr !== nutEntries[i].bDayMM) {
+                monthName = getMonth(nutEntries[i].bDayMM);
+                lastMonNumStr = nutEntries[i].bDayMM;
+                loopReplacementStr += "<span class='monthName'>" + monthName + "</span><br />";
+            }
+            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
+            loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;&nbsp;&nbsp;&nbsp;";
+            loopReplacementStr += "<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
+            lenSirName = nutEntries[i].LastName.length;
+            spaceToFill = (lenSirName < 10) ? (10 - lenSirName) : (15 - lenSirName);
+            /*spaceToFill = sirNameSpace - lenSirName;      */
+            for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
+                spaceStr += ".";
+            }
+            loopReplacementStr += spaceStr;
+            loopReplacementStr +=  nutEntries[i].FirstName + " ";
+            loopReplacementStr +=  nutEntries[i].MiddleInit + " ";
+            loopReplacementStr +=  nutEntries[i].bDayYYYY + " ";
+            if (requester === 'Foxy') {
+                loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + " &times;</a>";
+            }
+            loopReplacementStr += "<br />";
+            replacementStr += loopReplacementStr;
+            $("#replace").append(replacementStr);
+            loopReplacementStr = "";
+            replacementStr = "";
+        }
+    } else {
+        for (i = 0; i < numNuts; i += 1) {
+            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
+            lenSirName = nutEntries[i].LastName.length;
+            spaceToFill = (lenSirName < 10) ? (10 - lenSirName) : (15 - lenSirName);
+            /*spaceToFill = sirNameSpace - lenSirName;      */
+            for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
+                spaceStr += ".";
+            }
+            loopReplacementStr += spaceStr;
+            loopReplacementStr +=  nutEntries[i].FirstName + " ";
+            loopReplacementStr +=  nutEntries[i].MiddleInit + " ";
+            loopReplacementStr +=  nutEntries[i].bDayYYYY + " ";
+            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
+            loopReplacementStr += nutEntries[i].bDayDD;
+            if (requester === 'Foxy') {
+                loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + " &times;</a>";
+            }
+            loopReplacementStr += "<br />";
+            replacementStr += loopReplacementStr;
+            $("#replace").append(replacementStr);
+            loopReplacementStr = "";
+            replacementStr = "";
+        }
+    }
+    $("#replace").append("<pre><br><br></pre>");
+    return;
+}
+
+// fxn called by list nuts html page - which requester determines api
+/*jslint browser: true*/
+/*global $, jQuery, createXHR, displayPage*/
+function ajaxListBDays(requester, indexedBy) {
+    'use strict';
+
+    var bDayEntries = [], jqxhr;
+ 
+    
+    jqxhr = $.ajax({
+        type: "GET",
+        url: "listBDays.php?value=" + indexedBy,
+        beforeSend: function () {
+            $("#spinner").show();
+            $("#listWalnuts").css('display', 'none');
+            $("#mainMenu").css('display', 'none');            
+        }
+    })  
+        .done(function (dataReturned) {
+            $("#spinner").hide();
+            bDayEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
+            displayBDays(requester, bDayEntries, indexedBy);           
+            $(".outer").mCustomScrollbar({
+                mouseWheel: true,
+                scrollButtons: {
+                    enable: true
+                }
+            });                
+            $(".outer").mCustomScrollbar("update"); //update scrollbar according to newly loaded content
+            $(".outer").mCustomScrollbar("scrollTo","top",{scrollInertia:200}); //scroll to top
+                   
+            if (requester === 'Foxy') {
+                $("#mainMenu").css('display', 'block');
+                $("#listWalnuts").css('display', 'none');
+            } else {
+                $("#mainMenu").css('display', 'none');  //if user Walnut don't want admin dashboard link
+                $("#listWalnuts").css('display', 'block');
+            }
+            $("select").change(function () {
+              var str = "", option = 0;
+              option = $("select option:selected").val('myTag');
+              str = (option == 1) ? "byDate" : "byName";
+              $("#replace").empty();
+              ajaxListBDays(requester, str); // ajax call to populate page                         
+            });            
+        })
+        .fail(function (dataReturned) {
+            alert("List Birthdays failed" + dataReturned);
+        });
+}
+
+
+/* called by ajaxListNuts() fxn below - requester is who is making request, Foxy or user; nutEntries is arr of all walnuts */
 function displayPage(requester, nutEntries) {
     'use strict';
     var numNuts, i = 0,
         replacementStr = "", replacementStrLt = "", replacementStrRt = "",
         notesStr, b = 0, numBrks = 0, brksNeeded = 5, theHost = '';
-    // development or production ?
+// development or production ?
     theHost = location.host;
-    // get # entries in database into var numNuts
+// get # entries in database into var numNuts
     numNuts = nutEntries.length;
 
     for (i = 0; i < numNuts; i += 1) {
@@ -398,7 +585,7 @@ function displayPage(requester, nutEntries) {
         replacementStr = "<pre><a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
 
         if (requester === 'Foxy') {
-            replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\");' title='Delete'>" + "&times;</a>" + "<br>";
+            replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>" + "<br>";
         } else {
             replacementStr += "<br>";
         }
@@ -418,9 +605,9 @@ function displayPage(requester, nutEntries) {
 
         if (nutEntries[i].Notes.length) { // if notesStr longer than 30 chars, format for display
             notesStr = wordWrap(nutEntries[i].Notes, 30, '<br>', true);
- //           notesStr = notesStr.substring(0, 85); // trim to avoid 3rd nl                
+//           notesStr = notesStr.substring(0, 85); // trim to avoid 3rd nl                
             numBrks = (notesStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
-            // format any Notes to fit in our listNuts display properly - always print 4 newlines            
+        // format any Notes to fit in our listNuts display properly - always print 4 newlines            
         }
 
         if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
@@ -449,36 +636,6 @@ function displayPage(requester, nutEntries) {
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
 function ajaxListNuts(requester) {
- /*   // get local ajax request obj
-   
-    
-    var xhr = createXHR();
-    if (!xhr) {
-        return false;
-    }
-    // Create a function that will receive data sent from the server
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            document.getElementById("spinner").innerHTML = "";
-            walnutEntries = JSON.parse(xhr.responseText);
-            displayPage(requester, walnutEntries);
-            $(".content").mCustomScrollbar({
-                mouseWheel: true,
-                scrollButtons: {
-                    enable: true
-                }
-            });
-            if (requester === 'Foxy') {
-                document.getElementById("mainMenu").style.display = 'block';
-            }
-        } else {
-            document.getElementById("spinner").innerHTML = "<img id='spinner_img' src='../images/ajax-loader.gif'>";
-        }
-    };
-    //call php fxn to open Walnuts db and retieve/return all records for display
-    xhr.open("GET", "listNuts.php", true);
-    xhr.send(null);
-*/
     'use strict';
 
     var walnutEntries = [], jqxhr;
@@ -488,7 +645,7 @@ function ajaxListNuts(requester) {
         url: "listNuts.php",
         beforeSend: function () {
             $("#spinner").show();
-            if (requester === 'Walnut') {
+            if (requester === 'Walnut') {  // shouldn't this be Foxy ???
                 $("#editHint").hide();
             }
         }
@@ -497,7 +654,7 @@ function ajaxListNuts(requester) {
             $("#spinner").hide();
             walnutEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
             displayPage(requester, walnutEntries);
-            $("body").removeClass("loading");
+/*            $("body").removeClass("loading");     */
             $(".content").mCustomScrollbar({
                 mouseWheel: true,
                 scrollButtons: {
@@ -508,6 +665,7 @@ function ajaxListNuts(requester) {
                 $("#mainMenu").css('display', 'block');
             } else { // only 2 possible requesters - Foxy and Walnut
                 $("#editHint").show();
+                $("#bDayLink").show();
             }
         })
         .fail(function () {
@@ -515,18 +673,25 @@ function ajaxListNuts(requester) {
         });
 }
 
-function confirmDel(nutId, SirName) {
+function confirmDel(nutId, Name, dataBase, requester) {
     'use strict';
 
-    var jqxhr, r = confirm("Really delete " + SirName + "?");
+    var jqxhr, thisURL, thisHTML, r = confirm("Really delete " + Name + "?");
+    if (dataBase === "walnuts") {
+        thisURL = "delNut.php";
+        thisHTML = "listNuts.html?user=" + requester;
+    } else {
+        thisURL = "delBDay.php";
+        thisHTML = "listBDays.html?user=" + requester;
+    }
     if (r === true) {
         jqxhr = $.ajax({
             type : "GET",
-            url : "delNut.php",
+            url : thisURL,
             data : "value= " + nutId
         })
             .done(function () {
-                window.open("listNuts.html", "_self");
+                window.open(thisHTML, "_self");
             })
             .fail(function () {
                 alert("Delete failed ID: " + nutId);
@@ -537,32 +702,7 @@ function confirmDel(nutId, SirName) {
 // next 2 fxns called by editNut.html page
 function getOrigNut(nutID) {
     'use strict';
- /*   // target ID: value=# where # is 7th char
-    var s,
-    nut,
-    xhr,
-    key;
-    
-    // get ajax request obj
-    xhr = createXHR();
-    if (!xhr) {
-        alert("failed ajax request.");
-        return false;
-    }
-    // Create a function that will receive data sent from the server
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-             s = xhr.responseText;
-             nut = $.parseJSON(s);
-             for (key in nut) {
-                 $("#editNutForm " + "[name='" + key + "']").val(nut[key]);
-             }           
-            return;
-        };
-   };   
-    xhr.open("GET", "getNut.php?value=" + nutID,  true);
-    xhr.send(null);
-*/
+
     var key, valOfKey, jqxhr;
 
     jqxhr = $.ajax({
@@ -587,45 +727,12 @@ function getOrigNut(nutID) {
 // called by editNut.html on submit of form
 function ajaxEditNut() {
     'use strict';
-    // get ajax request obj
-/*    var xhr,
-        requester,
-        editData;
 
-   // Create a function that will receive data sent from the server
-        xhr = createXHR();
-    if (!xhr) {
-        return false;
-    }
-
-    xhr.onreadystatechange = function () {
-        requester = $("#editNutForm input[name=user]").val();
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            document.getElementById("editNutResponse").innerHTML = xhr.responseText;
-            if (requester === 'Foxy') {
-                window.open("listNuts.html", "_self"); // listNuts.html only called by Foxy
-            } else if (requester === 'Walnut') {
-                window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
-            } else {
-                alert("Error: Undefined requester " + requester);
-                return;
-            }
-        }
-    };
-    editData = getPostDataJSON("editNutForm"); 
-    xhr.open("POST", "editNut.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send(editData);
-*/
     var editData, requester;
     editData = getPostDataJSON("editNutForm");
     $.ajax({
         type: "POST",
         url: "editNut.php",
- /*       beforeSend: function () {
-            editData = getPostDataJSON("editNutForm");
-        },
-*/
         data: editData
     })
         .done(function (dataReturned) {
@@ -646,6 +753,63 @@ function ajaxEditNut() {
         .always(function () {
             setTimeout(function () {
                 $('#editNutResponse').slideUp('slow');
+            }, 8000);
+        });
+}
+
+// called by editBDay.html on submit of form
+function ajaxEditBDay() {
+    'use strict';
+
+    var editData, requester;
+    editData = getPostDataJSON("editBDayForm");
+    $.ajax({
+        type: "POST",
+        url: "editBDay.php",
+        data: editData
+    })
+        .done(function (dataReturned) {
+            $('#editBDayResponse').text(dataReturned);
+            requester = $("#editBDayForm input[name=user]").val();
+            if (requester === 'Foxy') {
+                window.open("listBDays.html?user=" + requester, "_self"); // listNuts.html only called by Foxy
+            } else if (requester === 'Walnut') {
+                window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
+            } else {
+                alert("Error: Undefined requester " + requester);
+                return;
+            }
+        })
+        .fail(function () {
+            $('#editBDayResponse').text("Update failed").slideDown('slow');
+        })
+        .always(function () {
+            setTimeout(function () {
+                $('#editBDayResponse').slideUp('slow');
+            }, 8000);
+        });
+}
+
+function getOrigBDay(nutID) {
+    'use strict';
+
+    var key, valOfKey, jqxhr;
+
+    jqxhr = $.ajax({
+        dataType: 'json',
+        url: "getBDay.php",
+        data: "value=" + nutID
+    }).done(function (dataReturned) {
+        $.each(dataReturned, function (key, valOfKey) {
+            $("#editBDayForm " + "[name='" + key + "']").val(valOfKey);
+        });
+    })
+        .fail(function (dataReturned) {
+            $('#editBDayResponse').text("error: " + dataReturned).slideDown('slow');
+        })
+        .always(function () {
+            setTimeout(function () {
+                $('#editBDayResponse').slideUp('slow');
             }, 8000);
         });
 }

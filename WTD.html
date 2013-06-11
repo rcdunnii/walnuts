@@ -21,13 +21,16 @@
         <h3><center>Admin Dashboard for Our WT Database</center></h3>
 
        <div >
-       <!-- ajaxWalnutFunction is in js file called ajaxWalnutCoreJSON.js  -->
-            <form id="WTForm" action="" onSubmit= "ajaxWalnutFunction(); return false;">						
-                    <input type="radio" id="createDB" name="dashBoardOpts" value="createDB"/>Create WT Database!<br>			
-                    <input type="radio" id="deleteDB" name="dashBoardOpts" value="deleteDB"/>Delete Entire WT Database!<br>
+       <!-- ajaxWalnutFunction is in js file called ajaxWalnutCoreJSON.js; user here is Foxy, the admin user  -->
+            <form id="WTForm" action="" onSubmit= "ajaxWalnutFunction('Foxy'); return false;">						
+                    <input type="radio" id="createNutsDB" name="dashBoardOpts" value="createNutsDB"/>Create WT Database!<br>			
+  <!--              <input type="radio" id="deleteNutsDB" name="dashBoardOpts" value="deleteNutsDB"/>Delete Entire WT Database!<br> -->
+                    <input type="radio" id="createNutsBDayDB" name="dashBoardOpts" value="createNutsBDayDB"/>Create Birthday Database!<br>
                     <input type="radio" id="bkUpDB"   name="dashBoardOpts" value="bkUpDB"/>Back Up WT Database!<br>                    
-                    <input type="radio" id="addEntry" name="dashBoardOpts" value="add" />Add New Entry<br>
-                    <input type="radio" id="listNuts" name="dashBoardOpts" value="list" />List Entries<br>
+                    <input type="radio" id="addEntry" name="dashBoardOpts" value="addNut" />Add New Walnut<br>
+                    <input type="radio" id="addBDay" name="dashBoardOpts" value="addBDay" />Add New Birthday<br>                    
+                    <input type="radio" id="listNuts" name="dashBoardOpts" value="listNuts" />List Walnuts<br>
+                    <input type="radio" id="listNuts" name="dashBoardOpts" value="listBDays" />List Birthdays<br>                    
                     <input type="submit" id="myPick"  value="Go!" />						
             </form>
         </div>

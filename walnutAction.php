@@ -1,6 +1,76 @@
 <?php
+   function createNutsBDayDB() {
+        require 'dbFoxy.inc';  // database info			
+		$mysqli = new mysqli($server, $user, $password);
+
+		/* check connection */
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", $mysqli->connect_error);
+			exit();
+		}
+		
+		/* sql query with CREATE DATABASE */
+		$sql = "CREATE DATABASE $bDaysDatabase DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+
+		// Performs the $sql query on the server to create the database
+		$res = $mysqli->query($sql) ;
+
+		if ($mysqli->error) {
+			try {    
+	/*			throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);       */
+    		    throw new Exception("MySQL error $mysqli->error ", $mysqli->errno);
+			} catch(Exception $e ) {
   
-   function createDB() {   		
+                echo "Error No: ".$e->getCode(). " - ". $e->getMessage();          
+/*				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+				echo nl2br($e->getTraceAsString());
+*/                
+				}
+			$mysqli->close();
+			return false;
+		}
+        
+        $mysqli = new mysqli($server, $user, $password, $bDaysDatabase);
+		if ($mysqli->connect_errno) {
+			die( 'Error: File:' . __FILE__ . 'line#' . __LINE__ . $mysqli->errno); 
+		}
+					
+		$sql = "CREATE TABLE bdays 
+			(
+			bDayID int NOT NULL AUTO_INCREMENT,
+            PRIMARY KEY (bDayID),
+			FirstName varchar(30) NOT NULL,
+            MiddleInit char(2) NULL,            
+			LastName varchar(50) NOT NULL,					
+			bDayYYYY char(4) NULL,
+            bDayMM char(3) NOT NULL,
+            bDayDD char(2) NOT NULL,
+            WalnutID int,
+            INDEX name (LastName, MiddleInit, FirstName),
+            INDEX bdMonth (bDayMM),
+            INDEX bDayDD (bDayDD)
+			)";
+			
+		// Performs the $sql query on the server to create the table
+		$res = $mysqli->query($sql);
+		
+		if ($mysqli->error) {
+			try {    
+				throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);    
+			} catch(Exception $e ) {
+				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+				echo nl2br($e->getTraceAsString());
+				}
+			$mysqli->close();
+			return;
+		}
+        
+		echo "$bDaysDatabase Database successfully created!";		
+		$mysqli->close();
+		return;		
+  }
+  
+   function createNutsDB() {   		
         require 'dbFoxy.inc';  // database info			
 		$mysqli = new mysqli($server, $user, $password);
 
@@ -92,7 +162,7 @@
 		return;		
 	}
 	
-	function deleteDB() {
+	function deleteNutsDB() {
         require 'dbFoxy.inc';  // database info			
 		$mysqli = @ new mysqli($server, $user, $password, $database);
 		
@@ -127,11 +197,13 @@
         if (!is_dir($dir))
             mkdir($dir);  
         //create the file name for the backup 
-        $backupfile = $dir.'/'.$database.'_'.date("m-d-Y_H-i-s").'.sql';   
+        $BU = $dir.'/nutDB_'.date("m-d-Y_H-i-s").'.sql';
+        $result = 0;
+        $log = $dir.'/dblog';
         //make the system call to mysqldump
-        exec("mysqldump --user=$user --password=$password --host=$server $database > $backupfile", $output, $result);
+        exec("mysqldump --debug-info  --log-error=$log --user=$user --password=$password --host=$server --databases $database   $bDaysDatabase > $BU", $output, $result);
         if ($result == 0) {           
-           echo ("<p>Backup OK!<br /><a class=\"downLoad\" href=\"$backupfile\" download>Click to Download</a>&nbsp;&nbsp;&nbsp;<a class= \"downLoad\" href=\"#\" >Skip Download</a></p>");
+           echo ("<p>Backup OK!<br /><a class=\"downLoad\" href=\"$BU\" download>Click to Download</a>&nbsp;&nbsp;&nbsp;<a class= \"downLoad\" href=\"#\" >Skip Download</a></p>");
         } else {
             echo ("Backup failed with error # " . $result);
         }
@@ -139,12 +211,14 @@
 	
 	if (($_REQUEST['value']) != "") {
 	   $whichDashBoardOpt = $_REQUEST['value'];
-	   if ($whichDashBoardOpt == "createDB") {
-           createDB();
-	   } elseif ($whichDashBoardOpt == "deleteDB") {				
-		   deleteDB();
+	   if ($whichDashBoardOpt == "createNutsDB") {
+           createNutsDB();
+	   } elseif ($whichDashBoardOpt == "deleteNutsDB") {				
+		   deleteNutsDB();
 	   } elseif ($whichDashBoardOpt == "bkUpDB") {      
            backUpWalnutDB();
+       } elseif ($whichDashBoardOpt == "createNutsBDayDB") {      
+           createNutsBDayDB();           
        } else {
 		   echo "Uh oh...";			   
 	   }  
