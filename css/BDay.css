@@ -19,27 +19,29 @@
                 margin: 0;
     }
     .listBDTitle {
-                position: absolute;
-                top: 10%;
+                position: relative;
+                top: 22%;
                 width: 400px; 
-                left:50%;
+                /* left:50%;   */
                 margin-left: -200px;  /* http://stackoverflow.com/questions/5811957/css-jquery-center-absolute-positioned-div */
-                color: lavender;
+                color: gold;
                 text-align:center;
                 font-size: x-large;
+				margin-right: auto;
+				margin-left: auto;
             }
       
-        #addBDayForm  label.error,
-        #editBDayForm  label.error {
-            display: block;
-            float: left;
-            color: red;
-            height: 20px;    
-            width: 250px;                
-            margin-right: 10px;       
-            margin-left: 10px;                                        
-            font: bold 16px arial;
-            text-align: left;
+	#addBDayForm  label.error,
+	#editBDayForm  label.error {
+		display: block;
+		float: left;
+		color: red;
+		height: 20px;    
+		width: 250px;                
+		margin-right: 10px;       
+		margin-left: 10px;                                        
+		font: bold 16px arial;
+		text-align: left;
     }
     
     #editBDayForm input,
@@ -77,7 +79,7 @@
                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */                              
                 width: 40em;
                 height: 225px;
-                top: 40%;
+                top: 28%;
                 overflow: auto;                
                 border: solid 3px black;
                 margin-left: auto;
@@ -283,12 +285,12 @@
  
       #mainMenu,
       #listWalnuts{
-        position: absolute;
+        position: relative;
         width: 200px;
         padding: 5px;
-        top:75%;
-		left: 50%;
-        margin-left:-100px;
+        top:35%;
+        margin-left:auto;
+        margin-right:auto;		
      }
    
       #mainMenu  a,
@@ -302,23 +304,24 @@
     
      #mainMenu a:hover,
      #listWalnuts a:hover {
-         background-color: white;
-         color:#000;
+         background-color: black;
+         color:white;
      }
 
+	 #sortOrder
+	 {
+		position: relative;
+		top: 29%;
+		left: 45.45%;  
+		width: 122px;
+	}
+	
 	  #sortOrder  select {
-       position: absolute;
-       top: 67%;
-/*     width: 100px;   */
-       left: 50%;
-       margin-left: -70px;		
-/*	   background: transparent;   */
 	   width: 140px;
 	   padding: 5px;
 	   font-size: 16px;
 	   line-height: 1;
 	   border: 0;
-	   border-radius: 2px;
 	   height: 26px;
 	   -webkit-appearance: none;
    }

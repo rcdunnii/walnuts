@@ -444,6 +444,7 @@ function displayBDays(requester, nutEntries, idxBy) {
     'use strict';
     var numNuts, i = 0,
         j = 0,
+		lenFirstName = "",		
         lenSirName = 0,
         sirNameSpace = 15,
         monthName = "",
@@ -476,11 +477,20 @@ function displayBDays(requester, nutEntries, idxBy) {
                 spaceStr += ".";
             }
             loopReplacementStr += spaceStr;
-            loopReplacementStr +=  nutEntries[i].FirstName + " ";
-            loopReplacementStr +=  nutEntries[i].MiddleInit + " ";
-            loopReplacementStr +=  nutEntries[i].bDayYYYY + " ";
+            loopReplacementStr +=  nutEntries[i].FirstName + "&nbsp;";
+
+            lenFirstName =  nutEntries[i].FirstName.length;
+            spaceToFill = (lenFirstName < 10) ? (10 - lenFirstName) : (15 - lenFirstName);			
+			loopReplacementStr += (nutEntries[i].MiddleInit) ? (nutEntries[i].MiddleInit[0] + "&nbsp;") : "&nbsp;&nbsp;";
+			for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
+				spaceStr += "&nbsp;";
+			}
+            loopReplacementStr += spaceStr;
+			
+            /*loopReplacementStr +=  nutEntries[i].MiddleInit + "&nbsp;";   */
+            loopReplacementStr +=  nutEntries[i].bDayYYYY + "&nbsp;";
             if (requester === 'Foxy') {
-                loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + " &times;</a>";
+                loopReplacementStr += "&nbsp;&nbsp;<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + "&times;</a>";
             }
             loopReplacementStr += "<br />";
             replacementStr += loopReplacementStr;
@@ -488,7 +498,7 @@ function displayBDays(requester, nutEntries, idxBy) {
             loopReplacementStr = "";
             replacementStr = "";
         }
-    } else {
+    } else {	// list byName
         for (i = 0; i < numNuts; i += 1) {
             loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
             lenSirName = nutEntries[i].LastName.length;
@@ -498,13 +508,20 @@ function displayBDays(requester, nutEntries, idxBy) {
                 spaceStr += ".";
             }
             loopReplacementStr += spaceStr;
-            loopReplacementStr +=  nutEntries[i].FirstName + " ";
-            loopReplacementStr +=  nutEntries[i].MiddleInit + " ";
-            loopReplacementStr +=  nutEntries[i].bDayYYYY + " ";
-            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
-            loopReplacementStr += nutEntries[i].bDayDD;
+            loopReplacementStr +=  nutEntries[i].FirstName + "&nbsp;";
+			lenFirstName =  nutEntries[i].FirstName.length;
+            spaceToFill = (lenFirstName < 10) ? (10 - lenFirstName) : (15 - lenFirstName);			
+			loopReplacementStr += (nutEntries[i].MiddleInit) ? (nutEntries[i].MiddleInit[0] + "&nbsp;") : "&nbsp;&nbsp;";
+			for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
+				spaceStr += "&nbsp;";
+			}
+            loopReplacementStr += spaceStr;
+			monthName = getMonth(nutEntries[i].bDayMM);
+            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:red\">" + monthName.substring(0,3) + "</span>" + "&nbsp;";
+            loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;";
+			loopReplacementStr += (nutEntries[i].bDayYYYY) ? nutEntries[i].bDayYYYY : "&nbsp;&nbsp;&nbsp;&nbsp;";			
             if (requester === 'Foxy') {
-                loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + " &times;</a>";
+                loopReplacementStr += "&nbsp;<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + "&times;</a>";
             }
             loopReplacementStr += "<br />";
             replacementStr += loopReplacementStr;
