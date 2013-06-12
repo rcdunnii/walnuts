@@ -446,6 +446,7 @@ function displayBDays(requester, nutEntries, idxBy) {
         j = 0,
 		lenFirstName = "",		
         lenSirName = 0,
+		monOffSet = 17, // spaces from start of 1st name to start of the date
         sirNameSpace = 15,
         monthName = "",
         lastMonNumStr = "",
@@ -459,7 +460,7 @@ function displayBDays(requester, nutEntries, idxBy) {
     theHost = location.host;
 // get # entries in database into var numNuts
     numNuts = nutEntries.length;
-    $("#replace").append("<pre><br><center><h2>Birth Dates in Database<br><span style=\"display:inline-block\" class=\"downPointer\">&#10132;</span></h2><center></pre>");
+	$("#replace").empty().append("<pre><br><center><h2>Birth Dates in Database<br><span style=\"display:inline-block\" class=\"downPointer\">&#10132;</span></h2><center></pre>");;
     if (idxBy == "byDate") {
         for (i = 0; i < numNuts; i += 1) {
             if (lastMonNumStr !== nutEntries[i].bDayMM) {
@@ -510,14 +511,15 @@ function displayBDays(requester, nutEntries, idxBy) {
             loopReplacementStr += spaceStr;
             loopReplacementStr +=  nutEntries[i].FirstName + "&nbsp;";
 			lenFirstName =  nutEntries[i].FirstName.length;
-            spaceToFill = (lenFirstName < 10) ? (10 - lenFirstName) : (15 - lenFirstName);			
+			spaceToFill = monOffSet - (lenFirstName + 3); // 3 comes from 1 space before MI, the MI and one space after
+            /*spaceToFill = (lenFirstName < 10) ? (10 - lenFirstName) : (15 - lenFirstName);			   */
 			loopReplacementStr += (nutEntries[i].MiddleInit) ? (nutEntries[i].MiddleInit[0] + "&nbsp;") : "&nbsp;&nbsp;";
 			for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
 				spaceStr += "&nbsp;";
 			}
             loopReplacementStr += spaceStr;
 			monthName = getMonth(nutEntries[i].bDayMM);
-            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color:red\">" + monthName.substring(0,3) + "</span>" + "&nbsp;";
+            loopReplacementStr += "<span style=\"color:red\">" + monthName.substring(0,3) + "</span>" + "&nbsp;";
             loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;";
 			loopReplacementStr += (nutEntries[i].bDayYYYY) ? nutEntries[i].bDayYYYY : "&nbsp;&nbsp;&nbsp;&nbsp;";			
             if (requester === 'Foxy') {

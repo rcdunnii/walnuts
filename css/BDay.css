@@ -331,7 +331,7 @@
 	   height: 34px;
 	   overflow: hidden;
 	   background: url("/images/dn_arrow.png") no-repeat right #ddd;
-	   border: 1px solid #ccc;
+	   /*border: 1px solid #ccc;   */
 	   color: gold;
 	   background-color:#5A4746;
 	   cursor: pointer;
