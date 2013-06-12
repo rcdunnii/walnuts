@@ -123,17 +123,18 @@
 	#editHint {
 		position: relative;
 		width: 300px;
-		margin-right: auto;
-        margin-left: auto;	
+		margin: 5px 5px;
 		padding: 5px;
 		background-color: transparent;
 		color: #EEDC82; /* flax  */
 		font-weight:bold;
 		font-size: 115%;
-/*		left: 30%;   */
-		top: 5px;
+		top: -30px;
 		font-family:"Times New Roman",Georgia,Serif;
-	}
+	
+		margin-left:  auto;
+		margin-right:  auto;
+}
   
     #bDayLink{
         position: absolute;
@@ -144,7 +145,6 @@
     #bDayLink a {
         color: gold;
         font-size: 1.3em;
-        font-weight: bold;
     }
 
     .securityLink {
@@ -249,20 +249,13 @@
     .oneNut:active {color:#FFD700;}  /* yellow on selected link */   
 	
     .updated 
-       {
+      {
         color: yellow;
     }
     
-	#galore {
-		position: relative;
-		width: 332px;
-		margin-left: auto;
-		margin-right: auto;
-		top: 23px;
-	}
     .listH1, .listH2
       {
-       width:70%;
+       width:40%%;
        margin-left: auto;
        margin-right: auto;
        text-align: center;

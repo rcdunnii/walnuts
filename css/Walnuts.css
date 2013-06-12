@@ -132,6 +132,8 @@
 		font-size: 115%;
 		top: 5px;
 		font-family:"Times New Roman",Georgia,Serif;
+		margin-right: auto;
+		margin-left: auto;
 	}
   
     #bDayLink{
