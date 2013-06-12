@@ -123,14 +123,14 @@
 	#editHint {
 		position: relative;
 		width: 300px;
-		margin: 5px 5px;
+		margin-right: auto;
+        margin-left: auto;	
 		padding: 5px;
 		background-color: transparent;
 		color: #EEDC82; /* flax  */
 		font-weight:bold;
 		font-size: 115%;
-		left: 30%;
-		top: -30px;
+		top: 5px;
 		font-family:"Times New Roman",Georgia,Serif;
 	}
   
@@ -164,7 +164,6 @@
         display: none;
     }
       
-  /*  textarea#Notes { */
    #Notes {
         font: normal 18px serif;
     }
@@ -223,12 +222,7 @@
     #replaceLt pre {
 	   padding: 0;
 	   color: white;
-	}
- 
-/*    
-    #addNutForm fieldset ul li  label.error,
-    #editNutForm fieldset ul li label.error 
-*/    
+	}    
     
 		
 	.oneNut {
@@ -247,13 +241,20 @@
     .oneNut:active {color:#FFD700;}  /* yellow on selected link */   
 	
     .updated 
-      {
+       {
         color: yellow;
     }
     
+	#galore {
+		position: relative;
+		width: 332px;
+		margin-left: auto;
+		margin-right: auto;
+		top: 23px;
+	}
     .listH1, .listH2
       {
-       width:40%%;
+       width:70%;
        margin-left: auto;
        margin-right: auto;
        text-align: center;
@@ -305,31 +306,24 @@
         margin-right: 5px;
         background: #800000;  /* dark red  */
     }
-/*    
-    #editNutPage h1,
-    #editNutPage h3,
-    #addNutPage h1,
-    #addNutPage h3
- */
+
     h1, h3
-      {
-  /*       color:#EEDC82; flax  */
-    color:#000000;
+       {
+		color:#000000;
     }
     
     #editNutForm,
     #addNutForm
-      {
+       {
         position: relative;
         width: 100%;
         height: 100%;
     }
 
-/*    span#editNutResponse,
-    span#addNutResponse   */
+
     #editNutResponse,
     #addNutResponse  
-      {
+       {
         position: absolute;
         width: 500px;
         height: 15px;
@@ -362,8 +356,7 @@
         border: 0;  
     }
       
-/*     form#editNutForm fieldset ul,
-     form#addNutForm fieldset ul */ 
+ 
      #editNutForm ul,
      #addNutForm  ul 
        {
@@ -373,10 +366,7 @@
      margin: 0.2em auto;
      }
 
-/*     
-    form#editNutForm fieldset ul li,
-    form#addNutForm fieldset ul li
-*/    
+   
     #editNutForm li,
     #addNutForm  li
     {
@@ -388,10 +378,7 @@
         padding: 5px;        
     }
 
-/*
-    form#editNutForm fieldset ul li label,
-    form#addNutForm fieldset ul li  label
-*/ 
+
     #editNutForm label,
     #addNutForm  label   
       {
@@ -415,10 +402,7 @@
         font: bold 16px arial;
         text-align: left;
     }
- /*
-    form#editNutForm fieldset ul li input,
-    form#addNutForm fieldset ul li input 
-*/ 
+ 
     #editNutForm input,
     #addNutForm  input    
       {
@@ -431,31 +415,14 @@
         border: 2px inset;
     }
  
-/* 
-    form#editNutForm fieldset ul li textarea#Notes,
-    form#addNutForm fieldset ul li textarea#Notes
-*/  
+  
     #editNutForm #Notes,
     #addNutForm #Notes  
       {
         margin-left:0;
     }
  
-/* 
-    form#addNutForm fieldset ul.navlist,
-    form#editNutForm fieldset ul.navlist
-    { 
-        position: absolute;
-        width: 430px;
-        height: 25px;
-        margin: 10px;
-		top: 533px;
-		left: 126px;
-        padding: .3em 0;
-        text-align: center;
-        list-style-type: none;
-    }
- */
+
     #addNutForm li.navlist,
     #editNutForm li.navlist
      {
@@ -465,24 +432,7 @@
         padding:0;
         overflow:hidden;
     }
-/*    
-    form#addNutForm fieldset ul.navlist li,
-    form#editNutForm fieldset ul.navlist  li
-    {
-        display: inline;   
-        padding: .1em .5em; */       
- /*       padding: 0 .5em;  
-        width: 8em
-        position: absolute;
-        height: 25px;
-        bottom: 0px;   ;*/     
-  /*      text-decoration: none;
-        background-color: #8B0000;
-        color: yellow;
-        border: 1px solid;
-        border-color: #cec #464 #575 #dfd;        
-    }*/
-  
+
     #addNutForm  li.navlist input,
     #editNutForm li.navlist input
       {
@@ -495,14 +445,7 @@
         border: 1px solid;
         border-color: #cec #464 #575 #dfd;
     }
-/*	
-    form#addNutForm fieldset ul.navlist li #submit,
-    form#editNutForm fieldset ul.navlist li #submit 
- */ 
-/*  
-    form#addNutForm fieldset ul.navlist li #reset,
-    form#editNutForm fieldset ul.navlist li #reset
-*/
+
     li.navlist #submit     
        {
       left: 20%;

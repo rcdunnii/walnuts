@@ -677,7 +677,6 @@ function ajaxListNuts(requester) {
             $("#spinner").hide();
             walnutEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
             displayPage(requester, walnutEntries);
-/*            $("body").removeClass("loading");     */
             $(".content").mCustomScrollbar({
                 mouseWheel: true,
                 scrollButtons: {
@@ -687,7 +686,7 @@ function ajaxListNuts(requester) {
             if (requester === 'Foxy') {
                 $("#mainMenu").css('display', 'block');
             } else { // only 2 possible requesters - Foxy and Walnut
-                $("#editHint").show();
+                $("#editHint").show(); 
                 $("#bDayLink").show();
             }
         })
