@@ -14,6 +14,9 @@
     $(function() { 
       
          $('form:first *:input[type!=hidden]:first').focus();
+		 $.validator.addMethod('year', function (value, element) {		    
+				return this.optional(element) || (value.length == 4);
+		 }, 'Enter YYYY !');
          // Handler for .ready() called.
          jQuery.validator.messages.required = "";
          $("#addBDayForm").validate({           
@@ -25,9 +28,9 @@
                         required: true,
                         minlength: 3
                     },
-                    YYYY: {
+                    bDayYYYY: {
                         required: false,
-                        minlength: 4
+                        year : true
                     },
                     bDayMM: {
                         required: true,
@@ -46,6 +49,9 @@
                         required: "Must include last name",
                         minlength:"That's a name???!"
                     },
+					bDayYYYY: {
+					    minlength: "Enter YYYY"
+					},					
                      bDayMM: {
                         required: "Include Birth Month (MM)",
                         minlength:"Needs 2 characters!"
@@ -85,7 +91,7 @@
                         </ul>
                         <fieldset class="submit">                        
                             <input type="submit" name="btn" id="submit" value="Submit"/>
-                            <input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)" />
+                            <input type="button" name="btn" id="reset" value="Reset" onclick="document.location.reload(true)" />
                             <input type="button" name="btn" id="home" value="Main Menu" onclick="window.location.href ='WTD.html';" />
                             <input type="button" name="btn" id="again" value="Add Another" onclick="document.location.reload(true)"/>
                          

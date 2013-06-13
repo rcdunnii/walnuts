@@ -472,8 +472,9 @@ function displayBDays(requester, nutEntries, idxBy) {
                 loopReplacementStr += "<span class='monthName'>" + monthName + "</span><br />";
             }
             loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
-            loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;&nbsp;&nbsp;&nbsp;";
-            loopReplacementStr += "<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
+            loopReplacementStr += nutEntries[i].bDayDD;
+			loopReplacementStr += ((nutEntries[i].bDayYYYY) ? ("-" + nutEntries[i].bDayYYYY + "&nbsp;&nbsp;&nbsp;") : ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));
+            loopReplacementStr += "<a class=\"oneNut\" onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = \"Update this Birthday\">" +  nutEntries[i].LastName + "</a>";
             lenSirName = nutEntries[i].LastName.length;
 			if (lenSirName < 10) {
 				spaceToFill = (10 - lenSirName);
@@ -489,11 +490,12 @@ function displayBDays(requester, nutEntries, idxBy) {
             lenFirstName =  nutEntries[i].FirstName.length;
             spaceToFill = (lenFirstName < 10) ? (10 - lenFirstName) : (15 - lenFirstName);
 			loopReplacementStr += (nutEntries[i].MiddleInit) ? (nutEntries[i].MiddleInit[0] + "&nbsp;") : "&nbsp;&nbsp;";
-			for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
+/*			for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
 				spaceStr += "&nbsp;";
 			}
             loopReplacementStr += spaceStr;
             loopReplacementStr +=  nutEntries[i].bDayYYYY + "&nbsp;";
+*/
             if (requester === 'Foxy') {
                 loopReplacementStr += "&nbsp;&nbsp;<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + "&times;</a>";
             }
@@ -505,7 +507,7 @@ function displayBDays(requester, nutEntries, idxBy) {
         }
     } else {	// list byName
         for (i = 0; i < numNuts; i += 1) {
-            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "\" title = 'Update this Birthday'>";
+            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"oneNut\" onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>";
 			nameStr =  nutEntries[i].LastName + "</a>, " + nutEntries[i].FirstName + " " + ((typeof nutEntries[i].MiddleInit[0] !== 'undefined') ? nutEntries[i].MiddleInit[0] : " ");
 			lenNameStr = nameStr.length; // may need to debit 4 for the </a> tag part of the string
 			loopReplacementStr += nameStr;
@@ -721,7 +723,9 @@ function confirmDel(nutId, Name, dataBase, requester) {
 function getOrigNut(nutID) {
     'use strict';
 
-    var jqxhr;
+    var jqxhr,
+	    key,
+		valOfKey;
 
     jqxhr = $.ajax({
         dataType: 'json',
@@ -789,14 +793,7 @@ function ajaxEditBDay() {
         .done(function (dataReturned) {
             $('#editBDayResponse').text(dataReturned);
             requester = $("#editBDayForm input[name=user]").val();
-            if (requester === 'Foxy') {
-                window.open("listBDays.html?user=" + requester, "_self"); // listNuts.html only called by Foxy
-            } else if (requester === 'Walnut') {
-                window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
-            } else {
-                alert("Error: Undefined requester " + requester);
-                return;
-            }
+            window.open("listBDays.html?user=" + requester, "_self");
         })
         .fail(function () {
             $('#editBDayResponse').text("Update failed").slideDown('slow');
@@ -811,7 +808,9 @@ function ajaxEditBDay() {
 function getOrigBDay(nutID) {
     'use strict';
 
-    var jqxhr;
+    var key,
+	    valOfKey,
+	    jqxhr;
 
     jqxhr = $.ajax({
         dataType: 'json',
