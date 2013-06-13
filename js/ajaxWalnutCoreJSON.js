@@ -261,7 +261,7 @@ function ajaxWalnutFunction(requester) {
                     .html(responseData)
                     .appendTo("#response")
                     .on({
-                        "click": function (e) {$(".redText").fadeOut('slow', function () {$(".redText").remove(); });
+                        "click": function () {$(".redText").fadeOut('slow', function () {$(".redText").remove(); });
                             }
                     }, ".downLoad");
             }
@@ -442,25 +442,28 @@ function getMonth(numStr) {
 
 function displayBDays(requester, nutEntries, idxBy) {
     'use strict';
-    var numNuts, i = 0,
+    var numNuts,
+		i = 0,
         j = 0,
-		lenFirstName = "",		
+		lenFirstName = 0,
         lenSirName = 0,
-		monOffSet = 17, // spaces from start of 1st name to start of the date
-        sirNameSpace = 15,
+		lenNameStr = 0,
+		nameStr = "",
+		monOffSet = 30, // spaces from start of 1st name to start of the date
+        /*sirNameSpace = 15,   */
         monthName = "",
         lastMonNumStr = "",
         spaceToFill = 0,
         spaceStr = "",
         replacementStr = "",
         loopReplacementStr = "",
-        theHost = "",
-        innerHeight; // height of inner div
+        theHost = "";
+
 // development or production ?
     theHost = location.host;
 // get # entries in database into var numNuts
     numNuts = nutEntries.length;
-	$("#replace").empty().append("<pre><br><center><h2>Birth Dates in Database<br><span style=\"display:inline-block\" class=\"downPointer\">&#10132;</span></h2><center></pre>");;
+	$("#replace").empty().append("<pre><br><center><h2>Birth Dates in Database<br><span style=\"display:inline-block\" class=\"downPointer\">&#10132;</span></h2><center></pre>");
     if (idxBy == "byDate") {
         for (i = 0; i < numNuts; i += 1) {
             if (lastMonNumStr !== nutEntries[i].bDayMM) {
@@ -472,23 +475,24 @@ function displayBDays(requester, nutEntries, idxBy) {
             loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;&nbsp;&nbsp;&nbsp;";
             loopReplacementStr += "<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
             lenSirName = nutEntries[i].LastName.length;
-            spaceToFill = (lenSirName < 10) ? (10 - lenSirName) : (15 - lenSirName);
-            /*spaceToFill = sirNameSpace - lenSirName;      */
-            for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
-                spaceStr += ".";
+			if (lenSirName < 10) {
+				spaceToFill = (10 - lenSirName);
+				for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
+					spaceStr += ".";
+				}
+			} else {
+				spaceStr = ",&nbsp;";
             }
             loopReplacementStr += spaceStr;
             loopReplacementStr +=  nutEntries[i].FirstName + "&nbsp;";
 
             lenFirstName =  nutEntries[i].FirstName.length;
-            spaceToFill = (lenFirstName < 10) ? (10 - lenFirstName) : (15 - lenFirstName);			
+            spaceToFill = (lenFirstName < 10) ? (10 - lenFirstName) : (15 - lenFirstName);
 			loopReplacementStr += (nutEntries[i].MiddleInit) ? (nutEntries[i].MiddleInit[0] + "&nbsp;") : "&nbsp;&nbsp;";
 			for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
 				spaceStr += "&nbsp;";
 			}
             loopReplacementStr += spaceStr;
-			
-            /*loopReplacementStr +=  nutEntries[i].MiddleInit + "&nbsp;";   */
             loopReplacementStr +=  nutEntries[i].bDayYYYY + "&nbsp;";
             if (requester === 'Foxy') {
                 loopReplacementStr += "&nbsp;&nbsp;<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + "&times;</a>";
@@ -501,29 +505,21 @@ function displayBDays(requester, nutEntries, idxBy) {
         }
     } else {	// list byName
         for (i = 0; i < numNuts; i += 1) {
-            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>" +  nutEntries[i].LastName + "</a>";
-            lenSirName = nutEntries[i].LastName.length;
-            spaceToFill = (lenSirName < 10) ? (10 - lenSirName) : (15 - lenSirName);
-            /*spaceToFill = sirNameSpace - lenSirName;      */
-            for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
-                spaceStr += ".";
-            }
-            loopReplacementStr += spaceStr;
-            loopReplacementStr +=  nutEntries[i].FirstName + "&nbsp;";
-			lenFirstName =  nutEntries[i].FirstName.length;
-			spaceToFill = monOffSet - (lenFirstName + 3); // 3 comes from 1 space before MI, the MI and one space after
-            /*spaceToFill = (lenFirstName < 10) ? (10 - lenFirstName) : (15 - lenFirstName);			   */
-			loopReplacementStr += (nutEntries[i].MiddleInit) ? (nutEntries[i].MiddleInit[0] + "&nbsp;") : "&nbsp;&nbsp;";
+            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;<a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "\" title = 'Update this Birthday'>";
+			nameStr =  nutEntries[i].LastName + "</a>, " + nutEntries[i].FirstName + " " + ((typeof nutEntries[i].MiddleInit[0] !== 'undefined') ? nutEntries[i].MiddleInit[0] : " ");
+			lenNameStr = nameStr.length; // may need to debit 4 for the </a> tag part of the string
+			loopReplacementStr += nameStr;
+			spaceToFill = monOffSet - (lenNameStr - 4);
 			for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
-				spaceStr += "&nbsp;";
+				spaceStr += ".";
 			}
             loopReplacementStr += spaceStr;
 			monthName = getMonth(nutEntries[i].bDayMM);
-            loopReplacementStr += "<span style=\"color:red\">" + monthName.substring(0,3) + "</span>" + "&nbsp;";
-            loopReplacementStr += nutEntries[i].bDayDD + "&nbsp;";
-			loopReplacementStr += (nutEntries[i].bDayYYYY) ? nutEntries[i].bDayYYYY : "&nbsp;&nbsp;&nbsp;&nbsp;";			
+            loopReplacementStr += "<span style=\"color:red\">" + monthName.substring(0, 3) + "</span>" + " ";
+            loopReplacementStr += nutEntries[i].bDayDD + " ";
+			loopReplacementStr += (nutEntries[i].bDayYYYY !== "") ? nutEntries[i].bDayYYYY : "    ";
             if (requester === 'Foxy') {
-                loopReplacementStr += "&nbsp;<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + "&times;</a>";
+                loopReplacementStr += " <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + "&times;</a>";
             }
             loopReplacementStr += "<br />";
             replacementStr += loopReplacementStr;
@@ -686,7 +682,7 @@ function ajaxListNuts(requester) {
             if (requester === 'Foxy') {
                 $("#mainMenu").css('display', 'block');
             } else { // only 2 possible requesters - Foxy and Walnut
-                $("#editHint").show(); 
+                $("#editHint").show();
                 $("#bDayLink").show();
             }
         })
@@ -725,7 +721,7 @@ function confirmDel(nutId, Name, dataBase, requester) {
 function getOrigNut(nutID) {
     'use strict';
 
-    var key, valOfKey, jqxhr;
+    var jqxhr;
 
     jqxhr = $.ajax({
         dataType: 'json',
@@ -815,7 +811,7 @@ function ajaxEditBDay() {
 function getOrigBDay(nutID) {
     'use strict';
 
-    var key, valOfKey, jqxhr;
+    var jqxhr;
 
     jqxhr = $.ajax({
         dataType: 'json',
