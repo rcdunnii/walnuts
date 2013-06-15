@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title></title>
+</head>
+<body>
+                        <div><h2>Restore Walnuts Database</h2</div> 
+                        <div><p>Enter path to sql restore file</div>
+                    <form id="getSQL" action="">                     
+                        <input type="file" name="sql"/>
+                        <input type="hidden" />
+                        <input type="submit" value="Submit"/>                                             
+                        <input type="button" name="btn" id="home" value="Main Menu" onclick="window.location.href ='WTD.html';" />
+                    </form>    
+    <script>
+        var input = $("input:file").css({background:"yellow", border:"3px red solid"});
+        $("div").text("For this type jQuery found " + input.length + ".")
+                .css("color", "red");
+        $("form").submit(function () { 
+            ajaxRestoreDB(input);
+            return false; }); // so it won't submit
+
+    </script>
+</script>
+</body>
+</html>

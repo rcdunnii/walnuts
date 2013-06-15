@@ -1,6 +1,9 @@
 <?php
-   function createNutsBDayDB() {
-        require 'dbFoxy.inc';  // database info			
+   
+   function createNutsDBs() {
+        require_once('dbFoxy.inc');  // database info
+/* create birthday datbase   */
+		
 		$mysqli = new mysqli($server, $user, $password);
 
 		/* check connection */
@@ -16,16 +19,11 @@
 		$res = $mysqli->query($sql) ;
 
 		if ($mysqli->error) {
-			try {    
-	/*			throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);       */
+			try {
     		    throw new Exception("MySQL error $mysqli->error ", $mysqli->errno);
-			} catch(Exception $e ) {
-  
-                echo "Error No: ".$e->getCode(). " - ". $e->getMessage();          
-/*				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-				echo nl2br($e->getTraceAsString());
-*/                
-				}
+			} catch(Exception $e ) { 
+                echo "Error No: ".$e->getCode(). " - ". $e->getMessage();                        
+			}
 			$mysqli->close();
 			return false;
 		}
@@ -64,22 +62,17 @@
 			$mysqli->close();
 			return;
 		}
+        $mysqli->close();
         
-		echo "$bDaysDatabase Database successfully created!";		
-		$mysqli->close();
-		return;		
-  }
-  
-   function createNutsDB() {   		
-        require 'dbFoxy.inc';  // database info			
-		$mysqli = new mysqli($server, $user, $password);
+/* Now create walnuts database  */
+
+	    $mysqli = new mysqli($server, $user, $password);
 
 		/* check connection */
 		if ($mysqli->connect_errno) {
 			printf("Connect failed: %s\n", $mysqli->connect_error);
 			exit();
-		}
-		
+		}		
 		/* sql query with CREATE DATABASE */
 		$sql = "CREATE DATABASE $database DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
 
@@ -88,18 +81,14 @@
 
 		if ($mysqli->error) {
 			try {    
-	/*			throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);       */
     		    throw new Exception("MySQL error $mysqli->error ", $mysqli->errno);
 			} catch(Exception $e ) {
-  
-                echo "Error No: ".$e->getCode(). " - ". $e->getMessage();          
-/*				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-				echo nl2br($e->getTraceAsString());
-*/                
-				}
+                echo "Error No: ".$e->getCode(). " - ". $e->getMessage();                
+			}
 			$mysqli->close();
 			return false;
-		}	
+		}
+        
 		$mysqli = new mysqli($server, $user, $password, $database );
 		if ($mysqli->connect_errno) {
 			die( 'Error: File:' . __FILE__ . 'line#' . __LINE__ . $mysqli->errno); 
@@ -157,13 +146,14 @@
 			return;
 		}
         
-		echo "$database Database successfully created!";		
+		echo "$database, $bDaysDatabase databases successfully created!";		
 		$mysqli->close();
 		return;		
 	}
 	
-	function deleteNutsDB() {
-        require 'dbFoxy.inc';  // database info			
+	function deleteNutsDBs() {
+        require_once('dbFoxy.inc');  // database info
+        
 		$mysqli = @ new mysqli($server, $user, $password, $database);
 		
 		/* check connection */
@@ -172,7 +162,7 @@
 			exit();
 		}
 		
-		$res = $mysqli->query('DROP DATABASE walnuts1');
+		$res = $mysqli->query("DROP DATABASE IF EXISTS $database");
 		
 		if ($mysqli->error) {
 			try {    
@@ -184,14 +174,40 @@
 			$mysqli->close();
 			return;
 		}
+        
+        $mysqli->close();
+        
+        $mysqli = @ new mysqli($server, $user, $password, $bDaysDatabase);
 		
-		echo "Ouch...$database Database deleted";
-		$mysqli->close();
+		/* check connection */
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", $mysqli->connect_error);
+			exit();
+		}
+		
+		$res = $mysqli->query("DROP DATABASE IF EXISTS $bDaysDatabase");
+		
+		if ($mysqli->error) {
+			try {    
+				throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);    
+			} catch(Exception $e ) {
+				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+				echo nl2br($e->getTraceAsString());
+				}
+			$mysqli->close();
+			return;
+		}
+        
+        $mysqli->close();
+		
+		echo "Ouch... Databases deleted";
+
 		return;					
 	}
 	
-    function backUpWalnutDB() {
-        require 'dbFoxy.inc';    
+    function backUpDBs() {
+        require_once('dbFoxy.inc');  // database info
+        
         $dir = "db_backup";  
         //if the db directory doesn't exist yet, create it
         if (!is_dir($dir))
@@ -207,18 +223,18 @@
         } else {
             echo ("Backup failed with error # " . $result);
         }
-}        
-	
+}
+
+/*    require_once('dbFoxy.inc');  // database info  */
+    
 	if (($_REQUEST['value']) != "") {
 	   $whichDashBoardOpt = $_REQUEST['value'];
-	   if ($whichDashBoardOpt == "createNutsDB") {
-           createNutsDB();
-	   } elseif ($whichDashBoardOpt == "deleteNutsDB") {				
-		   deleteNutsDB();
-	   } elseif ($whichDashBoardOpt == "bkUpDB") {      
-           backUpWalnutDB();
-       } elseif ($whichDashBoardOpt == "createNutsBDayDB") {      
-           createNutsBDayDB();           
+	   if ($whichDashBoardOpt == "createNutsDBs") {
+           createNutsDBs();
+	   } elseif ($whichDashBoardOpt == "deleteNutsDBs") {				
+		   deleteNutsDBs();
+	   } elseif ($whichDashBoardOpt == "bkUpDBs") {      
+           backUpDBs();          
        } else {
 		   echo "Uh oh...";			   
 	   }  

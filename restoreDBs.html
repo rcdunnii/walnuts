@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title></title>
+    <link rel="stylesheet" href="/css/Walnuts.css" type="text/css" />
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
+    <script type="text/javascript" src="/js/ajaxWalnutCoreJSON.js"></script>
+</head>
+<body id="popUp">
+             <div id="restorePopUp">
+                <div><h1>Restore Walnuts Databases</h1></div> 
+                <div><p>Enter path to SQL restore file</p></div>
+
+    <div class="custom-file">
+        <span class="text"  id="choice"></span>
+        <span class="button"></span>
+        <input type="file" id="file" />
+    </div>
+    <div class="restoreResponse"><span></span> </div>
+            </div>
+            
+<script>
+     $(function () {
+         var sql = "";
+         $('#file').change(function () {
+             sql = $('input[type=file]').val();
+             if (confirm("Retore with " + sql + "?")) {  
+                 $("#choice").text(sql);  
+                 ajaxRestoreDBs(sql);
+            } else {
+                 $("#choice").text("Nothing Selected");
+             }
+         });
+     });
+    </script>
+
+</body>
+</html>

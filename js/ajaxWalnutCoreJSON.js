@@ -208,7 +208,8 @@ function ajaxAuthenticate(form, fxn, method) {
 // fxn called by primary html page WTD.html - only run by Foxy
 function ajaxWalnutFunction(requester) {
     'use strict';
-    var user_input,
+    var result,
+        user_input,
         jqxhr,
         theHost;
 
@@ -218,8 +219,9 @@ function ajaxWalnutFunction(requester) {
 // production or development ?
     theHost = location.host;
     if (user_input) {
-        if (user_input === "deleteNutsDB") {
-            if (!(confirm("Are you sure you REALLY want to delete walnuts database?"))) {
+        if (user_input === "deleteNutsDBs") {
+            result = (confirm("Are you sure you REALLY want to delete walnuts database?"));
+            if (result === 0){
                 return false;// delete database aborted
             }
         }
@@ -239,6 +241,10 @@ function ajaxWalnutFunction(requester) {
             window.open("https://" + theHost + "/listBDays.html?user=" + requester, "_self");
             return false;   // do not remove - otherwise goes to ajax...
         }
+        if (user_input === "restoreDBs") {
+            window.open("https://" + theHost + "/restoreDBs.html", "_self");
+            return false;   // do not remove - otherwise goes to ajax...
+        }        
     } else {
         $("<div />")
             .addClass("redText")
@@ -255,7 +261,7 @@ function ajaxWalnutFunction(requester) {
         data: "value=" + user_input
     })
         .done(function (responseData) {
-            if (user_input === "bkUpDB") {
+            if (user_input === "bkUpDBs") {
                 $("<div />")
                     .addClass("redText")
                     .html(responseData)
@@ -265,7 +271,7 @@ function ajaxWalnutFunction(requester) {
                             }
                     }, ".downLoad");
             }
-            if (user_input === "createNutsDB") {
+            if (user_input === "createNutsDBs") {
                 $("<div />")
                     .addClass("redText")
                     .text(responseData)
@@ -274,14 +280,14 @@ function ajaxWalnutFunction(requester) {
                         $(".redText").remove();
                     });
             }
-            if (user_input === "createNutsBDayDB") {
+            if (user_input === "deleteNutsDBs") {
                 $("<div />")
                     .addClass("redText")
                     .text(responseData)
                     .appendTo("#response")
-                    .fadeOut(5000, function () {
+                  /* .fadeOut(5000, function () {
                         $(".redText").remove();
-                    });
+                    }); */
             }
         })
         .fail(function () {
@@ -687,6 +693,8 @@ function ajaxListNuts(requester) {
                 $("#editHint").show();
                 $("#bDayLink").show();
             }
+            var numStr = toString(walnutEntries.length);
+            $(".numNuts").text(numStr);
         })
         .fail(function () {
             alert("List Nuts failed");
@@ -828,5 +836,24 @@ function getOrigBDay(nutID) {
             setTimeout(function () {
                 $('#editBDayResponse').slideUp('slow');
             }, 8000);
+        });
+}
+
+function ajaxRestoreDBs(sql) {
+    'use strict';
+
+    var  jqxhr;
+
+    jqxhr = $.ajax({
+        type: "GET",
+        url: "restoreDBs.php",
+        data: "value=" + sql
+    })
+        .done(function (dataReturned) {
+            $(".restoreResponse").html(dataReturned).slideUp('slow');
+            window.location.href = "WTD.html";
+        })
+        .fail(function (dataReturned) {
+            $(".restoreResponse").html(dataReturned);
         });
 }
