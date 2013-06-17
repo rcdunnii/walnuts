@@ -308,7 +308,7 @@
     
     .redText {
         position: relative;
-        top: -16px;
+        top: 0px;
         color: red;
         margin-left: auto;
         margin-right: auto;

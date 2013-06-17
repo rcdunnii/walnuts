@@ -2,7 +2,7 @@
    
    function createNutsDBs() {
         require_once('dbFoxy.inc');  // database info
-/* create birthday datbase   */
+        /* create database   */
 		
 		$mysqli = new mysqli($server, $user, $password);
 
@@ -13,7 +13,7 @@
 		}
 		
 		/* sql query with CREATE DATABASE */
-		$sql = "CREATE DATABASE $bDaysDatabase DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+		$sql = "CREATE DATABASE $database DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
 
 		// Performs the $sql query on the server to create the database
 		$res = $mysqli->query($sql) ;
@@ -28,7 +28,7 @@
 			return false;
 		}
         
-        $mysqli = new mysqli($server, $user, $password, $bDaysDatabase);
+        $mysqli = new mysqli($server, $user, $password, $database);
 		if ($mysqli->connect_errno) {
 			die( 'Error: File:' . __FILE__ . 'line#' . __LINE__ . $mysqli->errno); 
 		}
@@ -61,37 +61,6 @@
 				}
 			$mysqli->close();
 			return;
-		}
-        $mysqli->close();
-        
-/* Now create walnuts database  */
-
-	    $mysqli = new mysqli($server, $user, $password);
-
-		/* check connection */
-		if ($mysqli->connect_errno) {
-			printf("Connect failed: %s\n", $mysqli->connect_error);
-			exit();
-		}		
-		/* sql query with CREATE DATABASE */
-		$sql = "CREATE DATABASE $database DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
-
-		// Performs the $sql query on the server to create the database
-		$res = $mysqli->query($sql) ;
-
-		if ($mysqli->error) {
-			try {    
-    		    throw new Exception("MySQL error $mysqli->error ", $mysqli->errno);
-			} catch(Exception $e ) {
-                echo "Error No: ".$e->getCode(). " - ". $e->getMessage();                
-			}
-			$mysqli->close();
-			return false;
-		}
-        
-		$mysqli = new mysqli($server, $user, $password, $database );
-		if ($mysqli->connect_errno) {
-			die( 'Error: File:' . __FILE__ . 'line#' . __LINE__ . $mysqli->errno); 
 		}
 					
 		$sql = "CREATE TABLE nuts 
@@ -146,7 +115,40 @@
 			return;
 		}
         
-		echo "$database, $bDaysDatabase databases successfully created!";		
+        $sql = "CREATE TABLE `hash` (
+                `Walnut` text NOT NULL,
+  `              Foxy` text NOT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+
+        $res = $mysqli->query($sql);
+        
+        if ($mysqli->error) {
+			try {    
+				throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);    
+			} catch(Exception $e ) {
+				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+				echo nl2br($e->getTraceAsString());
+				}
+			$mysqli->close();
+			return;
+		}
+
+        $sql = "INSERT INTO `hash` VALUES ('563971f51f5842ea7b4dae7485e0095357101d8698824264dea77aba542e35fcbff10c7beaf6403f9f352aff09a32308f50868a71c27eeaafab9121ee66a9efe','2d5baeb6f13b0d31c84cfa4b5e8bd40940eb6c259caf387e997dab3c9ac02d6a9bbac0ee4f58bf3dec1869c9893b533ae43647682dc6ba1025ee696194757ccb'),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('','');";
+
+        $res = $mysqli->query($sql);
+        
+        if ($mysqli->error) {
+			try {    
+				throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);    
+			} catch(Exception $e ) {
+				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+				echo nl2br($e->getTraceAsString());
+				}
+			$mysqli->close();
+			return;
+		}
+        
+		echo "$database successfully created!";		
 		$mysqli->close();
 		return;		
 	}
@@ -176,30 +178,7 @@
 		}
         
         $mysqli->close();
-        
-        $mysqli = @ new mysqli($server, $user, $password, $bDaysDatabase);
-		
-		/* check connection */
-		if ($mysqli->connect_errno) {
-			printf("Connect failed: %s\n", $mysqli->connect_error);
-			exit();
-		}
-		
-		$res = $mysqli->query("DROP DATABASE IF EXISTS $bDaysDatabase");
-		
-		if ($mysqli->error) {
-			try {    
-				throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);    
-			} catch(Exception $e ) {
-				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-				echo nl2br($e->getTraceAsString());
-				}
-			$mysqli->close();
-			return;
-		}
-        
-        $mysqli->close();
-		
+      
 		echo "Ouch... Databases deleted";
 
 		return;					
@@ -217,7 +196,7 @@
         $result = 0;
         $log = $dir.'/dblog';
         //make the system call to mysqldump
-        exec("mysqldump --debug-info  --log-error=$log --user=$user --password=$password --host=$server --databases $database   $bDaysDatabase > $BU", $output, $result);
+        exec("mysqldump --debug-info  --log-error=$log --user=$user --password=$password --host=$server  $database  > $BU", $output, $result);
         if ($result == 0) {           
            echo ("<p>Backup OK!<br /><a class=\"downLoad\" href=\"$BU\" download>Click to Download</a>&nbsp;&nbsp;&nbsp;<a class= \"downLoad\" href=\"#\" >Skip Download</a></p>");
         } else {

@@ -11,7 +11,7 @@
     $result = 0;
     $log = $dir.'/dblog';
 
-    exec("mysqldump --debug-info  --log-error=$log --user=$user --password=$password --host=$server --databases $database $bDaysDatabase > $BU", $output, $result);
+    exec("mysqldump --debug-info  --log-error=$log --user=$user --password=$password --host=$server $database > $BU", $output, $result);
     if ($result == 0)  {
         header("Content-Description: File Transfer"); 
         header("Content-Type: application/octet-stream"); 

@@ -1,9 +1,9 @@
 /*global XMLHttpRequest:true,ActiveXObject:true,document:true,confirm:true*/
 /*global window:true,$,alert:true, location,escape */
 //fxn to create XMLHttpRequest objects
-function createXHR() {
     'use strict';
-    try {
+ function createXHR() {
+   try {
         return new XMLHttpRequest();
     } catch (e) {
         try {
@@ -221,7 +221,7 @@ function ajaxWalnutFunction(requester) {
     if (user_input) {
         if (user_input === "deleteNutsDBs") {
             result = (confirm("Are you sure you REALLY want to delete walnuts database?"));
-            if (result === 0){
+            if (result === false){
                 return false;// delete database aborted
             }
         }
@@ -276,18 +276,18 @@ function ajaxWalnutFunction(requester) {
                     .addClass("redText")
                     .text(responseData)
                     .appendTo("#response")
-                    .fadeOut(5000, function () {
+                    .fadeOut(10000, function () {
                         $(".redText").remove();
-                    });
+                    }); 
             }
             if (user_input === "deleteNutsDBs") {
                 $("<div />")
                     .addClass("redText")
                     .text(responseData)
                     .appendTo("#response")
-                  /* .fadeOut(5000, function () {
+                   .fadeOut(10000, function () {
                         $(".redText").remove();
-                    }); */
+                    }); 
             }
         })
         .fail(function () {

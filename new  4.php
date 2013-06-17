@@ -41,9 +41,9 @@ if($_POST)
     $RandNumber         = rand(0, 9999999999); //Random number to make each filename unique.
     $uploaded_date      = date("Y-m-d H:i:s");
 
-    if ((strtolower($FileExt)) !== ".sql")
+    if ((strtolower($FileExt)) != "sql"
     {        
-            die('Unsupported File!' . $FileExt); //output error
+            die('Unsupported File!'); //output error
     }
 
 
@@ -53,16 +53,14 @@ if($_POST)
     //Rename and save uploded file to destination folder.
     if(move_uploaded_file($_FILES['mFile']["tmp_name"], $UploadDirectory . $NewFileName ))
     {
-        $result = exec("mysql --user=\"{$user}\" --host=\"{$server}\" --password=\"{$password}\"  {$database}  <  {$UploadDirectory} . {$NewFileName};");
+        $result = exec("mysql -u $user -p $password $database < " . $UploadDirectory . $NewFileName .";");
         if ($result) {
-            echo("mysql --user={$user} --host={$server} --password={$password}  {$database}  <  {$UploadDirectory}{$NewFileName};");
-            die('error restoring ' . $database . ' from file '. $UploadDirectory . $NewFileName .' - error: ' . $result);
+            die('error uploading File!');
         } else {
-          /*  header('Location: '.$SuccessRedirect); //redirect user after success   */
-         
+            header('Location: '.$SuccessRedirect); //redirect user after success
         }
     }else{
-        die('error moving uploaded File to ' . $UploadDirectory . $NewFileName );
+        die('error uploading File!');
     }
 }
 

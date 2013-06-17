@@ -4,7 +4,7 @@
         
 		include_once($_SERVER["DOCUMENT_ROOT"] . "/functions.php");	
         
-		$mysqli=  @ new mysqli($server,$user,$password, $bDaysDatabase );
+		$mysqli=  @ new mysqli($server,$user,$password, $database );
 		
 		/* check connection */
 		if ($mysqli->connect_errno) {

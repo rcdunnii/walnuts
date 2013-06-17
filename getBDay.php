@@ -1,7 +1,7 @@
 <?php
 	require 'db.inc';
 		
-	$mysqli = @ new mysqli($server, $user, $password,  $bDaysDatabase );
+	$mysqli = @ new mysqli($server, $user, $password,  $database );
 		
 	/* check connection */
 	if ($mysqli->connect_errno) {

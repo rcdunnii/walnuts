@@ -2,7 +2,7 @@
 		require 'db.inc';
        
 		// make connection to mysql server
-		$mysqli = new mysqli($server,$user,$password, $bDaysDatabase );
+		$mysqli = new mysqli($server,$user,$password, $database );
 		if ($mysqli->connect_errno) {
 			echo 'Error: File' . __FILE__ . 'line#' .__LINE__ . $mysqli->connect_error;
 			$mysqli->close();
