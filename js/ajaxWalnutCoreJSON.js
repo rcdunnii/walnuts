@@ -276,9 +276,9 @@ function ajaxWalnutFunction(requester) {
                     .addClass("redText")
                     .text(responseData)
                     .appendTo("#response")
-                    .fadeOut(10000, function () {
-                        $(".redText").remove();
-                    }); 
+                 /*   .fadeOut(10000, function () {
+                        $(".redText").remove(); 
+                    }); */
             }
             if (user_input === "deleteNutsDBs") {
                 $("<div />")

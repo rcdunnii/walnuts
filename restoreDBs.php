@@ -2,7 +2,7 @@
 require 'dbFoxy.inc';
 
 $UploadDirectory    = 'db_backup/'; //Upload Directory, ends with slash & make sure folder exist
-$SuccessRedirect    = 'WTD.html'; //Redirect to a URL after success
+$SuccessRedirect    = 'https://localhost/WTD.html'; //Redirect to a URL after success
 
 // replace with your mysql database details
 
@@ -15,12 +15,12 @@ $database = 'xxx'; //databasename
 
 if (!@file_exists($UploadDirectory)) {
     //destination folder does not exist
-    die("Make sure Upload directory exist!");
+    die("Make sure Upload directory exists!");
 }
 
 if($_POST)
 {
-    if(!isset($_POST['mName']) || strlen($_POST['mName'])<1)
+   if(!isset($_POST['mName']) || strlen($_POST['mName'])<1)
     {
         //required variables are empty
         die("Title is empty!");
@@ -51,20 +51,27 @@ if($_POST)
     $NewFileName = preg_replace(array('/s/', '/.[.]+/', '/[^w_.-]/'), array('_', '.', ''), strtolower($FileTitle));
     $NewFileName = $NewFileName.'_'.$RandNumber.$FileExt;
     //Rename and save uploded file to destination folder.
-    if(move_uploaded_file($_FILES['mFile']["tmp_name"], $UploadDirectory . $NewFileName ))
+    $sqlFile     = $UploadDirectory . $NewFileName;
+    
+    
+    if(move_uploaded_file($_FILES['mFile']["tmp_name"], $sqlFile ))
     {
-        $result = exec("mysql --user=\"{$user}\" --host=\"{$server}\" --password=\"{$password}\"  {$database}  <  {$UploadDirectory} . {$NewFileName};");
-        if ($result) {
-            echo("mysql --user={$user} --host={$server} --password={$password}  {$database}  <  {$UploadDirectory}{$NewFileName};");
-            die('error restoring ' . $database . ' from file '. $UploadDirectory . $NewFileName .' - error: ' . $result);
-        } else {
-          /*  header('Location: '.$SuccessRedirect); //redirect user after success   */
-         
+         if (!@file_exists($sqlFile)) {
+            //destination folder does not exist
+            die("Make sure " . $sqlFile. " exist!");
+         }  
+
+/*        $restore = "c:/xampp/mysql/bin/mysql -h $server -u root  $database < $sqlFile";        */
+        $restore = "mysql -h $server -u $user  -p$password $database < $sqlFile"; 
+        system($restore, $result);
+   
+        if ($result !== false) {  // $result == 0 == false == success             
+            die('error restoring ' . $database . ' from file '. $sqlFile .' - error: ' . $result );
         }
     }else{
-        die('error moving uploaded File to ' . $UploadDirectory . $NewFileName );
-    }
-}
+            die('error moving uploaded File to ' . $sqlFile );
+    }   
+}    
 
 //function outputs upload error messages, http://www.php.net/manual/en/features.file-upload.errors.php#90522
 function upload_errors($err_code) {

@@ -115,25 +115,11 @@
 			return;
 		}
         
-        $sql = "CREATE TABLE `hash` (
-                `Walnut` text NOT NULL,
-  `              Foxy` text NOT NULL
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
-
-        $res = $mysqli->query($sql);
-        
-        if ($mysqli->error) {
-			try {    
-				throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);    
-			} catch(Exception $e ) {
-				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
-				echo nl2br($e->getTraceAsString());
-				}
-			$mysqli->close();
-			return;
-		}
-
-        $sql = "INSERT INTO `hash` VALUES ('563971f51f5842ea7b4dae7485e0095357101d8698824264dea77aba542e35fcbff10c7beaf6403f9f352aff09a32308f50868a71c27eeaafab9121ee66a9efe','2d5baeb6f13b0d31c84cfa4b5e8bd40940eb6c259caf387e997dab3c9ac02d6a9bbac0ee4f58bf3dec1869c9893b533ae43647682dc6ba1025ee696194757ccb'),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('',''),('','');";
+        $sql = "CREATE TABLE hash
+        (
+            Walnut text NOT NULL,
+            Foxy text NOT NULL
+        )";
 
         $res = $mysqli->query($sql);
         

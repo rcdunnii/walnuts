@@ -91,17 +91,25 @@
             //show uploading message
             $("#output").html('<div style="padding:10px"><img src="images/ajax-loader.gif" alt="Please Wait"/> <span>Uploading...</span></div>');
             $(this).ajaxSubmit({
-            target: '#output',
-            success:  afterSuccess //call function after success
+            target: '#output', 
+            success:  afterSuccess, //call function after success
+            error: afterError       // call fxn after error
             });
         });
     });
 
     function afterSuccess()
     {
-        $('#FileUploader').resetForm();  // reset form
-        $('#uploadButton').removeAttr('disabled'); //enable submit button
+        alert("Successful restoration of Walnuts Database!");
+        window.location.href = "https://localhost/WTD.html";       
     }
+    
+    function afterError()
+    {
+        alert("Error on restoration of Walnuts Database!");
+        window.location.href = "https://localhost/WTD.html";       
+    }
+       
 </script>
 
 </head>
@@ -110,7 +118,7 @@
 <div id="theForm">
 <div id="output"></div>
 <form action="restoreDBs.php" id="FileUploader" enctype="multipart/form-data" method="post" >
-    <label>
+  <label>
     <span class="small">Title of the File</span>
     </label>
     <input type="text" name="mName" id="mName" />
