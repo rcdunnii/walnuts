@@ -180,13 +180,14 @@
         //create the file name for the backup 
         $BU = $dir.'/nutDB_'.date("m-d-Y_H-i-s").'.sql';
         $result = 0;
-        $log = $dir.'/dblog';
+        $log = $dir.'/dblog';  
         //make the system call to mysqldump
-        exec("mysqldump --debug-info  --log-error=$log --user=$user --password=$password --host=$server  $database  > $BU", $output, $result);
+        exec("D:/xampp/mysql/bin/mysqldump.exe   --user=$user --password=$password --host=$server  $database  > $BU", $output, $result);
         if ($result == 0) {           
            echo ("<p>Backup OK!<br /><a class=\"downLoad\" href=\"$BU\" download>Click to Download</a>&nbsp;&nbsp;&nbsp;<a class= \"downLoad\" href=\"#\" >Skip Download</a></p>");
         } else {
             echo ("Backup failed with error # " . $result);
+			var_dump($output);
         }
 }
 

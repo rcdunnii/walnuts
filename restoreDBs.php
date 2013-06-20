@@ -1,34 +1,70 @@
 <?php
 require 'dbFoxy.inc';
 
+/* walnuts database must exist before we can restore it */
+ 
+        /* create database if not exist */
+		
+		$mysqli = new mysqli($server, $user, $password);
+
+		/* check connection */
+		if ($mysqli->connect_errno) {
+			header('HTTP/1.1 500 Internal Server Booboo');
+			header('Content-Type: text/plain');
+			die("Cannot connect to mysqld");
+		}
+		
+		/* sql query with CREATE DATABASE */
+		$sql = "CREATE DATABASE IF NOT EXISTS $database DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+
+		// Performs the $sql query on the server to create the database
+		$res = $mysqli->query($sql) ;
+
+		if ($mysqli->error) {			
+			$mysqli->close();
+			header('HTTP/1.1 500 Internal Server Booboo');
+			header('Content-Type: text/plain');
+			die("Create database failed");
+		}
+		
+		$mysqli->close();
+		
 $UploadDirectory    = 'db_backup/'; //Upload Directory, ends with slash & make sure folder exist
 $SuccessRedirect    = 'https://localhost/WTD.html'; //Redirect to a URL after success
 
 // replace with your mysql database details
 
-/*
-$user     = "xxx"; //mysql username
-$password     = "xxx"; //mysql password
-$server    = "localhost"; //hostname
-$database = 'xxx'; //databasename
- */
 
 if (!@file_exists($UploadDirectory)) {
+	header('HTTP/1.1 500 Internal Server Booboo');
+	header('Content-Type: text/plain');
     //destination folder does not exist
     die("Make sure Upload directory exists!");
 }
+
 
 if($_POST)
 {
    if(!isset($_POST['mName']) || strlen($_POST['mName'])<1)
     {
+		header('HTTP/1.1 500 Internal Server Booboo');
+        header('Content-Type: text/plain');
         //required variables are empty
         die("Title is empty!");
     }
 
 
-    if($_FILES['mFile']['error'])
+    if(!isset($_FILES['mFile']))
+	{	 
+		header('HTTP/1.1 500 Internal Server Booboo');
+        header('Content-Type: text/plain');
+		die("No upload file chosen");
+	}
+	
+	if($_FILES['mFile']['error'])
     {
+		header('HTTP/1.1 500 Internal Server Booboo');
+        header('Content-Type: text/plain');	
         //File upload error encountered
         die(upload_errors($_FILES['mFile']['error']));
     }
@@ -40,6 +76,7 @@ if($_POST)
     $FileSize           = $_FILES['mFile']["size"]; //file size
     $RandNumber         = rand(0, 9999999999); //Random number to make each filename unique.
     $uploaded_date      = date("Y-m-d H:i:s");
+	$NewFileName        = "";
 
     if ((strtolower($FileExt)) !== ".sql")
     {        
@@ -48,7 +85,10 @@ if($_POST)
 
 
     //File Title will be used as new File name
-    $NewFileName = preg_replace(array('/s/', '/.[.]+/', '/[^w_.-]/'), array('_', '.', ''), strtolower($FileTitle));
+ /*   $NewFileName = preg_replace(array('/s/', '/.[.]+/', '/^[\w\_.-]/'), array('_', '.', ''), strtolower($FileTitle));  */
+	$replace="_";
+	$pattern="/([[:alnum:]_\.-]*)/";
+	$NewFileName = str_replace(str_split(preg_replace($pattern,$replace, $FileTitle)),$replace, $FileTitle);
     $NewFileName = $NewFileName.'_'.$RandNumber.$FileExt;
     //Rename and save uploded file to destination folder.
     $sqlFile     = $UploadDirectory . $NewFileName;
@@ -61,14 +101,23 @@ if($_POST)
             die("Make sure " . $sqlFile. " exist!");
          }  
 
-/*        $restore = "c:/xampp/mysql/bin/mysql -h $server -u root  $database < $sqlFile";        */
-        $restore = "mysql -h $server -u $user  -p$password $database < $sqlFile"; 
+        $restore = "D:/xampp/mysql/bin/mysql.exe --host $server --user $user  --password=$password $database <  $sqlFile"; 
         system($restore, $result);
    
-        if ($result !== false) {  // $result == 0 == false == success             
-            die('error restoring ' . $database . ' from file '. $sqlFile .' - error: ' . $result );
-        }
+       if (($result !== false) && ($result !== 0 )) {  // $result == 0 == false == success
+		   header('HTTP/1.1 500 Internal Server Booboo');
+           header('Content-Type: text/plain');
+           //required variables are empty
+           die('error restoring ' . $database . ' from file '. $sqlFile .' - error: ' . $result );
+        } else {
+		    return true;
+		}
+	
+		
     }else{
+		   header('HTTP/1.1 500 Internal Server Booboo');
+           header('Content-Type: text/plain');
+           //required variables are empty
             die('error moving uploaded File to ' . $sqlFile );
     }   
 }    
