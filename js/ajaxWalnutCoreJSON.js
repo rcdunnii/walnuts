@@ -241,8 +241,8 @@ function ajaxWalnutFunction(requester) {
             window.open("https://" + theHost + "/listBDays.html?user=" + requester, "_self");
             return false;   // do not remove - otherwise goes to ajax...
         }
-        if (user_input === "restoreDBs") {
-            window.open("https://" + theHost + "/restoreDBs.html", "_self");
+        if (user_input === "restoreDB") {
+            window.open("https://" + theHost + "/restoreDB.html", "_self");
             return false;   // do not remove - otherwise goes to ajax...
         }        
     } else {
@@ -276,9 +276,9 @@ function ajaxWalnutFunction(requester) {
                     .addClass("redText")
                     .text(responseData)
                     .appendTo("#response")
-                 /*   .fadeOut(10000, function () {
+                    .fadeOut(10000, function () {
                         $(".redText").remove(); 
-                    }); */
+                    });
             }
             if (user_input === "deleteNutsDBs") {
                 $("<div />")

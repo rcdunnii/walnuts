@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  
+  .custom-file{
+    width: 300px;
+    height: 300px;
+    background-color: white;
+    color: black;
+}
+.custom-file #file {
+    position: absolute;
+    bottom:0;
+    left:0;
+    with: 100%;
+    height: 20px;
+    opacity: 0;
+}
+.custom-file span{
+    float: left;
+    font-size: 11px;
+    height: 18px;
+}
+.custom-file span.text {
+    width: 100px;
+}
+.custom-file span.button {
+    border:1px solid gray;
+}
+  </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/ajaxWalnutCoreJSON.js"></script>
+</head>
+<body>
+    <div class="custom-file">
+        <span class="text"  id="choice">Nothing selected</span>
+        <span class="button">Choose a file</span>
+        <input type="file" id="file" />
+        <input type="hidden" id="sibling" />
+    </div>
+  <div>
+  </div>
+    <script>
+     $(function() {
+        var sql = "", input = "";
+        $('#file').change(function(){
+           input = $(this).val();
+           sql = $(this).next().val(input);
+            if (confirm("Retore with " + sql + "?")) {
+ /*               $("#choice").text(sql);  */
+                ajaxRestoreDBs(sql);
+            } else {
+                $("#choice").text("Nothing Selected");
+            }
+        });
+    });
+    </script>
+ 
+</body>

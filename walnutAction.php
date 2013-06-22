@@ -182,7 +182,15 @@
         $result = 0;
         $log = $dir.'/dblog';  
         //make the system call to mysqldump
-        exec("D:/xampp/mysql/bin/mysqldump.exe   --user=$user --password=$password --host=$server  $database  > $BU", $output, $result);
+		
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			$mysqldump = "D:/xampp/mysql/bin/mysqldump.exe";
+		} else {
+			$mysqldump = "/usr/bin/mysqldump";
+		}
+		
+        exec("$mysqldump --user=$user --password=$password --host=$server  $database  > $BU", $output, $result);
+		
         if ($result == 0) {           
            echo ("<p>Backup OK!<br /><a class=\"downLoad\" href=\"$BU\" download>Click to Download</a>&nbsp;&nbsp;&nbsp;<a class= \"downLoad\" href=\"#\" >Skip Download</a></p>");
         } else {

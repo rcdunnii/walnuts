@@ -1,0 +1,170 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title></title>
+  <style type="text/css">
+   html, body {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: rgb(104,32,19); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(104,32,19,1) 0%, rgba(139,69,19,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(104,32,19,1)), color-stop(100%,rgba(139,69,19,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#682013', endColorstr='#8b4513',GradientType=0 ); /* IE6-9 */
+	padding: 0;
+	margin: 0;
+    }
+  #theForm{
+	margin:0 auto;
+	width:400px;
+	position: relative;
+	top: 300px;
+	padding: 20px;
+	background: rgba(238, 238, 238, 0.78);
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #E7E7E7;
+}
+#theForm label{
+	display:block;
+	font-weight:bold;
+	text-align:right;
+	width:140px;
+	float:left;
+}
+#theForm .small{
+	color:#666666;
+	display:block;
+	font-size:11px;
+	font-weight:normal;
+	text-align:right;
+	width:140px;
+}
+#theForm input{
+	float:left;
+	font-size:12px;
+	padding:4px 2px;
+	border:1px solid #aacfe4;
+	width:200px;
+	margin:2px 0 20px 10px;
+}
+#theForm textarea{
+	float:left;
+	font-size:12px;
+	padding:4px 2px;
+	border:solid 1px #aacfe4;
+	width:200px;
+	margin:2px 0 20px 10px;
+	height: 50px;
+}
+
+#theForm button{
+	clear:both;
+	margin-left:150px;
+}
+.red-button {
+	-moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
+	box-shadow:inset 0px 1px 0px 0px #f29c93;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
+	background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');
+	background-color:#fe1a00;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #d83526;
+	display:inline-block;
+	color:#ffffff;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #b23e35;
+	font: bold 13px arial;
+}.red-button:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00) );
+	background:-moz-linear-gradient( center top, #ce0100 5%, #fe1a00 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce0100', endColorstr='#fe1a00');
+	background-color:#ce0100;
+}.red-button:active {
+	position:relative;
+	top:1px;
+}
+#output {
+	position: relative;
+	width:200px;
+	top: 50%;
+	left: 30%;
+	text-align: center;
+	color: blue;
+}	
+</style>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
+ <script>
+ $(function() { 
+    $('form:first *:input[type!=hidden]:first').focus();
+
+	$(":button").click( function(e) {
+		var x=$("#mName").val();
+		
+		if  (x==null || x=="") 
+		{
+			$('#output').text("Need Title!");
+			return false;
+		}
+		var formData = new FormData($('form')[0]);	
+		formData.append( 'mFile', $( '#mFile' )[0].files[0] );	
+		
+		$.ajax({
+			type: "POST",
+			url: "restoreDB1.php",
+			data: formData,
+			//Options to tell JQuery not to process data or worry about content-type
+			cache: false,
+			contentType: false,
+			processData: false,
+			success: function () {
+				$('#output').text("Successful Restore!");
+			},
+			fail: function (resp) {
+				$('#output').text("Update failed: " + resp).slideDown('slow');
+			},
+			complete: function () {
+				setTimeout(function () {
+					window.location.href = "https://localhost/WTD.html";
+				}, 3000);
+			}
+		});
+		e.preventDefault();	
+	}); 
+	 
+}); 			 
+
+</script>
+</head>	
+<body>
+<div id="theForm">
+
+<form action="restoreDB1.php" id="FileUploader" enctype="multipart/form-data" method="post" >
+  <label>
+    <span class="small">Title of the File</span>
+    </label>
+    <input type="text" name="mName" id="mName" />
+
+    <label>
+    <span class="small">Choose a File</span>
+    </label>
+    <input type="file" name="mFile" id="mFile" />
+    <button type="button" class="red-button" id="uploadButton">Upload</button>
+    <div class="spacer"></div>
+</form>
+
+<div id="output"></div>
+
+</div>
+</body>
+</html>
