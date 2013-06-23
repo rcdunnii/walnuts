@@ -283,7 +283,7 @@
       {
         position: relative;
         width: 700px;
-        height: 350px;
+        height: 370px;
         top: 30%;
         margin-left: auto;
         margin-right: auto;
@@ -305,6 +305,10 @@
       {
         font: italic 16px sans-serif;
     }
+    
+    .selectRadio {
+        font: italic 16px sans-serif;
+    }    
     
     .redText {
         position: relative;

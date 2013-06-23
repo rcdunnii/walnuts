@@ -119,7 +119,7 @@
 		var formData = new FormData($('form')[0]);	
 		formData.append( 'mFile', $( '#mFile' )[0].files[0] );	
 		
-		$.ajax({
+		jqXHR = $.ajax({
 			type: "POST",
 			url: "restoreDB.php",
 			data: formData,
@@ -130,8 +130,8 @@
 			success: function () {
 				$('#output').text("Successful Restore!");
 			},
-			fail: function (resp) {
-				$('#output').text("Update failed: " + resp).slideDown('slow');
+			error: function () {
+				$('#output').text("Update failed: " + jqXHR.responseText).slideDown('slow');
 			},
 			complete: function () {
 				setTimeout(function () {

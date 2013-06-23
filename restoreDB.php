@@ -32,10 +32,10 @@ require 'dbFoxy.inc';
 $UploadDirectory    = 'db_backup/'; //Upload Directory, ends with slash & make sure folder exist
 
 
-if (!@file_exists($UploadDirectory)) {
+if (!file_exists($UploadDirectory)) {
 	header('HTTP/1.1 500 Internal Server Booboo');
 	header('Content-Type: text/plain');
-    //destination folder does not exist
+    //destination folder does not exist  
     die("Make sure Upload directory exists!");
 }
 
@@ -99,14 +99,18 @@ if($_POST)
             //destination folder does not exist
             die("Make sure " . $sqlFile. " exist!"); 
          } 
-/*		 
+		
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-			$mysql = "%XAMPP%/mysql/bin/mysql.exe";
+            if (file_exists("C:/xampp/")) {
+                $mysql = "C:/xampp/mysql/bin/mysql.exe";
+            } else if (file_exists("D:/xampp/")) {
+                $mysql = "D:/xampp/mysql/bin/mysql.exe";
+            }             
 		} else {
 			$mysql = "/usr/bin/mysql";
 		}
-*/		
-        $restore = "D:/xampp/mysql/bin/mysql --host $server --user $user  --password=$password $database <  $sqlFile"; 
+		
+        $restore = "$mysql --host $server --user $user  --password=$password $database <  $sqlFile"; 
         system($restore, $result);
    
        if (($result !== false) && ($result !== 0 )) {  // $result == 0 == false == success

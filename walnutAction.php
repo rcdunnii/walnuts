@@ -170,7 +170,7 @@
 		return;					
 	}
 	
-    function backUpDBs() {
+    function backUpDB() {
         require_once('dbFoxy.inc');  // database info
         
         $dir = "db_backup";  
@@ -184,7 +184,11 @@
         //make the system call to mysqldump
 		
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-			$mysqldump = "D:/xampp/mysql/bin/mysqldump.exe";
+            if (file_exists("C:/xampp/")) {
+                $mysqldump = "C:/xampp/mysql/bin/mysqldump.exe";
+            } else if (file_exists("D:/xampp/")) {
+                $mysqldump = "D:/xampp/mysql/bin/mysqldump.exe";
+            }             
 		} else {
 			$mysqldump = "/usr/bin/mysqldump";
 		}
@@ -207,8 +211,8 @@
            createNutsDBs();
 	   } elseif ($whichDashBoardOpt == "deleteNutsDBs") {				
 		   deleteNutsDBs();
-	   } elseif ($whichDashBoardOpt == "bkUpDBs") {      
-           backUpDBs();          
+	   } elseif ($whichDashBoardOpt == "bkUpDB") {      
+           backUpDB();          
        } else {
 		   echo "Uh oh...";			   
 	   }  
