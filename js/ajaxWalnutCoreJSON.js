@@ -694,7 +694,7 @@ function ajaxListNuts(requester) {
                 $("#editHint").show();
                 $("#bDayLink").show();
             }
-            var numStr = toString(walnutEntries.length);
+            var numStr = walnutEntries.length;
             $(".numNuts").text(numStr);
         })
         .fail(function () {
