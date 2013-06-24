@@ -448,25 +448,25 @@ function getMonth(numStr) {
 
 function displayBDays(requester, nutEntries, idxBy) {
     'use strict';
-    var numNuts,
+        var dateStr = "",
 		i = 0,
         idx = 0,   // str len counter up to xCol
-        xCol = 43, // col for delete link 'x'
         j = 0,
-		lenFirstName = 0,
-        lenSirName = 0,
-		lenNameStr = 0,
-		nameStr = "",
-		monOffSet = 30, // spaces from start of 1st name to start of the date
-        /*sirNameSpace = 15,   */
-        monthName = "",
         lastMonNumStr = "",
-        spaceToFill = 0,
-        spaceStr = "",
-        replacementStr = "",
+		lenFirstName = 0,        
+		lenNameStr = 0,        
+        lenSirName = 0,
         loopReplacementStr = "",
-        theHost = "";
-
+		monOffSet = 30, // spaces from start of 1st name to start of the date
+        monthName = "",        
+        numNuts = 0,
+		nameStr = "",
+        replacementStr = "",
+        spaceStr = "",
+        spaceToFill = 0,
+        theHost = "",
+        xCol = 43; // col for delete link 'x'
+        
 // development or production ?
     theHost = location.host;
 // get # entries in database into var numNuts
@@ -480,29 +480,31 @@ function displayBDays(requester, nutEntries, idxBy) {
                 loopReplacementStr += "<span class='monthName'>" + monthName + "</span><br />";
             }
             idx = 0;
-            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;" + nutEntries[i].bDayMM + "-";
+            loopReplacementStr += "\u00A0\u00A0\u00A0\u00A0" + nutEntries[i].bDayMM + "-";
             idx += 7;
             loopReplacementStr += nutEntries[i].bDayDD;
             idx += 2;
-			loopReplacementStr += ((nutEntries[i].bDayYYYY) ? ("-" + nutEntries[i].bDayYYYY + "&nbsp;&nbsp;&nbsp;") : ("&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"));
+			loopReplacementStr += ((nutEntries[i].bDayYYYY) ? ("-" + nutEntries[i].bDayYYYY + "\u00A0\u00A0\u00A0") : ("\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"));
             idx += 8;
             loopReplacementStr += "<a class=\"oneNut\" onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = \"Update this Birthday\">" +  nutEntries[i].LastName + "</a>";
             lenSirName = nutEntries[i].LastName.length;
-            loopReplacementStr += ",&nbsp;";
-            idx += lenSirName + 2;			
-            loopReplacementStr +=  nutEntries[i].FirstName + "&nbsp;";
+            loopReplacementStr += ",\u00A0";
+            idx += (lenSirName + 2);			
+            loopReplacementStr +=  nutEntries[i].FirstName + "\u00A0";
             lenFirstName =  nutEntries[i].FirstName.length;
-            idx += lenFirstName + 1;
-			loopReplacementStr += (nutEntries[i].MiddleInit) ? (nutEntries[i].MiddleInit[0] + "&nbsp;") : "&nbsp;&nbsp;";
+            idx += (lenFirstName + 1);
+			loopReplacementStr += (nutEntries[i].MiddleInit) ? (nutEntries[i].MiddleInit[0] + "\u00A0") : "\u00A0\u00A0";
             idx += 2;
             spaceToFill = (xCol - idx);
             
 			for (j = 0, spaceStr = ""; j < spaceToFill; j += 1) {
-				spaceStr += "&nbsp;";
+				spaceStr += "\u00A0";
 			}
             
+ 
             loopReplacementStr += spaceStr;
-
+ 
+            
             if (requester === 'Foxy') {
                 loopReplacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + "&times;</a>";
             }
@@ -514,7 +516,7 @@ function displayBDays(requester, nutEntries, idxBy) {
         }
     } else {	// list byName
         for (i = 0; i < numNuts; i += 1) {
-            loopReplacementStr += "&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"oneNut\" onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>";
+            loopReplacementStr += "\u00A0\u00A0\u00A0\u00A0<a class=\"oneNut\" onclick= \"window.location.href='https://" + theHost + "/editBDay.html?value=" + nutEntries[i].bDayID + "&user=" + requester + "'\" title = 'Update this Birthday'>";
 			nameStr =  nutEntries[i].LastName + "</a>, " + nutEntries[i].FirstName + " " + ((typeof nutEntries[i].MiddleInit[0] !== 'undefined') ? nutEntries[i].MiddleInit[0] : " ");
 			lenNameStr = nameStr.length; // may need to debit 4 for the </a> tag part of the string
 			loopReplacementStr += nameStr;
@@ -526,7 +528,7 @@ function displayBDays(requester, nutEntries, idxBy) {
 			monthName = getMonth(nutEntries[i].bDayMM);
             loopReplacementStr += "<span style=\"color:red\">" + monthName.substring(0, 3) + "</span>" + " ";
             loopReplacementStr += nutEntries[i].bDayDD + " ";
-			loopReplacementStr += (nutEntries[i].bDayYYYY !== "") ? nutEntries[i].bDayYYYY : "    ";
+			loopReplacementStr += (nutEntries[i].bDayYYYY !== "") ? nutEntries[i].bDayYYYY : "\u00A0\u00A0\u00A0\u00A0";
             if (requester === 'Foxy') {
                 loopReplacementStr += " <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].bDayID + " , \"" + nutEntries[i].LastName + "\", \"bDays\", \"Foxy\");' title='Delete'>" + "&times;</a>";
             }

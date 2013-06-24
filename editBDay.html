@@ -29,15 +29,20 @@
                     },
                     bDayYYYY: {
 					    required: false,
-                        year: true 
+                        year: true,
+                        digits : true
                     },
                     bDayMM: {
                         required: true,
-                        minlength: 2
+                        minlength: 2,
+                        digits : true,
+                        range : [01,12]                        
                     },
                     bDayDD: {
                         required: true,
-                        minlength: 2
+                        minlength: 2,
+                        digits : true,
+                        range : [01,31]
                     }                   
            },
            messages : {
@@ -53,11 +58,11 @@
 					},	
                     bDayMM: {
                         required: "Include Birth Month (MM)",
-                        minlength:"Needs 2 characters!"
+                        minlength:"Needs 2 numbers!"
                     },
                     bDayDD: {
                         required: "Include Birth Day of Month (DD)",
-                        minlength:"Needs 2 characters!"
+                        minlength:"Needs 2 numbers!"
                     }
                 },
              debug: true,

@@ -50,12 +50,22 @@
         top: 50%;
     }
     
+       .loginBkGndAdm{
+        position: absolute;    
+        background: url("/images/AdminOpener.gif") no-repeat center;
+        width: 1100px;
+        height: 715px;
+        margin: -357px 0 0 -550px;
+        left: 50%;
+        top: 50%;
+    }
+    
     #popUpLogin {
         position: relative;
         width: 367px;
         height: 238px;
-        top: 32%;
-        left: -21%;
+        top: 39%;
+        left: -19%;
         margin: 0 auto;
         background-color: transparent;
         color: white;
@@ -371,7 +381,7 @@
         height: 15px;
         margin: 0;
         padding: 5px;
-        top: 591px;
+        top: 0px;
         left: 180px;        
         font: italic 800 18px sans-serif;
     } 
