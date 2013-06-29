@@ -59,6 +59,10 @@
         left: 50%;
         top: 50%;
     }
+
+    input.highlight {
+        background-color: yellow;
+    }
     
     #popUpLogin {
         position: relative;
