@@ -3,10 +3,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<title>Walnut Tally Dashboard</title>
+    <link rel="shortcut icon" href="images/favicon.ico" />
 	<link rel="stylesheet" href="/css/Walnuts.css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="js/jquery.lint.js"></script>	
-	<script type="text/javascript" src="/js/ajaxWalnutCoreJSON.js" ></script>
+	<script type="text/javascript" src="/js/main.js" ></script>
     <script type="text/javascript">
 	    if (readCookie('foxyCookie') == null) {
 		    window.location.href = "wtdLogin.html";
@@ -21,7 +22,7 @@
         <h3><center>Admin Dashboard for Our WT Database</center></h3>
 
        <div >
-       <!-- ajaxWalnutFunction is in js file called ajaxWalnutCoreJSON.js; user here is Foxy, the admin user  -->
+       <!-- ajaxWalnutFunction is in js file called main.js; user here is Foxy, the admin user  -->
             <form id="WTForm" action="" onSubmit= "ajaxWalnutFunction('Foxy'); return false;">						
                     <input type="radio" id="createNutsDB" name="dashBoardOpts" value="createNutsDBs"/>Create WT Database!<br>			
                     <input type="radio" id="deleteNutsDB" name="dashBoardOpts" value="deleteNutsDBs"/>Delete WT Database!<br> 

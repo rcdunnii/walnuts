@@ -41,7 +41,7 @@
 				
 	$stmt->close();		
 	
-    return; // return to caller which is javascript function confirmDel() in ajaxWalnutCoreJSON.js
+    return; // return to caller which is javascript function confirmDel() in main.js
 
 
 ?>

@@ -2,6 +2,11 @@
 custom-scrollbar-plugin/
 custom-scrollbar-plugin-old/
 ignore/
+build/
+doc/
+obsolete/
+images/walleaf*
+images/walnut
 *.bak
 css/test*
 test*

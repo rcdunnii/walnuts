@@ -1,5 +1,5 @@
 <?php
-        /* called by ajaxEditNut() js function in ajaxWalnutCoreJSON.js */
+        /* called by ajaxEditNut() js function in main.js */
 		require 'db.inc';
         
 		include_once($_SERVER["DOCUMENT_ROOT"] . "/functions.php");	
