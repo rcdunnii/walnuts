@@ -1,43 +1,65 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>Walnut Tally Dashboard</title>
-    <link rel="shortcut icon" href="images/favicon.ico" />
-	<link rel="stylesheet" href="/css/Walnuts.css"/>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="js/jquery.lint.js"></script>	
-	<script type="text/javascript" src="/js/main.js" ></script>
-    <script type="text/javascript">
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Walnuts Tally Dashboard</title>
+        <meta name="description" content="Walnut Tally Online">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/main.css">  <!-- includes old Walnut.css -->
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/main.js"></script>        
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+        <script type="text/javascript">
 	    if (readCookie('foxyCookie') == null) {
 		    window.location.href = "wtdLogin.html";
         }
-    </script>    
-</head>
-<body>
+    </script>   
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
 
-
-	<div id="wtHomePage">
+        <!-- Add your site or application content here -->
+        <div id="wtHomePage">
         <h1><center>Walnuts Galore!</center></h1>
         <h3><center>Admin Dashboard for Our WT Database</center></h3>
 
        <div >
        <!-- ajaxWalnutFunction is in js file called main.js; user here is Foxy, the admin user  -->
             <form id="WTForm" action="" onSubmit= "ajaxWalnutFunction('Foxy'); return false;">						
-                    <input type="radio" id="createNutsDB" name="dashBoardOpts" value="createNutsDBs"/>Create WT Database!<br>			
-                    <input type="radio" id="deleteNutsDB" name="dashBoardOpts" value="deleteNutsDBs"/>Delete WT Database!<br> 
-                    <input type="radio" id="bkUpDB"   name="dashBoardOpts" value="bkUpDB"/>Back Up WT Database!<br>
-                    <input type="radio" id="restoreDB" name="dashBoardOpts" value="restoreDB"/>Restore WT Database!<br>
-					<input type="radio" id="addEntry" name="dashBoardOpts" value="addNut" />Add New Walnut<br>
-                    <input type="radio" id="addBDay" name="dashBoardOpts" value="addBDay" />Add New Birthday<br>                    
-                    <input type="radio" id="listNuts" name="dashBoardOpts" value="listNuts" />List Walnuts<br>
-                    <input type="radio" id="listNuts" name="dashBoardOpts" value="listBDays" />List Birthdays<br>                    
-                    <input type="submit" id="myPick"  value="Go!" />						
+                    <input type="radio" name="dashBoardOpts" value="createNutsDBs"/><span class="wtd">Create WT Database!</span><br>			
+                    <input type="radio" name="dashBoardOpts" value="deleteNutsDBs"/><span class="wtd">Delete WT Database!</span><br> 
+                    <input type="radio" name="dashBoardOpts" value="bkUpDB"/><span class="wtd">Back Up WT Database!</span><br>
+                    <input type="radio" name="dashBoardOpts" value="restoreDB"/><span class="wtd">Restore WT Database!</span><br>
+					<input type="radio" name="dashBoardOpts" value="addNut" /><span class="wtd">Add New Walnut</span><br>
+                    <input type="radio" name="dashBoardOpts" value="addBDay" /><span class="wtd">Add New Birthday</span><br>                    
+                    <input type="radio" name="dashBoardOpts" value="listNuts" /><span class="wtd">List Walnuts</span><br>
+                    <input type="radio" name="dashBoardOpts" value="listBDays" /><span class="wtd">List Birthdays</span><br>                    
+                    <input class="go" type="submit" id="submit" />						
             </form>
         </div>
-        <div class="selectRadio"> <center><span>Select button above, then press Go!</span></center></div>  
+
 	    <div id="response"><center><span></span></center></div> 
 	</div>
 
-</body>
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src='//www.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
 </html>

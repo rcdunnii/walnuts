@@ -621,9 +621,9 @@ function displayPage(requester, nutEntries) {
         }
         replacementStr += nutEntries[i].Names + "<br>";
         replacementStr += ((nutEntries[i].FormalNames) ? (nutEntries[i].FormalNames + "<br>") : "<br>");
-        replacementStr += ((nutEntries[i].Children) ? (nutEntries[i].Children + "<br>") : "<br>");
+        replacementStr += ((nutEntries[i].Children) ? "Children: " + (nutEntries[i].Children + "<br>") : "<br>");
         replacementStr += "Address: " + nutEntries[i].Addr1;
-        replacementStr += ((nutEntries[i].Addr2) ? ", " + (nutEntries[i].Addr2 + "<br>") : "<br>");
+        replacementStr += ((nutEntries[i].Addr2) ? "<br>" +  "         " +(nutEntries[i].Addr2 + "<br>") : "<br><br>");
         replacementStr += "         " + nutEntries[i].Addr3 + "<br>";
         replacementStr += "         " + nutEntries[i].Addr4 + "<br>";
         replacementStr += "Email 1: " + nutEntries[i].Email1 + "<br>";
