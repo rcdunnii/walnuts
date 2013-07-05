@@ -124,7 +124,7 @@ textarea {
         position:fixed;
         width:  1000px;
         height: 753px;
-        top: 50%;
+        top: 47%;
         left:50%;
         margin-top: -364px;   /* http://stackoverflow.com/questions/2005954/center-element-with-positionfixed */
         margin-left: -500px;  /* BE SURE TO CHANGE margin-top and margin-left IF YOU CHANGE WIDTH AND OR HEIGHT!  MUST BE HALF OF EACH */
@@ -269,17 +269,7 @@ textarea {
 		font-family:"Times New Roman",Georgia,Serif;
 	}
   
-    #bDayLink{
-        position: absolute;
-        bottom: 1%;    
-        left: 25em;
-    }
-
-    #bDayLink a {
-        color: gold;
-        font-size: 1.3em;
-    }
-
+   
     .securityLink {
         position: relative;
         left: 25px;
@@ -303,27 +293,37 @@ textarea {
         font: normal 18px serif;
     }
         
-    #mainMenu {  /* used in listNuts1.html - if user is admin javascript will change display to display:block */
+    #mainMenu {
+     /* used in listNuts1.html - if user is admin javascript will change display to display:block */
         display: none;
-    }
-     
-    #mainMenu p {
         position: relative;
+        bottom: -5%;
+    }
+    
+    #bDayLink{
+       display: block;
+       position: relative;
+       bottom: -5%;        
+    }
+    
+    #mainMenu p,
+    #bDayLink p {
         width: 25%;
-        bottom: -2%;
         margin-right: auto;
         margin-left: auto;
         text-align: center;
     }
 
-    #mainMenu p a {
+    #mainMenu p a ,
+    #bDayLink p a {
         background-color: transparent;
         color: #FFFF00;
         font: normal bold 1.7em "Times New Roman", Georgia, serif;
     }
     
-     #mainMenu p a:hover{
-         background-color: #FFFF00;
+     #mainMenu p a:hover,
+     #bDayLink p a:hover{
+         background-color: gold;
          color:#000;
      }
      
@@ -336,13 +336,6 @@ textarea {
         margin-right: auto;
         background: transparent;
 		overflow:auto;
-/*      padding:10px; -moz-box-shadow:inset 0 0 20px #EEDC82; -webkit-box-shadow:inset 0 0 20px #EEDC82; box-shadow:inset 0 0 20px #EEDC82;        
-     
-     border-top: 3px double rgba(66, 30, 19, 0.5);
-        border-bottom: 3px double rgba(66, 30, 19, 0.5);        
-        border-radius: 25px;
-        -webkit-background-clip: padding-box;
-        background-clip: padding-box;  */
        }
 	   
 	.col1 {
