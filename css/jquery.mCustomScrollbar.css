@@ -162,7 +162,7 @@
 .mCSB_scrollTools .mCSB_buttonRight{
 	background-image:url(mCSB_buttons.png);
 	background-repeat:no-repeat;
-	opacity:0.4;
+	opacity:0.8;
 	filter:"alpha(opacity=40)"; -ms-filter:"alpha(opacity=40)"; /* old ie */
 }
 .mCSB_scrollTools .mCSB_buttonUp{
@@ -193,8 +193,8 @@
 .mCSB_scrollTools .mCSB_buttonDown:hover,
 .mCSB_scrollTools .mCSB_buttonLeft:hover,
 .mCSB_scrollTools .mCSB_buttonRight:hover{
-	opacity:0.75;
-	filter:"alpha(opacity=75)"; -ms-filter:"alpha(opacity=75)"; /* old ie */
+	opacity:1;
+	filter:"alpha(opacity=100)"; -ms-filter:"alpha(opacity=100)"; /* old ie */
 }
 .mCSB_scrollTools .mCSB_buttonUp:active,
 .mCSB_scrollTools .mCSB_buttonDown:active,

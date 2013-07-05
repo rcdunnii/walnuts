@@ -97,17 +97,53 @@ textarea {
     html, body {
         position: static;
         height: 100%;
-        width: 100%;       
-        background: rgb(104,32,19); /* Old browsers */
-        background: -moz-linear-gradient(top,  rgba(104,32,19,1) 0%, rgba(139,69,19,1) 100%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(104,32,19,1)), color-stop(100%,rgba(139,69,19,1))); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* IE10+ */
-        background: linear-gradient(to bottom,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#682013', endColorstr='#8b4513',GradientType=0 ); /* IE6-9 */
+        width: 100%; 
+/*		background-image: url("/images/walnut-wood.jpg");  */
+        background: url("/images/walnut-wood.jpg") no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;        
+/*		background-repeat: no-repeat;        
+
+        background: rgb(104,32,19); // Old browsers
+        background: -moz-linear-gradient(top,  rgba(104,32,19,1) 0%, rgba(139,69,19,1) 100%); // 
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(104,32,19,1)), color-stop(100%,rgba(139,69,19,1))); // Chrome,Safari4+ 
+        background: -webkit-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); // Chrome10+,Safari5.1+ 
+        background: -o-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); // Opera 11.10+ 
+        background: -ms-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); // IE10+
+        background: linear-gradient(to bottom,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); // W3C 
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#682013', endColorstr='#8b4513',GradientType=0 ); // IE6-9 
+*/        
         padding: 0;
         margin: 0;
+    }
+    
+
+    .frame {
+        position:fixed;
+        width:  1000px;
+        height: 753px;
+        top: 50%;
+        left:50%;
+        margin-top: -364px;   /* http://stackoverflow.com/questions/2005954/center-element-with-positionfixed */
+        margin-left: -500px;  /* BE SURE TO CHANGE margin-top and margin-left IF YOU CHANGE WIDTH AND OR HEIGHT!  MUST BE HALF OF EACH */
+
+	    -moz-border-radius: 10px;
+		border-radius: 10px;		
+    }
+    
+    .walnutContainer {
+		position: relative;
+		margin:0;
+		width: 97%;
+		height:96%;
+		top:  0;
+		margin-left: auto;
+		margin-right: auto;
+        background:#421E13;        
+	    -moz-border-radius: 50px;
+		border-radius: 50px;
     }
     
     #popUp {
@@ -207,34 +243,6 @@ textarea {
         padding:0;
         
     }
- 
-    .frame {
-        position:fixed;
-        width:  1000px;
-        height: 753px;
-        top: 50%;
-        left:50%;
-        margin-top: -364px;   /* http://stackoverflow.com/questions/2005954/center-element-with-positionfixed */
-        margin-left: -500px;  /* BE SURE TO CHANGE margin-top and margin-left IF YOU CHANGE WIDTH AND OR HEIGHT!  MUST BE HALF OF EACH */
-        background:#421E13;
-	    -moz-border-radius: 10px;
-		border-radius: 10px;		
-    }
-    
-    .walnutContainer {
-		position: relative;
-		margin:0;
-		width: 97%;
-		height:96%;
-		top:  15px;
-		left: 10px;
-		margin-left: 5px;
-		margin-right: 5px;
-		background-image: url("/images/walnut-wood.jpg");
-		background-repeat: no-repeat;
-	    -moz-border-radius: 50px;
-		border-radius: 50px;
-    }
     
     #submitWrapper {
         position: absolute;
@@ -259,13 +267,11 @@ textarea {
 		font-size: 115%;
 		top: 5px;
 		font-family:"Times New Roman",Georgia,Serif;
-		margin-right: auto;
-		margin-left: auto;
 	}
   
     #bDayLink{
         position: absolute;
-        bottom: 1em;    
+        bottom: 1%;    
         left: 25em;
     }
 
@@ -301,19 +307,23 @@ textarea {
         display: none;
     }
      
-    #mainMenu a {
+    #mainMenu p {
         position: relative;
-        width: 100px;
-        margin: 5px 5px;
-        padding: 5px;
+        width: 25%;
+        bottom: -2%;
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+    }
+
+    #mainMenu p a {
         background-color: transparent;
         color: #FFFF00;
-        font-weight:bold;
-        font-size: 110%;
-        font-family:"Times New Roman",Georgia,Serif;
-    }        
-     #mainMenu a:hover{
-         background-color: white;
+        font: normal bold 1.7em "Times New Roman", Georgia, serif;
+    }
+    
+     #mainMenu p a:hover{
+         background-color: #FFFF00;
          color:#000;
      }
      
@@ -321,11 +331,18 @@ textarea {
         position:relative;
         width:  90%;
         max-height: 500px;
-        bottom: 38px;
+        bottom: 4%;
         margin-left: auto;
         margin-right: auto;
         background: transparent;
 		overflow:auto;
+/*      padding:10px; -moz-box-shadow:inset 0 0 20px #EEDC82; -webkit-box-shadow:inset 0 0 20px #EEDC82; box-shadow:inset 0 0 20px #EEDC82;        
+     
+     border-top: 3px double rgba(66, 30, 19, 0.5);
+        border-bottom: 3px double rgba(66, 30, 19, 0.5);        
+        border-radius: 25px;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;  */
        }
 	   
 	.col1 {
@@ -348,9 +365,9 @@ textarea {
     
 	.numNutsDiv {
         position: relative;
-        top: 96px;
-        height: 25px;
-        width: 200px;
+        top: 2%;
+        height: 4%;
+        width: 25%;
         margin-left: auto;
         margin-right: auto;
         font: normal normal 24px "Times New Roman", Georgia, Serif;
@@ -391,19 +408,27 @@ textarea {
     
 	#galore {
 		position: relative;
-		width: 332px;
+		width: 45%;
 		margin-left: auto;
 		margin-right: auto;
-		top: 10px;
+		top: 5%;
 	}
 	
     .listH1, .listH2
       {
-       width:74%;
+       width:80%;
        margin-left: auto;
        margin-right: auto;
        text-align: center;
        color:#EEDC82; /* flax  */
+    }
+    
+    .listH1 {
+        font: normal bold 3em "Times New Roman",Georgia,Serif;
+    }
+    
+     .listH2 {
+        font: normal bold 1.5em  "Times New Roman",Georgia,Serif;
     }
 	   
     #wtHomePage 
