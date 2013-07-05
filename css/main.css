@@ -128,9 +128,13 @@ textarea {
         left:50%;
         margin-top: -364px;   /* http://stackoverflow.com/questions/2005954/center-element-with-positionfixed */
         margin-left: -500px;  /* BE SURE TO CHANGE margin-top and margin-left IF YOU CHANGE WIDTH AND OR HEIGHT!  MUST BE HALF OF EACH */
-
-	    -moz-border-radius: 10px;
-		border-radius: 10px;		
+        -moz-border-radius-topleft: 30px;
+        -moz-border-radius-topright: 0px;
+        -moz-border-radius-bottomright: 30px;
+        -moz-border-radius-bottomleft: 30px;
+        -webkit-border-radius: 30px 0px 30px 30px;
+        border-radius: 30px 0px 30px 30px;
+        padding: 30px;        
     }
     
     .walnutContainer {
@@ -142,8 +146,14 @@ textarea {
 		margin-left: auto;
 		margin-right: auto;
         background:#421E13;        
-	    -moz-border-radius: 50px;
-		border-radius: 50px;
+	    -moz-border-top-left-radius: 50px;
+	    -moz-border-top-right-radius: 0;
+	    -moz-border-bottom-right-radius: 50px;
+	    -moz-border-bottom-left-radius: 50px;        
+        border-top-left-radius: 50px; 
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 50px;
+        border-bottom-left-radius: 50px;
     }
     
     #popUp {
@@ -297,28 +307,40 @@ textarea {
      /* used in listNuts1.html - if user is admin javascript will change display to display:block */
         display: none;
         position: relative;
-        bottom: -5%;
+        width: 25%;       
+        top: 4.5%;
+        left: 73.48%;
+        background: #421E13;
+        -moz-border-radius-topleft: 30px;
+        -moz-border-radius-topright: 0;
+        border-radius: 30px 0 0 0;  
     }
     
     #bDayLink{
        display: block;
        position: relative;
-       bottom: -5%;        
+       width: 25%;       
+       top: 4.5%;
+       left: 73.48%;
+       background: #421E13;
+        -moz-border-radius-topleft: 30px;
+        -moz-border-radius-topright: 0;
+        border-radius: 30px 0 0 0;       
     }
     
     #mainMenu p,
     #bDayLink p {
-        width: 25%;
-        margin-right: auto;
-        margin-left: auto;
-        text-align: center;
+        width: 50%;
+        position: relative;
+        left: 33%;
+ /*       text-align: center;   */
     }
 
     #mainMenu p a ,
     #bDayLink p a {
         background-color: transparent;
         color: #FFFF00;
-        font: normal bold 1.7em "Times New Roman", Georgia, serif;
+        font: normal bold 1.5em "Times New Roman", Georgia, serif;
     }
     
      #mainMenu p a:hover,
