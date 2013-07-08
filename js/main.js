@@ -336,11 +336,11 @@ function ajaxAddNuts() {
             $('#addNutResponse').text("Update failed").slideDown('slow');
         },
         success: function (dataReturned) {
-            $('#addNutResponse').text(dataReturned);
+            $('#addNutResponse').css('visibility', 'visible').text(dataReturned);
         },
         complete: function () {
             setTimeout(function () {
-                $('#addNutResponse'); /*.slideUp('slow'); */
+                $('#addNutResponse').css('visibility', 'hidden'); /*slideUp('slow'); */
             }, 8000);
         }
     });

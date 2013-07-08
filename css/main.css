@@ -121,13 +121,12 @@ textarea {
     
 
     .frame {
-        position:fixed;
-        width:  1000px;
-        height: 753px;
-        top: 47%;
-        left:50%;
-        margin-top: -364px;   /* http://stackoverflow.com/questions/2005954/center-element-with-positionfixed */
-        margin-left: -500px;  /* BE SURE TO CHANGE margin-top and margin-left IF YOU CHANGE WIDTH AND OR HEIGHT!  MUST BE HALF OF EACH */
+        position:relative;
+        width:  75%;
+        height: 90%;
+        top: 0;
+        margin-right: auto;  
+        margin-left: auto;  
         -moz-border-radius-topleft: 30px;
         -moz-border-radius-topright: 0px;
         -moz-border-radius-bottomright: 30px;
@@ -154,6 +153,17 @@ textarea {
         border-top-right-radius: 0;
         border-bottom-right-radius: 50px;
         border-bottom-left-radius: 50px;
+    }
+        
+    #editNutPage ,
+    #addNutPage
+      {
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        width: 96%;
+        height:100%;
+        background: #800000;  /* dark red  */
     }
     
     #popUp {
@@ -267,7 +277,7 @@ textarea {
         
 	#editHint {
 		position: relative;
-		width: 300px;
+		width: 26%;
 		margin-right: auto;
         margin-left: auto;	
 		padding: 5px;
@@ -275,7 +285,7 @@ textarea {
 		color: #EEDC82; /* flax  */
 		font-weight:bold;
 		font-size: 115%;
-		top: 5px;
+		top: -2%;
 		font-family:"Times New Roman",Georgia,Serif;
 	}
   
@@ -450,13 +460,13 @@ textarea {
       {
         position: relative;
         width: 40%;
-        height: 50%;
-        top: 30%;
+        height: 75%;
+        top: 16%;
         margin-left: auto;
         margin-right: auto;
         margin-top: 10px;
         color: #000;
-        background: #FFF;
+        background: transparent;
     }
     
     #WTForm
@@ -489,27 +499,18 @@ textarea {
         margin-right: auto;
         width: 300px;
         text-align: center;       
-    }    
-    
-    #editNutPage ,
-    #addNutPage
-      {
-        position: relative;
-        margin:0;
-        width: 96%;
-        height:96%;
-        top:  -7px;
-        left: 15px;
-        margin-left: 5px;
-        margin-right: 5px;
-        background: #800000;  /* dark red  */
     }
 
-    h1, h3
+    h1
        {
-		color:#000000;
+        color: gold;
+        font: normal bold 1.8em Georgia;
     }
-    
+    h3
+       {
+        color: gold;
+        font: normal bold 1.2em Georgia;
+    }    
     #editNutForm,
     #addNutForm
        {
@@ -522,16 +523,17 @@ textarea {
     #editNutResponse,
     #addNutResponse  
        {
-        position: absolute;
+        position: relative;
+        visibility: hidden;
         width: 500px;
-        height: 15px;
-        margin: 0;
-        padding: 5px;
-        top: 0px;
-        left: 180px;        
-        font: italic 800 18px sans-serif;
+        height: 25px;
+        margin-right: auto;
+        margin-left: auto;
+        font: italic 800 1em sans-serif;
+        color: lightgreen;
+        text-align: center;
     } 
-   
+       
     #spinner {
         position: absolute;
         display: none;
@@ -546,6 +548,7 @@ textarea {
 
     fieldset {
         position: relative;
+        width: 100%;
         height: 78%;
         top: 8px;
         background: #800000; 
@@ -554,122 +557,114 @@ textarea {
         border: 0;  
     }
       
- 
-     #editNutForm ul,
-     #addNutForm  ul 
+    ul.nonav
        {
-     width: 95%;
-     height: 97%;
+     width: 100%;
+     height:75%;
      border: 0;
      margin: 0.2em auto;
      }
 
    
-    #editNutForm li,
-    #addNutForm  li
-    {
+    li.nonavli
+       {
+        display: block;
+        width: 100%;
         text-align: left;
         margin-left: 10px;
         list-style:none;
-        float: left;
-        clear: left;
         padding: 5px;        
     }
 
-
-    #editNutForm label,
-    #addNutForm  label   
+    ul.nonav label   
       {
-        display: block;
-        width: 200px;
-        float: left;
-        height: 20px;
+        display: inline-block;
+        width: 11%;
+        height: 6%;
         text-align: right;
         margin-right: 10px;
         font: bold 16px arial;
     }
-    #editNutForm  label.error,
-    #addNutForm  label.error {
-        display: block;
-        float: left;
-        color: red;
-        height: 20px;
-        width: 250px;
-        margin-right: 10px;
-        margin-left: 10px;        
-        font: bold 16px arial;
-        text-align: left;
-    }
  
-    #editNutForm input,
-    #addNutForm  input    
+    ul.nonav  li.nonavli input
       {
-        display: block;
-        float:left;
+        display: inline-block;
+        width: 30%;
         padding: 0;
-        height: 20px;
+        height: 6%;
         background-color:white;
-        font: normal 18px serif;
+        color: darkgreen;
+        font: normal 1.2em serif;
         border: 2px inset;
     }
- 
+    
+    ul.nonav  li.nonavli input.error {
+      border: 1px solid red;
+      background-color: yellow;
+    } 
   
-    #editNutForm #Notes,
-    #addNutForm #Notes  
+   ul.nonav  li.nonavli input.valid {
+       border: 2px inset;
+      background-color: white;
+    } 
+    #Notes  
       {
         margin-left:0;
     }
- 
-
-    #addNutForm li.navlist,
-    #editNutForm li.navlist
-     {
-        display: inline;
-        list-style-type:none;
-        margin:0;
-        padding:0;
-        overflow:hidden;
+   
+    ul.navul {
+        position: relative;
+        width: 100%;
+        height: 10%;
+        bottom: 7%;
+    }
+      
+    ul.navul li.navli 
+      {
+        display: inline-block;
+        list-style-type: none;
+        padding: 0;
+        position: relative;
+        left: 20%;
+        margin-right: 5%;
     }
 
-    #addNutForm  li.navlist input,
-    #editNutForm li.navlist input
-      {
-        position: absolute;
-        display: inline;
-        bottom: 0px;     
+    ul.navul li.navli input    
+      {  
         text-decoration: none;
         background-color: #8B0000;
         color: yellow;
         border: 1px solid;
         border-color: #cec #464 #575 #dfd;
+        font: normal normal 1.2em Georgia serif;
     }
 
-    li.navlist #submit     
+    .navul .navli #submit     
        {
       left: 20%;
     }
     
-     li.navlist #reset    
+     .navul .navli #reset    
        {
       left: 40%;
     }
-     li.navlist #home 
+     .navul .navli #home 
        {
       left: 60%;
     }
-     li.navlist #again     
+     .navul .navli #again     
        {
       left: 80%;
     }
     
-    #addNutForm #submit:hover,
-    #addNutForm #reset:hover,
-    #addNutForm #home:hover,
-    #addNutForm #again:hover
+    .navul .navli #submit:hover,
+    .navul .navli #reset:hover,
+    .navul .navli #home:hover,
+    .navul .navli #again:hover
     {
         background-color: brown;
         color: #FFF;
-    }
+   }
 
 
 
