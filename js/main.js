@@ -809,11 +809,11 @@ function ajaxEditNut() {
         .fail(function () {
             $('#editNutResponse').text("Update failed").slideDown('slow');
         })
-        .always(function () {
+   /*     .always(function () {
             setTimeout(function () {
                 $('#editNutResponse').slideUp('slow');
             }, 8000);
-        });
+        }); */
 }
 
 // called by editBDay.html on submit of form

@@ -96,8 +96,8 @@ textarea {
   
     html, body {
         position: static;
-        height: 100%;
-        width: 100%; 
+        height: 800px;
+        width: 1341px; 
 /*		background-image: url("/images/walnut-wood.jpg");  */
         background: url("/images/walnut-wood.jpg") no-repeat center center fixed; 
         -webkit-background-size: cover;
@@ -122,9 +122,9 @@ textarea {
 
     .frame {
         position:relative;
-        width:  75%;
+        width:  85%;
         height: 90%;
-        top: 0;
+        top: -80px;
         margin-right: auto;  
         margin-left: auto;  
         -moz-border-radius-topleft: 30px;
@@ -318,9 +318,9 @@ textarea {
         display: none;
         position: relative;
         width: 25%;       
-        top: 4.5%;
-        left: 73.48%;
-        background: #421E13;
+        top: 33px;
+        left: 838px;
+        background:#421E13;  
         -moz-border-radius-topleft: 30px;
         -moz-border-radius-topright: 0;
         border-radius: 30px 0 0 0;  
@@ -330,8 +330,8 @@ textarea {
        display: block;
        position: relative;
        width: 25%;       
-       top: 4.5%;
-       left: 73.48%;
+       top: 33px;
+       left: 838px;
        background: #421E13;
         -moz-border-radius-topleft: 30px;
         -moz-border-radius-topright: 0;
@@ -372,7 +372,7 @@ textarea {
 	   
 	.col1 {
        float: left;    
-	   width:  390px;
+	   width:  470px;
        height: 80%;
        margin: 5px;
        padding-left: 1px;
@@ -381,7 +381,7 @@ textarea {
     
 	.col2 {
        float: left;    
-	   width: 390px;
+	   width: 470px;
        height:80%;
        margin: 5px;
        padding-left: 1px;
@@ -479,8 +479,8 @@ textarea {
     }
     
     span.wtd {
-       color: #104E8B;
-       font: normal bold 1.1em sans-serif;
+       color: gold;
+       font: normal bold 1em serif;
        padding-left: 1em;
        padding-bottom: 0.5em;
     }
@@ -495,6 +495,7 @@ textarea {
         position: relative;
         top: 0px;
         color: red;
+        background-color: #EEDC82;
         margin-left: auto;
         margin-right: auto;
         width: 300px;
@@ -553,7 +554,6 @@ textarea {
         top: 8px;
         background: #800000; 
         color:#EEDC82;
-        padding: 10px;
         border: 0;  
     }
       
