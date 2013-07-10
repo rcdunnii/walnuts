@@ -40,7 +40,13 @@
 	<script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
    <!-- load the page with ajax call -->    
     <script type="text/javascript">
-        ajaxListNuts('Foxy'); // ajax call to populate page
+       <!-- this page can be called de novo or after an edit of a specific nut in which case it is called with query string of ?id=nutID -->    
+        var nutID = getParameterByName('id');
+         if (nutID === undefined) {
+            ajaxListNuts("Foxy");
+         } else {
+            ajaxListNuts("Foxy", nutID);
+         }        
     </script>
 </body>
 

@@ -37,11 +37,7 @@
 			return;
 		}
 								
-		$stmt->close();															 
-        
-		$notification = (IsNullOrEmptyString($f["Names"])) ? $f["SirName"] : $f["Names"];
-        
-		printf("Edited %s" , $notification);
+		$stmt->close();
 			
 		return;									
 

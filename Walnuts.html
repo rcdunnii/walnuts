@@ -24,8 +24,14 @@
 	    if (readCookie('nutCookie') !== "loggedIn") {
 		    window.location.href = "login.html";
         } else {
+        <!-- this page can be called de novo or after an edit of a specific nut in which case it is called with query string of ?id=nutID -->
              $( document ).ready(function() {
+                 var nutID = getParameterByName('id');
+                 if (nutID === undefined) {
                     ajaxListNuts("Walnut");
+                 } else {
+                    ajaxListNuts("Walnut", nutID);
+                 }
                 });        
         }
         </script> 

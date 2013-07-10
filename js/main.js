@@ -612,7 +612,7 @@ function displayPage(requester, nutEntries) {
 
     for (i = 0; i < numNuts; i += 1) {
 
-        replacementStr = "<pre><a class='oneNut' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
+        replacementStr = "<pre><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
 
         if (requester === 'Foxy') {
             replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>" + "<br>";
@@ -665,7 +665,7 @@ function displayPage(requester, nutEntries) {
 // fxn called by list nuts html page - which requester determines api
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
-function ajaxListNuts(requester) {
+function ajaxListNuts(requester, nutID) {
     'use strict';
 
     var walnutEntries = [], jqxhr;
@@ -724,6 +724,11 @@ function ajaxListNuts(requester) {
             }
             var numStr = walnutEntries.length;
             $(".numNuts").text(numStr);
+            if (nutID === undefined) {
+                $(".content").mCustomScrollbar("scrollTo", "top");
+            } else {
+                $(".content").mCustomScrollbar("scrollTo", "#" + nutID);
+            }
         })
         .fail(function () {
             alert("List Nuts failed");
@@ -787,7 +792,7 @@ function getOrigNut(nutID) {
 function ajaxEditNut() {
     'use strict';
 
-    var editData, requester;
+    var editData, requester, nutID;
     editData = getPostDataJSON("editNutForm");
     $.ajax({
         type: "POST",
@@ -795,12 +800,12 @@ function ajaxEditNut() {
         data: editData
     })
         .done(function (dataReturned) {
-            $('#editNutResponse').text(dataReturned);
             requester = $("#editNutForm input[name=user]").val();
+            nutID = $("#editNutForm input[name=walnutID]").val();            
             if (requester === 'Foxy') {
-                window.open("listNuts.html", "_self"); // listNuts.html only called by Foxy
+                window.open("listNuts.html?id=nutID_" + nutID, "_self"); // listNuts.html only called by Foxy
             } else if (requester === 'Walnut') {
-                window.open("Walnuts.html", "_self"); // Walnuts.html only called by user Walnut
+                window.open("Walnuts.html?id=nutID_" + nutID, "_self"); // Walnuts.html only called by user Walnut
             } else {
                 alert("Error: Undefined requester " + requester);
                 return;
