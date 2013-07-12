@@ -14,6 +14,32 @@
     }
 }
 
+
+function searchNut() {
+    var searchData = $("#searchForm").serialize(), jqxhr, status;
+    jqxhr = $.ajax({
+        type: "POST",
+        url: "nutSearch.php",
+        data:  searchData, // search form single input name is 'nutSearch' so this produces "nutSearch=user_input"
+        success: function (nutID) {
+            if (nutID == "No match") {
+                $('#nutSearch').attr( 'placeholder', nutID)
+                $(".content").mCustomScrollbar("scrollTo", "top");
+            } else {
+                var position = "#nutID_" + nutID;
+                $(".content").mCustomScrollbar("scrollTo", position);
+            }
+        },
+        error: function(jqxhr, status, error) {
+           var err = eval("(" + jqxhr.responseText + ")");
+            alert(err.Message);
+  /*        alert( jqxhr.responseText);           */
+        }
+     });      
+}
+
+
+
 function getMessageBody(form) {
     'use strict';
     var data = "", i, j, option, elem, param, nodeName, type, valueAttr, value;
@@ -724,10 +750,11 @@ function ajaxListNuts(requester, nutID) {
             }
             var numStr = walnutEntries.length;
             $(".numNuts").text(numStr);
-            if (nutID === undefined) {
-                $(".content").mCustomScrollbar("scrollTo", "top");
+            if (nutID) {
+               var position = '#' + nutID;
+                $(".content").mCustomScrollbar("scrollTo", position); 
             } else {
-                $(".content").mCustomScrollbar("scrollTo", "#" + nutID);
+                $(".content").mCustomScrollbar("scrollTo", "top");
             }
         })
         .fail(function () {
