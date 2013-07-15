@@ -100,10 +100,10 @@ textarea {
         width: 1341px; 
 /*		background-image: url("/images/walnut-wood.jpg");  */
         background: url("/images/walnut-wood.jpg") no-repeat center center fixed; 
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;        
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+        background-size: cover !important;        
 /*		background-repeat: no-repeat;        
 
         background: rgb(104,32,19); // Old browsers
@@ -338,38 +338,43 @@ textarea {
         -moz-border-radius-topright: 0;
         border-radius: 30px 0 0 0;       
     }
-  /*  
-    #searchLink input#nutSearch{
-       display: block;
-       position: relative;
-       border: none;
-       outline: none; 
-       font: normal bold 1em "Times New Roman", Georgia, serif;       
-       width: 25%;       
-       top: 113px;
-       left: 17px;
-       height: 32px;
-       background: #421E13;
-       -moz-border-radius-topright: 30px;
-       -moz-border-radius-topleft: 0;
-        border-radius:  0 30px 0 0;
-        text-align: left;
-        padding-left: 5px;
-    }        
- */  
+ 
     #searchLink {
         display: block;
         position: relative;
         width: 25%;
         height: 32px;
         top: 80px;
-        left: 16px;
+        left: 17px;
         background: #421E13;
         -moz-border-radius-topright: 30px;
         -moz-border-radius-topleft: 0;
         border-radius: 0 30px 0 0;    
     }
+ /*   
+    .placeholder {
+        background-color: transparent;
+        color: #FFFF00;
+        font: normal bold 1.5em "Times New Roman", Georgia, serif;
+        border: none;
+        outline: none;
+        padding-left: 18px;
+        width: 225px;
+        margin-bottom: 5px; 
+    }
     
+    .placeholder:hover   
+    {
+        background-color: gold;
+        color:#000;    
+    }
+ 
+    .placeholder:focus    
+        {
+        background-color: gold;
+        color:#000;    
+    }
+ */   
     #searchLink input#nutSearch {    
         background-color: transparent;
         color: #FFFF00;
@@ -402,7 +407,7 @@ textarea {
          background-color: gold;
          color:#000;
     } 
-    
+   
     /* Firefox 18-  */
     input -moz-placeholder { 
        background-color: transparent;
@@ -412,15 +417,13 @@ textarea {
     }
     
     input:hover:-moz-placeholder {  
-       background-color: transparent;
-        color: #FFFF00;
-        font: normal bold 1.5em "Times New Roman", Georgia, serif; 
+         background-color: gold;
+         color:#000;
     }
 
     input:focus:-moz-placeholder { 
-       background-color: transparent;
-        color: #FFFF00;
-        font: normal bold 1.5em "Times New Roman", Georgia, serif; 
+         background-color: gold;
+         color:#000; 
     }
     
      /* Firefox 19+ */   
@@ -431,15 +434,13 @@ textarea {
        margin-bottom: 5px;                
     }   
     input:hover::-moz-placeholder {  
-       background-color: transparent;
-        color: #FFFF00;
-        font: normal bold 1em "Times New Roman", Georgia, serif;
+         background-color: gold;
+         color:#000;
     }
  
     input:focus::-moz-placeholder {   
-       background-color: transparent;
-        color: #FFFF00;
-        font: normal bold 1em "Times New Roman", Georgia, serif;
+         background-color: gold;
+         color:#000;
     }
     
 
@@ -451,17 +452,21 @@ textarea {
     }
     
      input#nutSearch:focus:-ms-input-placeholder {  
-       background-color: transparent;
-        color: #FFFF00;
-        font: normal bold 1em "Times New Roman", Georgia, serif;
+         background-color: gold;
+         color:#000;
     }
     
      input#nutSearch:hover:-ms-input-placeholder {  
-       background-color: transparent;
-        color: #FFFF00;
-        font: normal bold 1em "Times New Roman", Georgia, serif;
+         background-color: gold;
+         color:#000;
     }
-    
+ /*   
+    [type="search"] {
+    -moz-appearance:    textfield;
+    -webkit-appearance: textfield;
+    appearance: textfield;
+    }
+ */   
     #mainMenu p,
     #bDayLink p {
         width: 50%;
@@ -614,7 +619,7 @@ textarea {
     }
     
     
-    .redText {
+    #searchLink input#nutSearch.redText {
         position: relative;
         top: 0px;
         color: red;

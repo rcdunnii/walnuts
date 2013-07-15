@@ -36,7 +36,7 @@
 	
 	/* fetch object array */
     If (!($row = $res->fetch_assoc())) {
-		echo "fetch of row from DB failed: (" . $stmt->errno . ") " . $stmt->error;
+		echo "No Match";
 	}
 
     print $row["walnutID"];

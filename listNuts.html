@@ -17,10 +17,15 @@
 </head>
 
 <body>
-      <div><p><center><span id="spinner">&nbsp;</span></center></p></div>
-     <div class="frame">   
-        <div id="mainMenu"><p><a href="WTD.html">Main Menu</a></p></div>
-       <div class="walnutContainer"> 
+     <div><p><center><span id="spinner">&nbsp;</span></center></p></div>
+     <div class="frame">
+     <div id="searchLink">
+        <form  action="#" id="searchForm" onsubmit="searchNut(); return false;" >
+            <input type="search" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder ="Search" title="Sir Name Lookup"/><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
+        </form>
+      </div>      
+      <div id="mainMenu"><p><a href="WTD.html">Main Menu</a></p></div>
+      <div class="walnutContainer"> 
  
         <div id="galore"><h1 class="listH1"><center>Walnuts Galore!</center></h1></div>
         <div class="numNutsDiv"><span># Nuts: <span class="numNuts"></span></span></div>

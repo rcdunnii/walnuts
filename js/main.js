@@ -22,18 +22,19 @@ function searchNut() {
         url: "nutSearch.php",
         data:  searchData, // search form single input name is 'nutSearch' so this produces "nutSearch=user_input"
         success: function (nutID) {
-            if (nutID == "No match") {
-                $('#nutSearch').attr( 'placeholder', nutID)
-                $(".content").mCustomScrollbar("scrollTo", "top");
+                if (nutID == "No Match") {
+                    $('#nutSearch').val("").attr("placeholder", nutID);
+                    $(".content").mCustomScrollbar("scrollTo", "top");
             } else {
                 var position = "#nutID_" + nutID;
                 $(".content").mCustomScrollbar("scrollTo", position);
+                $('#nutSearch').val("").attr("placeholder", "Search");                
             }
         },
         error: function(jqxhr, status, error) {
-           var err = eval("(" + jqxhr.responseText + ")");
-            alert(err.Message);
-  /*        alert( jqxhr.responseText);           */
+    /*        var err = eval("(" + jqxhr.responseText + ")");
+            alert(err.Message); */
+         alert( jqxhr.responseText);           
         }
      });      
 }
