@@ -625,142 +625,107 @@ function ajaxListBDays(requester, indexedBy) {
         });
 }
 
+//count textarea text input
+ $.fn.extend( {
+        limiter: function(limit, elem) {
+            $(this).on("keyup focus", function() {
+                setCount(this, elem);
+            });
+            function setCount(src, elem) {
+                var chars = src.value.length;
+                if (chars > limit) {
+                    src.value = src.value.substr(0, limit);
+                    chars = limit;
+                }
+                elem.html( limit - chars );
+            }
+            setCount($(this)[0], elem);
+        }
+    });
+    
 
-/* called by ajaxListNuts() fxn below - requester is who is making request, Foxy or user; nutEntries is arr of all walnuts */
-function displayPage(requester, nutEntries) {
+function displayTable(requester, nutEntries) {
     'use strict';
     var numNuts, i = 0,
-        replacementStr = "", replacementStrLt = "", replacementStrRt = "",
-        notesStr, b = 0, numBrks = 0, brksNeeded = 5, theHost = '';
+        replacementStr = "", nutTable = "",
+        noteStr = "", b = 0, numBrks = 0, brksNeeded = 5, theHost = "";
 // development or production ?
     theHost = location.host;
 // get # entries in database into var numNuts
     numNuts = nutEntries.length;
 
-    for (i = 0; i < numNuts; i += 1) {
+    for (i = 0; i < numNuts; i += 2) {
 
-        replacementStr = "<pre><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
+        replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
 
         if (requester === 'Foxy') {
-            replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>" + "<br>";
+            replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
         } else {
-            replacementStr += "<br>";
+            replacementStr += "</td><td>";
         }
-        replacementStr += nutEntries[i].Names + "<br>";
-        replacementStr += ((nutEntries[i].FormalNames) ? (nutEntries[i].FormalNames + "<br>") : "<br>");
-        replacementStr += ((nutEntries[i].Children) ? "Children: " + (nutEntries[i].Children + "<br>") : "<br>");
-        replacementStr += "Address: " + nutEntries[i].Addr1;
-        replacementStr += ((nutEntries[i].Addr2) ? "<br>" +  "         " +(nutEntries[i].Addr2 + "<br>") : "<br><br>");
-        replacementStr += "         " + nutEntries[i].Addr3 + "<br>";
-        replacementStr += "         " + nutEntries[i].Addr4 + "<br>";
-        replacementStr += "Email 1: " + nutEntries[i].Email1 + "<br>";
-        replacementStr += "      2: " + nutEntries[i].Email2 + "<br>";
-        replacementStr += "Phone 1: " + nutEntries[i].Phone1 + "<br>";
-        replacementStr += "      2: " + nutEntries[i].Phone2 + "<br>";
-        notesStr = ""; //  inits after each loop
+        replacementStr += "<a class='oneNut' id='nutID_" + nutEntries[i + 1].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i + 1].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i + 1].SirName + "</a>";
+
+        if (requester === 'Foxy') {
+            replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i + 1].walnutID + " , \"" + nutEntries[i + 1].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td></tr>";
+        } else {
+            replacementStr += "</td></tr>";
+        }
+
+        replacementStr += "<tr><td>" + nutEntries[i].Names + "</td><td>" + nutEntries[i + 1].Names + "</td></tr>";
+        replacementStr += "<tr><td>" + nutEntries[i].FormalNames + "</td><td>" + nutEntries[i + 1].FormalNames + "</td></tr>";
+        replacementStr += "<tr><td>" + "Children: " + nutEntries[i].Children + "</td><td>" + "Children: " + nutEntries[i + 1].Children + "</td></tr>";
+        replacementStr += "<tr><td>" + "Address: " + nutEntries[i].Addr1 + "</td><td>" + "Address: " + nutEntries[i + 1].Addr1 + "</td></tr>";
+        replacementStr += "<tr><td>" + "         " + nutEntries[i].Addr2 + "</td><td>" + "         " + nutEntries[i + 1].Addr2 + "</td></tr>";
+        replacementStr += "<tr><td>" + "         " + nutEntries[i].Addr3 + "</td><td>" + "         " + nutEntries[i + 1].Addr3 + "</td></tr>";
+        replacementStr += "<tr><td>" + "         " + nutEntries[i].Addr4 + "</td><td>" + "         " + nutEntries[i + 1].Addr4 + "</td></tr>";
+        replacementStr += "<tr><td>" + "Email 1: " + nutEntries[i].Email1 + "</td><td>" + "Email 1: " + nutEntries[i + 1].Email1 + "</td></tr>";
+        replacementStr += "<tr><td>" + "      2: " + nutEntries[i].Email2 + "</td><td>" + "      2: " + nutEntries[i + 1].Email2 + "</td></tr>";
+        replacementStr += "<tr><td>" + "Phone 1: " + nutEntries[i].Phone1 + "</td><td>" + "Phone 1: " + nutEntries[i + 1].Phone1 + "</td></tr>";
+        replacementStr += "<tr><td>" + "      2: " + nutEntries[i].Phone2 + "</td><td>" + "      2: " + nutEntries[i + 1].Phone2 + "</td></tr>";
+        noteStr = ""; //  inits after each loop
         numBrks = 0;
 
-        if (nutEntries[i].Notes.length) { // if notesStr longer than 30 chars, format for display
-            notesStr = wordWrap(nutEntries[i].Notes, 30, '<br>', true);
-//           notesStr = notesStr.substring(0, 85); // trim to avoid 3rd nl                
-            numBrks = (notesStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
+        if (nutEntries[i].Notes.length) { // if noteStr longer than 30 chars, format for display
+            noteStr = wordWrap(nutEntries[i].Notes, 40, '<br>', true);
+            numBrks = (noteStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
         // format any Notes to fit in our listNuts display properly - always print 4 newlines            
         }
 
         if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
-            notesStr = "<span class=\"updated\">Last Update: " + nutEntries[i].Updated + "</span><br>" + notesStr;
+            noteStr = "<span class=\"updated\">Last Update: " + nutEntries[i].Updated + "</span><br>" + noteStr;
             numBrks += 1; // because we've added 1 <br> in line above...
         }
 
         for (b = numBrks; b < brksNeeded; b += 1) {
-            notesStr += "<br>";
+            noteStr += "<br>";
         }
 
-        replacementStr += "Notes:   " + notesStr + "</pre>";
-        if (isEven(i)) {
-            replacementStrLt += replacementStr;
-        } else {
-            replacementStrRt += replacementStr;
+        replacementStr += "<tr><td>" + "Notes: " + noteStr + "</td><td>";
+
+        noteStr = "";
+        if (nutEntries[i + 1].Notes.length) { // if noteStr longer than 30 chars, format for display
+            noteStr = wordWrap(nutEntries[i + 1].Notes, 40, '<br>', true);
+            numBrks = (noteStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
+        // format any Notes to fit in our listNuts display properly - always print 4 newlines            
         }
+
+        if ((Date.parse(nutEntries[i + 1].Created)) < (Date.parse(nutEntries[i + 1].Updated))) {
+            noteStr = "<span class=\"updated\">Last Update: " + nutEntries[i + 1].Updated + "</span><br>" + noteStr;
+            numBrks += 1; // because we've added 1 <br> in line above...
+        }
+
+        for (b = numBrks; b < brksNeeded; b += 1) {
+            noteStr += "<br>";
+        }
+
+        replacementStr += "Notes: " + noteStr + "</td></tr>";
+
+        nutTable += replacementStr;
+
         replacementStr = "";
     }
-    document.getElementById("replaceLt").innerHTML = replacementStrLt;
-    document.getElementById("replaceRt").innerHTML = replacementStrRt;
+    document.getElementById("walnutTable").innerHTML = "<table>" + nutTable + "</table>";
     return;
-}
-
-// fxn called by list nuts html page - which requester determines api
-/*jslint browser: true*/
-/*global $, jQuery, createXHR, displayPage*/
-function ajaxListNuts(requester, nutID) {
-    'use strict';
-
-    var walnutEntries = [], jqxhr;
-
-    jqxhr = $.ajax({
-        type: "GET",
-        url: "listNuts.php",
-        beforeSend: function () {
-            $("#spinner").show();
-            if (requester === 'Walnut') {  // shouldn't this be Foxy ???
-                $("#editHint").hide();
-            }
-        }
-    })
-        .done(function (dataReturned) {
-            $("#spinner").hide();
-            walnutEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
-            displayPage(requester, walnutEntries);
-            $(".content").mCustomScrollbar({
-                mouseWheel: true,
-                scrollButtons: {
-                    enable: true
-                },
-                theme: "light-thick",                
-            });
-            $(".content").hover(function(){
-					$(document).data({"keyboard-input":"enabled"});
-					$(this).addClass("keyboard-input");
-				},function(){
-					$(document).data({"keyboard-input":"disabled"});
-					$(this).removeClass("keyboard-input");
-				});
-            $(document).keydown(function(e){
-                if($(this).data("keyboard-input")==="enabled"){
-                    var activeElem=$(".keyboard-input"),
-                        activeElemPos=Math.abs($(".keyboard-input .mCSB_container").position().top),
-                        pixelsToScroll=60;
-                    if(e.which===38){ //scroll up
-                        e.preventDefault();
-                        if(pixelsToScroll>activeElemPos){
-                            activeElem.mCustomScrollbar("scrollTo","top");
-                        }else{
-                            activeElem.mCustomScrollbar("scrollTo",(activeElemPos-pixelsToScroll),{scrollInertia:400,scrollEasing:"easeOutCirc"});
-                        }
-                    }else if(e.which===40){ //scroll down
-                        e.preventDefault();
-                        activeElem.mCustomScrollbar("scrollTo",(activeElemPos+pixelsToScroll),{scrollInertia:400,scrollEasing:"easeOutCirc"});
-                    }
-                }
-            });            
-            if (requester === 'Foxy') {
-                $("#mainMenu").css('display', 'block');
-            } else { // only 2 possible requesters - Foxy and Walnut
-                $("#editHint").show();
-                $("#bDayLink").show();
-            }
-            var numStr = walnutEntries.length;
-            $(".numNuts").text(numStr);
-            if (nutID) {
-               var position = '#' + nutID;
-                $(".content").mCustomScrollbar("scrollTo", position); 
-            } else {
-                $(".content").mCustomScrollbar("scrollTo", "top");
-            }
-        })
-        .fail(function () {
-            alert("List Nuts failed");
-        });
 }
 
 // fxn called by list nuts html page - which requester determines api
@@ -784,7 +749,7 @@ function ajaxListNutsTable(requester, nutID) {
         .done(function (dataReturned) {
             $("#spinner").hide();
             walnutEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
-            displayPage(requester, walnutEntries);
+            displayTable(requester, walnutEntries);
             $(".content").mCustomScrollbar({
                 mouseWheel: true,
                 scrollButtons: {

@@ -33,7 +33,7 @@
                             <label for="password">Password: </label>
                             <input type="password" id="password" name="password" /><br /><br />	
                             <label for="captcha_code">Security Code:</label>                    
-                            <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" value="" /><br /><br /> 
+                            <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="7" value="" /><br /><br /> 
                             <img id="captcha" src="/securimage/securimage_show.php" alt="CAPTCHA Image" /> <br />                   
                             <a href="#" class="securityLink" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false">[ Different Security Image ]</a><br /><br />                                
                            <div id="submitWrapper"><input id="submitID" type="submit" value="Submit" /></div>

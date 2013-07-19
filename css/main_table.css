@@ -1,0 +1,989 @@
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+body {
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {  
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
+
+img {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Chrome Frame prompt
+   ========================================================================== */
+
+.chromeframe {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+/* Walnut Tally Style Sheet */
+  
+    html, body {
+        position: static;
+        height: 800px;
+        width: 1341px; 
+/*		background-image: url("/images/walnut-wood.jpg");  */
+        background: url("/images/walnut-wood.jpg") no-repeat center center fixed; 
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+        background-size: cover !important;        
+/*		background-repeat: no-repeat;        
+
+        background: rgb(104,32,19); // Old browsers
+        background: -moz-linear-gradient(top,  rgba(104,32,19,1) 0%, rgba(139,69,19,1) 100%); // 
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(104,32,19,1)), color-stop(100%,rgba(139,69,19,1))); // Chrome,Safari4+ 
+        background: -webkit-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); // Chrome10+,Safari5.1+ 
+        background: -o-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); // Opera 11.10+ 
+        background: -ms-linear-gradient(top,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); // IE10+
+        background: linear-gradient(to bottom,  rgba(104,32,19,1) 0%,rgba(139,69,19,1) 100%); // W3C 
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#682013', endColorstr='#8b4513',GradientType=0 ); // IE6-9 
+*/        
+        padding: 0;
+        margin: 0;
+    }
+    
+
+    .frame {
+        position:relative;
+        width:  85%;
+        height: 90%;
+        top: -80px;
+        margin-right: auto;  
+        margin-left: auto;  
+        -moz-border-radius-topleft: 30px;
+        -moz-border-radius-topright: 0px;
+        -moz-border-radius-bottomright: 30px;
+        -moz-border-radius-bottomleft: 30px;
+        -webkit-border-radius: 30px 0px 30px 30px;
+        border-radius: 30px 0px 30px 30px;
+        padding: 30px;        
+    }
+    
+    #walnutTable {
+        border-collapse:collapse;
+        width:100%;
+        color: white;
+        background: transparent;
+        font-family: monospace, serif;
+        _font-family: 'courier new', monospace;
+        font-size: 1em;
+        white-space: pre;
+    }
+    .walnutContainer {
+		position: relative;
+		margin:0;
+/*		width: 97%;  */
+        width: 85%;
+		height:96%;
+		top:  0;
+		margin-left: auto;
+		margin-right: auto;
+        background:#421E13;        
+	    -moz-border-top-left-radius: 0;
+	    -moz-border-top-right-radius: 0;
+	    -moz-border-bottom-right-radius: 50px;
+	    -moz-border-bottom-left-radius: 50px;        
+        border-top-left-radius: 0; 
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 50px;
+        border-bottom-left-radius: 50px;
+    }
+        
+    #editNutPage ,
+    #addNutPage
+      {
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        width: 96%;
+        height:100%;
+        background: #800000;  /* dark red  */
+    }
+    
+    #popUp {
+        position: absolute;
+        height: 200px;
+        width: 500px;
+        top: 50%;
+        left: 50%;
+        margin-left: -250px;
+        margin-top: -100px;
+    }
+    
+    #popUp h1 {
+        color: gold;
+        text-align: center;
+    }    
+    
+    .loginWrapper {
+        position: absolute;
+        width: 1300px;     /*1300px;*/
+        height: 900px;
+        margin: -450px 0 0 -650px;
+        left: 50%;
+        top: 50%;
+    }   
+  
+    .loginBkGnd {
+        position: absolute;    
+        background: url("/images/WalnutOpener.gif") no-repeat center;
+        width: 1100px;
+        height: 715px;
+        margin: -357px 0 0 -550px;
+        left: 50%;
+        top: 50%;
+    }
+    
+       .loginBkGndAdm{
+        position: absolute;    
+        background: url("/images/AdminOpener.gif") no-repeat center;
+        width: 1100px;
+        height: 715px;
+        margin: -357px 0 0 -550px;
+        left: 50%;
+        top: 50%;
+    }
+
+    input.highlight {
+        background-color: yellow;
+    }
+    
+    input#submit.go {
+        margin: 0.5em;
+    }
+    
+    #popUpLogin {
+        position: relative;
+        width: 367px;
+        height: 238px;
+        top: 39%;
+        left: -19%;
+        margin: 0 auto;
+        background-color: transparent;
+        color: white;
+        border: none;
+        padding: 2px;
+    }
+    
+    #popUpImg {
+       position: absolute;
+       top: 21%;
+       left:70%;
+       display:none;
+    }
+  
+    #loginError  {
+        position:relative;
+        text-align: left;
+        font-size: 1.2em;
+        color: red;
+        bottom: 30px;
+        left: 30px;
+        margin: 10px 10px;
+    }
+    
+    #hintWrapper {
+        position: relative;
+        left: 52px;
+        margin-top: 10px;
+    }
+    
+    .leftImg {
+        position: absolute;
+        bottom: -15px;
+        left: 5px;
+        width:300px;
+        margin: 0;
+        padding:0;
+        
+    }
+    
+    #submitWrapper {
+        position: absolute;
+        left:68px;
+        top: 244px;
+    }
+     
+    #submitID {
+        margin-left: auto;
+        margin-right: auto;
+    }
+        
+	#editHint {
+		position: relative;
+		width: 26%;
+		margin-right: auto;
+        margin-left: auto;	
+		padding: 5px;
+		background-color: transparent;
+		color: #EEDC82; /* flax  */
+		font-weight:bold;
+		font-size: 115%;
+		top: -2%;
+		font-family:"Times New Roman",Georgia,Serif;
+	}
+  
+   
+    .securityLink {
+        position: relative;
+        left: 25px;
+    }
+	    
+    .securityLink:link {color:#FFFF00;}    /*  unvisited link */
+    .securityLink:visited {color:#FFFF00;} /* visited link same color for this app as unvisited */
+    .securityLink:hover {color:#FFFFFF;}   /* white on mouse over link */
+    .securityLink:active {color:#FFD700;}  /* yellow on selected link */ 
+       
+    #hintLink:link {color:#FFFF00;}    /*  unvisited link */
+    #hintLink:visited {color:#FFFF00;} /* visited link same color for this app as unvisited */
+    #hintLink:hover {color:#FFFFFF;}   /* white on mouse over link */
+    #hintLink:active {color:#FFD700;}  /* yellow on selected link */ 
+      
+    #hintLink{
+        display: none;
+    }
+      
+   #Notes {
+        font: normal 18px serif;
+    }
+        
+    #mainMenu {
+     /* used in listNuts1.html - if user is admin javascript will change display to display:block */
+        display: none;
+        position: relative;
+        width: 19%;       
+        top: 33px;
+        left: 838px;
+        background:#421E13;  
+        -moz-border-radius-topleft: 30px;
+        -moz-border-radius-topright: 0;
+        border-radius: 30px 0 0 0;  
+    }
+    
+    #bDayLink{
+       display: block;
+       position: relative;
+       width: 19%; 
+       height: 32px;       
+       top: 33px;
+       left: 836px;
+       background: #421E13;
+        -moz-border-radius-topleft: 30px;
+        -moz-border-radius-topright: 0;
+        border-radius: 30px 0 0 0;       
+    }
+ 
+    #searchLink {
+        display: block;
+        position: relative;
+        width: 19%%;
+        height: 32px;
+        top: 80px;
+        left: 85px;
+        background: #421E13;
+        -moz-border-radius-topright: 30px;
+        -moz-border-radius-topleft: 0;
+        border-radius: 0 30px 0 0;    
+    }
+  
+    #searchLink input#nutSearch {    
+        background-color: transparent;
+        color: #FFFF00;
+        font: normal bold 1.5em "Times New Roman", Georgia, serif;
+        border: none;
+        outline: none;
+        padding-left: 18px;
+        width: 168px;
+   }
+ 
+    #searchLink input#searchImg {
+       display: block;
+       position: relative;
+       background: transparent;       
+       top: -28px;
+       left: 185px;
+    }
+    
+    input::-webkit-input-placeholder {
+      background-color: transparent;
+        color: #FFFF00;
+        font: normal bold 1em "Times New Roman", Georgia, serif;
+        margin-bottom: 5px;
+    }
+    input:hover::-webkit-input-placeholder {
+         background-color: gold;
+         color:#000;
+    } 
+    input:focus::-webkit-input-placeholder {
+         background-color: gold;
+         color:#000;
+    } 
+   
+    /* Firefox 18-  */
+    input -moz-placeholder { 
+       background-color: transparent;
+       color: #FFFF00;
+       font: normal bold 1.5em "Times New Roman", Georgia, serif;
+       margin-bottom: 5px;        
+    }
+    
+    input:hover:-moz-placeholder {  
+         background-color: gold;
+         color:#000;
+    }
+
+    input:focus:-moz-placeholder { 
+         background-color: gold;
+         color:#000; 
+    }
+    
+     /* Firefox 19+ */   
+    input::-moz-placeholder {  
+       background-color: transparent;
+       color: #FFFF00;
+       font: normal bold 1em "Times New Roman", Georgia, serif;
+       margin-bottom: 5px;                
+    }   
+    input:hover::-moz-placeholder {  
+         background-color: gold;
+         color:#000;
+    }
+ 
+    input:focus::-moz-placeholder {   
+         background-color: gold;
+         color:#000;
+    }
+    
+
+    input#nutSearch:-ms-input-placeholder {  
+       background-color: transparent;
+       color: #FFFF00;
+       font: normal bold 1em "Times New Roman", Georgia, serif;
+       margin-bottom: 5px;                
+    }
+    
+     input#nutSearch:focus:-ms-input-placeholder {  
+         background-color: gold;
+         color:#000;
+    }
+    
+     input#nutSearch:hover:-ms-input-placeholder {  
+         background-color: gold;
+         color:#000;
+    }
+ /*   
+    [type="search"] {
+    -moz-appearance:    textfield;
+    -webkit-appearance: textfield;
+    appearance: textfield;
+    }
+ */   
+    #mainMenu p,
+    #bDayLink p {
+        width: 50%;
+        position: relative;
+        left: 32%;
+    }
+
+    #mainMenu p a ,
+    #bDayLink p a {
+        background-color: transparent;
+        color: #FFFF00;
+        font: normal bold 1.5em "Times New Roman", Georgia, serif;
+    }
+    
+     #mainMenu p a:hover,
+     #bDayLink p a:hover{
+         background-color: gold;
+         color:#000;
+     }
+     
+     .content {
+        position:relative;
+        width:  90%;
+        max-height: 500px;
+        bottom: 4%;
+        margin-left: auto;
+        margin-right: auto;
+        background: transparent;
+		overflow:auto;
+       }
+	   
+	.col1 {
+       float: left;    
+	   width:  470px;
+       height: 80%;
+       margin: 5px;
+       padding-left: 1px;
+       padding-right: 1px;
+    }
+    
+	.col2 {
+       float: left;    
+	   width: 470px;
+       height:80%;
+       margin: 5px;
+       padding-left: 1px;
+       padding-right: 1px;       
+	}
+    
+	.numNutsDiv {
+        position: relative;
+        top: 0;
+        height: 4%;
+        width: 25%;
+        margin-left: auto;
+        margin-right: auto;
+        font: normal normal 24px "Times New Roman", Georgia, Serif;
+        color: #EEDC82; /* flax  */
+        text-align: center;
+    }
+        
+    .numNuts {      
+        color: #FFFF00;        
+    }
+    
+    #replaceRt pre,
+    #replaceLt pre {
+	   padding: 0;
+	   color: white;
+	}    
+    
+		
+	.oneNut {
+     text-decoration: underline;
+     font-weight:bold;
+     font-size: 110%;
+     font-family:"Times New Roman",Georgia,Serif;
+     color:#FFFF00;
+     cursor:pointer;
+   }
+
+   /* javascript generated class in main line 140 */
+	.oneNut:link {color:#FFFF00;}    /*  unvisited link */
+    .oneNut:visited {color:#FFFF00;} /* visited link same color for this app as unvisited */
+    .oneNut:hover {color:#FFFFFF;}   /* white on mouse over link */
+    .oneNut:active {color:#FFD700;}  /* yellow on selected link */   
+	
+    .updated 
+       {
+        color: yellow;
+    }
+    
+	#galore {
+		position: relative;
+		width: 45%;
+		margin-left: auto;
+		margin-right: auto;
+		top: 5%;
+	}
+	
+    .listH1, .listH2
+      {
+       width:80%;
+       margin-left: auto;
+       margin-right: auto;
+       text-align: center;
+       color:#EEDC82; /* flax  */
+    }
+    
+    .listH1 {
+        font: normal bold 3em "Times New Roman",Georgia,Serif;
+    }
+    
+     .listH2 {
+        font: normal bold 1.5em  "Times New Roman",Georgia,Serif;
+    }
+	   
+    #wtHomePage 
+      {
+        position: relative;
+        width: 40%;
+        height: 75%;
+        top: 16%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        color: #000;
+        background: transparent;
+    }
+    
+    #WTForm
+      {
+        position: relative;
+        width: 40% ;
+        margin-left: auto ;
+        margin-right: auto ;
+        text-align: left;
+    }
+    
+    span.wtd {
+       color: gold;
+       font: normal bold 1em serif;
+       padding-left: 1em;
+       padding-bottom: 0.5em;
+    }
+        
+    #response
+      {
+        font: italic 16px sans-serif;
+    }
+    
+    
+    #searchLink input#nutSearch.redText {
+        position: relative;
+        top: 0px;
+        color: red;
+        background-color: #EEDC82;
+        margin-left: auto;
+        margin-right: auto;
+        width: 300px;
+        text-align: center;       
+    }
+
+    h1
+       {
+        color: gold;
+        font: normal bold 1.8em Georgia;
+    }
+    h3
+       {
+        color: gold;
+        font: normal bold 1.2em Georgia;
+    }    
+    #editNutForm,
+    #addNutForm
+       {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    #editNutResponse,
+    #addNutResponse  
+       {
+        position: relative;
+        visibility: hidden;
+        width: 500px;
+        height: 25px;
+        margin-right: auto;
+        margin-left: auto;
+        font: italic 800 1em sans-serif;
+        color: lightgreen;
+        text-align: center;
+    } 
+       
+    #spinner {
+        position: absolute;
+        display: none;
+        background-image: url("/images/ajax-loader.gif");
+        width: 32px;
+        height: 32px;  
+        top: 25%;
+        left: 50%;
+        background-color: transparent;
+    }
+
+
+    fieldset {
+        position: relative;
+        width: 100%;
+        height: 78%;
+        top: 8px;
+        background: #800000; 
+        color:#EEDC82;
+        border: 0;  
+    }
+      
+    ul.nonav
+       {
+     width: 100%;
+     height:75%;
+     border: 0;
+     margin: 0.2em auto;
+     }
+
+   
+    li.nonavli
+       {
+        display: block;
+        width: 100%;
+        text-align: left;
+        margin-left: 10px;
+        list-style:none;
+        padding: 5px;        
+    }
+
+    ul.nonav label   
+      {
+        display: inline-block;
+        width: 11%;
+        height: 6%;
+        text-align: right;
+        margin-right: 10px;
+        font: bold 16px arial;
+    }
+ 
+    ul.nonav  li.nonavli input
+      {
+        display: inline-block;
+        width: 30%;
+        padding: 0;
+        height: 6%;
+        background-color:white;
+        color: darkgreen;
+        font: normal 1.2em serif;
+        border: 2px inset;
+    }
+    
+    ul.nonav  li.nonavli input.error {
+      border: 1px solid red;
+      background-color: yellow;
+    } 
+  
+   ul.nonav  li.nonavli input.valid {
+       border: 2px inset;
+      background-color: white;
+    } 
+    #Notes  
+      {
+        margin-left:0;
+    }
+   
+    ul.navul {
+        position: relative;
+        width: 100%;
+        height: 10%;
+        bottom: 7%;
+    }
+      
+    ul.navul li.navli 
+      {
+        display: inline-block;
+        list-style-type: none;
+        padding: 0;
+        position: relative;
+        left: 20%;
+        margin-right: 5%;
+    }
+
+    ul.navul li.navli input    
+      {  
+        text-decoration: none;
+        background-color: #8B0000;
+        color: yellow;
+        border: 1px solid;
+        border-color: #cec #464 #575 #dfd;
+        font: normal normal 1.2em Georgia serif;
+    }
+
+    .navul .navli #submit     
+       {
+      left: 20%;
+    }
+    
+     .navul .navli #reset    
+       {
+      left: 40%;
+    }
+     .navul .navli #home 
+       {
+      left: 60%;
+    }
+     .navul .navli #again     
+       {
+      left: 80%;
+    }
+    
+    .navul .navli #submit:hover,
+    .navul .navli #reset:hover,
+    .navul .navli #home:hover,
+    .navul .navli #again:hover
+    {
+        background-color: brown;
+        color: #FFF;
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Image replacement
+ */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-o-min-device-pixel-ratio: 5/4),
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

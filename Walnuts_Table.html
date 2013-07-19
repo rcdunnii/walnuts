@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Walnuts</title>
+        <meta name="description" content="Walnut Tally Online">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/main_table.css">  <!-- includes old Walnut.css -->
+        <link rel="stylesheet" href="/css/jquery.mCustomScrollbar.css" type="text/css" />       
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/main_table.js"></script>
+        <script type="text/javascript" src="/js/jquery.mCustomScrollbar.concat.min.js"></script>               
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+ <!--       <script type="text/javascript" src="/js/vendor/jquery.placeholder.min.js" ></script>       -->
+        <script type="text/javascript">
+	    if (readCookie('nutCookie') !== "loggedIn") {
+		    window.location.href = "login.html";
+        } else {
+        <!-- this page can be called de novo or after an edit of a specific nut in which case it is called with query string of ?id=nutID -->
+             $( document ).ready(function() {
+ /*                $('input').placeholder();  */
+                 var nutID = getParameterByName('id');
+                 if (nutID) {
+                    ajaxListNutsTable("Walnut", nutID);  
+                 } else {
+                    ajaxListNutsTable("Walnut");
+                 }
+                });        
+        }
+        </script> 
+        
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+    <div><span id="spinner">&nbsp;</span></div>
+    <div class="frame">
+    <div id="searchLink">
+        <form  action="#" id="searchForm" onsubmit="searchNut(); return false;" >
+            <input type="text" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder ="Search" title="Sir Name Lookup"/><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
+        </form>
+    </div>     
+    <div id="bDayLink"><p><a href="listBDays.html?user=Walnut">Birthdays</a></p></div>
+        <div class="walnutContainer">
+            <div id="galore"><h1 class="listH1">Walnuts Galore!</h1></div>
+            <div class="numNutsDiv"><span># Nuts: <span class="numNuts"></span></span></div>
+            <div id="editHint"><p>Click on Family Name to Edit</p></div> 			
+            <div class="content">
+                <div ><p id="walnutTable"></p></div>                
+            </div>
+        </div>
+
+   </div>
+   
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src='//www.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+         
+<!--[if IE]>
+<script type="text/javascript">
+// A no-dependancy quick and dirty method of adding basic
+// placeholder functionality to Internet Explorer 5.5+
+// Author: Jay Williams <myd3.com>
+// License: MIT License
+// Link: https://gist.github.com/1105055
+ 
+function add_placeholder (id, placeholder)
+{
+	var el = document.getElementById(id);
+	el.placeholder = placeholder;
+ 
+    el.onfocus = function ()
+    {
+		if(this.value == this.placeholder)
+		{
+			this.value = '';
+			el.style.cssText  = '';
+		}
+    };
+ 
+    el.onblur = function ()
+    {
+		if(this.value.length == 0)
+		{
+			this.value = this.placeholder;
+			el.style.cssText = 'color:#FFFF00;';
+		}
+    };
+ 
+	el.onblur();
+}
+ 
+// Add right before </body> or inside a DOMReady wrapper
+add_placeholder('nutSearch', 'Search');
+ 
+</script>
+<![endif]-->
+
+    </body>
+</html>
