@@ -371,7 +371,7 @@ textarea {
     #searchLink input#nutSearch {    
         background-color: transparent;
         color: #FFFF00;
-        font: normal bold 1.5em "Times New Roman", Georgia, serif;
+        font: normal bold 1.3em "Times New Roman", Georgia, serif;
         border: none;
         outline: none;
         padding-left: 18px;
@@ -471,7 +471,8 @@ textarea {
     #bDayLink p a {
         background-color: transparent;
         color: #FFFF00;
-        font: normal bold 1.5em "Times New Roman", Georgia, serif;
+        font: normal bold 1.3em "Times New Roman", Georgia, serif;
+        text-decoration: none;
     }
     
      #mainMenu p a:hover,
