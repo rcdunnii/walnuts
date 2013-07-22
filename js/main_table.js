@@ -693,7 +693,7 @@ function displayTable(requester, nutEntries) {
 
         if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
             noteStr = "<span class=\"updated\">Last Update: " + nutEntries[i].Updated + "</span><br>" + noteStr;
-            numBrks += 1; // because we've added 1 <br> in line above...
+            numBrks += 1; // because we've added 1 <br> in line above... 
         }
 
         for (b = numBrks; b < brksNeeded; b += 1) {
@@ -703,6 +703,8 @@ function displayTable(requester, nutEntries) {
         replacementStr += "<tr><td>" + "Notes: " + noteStr + "</td><td>";
 
         noteStr = "";
+        numBrks = 0;
+        
         if (nutEntries[i + 1].Notes.length) { // if noteStr longer than 30 chars, format for display
             noteStr = wordWrap(nutEntries[i + 1].Notes, 40, '<br>', true);
             numBrks = (noteStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string

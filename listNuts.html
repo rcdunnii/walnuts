@@ -17,6 +17,9 @@
 </head>
 
 <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
      <div><span id="spinner">&nbsp;</span></div>
      <div class="frame">
      <div id="searchLink">
@@ -26,13 +29,11 @@
       </div>      
       <div id="mainMenu"><p><a href="WTD.html">Main Menu</a></p></div>
       <div class="walnutContainer"> 
- 
-        <div id="galore"><h1 class="listH1"><center>Walnuts Galore!</center></h1></div>
+        <div id="galore"><h1 class="listH1">Walnuts Galore!</h1></div>
         <div class="numNutsDiv"><span># Nuts: <span class="numNuts"></span></span></div>
-        <div id="editHint"><p><center>Click on Family Name to Edit</center></p></div> 			
+        <div id="editHint"><p>Click on Family Name to Edit</p></div> 			
         <div class="content">
-            <div class="col1"><p id="replaceLt"></p></div>
-            <div class="col2"><p id="replaceRt"></p> </div>                    
+                <div ><p id="walnutTable"></p></div>                    
         </div>
       </div> 
      </div> 
@@ -87,11 +88,11 @@ add_placeholder('nutSearch', 'Search');
     <script type="text/javascript">
        <!-- this page can be called de novo or after an edit of a specific nut in which case it is called with query string of ?id=nutID -->    
         var nutID = getParameterByName('id');
-         if (nutID === undefined) {
-            ajaxListNuts("Foxy");
-         } else {
-            ajaxListNuts("Foxy", nutID);
-         }        
+        if (nutID === undefined) {
+           ajaxListNutsTable("Foxy");
+        } else {
+           ajaxListNutsTable("Foxy", nutID);
+        }       
     </script>
 </body>
 

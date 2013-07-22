@@ -146,6 +146,11 @@ textarea {
         font-size: 1em;
         white-space: pre;
     }
+    
+    #walnutTable  tr td {
+        width: 100px;
+    }
+    
     .walnutContainer {
 		position: relative;
 		margin:0;
