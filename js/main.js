@@ -780,6 +780,7 @@ function ajaxListNutsTable(requester, nutID) {
             walnutEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
             displayTable(requester, walnutEntries);
             $(".content").mCustomScrollbar({
+      /*          horizontalScroll:true,  */
                 mouseWheel: true,
                 scrollButtons: {
                     enable: true
