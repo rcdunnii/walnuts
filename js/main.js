@@ -770,7 +770,7 @@ function ajaxListNutsTable(requester, nutID) {
         url: "listNuts.php",
         beforeSend: function () {
             $("#spinner").show();
-            if (requester === 'Walnut') {  // shouldn't this be Foxy ???
+            if (requester === 'Walnut') { 
                 $("#editHint").hide();
             }
         }
