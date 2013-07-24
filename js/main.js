@@ -674,7 +674,7 @@ function displayTable(requester, nutEntries) {
             }
 
             if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
-                noteStr = "<span class=\"updated\">Last Update: " + nutEntries[i].Updated + "</span><br>" + noteStr;
+                noteStr = "<span class=\"updated\">Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</span><br>" + noteStr;
                 numBrks += 1; // because we've added 1 <br> in line above... 
             }
 
@@ -694,7 +694,7 @@ function displayTable(requester, nutEntries) {
             }
 
             if ((Date.parse(nutEntries[i + 1].Created)) < (Date.parse(nutEntries[i + 1].Updated))) {
-                noteStr = "<span class=\"updated\">Last Update: " + nutEntries[i + 1].Updated + "</span><br>" + noteStr;
+                noteStr = "<span class=\"updated\">Last Update: " + nutEntries[i + 1].Updated.split(" ", 1) + "</span><br>" + noteStr;
                 numBrks += 1; // because we've added 1 <br> in line above...
             }
 
@@ -738,7 +738,7 @@ function displayTable(requester, nutEntries) {
             }
 
             if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
-                noteStr = "<span class=\"updated\">Last Update: " + nutEntries[i].Updated + "</span><br>" + noteStr;
+                noteStr = "<span class=\"updated\">Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</span><br>" + noteStr;
                 numBrks += 1; // because we've added 1 <br> in line above... 
             }
 
