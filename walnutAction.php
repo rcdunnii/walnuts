@@ -199,7 +199,6 @@
            echo ("<p>Backup OK!<br /><a class=\"downLoad\" href=\"$BU\" download>Click to Download</a>&nbsp;&nbsp;&nbsp;<a class= \"downLoad\" href=\"#\" >Skip Download</a></p>");
         } else {
             echo ("Backup failed with error # " . $result);
-			var_dump($output);
         }
 }
 
