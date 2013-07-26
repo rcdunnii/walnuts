@@ -135,11 +135,11 @@ textarea {
         font-size: 1em;
         white-space: pre;
     }
-    
+ /*   
     #walnutTable  tr td {
         width: 100px;
     }
-    
+ */   
     .walnutContainer {
 		position: relative;
 		margin:0;
@@ -374,8 +374,17 @@ textarea {
        left: 185px;
     }
     
+    input.editable::-webkit-input-placeholder {
+        background-color: transparent;
+        color: #FFFFFF;
+        font-family: monospace, serif;
+       _font-family: 'courier new', monospace;
+        font-size: 1em;
+        margin-bottom: 5px;
+    }
+    
     input::-webkit-input-placeholder {
-      background-color: transparent;
+        background-color: transparent;
         color: #FFFF00;
         font: normal bold 1em "Times New Roman", Georgia, serif;
         margin-bottom: 5px;
@@ -539,6 +548,16 @@ textarea {
     .updated 
        {
         color: yellow;
+    }
+    
+     .editable {
+        border: none;
+        background: transparent;
+        color: white;
+     }
+     
+     .over-inline {
+        background-color: yellow;
     }
     
 	#galore {

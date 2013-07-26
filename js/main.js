@@ -655,7 +655,8 @@ function displayTable(requester, nutEntries) {
 
             replacementStr += "<tr><td>" + nutEntries[i].Names + "</td><td>" + nutEntries[i + 1].Names + "</td></tr>";
             replacementStr += "<tr><td>" + nutEntries[i].FormalNames + "</td><td>" + nutEntries[i + 1].FormalNames + "</td></tr>";
-            replacementStr += "<tr><td>" + "Children: " + nutEntries[i].Children + "</td><td>" + "Children: " + nutEntries[i + 1].Children + "</td></tr>";
+            
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children: <span class='editableData'>" + nutEntries[i].Children + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Children' id='Children'>"  + "Children: <span class='editableData'>" + nutEntries[i + 1].Children + "</span></td></tr>";
             replacementStr += "<tr><td>" + "Address: " + nutEntries[i].Addr1 + "</td><td>" + "Address: " + nutEntries[i + 1].Addr1 + "</td></tr>";
             replacementStr += "<tr><td>" + "         " + nutEntries[i].Addr2 + "</td><td>" + "         " + nutEntries[i + 1].Addr2 + "</td></tr>";
             replacementStr += "<tr><td>" + "         " + nutEntries[i].Addr3 + "</td><td>" + "         " + nutEntries[i + 1].Addr3 + "</td></tr>";
@@ -757,6 +758,21 @@ function displayTable(requester, nutEntries) {
     return;
 }
 
+var rapture = function (which) {
+    $(which).contents().filter(function() {
+        return this.nodeType === 3;
+    })
+        .wrap('<p></p>')
+        .end()
+            .filter('br')
+                .remove()
+            .end()
+            .children().filter(function() {
+               $(this).html($.trim($(this).html().replace(/(\t|\n)/g, "")));
+               return !$(this).text().length
+            }).remove();
+}
+            
 // fxn called by list nuts html page - which requester determines api
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
@@ -780,13 +796,65 @@ function ajaxListNutsTable(requester, nutID) {
             walnutEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
             displayTable(requester, walnutEntries);
             $(".content").mCustomScrollbar({
-      /*          horizontalScroll:true,  */
                 mouseWheel: true,
                 scrollButtons: {
                     enable: true
                 },
                 theme: "light-thick",                
             });
+            // put spaces in empty spans to allow in-line edits
+            $('.editable span').each(function(){
+                if (!$(this).text().trim().length) {
+                    $(this).text("                              ");
+                }
+            });
+            $('.editable span')  
+               .hover(function() {              
+                      $(this).toggleClass('over-inline');
+               })
+               .click(function(event) {
+                    var $editable = $(this);
+                    
+                    if ($editable.hasClass('active-inline')) {
+                        return;
+                    }
+                    
+                    var contents = $.trim($editable.html().replace(/\/p>/g,"/p>/p>\n\n"));
+                    $editable
+                        .addClass('active-inline')
+                        .empty();
+                    // what form elem needed?    
+                    var editElement = $editable.hasClass('editable') ? '<input type="text" />' : '<textarea></textarea>'; 
+
+                    // replaced target with form element
+                    $(editElement)
+                        .val(contents)
+                        .appendTo($editable)
+                        .focus()
+                        .blur(function(event) {
+                            $editable.trigger('blur');
+                        });
+                })        
+                .blur(function(event) {
+                // end in-line editing
+                    var $editable = $(this);
+                    var edited = $editable.find(':first-child').val();
+                    $editable
+                        .children()
+                        .replaceWith('<em class="ajax">Saving...<em>');
+                 // post new value to the server       
+                        $.post('save.php', {id: $editable.attr('id'), value: edited},
+                        function(data) {
+                          $editable
+                            .removeClass('active-inline')
+                            .children()
+                            .replaceWith(edited);
+                            if ($editable.hasClass('editable-area')) {
+                                rapture($editable);
+                        }
+                       } 
+                     );
+                });          
             $(".content").hover(function(){
 					$(document).data({"keyboard-input":"enabled"});
 					$(this).addClass("keyboard-input");
