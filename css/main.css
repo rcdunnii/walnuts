@@ -556,8 +556,14 @@ textarea {
         color: white;
      }
      
+     .click-inline,
      .over-inline {
+        border: none;
+        color: black;
         background-color: yellow;
+        font-family: monospace, serif;
+        _font-family: 'courier new', monospace;
+        font-size: 1em;        
     }
     
 	#galore {

@@ -824,7 +824,7 @@ function ajaxListNutsTable(requester, nutID) {
                         .addClass('active-inline')
                         .empty();
                     // what form elem needed?    
-                    var editElement = $editable.hasClass('editable') ? '<input type="text" />' : '<textarea></textarea>'; 
+                    var editElement = $editable.parent().hasClass('editable') ? '<input type="text" class="click-inline" />' : '<textarea></textarea>'; 
 
                     // replaced target with form element
                     $(editElement)
@@ -838,20 +838,22 @@ function ajaxListNutsTable(requester, nutID) {
                 .blur(function(event) {
                 // end in-line editing
                     var $editable = $(this);
-                    var edited = $editable.find(':first-child').val();
+                    // get [td.editable span input] value where $editable is td.editable span
+                    var edited = $editable.children(":first").val();
                     $editable
                         .children()
                         .replaceWith('<em class="ajax">Saving...<em>');
                  // post new value to the server       
-                        $.post('save.php', {id: $editable.attr('id'), value: edited},
+                        $.post('save.php', {id: $editable.parent().attr('walnutID'), name: $editable.parent().attr('name'), value: edited},
                         function(data) {
                           $editable
                             .removeClass('active-inline')
                             .children()
-                            .replaceWith(edited);
+                            .replaceWith(edited ? edited : "                              ")                           
                             if ($editable.hasClass('editable-area')) {
                                 rapture($editable);
                         }
+/*                        alert(data);   */
                        } 
                      );
                 });          
