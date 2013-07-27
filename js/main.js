@@ -656,8 +656,8 @@ function displayTable(requester, nutEntries) {
             replacementStr += "<tr><td>" + nutEntries[i].Names + "</td><td>" + nutEntries[i + 1].Names + "</td></tr>";
             replacementStr += "<tr><td>" + nutEntries[i].FormalNames + "</td><td>" + nutEntries[i + 1].FormalNames + "</td></tr>";
             
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children: <span class='editableData'>" + nutEntries[i].Children + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Children' id='Children'>"  + "Children: <span class='editableData'>" + nutEntries[i + 1].Children + "</span></td></tr>";
-            replacementStr += "<tr><td>" + "Address: " + nutEntries[i].Addr1 + "</td><td>" + "Address: " + nutEntries[i + 1].Addr1 + "</td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children: <span>" + nutEntries[i].Children + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Children' id='Children'>"  + "Children: <span>" + nutEntries[i + 1].Children + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i].Addr1 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i + 1].Addr1 + "</span></td></tr>";
             replacementStr += "<tr><td>" + "         " + nutEntries[i].Addr2 + "</td><td>" + "         " + nutEntries[i + 1].Addr2 + "</td></tr>";
             replacementStr += "<tr><td>" + "         " + nutEntries[i].Addr3 + "</td><td>" + "         " + nutEntries[i + 1].Addr3 + "</td></tr>";
             replacementStr += "<tr><td>" + "         " + nutEntries[i].Addr4 + "</td><td>" + "         " + nutEntries[i + 1].Addr4 + "</td></tr>";
@@ -831,6 +831,11 @@ function ajaxListNutsTable(requester, nutID) {
                         .val(contents)
                         .appendTo($editable)
                         .focus()
+                        .keypress(function(event) {
+                            if (event.keyCode == 13) {
+                                $editable.trigger('blur');
+                            }
+                         })   
                         .blur(function(event) {
                             $editable.trigger('blur');
                         });
