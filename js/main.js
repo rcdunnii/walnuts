@@ -818,70 +818,94 @@ function ajaxListNutsTable(requester, nutID) {
                 },
                 theme: "light-thick",                
             });
+            
             // put spaces in empty spans to allow in-line edits
             $('.editable span, .editable-area span.textarea').each(function(){
                 if ((!$(this).text().trim().length)){ 
                         $(this).text("                              ");
                  }                 
             });
-            $('.editable span, .editable-area span.textarea')  
-               .hover(function() {              
-                      $(this).toggleClass('over-inline');
-               })
+            
+            function saveChanges(obj, cancel) {
+                var t, editableClass, editableElem;
+  
+                if (!cancel) {
+                    t = $(obj).parent().siblings(0).val();
+                } else {
+                    t = cancel;
+                }    
+                editableClass = $(obj).parent().siblings(0).is("textarea") ? "editable-area" : "editable";
+                editableElem = $(obj).closest('[class="' + editableClass + '"]');
+
+                if (!cancel) {
+                   $(editableElem).find('span.active-inline div').replaceWith('<em class="ajax">Saving...<em>');
+                 // post new value to the server                          
+/*                       $.post('save.php', {id: $(obj).closest('[class|="editable"]').attr('walnutID'), name: $(obj).closest('[class|="editable"]').attr('name'), value: t},  */
+                    $.post('save.php', {id: $(editableElem).attr('walnutID'), name: $(editableElem).attr('name'), value: t},
+                        function(data) {
+                          $(editableElem)
+                            .find('.ajax')
+                            .replaceWith(t ? wordWrap(t, 40, '\n', true) : "                              ");
+                          $('span.active-inline').removeClass('active-inline over-inline');
+  /*                        alert(data);      */
+                       } 
+                    ) 
+                } else {
+                    $(editableElem)
+                        .find('span.active-inline div')
+                        .replaceWith(t);
+   /*                       .text(t); */
+                    $('span.active-inline').removeClass('active-inline');     
+              }
+            };
+            
+            $('.editable span, .editable-area span.textarea')                 
+               .bind('mouseover.colorize', function() {
+                    $(this).addClass('over-inline');
+                 })
+               .bind('mouseout.colorize', function() {
+                    $(this).removeClass('over-inline');
+                })     
                .click(function(event) {
+                    var $editable, inputarea, textarea, button, revert, contents, editElement;
+                    
                     var $editable = $(this);
+                    event.stopPropagation();
                     
                     if ($editable.hasClass('active-inline')) {
                         return;
                     }
-                    
-                    var contents = $.trim($editable.html().replace(/\/p>/g,"/p>/p>\n\n"));
+                    inputarea ='<div><input type="text" class="click-inline" size="30"/>';
+                    textarea = '<div><textarea rows="3" cols="30">' + $(this).html() + '</textarea>';
+                    button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
+                    revert = $(this).html();                  
+                    contents = $.trim($editable.html().replace(/\/p>/g,"/p>/p>\n\n"));
                     $editable
                         .addClass('active-inline')
                         .empty();
-                    // what form elem needed?    
-                    var editElement = $editable.parent().hasClass('editable') ? '<input type="text" class="click-inline" />' : '<textarea class="click-inline"></textarea>'; 
-
-                    // replaced target with form element
+                    // what form elem needed? 
+ 
+                    if ($editable.parents("td").hasClass('editable')) { // input field or textarea field being edited?
+                        editElement =  inputarea+button;
+                        $(editElement).appendTo($editable);
+                        $('input.click-inline').val(contents);
+                        editElement = $('editable input.click-inline');
+                    } else {
+                        editElement = textarea+button;
+                        $(editElement).appendTo($editable);
+                        editElement = $('editable-area .textarea')
+                    }
+ 
+ /*                   // replaced target with pre-existing text in form element
                     $(editElement)
-                        .val(contents)
-                        .appendTo($editable)
-                        .focus()                        
-                        .blur(function(event) {
-                            $editable.trigger('blur');
-                        })
-                        .keypress(function(event) {
-                            if (event.keyCode == 13) {
-                                event.stopPropagation();
-                                $editable.triggerHandler('blur');
-                            }
-                        });                        
-                })                        
-               .blur(function(event) {
-                // end in-line editing
-                    var $editable = $(this);
-                    // get [td.editable span input] or [td.editable span.textarea] value where $editable is td.editable span
-                    var edited = $editable.children(":first").val(); 
-                 /*   edited = wordWrap(edited, 40, '<br>', true);
-                    var edited = $editable.children("active-inline").val();*/
-                    $editable
-                        .children()
-                        .replaceWith('<em class="ajax">Saving...<em>');
-                 // post new value to the server       
-                        $.post('save.php', {id: $editable.parent().attr('walnutID'), name: $editable.parent().attr('name'), value: edited},
-                        function(data) {
-                          $editable
-                            .removeClass('active-inline click-inline')
-                            .children()
-                            .replaceWith(edited ? wordWrap(edited, 40, '<br>', true) : "                              ");                           
-/*                           if ($editable.hasClass('editable-area')) {
-                                rapture($editable);                                
-                             }
-*/                             
-/*                       alert(data);      */
-                       } 
-                     )
-                });          
+                        .focus();
+*/  
+
+                    $('.saveButton').off("click").on("click",(function(){saveChanges(this, false);}));
+                    $('.cancelButton').off("click").on("click",(function(){saveChanges(this, revert);}));
+                });
+ 
+            
             $(".content").hover(function(){
 					$(document).data({"keyboard-input":"enabled"});
 					$(this).addClass("keyboard-input");
