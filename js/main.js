@@ -788,7 +788,99 @@ var rapture = function (which) {
                return !$(this).text().length
             }).remove();
 }
+
+function saveChanges(obj, cancel) {
+    var t, editableClass, editableElem;
+
+    if (!cancel) {
+        t = $(obj).parent().siblings(0).val();
+    } else {
+        t = cancel;
+    }    
+    editableClass = $(obj).parent().siblings(0).is("textarea") ? "editable-area" : "editable";
+    editableElem = $(obj).closest('[class="' + editableClass + '"]');
+
+    if (!cancel) {
+       $(editableElem).find('span.active-inline div').replaceWith('<em class="ajax">Saving...<em>');
+     // post new value to the server                          
+        $.post('save.php', {id: $(editableElem).attr('walnutID'), name: $(editableElem).attr('name'), value: t},
+            function(data) {
+              $(editableElem)
+                .find('.ajax')
+                .replaceWith(t ? wordWrap(t, 40, '\n', true) : "                              ");
+              $('span.active-inline').removeClass('active-inline over-inline');
+/*                        alert(data);      */
+           } 
+        ) 
+    } else {                    
+        $('span.active-inline')
+            .replaceWith('<span>' + t + '</span>');
+    }
+    
+    setClickable();
+} 
+
+function setClickable() {
+  // put spaces in empty spans to allow in-line edits
+            $('.editable span, .editable-area span.textarea').each(function(){
+                if ((!$(this).text().trim().length)){ 
+                        $(this).text("                              ");
+                 }                 
+            });
             
+            $('.editable span, .editable-area span.textarea')                 
+               .on('mouseover.colorize', function() {  
+                    $(this).addClass('over-inline');
+                 })
+               .on('mouseout.colorize', function() {  
+                    $(this).removeClass('over-inline');
+                })     
+               .on('click',function(event) {
+                    var $editable, inputarea, textarea, button, revert, contents, editElement;
+                    
+                    var $editable = $(this);
+                    
+                    if ($editable.hasClass('active-inline')) {
+                        return;
+                    }
+                    inputarea ='<div class="ie"><input type="text" class="click-inline" size="30"/>';
+                    textarea = '<div class="ie"><textarea rows="3" cols="30">' + $(this).html() + '</textarea>';
+                    button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
+                    revert = $(this).html();                  
+                    contents = $.trim($editable.html().replace(/\/p>/g,"/p>/p>\n\n"));
+                    $editable
+                        .addClass('active-inline')
+                        .empty();
+                    // what form elem needed? 
+ 
+                    if ($editable.parents("td").hasClass('editable')) { // input field or textarea field being edited?
+                        editElement =  inputarea+button;
+                        $(editElement).appendTo($editable);
+                        $('input.click-inline').val(contents);
+                        editElement = $('editable input.click-inline');
+                        $(editElement).focus();
+                    } else {
+                        editElement = textarea+button;
+                        $(editElement).appendTo($editable);
+                        editElement = $('editable-area .textarea')
+                        $(editElement).focus();                        
+                    }
+
+                    $('.saveButton')
+                        .click(function(){
+                            saveChanges(this, false);                            
+                        });
+                            
+                    $('.cancelButton')
+                        .on ({
+                            "click": function(){
+                                saveChanges(this, revert);
+                            }        
+                        });
+ 
+                });
+ }
+ 
 // fxn called by list nuts html page - which requester determines api
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
@@ -819,92 +911,7 @@ function ajaxListNutsTable(requester, nutID) {
                 theme: "light-thick",                
             });
             
-            // put spaces in empty spans to allow in-line edits
-            $('.editable span, .editable-area span.textarea').each(function(){
-                if ((!$(this).text().trim().length)){ 
-                        $(this).text("                              ");
-                 }                 
-            });
-            
-            function saveChanges(obj, cancel) {
-                var t, editableClass, editableElem;
-  
-                if (!cancel) {
-                    t = $(obj).parent().siblings(0).val();
-                } else {
-                    t = cancel;
-                }    
-                editableClass = $(obj).parent().siblings(0).is("textarea") ? "editable-area" : "editable";
-                editableElem = $(obj).closest('[class="' + editableClass + '"]');
-
-                if (!cancel) {
-                   $(editableElem).find('span.active-inline div').replaceWith('<em class="ajax">Saving...<em>');
-                 // post new value to the server                          
-/*                       $.post('save.php', {id: $(obj).closest('[class|="editable"]').attr('walnutID'), name: $(obj).closest('[class|="editable"]').attr('name'), value: t},  */
-                    $.post('save.php', {id: $(editableElem).attr('walnutID'), name: $(editableElem).attr('name'), value: t},
-                        function(data) {
-                          $(editableElem)
-                            .find('.ajax')
-                            .replaceWith(t ? wordWrap(t, 40, '\n', true) : "                              ");
-                          $('span.active-inline').removeClass('active-inline over-inline');
-  /*                        alert(data);      */
-                       } 
-                    ) 
-                } else {
-                    $(editableElem)
-                        .find('span.active-inline div')
-                        .replaceWith(t);
-   /*                       .text(t); */
-                    $('span.active-inline').removeClass('active-inline');     
-              }
-            };
-            
-            $('.editable span, .editable-area span.textarea')                 
-               .bind('mouseover.colorize', function() {
-                    $(this).addClass('over-inline');
-                 })
-               .bind('mouseout.colorize', function() {
-                    $(this).removeClass('over-inline');
-                })     
-               .click(function(event) {
-                    var $editable, inputarea, textarea, button, revert, contents, editElement;
-                    
-                    var $editable = $(this);
-                    event.stopPropagation();
-                    
-                    if ($editable.hasClass('active-inline')) {
-                        return;
-                    }
-                    inputarea ='<div><input type="text" class="click-inline" size="30"/>';
-                    textarea = '<div><textarea rows="3" cols="30">' + $(this).html() + '</textarea>';
-                    button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
-                    revert = $(this).html();                  
-                    contents = $.trim($editable.html().replace(/\/p>/g,"/p>/p>\n\n"));
-                    $editable
-                        .addClass('active-inline')
-                        .empty();
-                    // what form elem needed? 
- 
-                    if ($editable.parents("td").hasClass('editable')) { // input field or textarea field being edited?
-                        editElement =  inputarea+button;
-                        $(editElement).appendTo($editable);
-                        $('input.click-inline').val(contents);
-                        editElement = $('editable input.click-inline');
-                    } else {
-                        editElement = textarea+button;
-                        $(editElement).appendTo($editable);
-                        editElement = $('editable-area .textarea')
-                    }
- 
- /*                   // replaced target with pre-existing text in form element
-                    $(editElement)
-                        .focus();
-*/  
-
-                    $('.saveButton').off("click").on("click",(function(){saveChanges(this, false);}));
-                    $('.cancelButton').off("click").on("click",(function(){saveChanges(this, revert);}));
-                });
- 
+            setClickable();   // inline edit code          
             
             $(".content").hover(function(){
 					$(document).data({"keyboard-input":"enabled"});
@@ -930,7 +937,8 @@ function ajaxListNutsTable(requester, nutID) {
                         activeElem.mCustomScrollbar("scrollTo",(activeElemPos+pixelsToScroll),{scrollInertia:400,scrollEasing:"easeOutCirc"});
                     }
                 }
-            });            
+            }); 
+            
             if (requester === 'Foxy') {
                 $("#mainMenu").css('display', 'block');
             } else { // only 2 possible requesters - Foxy and Walnut
