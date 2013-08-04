@@ -669,7 +669,7 @@ function displayTable(requester, nutEntries) {
             // set Email 1
             replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <span>" + nutEntries[i].Email1 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <span>" + nutEntries[i + 1].Email1 + "</span></td></tr>";
             // set Email  2
-            replacementStr += "<tr><td  class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "       : <span>" + nutEntries[i].Email2 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <span>" + nutEntries[i + 1].Email2 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <span>" + nutEntries[i].Email2 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <span>" + nutEntries[i + 1].Email2 + "</span></td></tr>";
             // set Phone  1
             replacementStr += "<tr><td   class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i].Phone1 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i + 1].Phone1 + "</span></td></tr>";
             // set Phone  2
@@ -827,13 +827,14 @@ function setClickable() {
                         $(this).text("                              ");
                  }                 
             });
+ /*              .css('background-color', 'rgba(66,30,0,0.5)');   */
             
             $('.editable span, .editable-area span.textarea')                 
                .on('mouseover.colorize', function() {  
-                    $(this).addClass('over-inline');
+                    $(this).addClass('over-inline').attr('title', 'Click to Edit');
                  })
                .on('mouseout.colorize', function() {  
-                    $(this).removeClass('over-inline');
+                    $(this).removeClass('over-inline').removeAttr('title');
                 })     
                .on('click',function(event) {
                     var $editable, inputarea, textarea, button, revert, contents, editElement;
@@ -843,8 +844,8 @@ function setClickable() {
                     if ($editable.hasClass('active-inline')) {
                         return;
                     }
-                    inputarea ='<div class="ie"><input type="text" class="click-inline" size="30"/>';
-                    textarea = '<div class="ie"><textarea rows="3" cols="30">' + $(this).html() + '</textarea>';
+                    inputarea ='<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
+                    textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="30" >' + $(this).html() + '</textarea>';
                     button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
                     revert = $(this).html();                  
                     contents = $.trim($editable.html().replace(/\/p>/g,"/p>/p>\n\n"));

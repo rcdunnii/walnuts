@@ -573,6 +573,32 @@ textarea {
         font-size: 1em;        
     }
     
+     .ie_div_span {
+        position: relative;
+        top: -21px;
+        left: 95px;
+     }
+     
+     .saveButton,
+     .cancelButton {
+       font:2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;
+       font-size:70%;
+       background-color: yellow;
+       cursor:pointer;
+    }
+     .saveButton {
+         color: green;
+     }
+
+     .cancelButton {
+        color: red;
+     }
+     
+     .saveButton:hover,
+     .cancelButton :hover {
+        background-color:rgba(255,204,0,0.8);
+    }
+    
 	#galore {
 		position: relative;
 		width: 45%;
