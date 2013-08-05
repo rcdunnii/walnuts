@@ -579,6 +579,14 @@ textarea {
         left: 95px;
      }
      
+     .ie_div_txtarea {
+           position: relative;
+    }           
+    
+     .ie_div_txtarea textarea {
+        background-color: green;    
+     }
+     
      .saveButton,
      .cancelButton {
        font:2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;

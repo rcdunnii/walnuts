@@ -790,7 +790,7 @@ var rapture = function (which) {
 }
 
 function saveChanges(obj, cancel) {
-    var t, editableClass, editableElem;
+    var t, editableClass, editableElem, spanClass;
 
     if (!cancel) {
         t = $(obj).parent().siblings(0).val();
@@ -799,6 +799,7 @@ function saveChanges(obj, cancel) {
     }    
     editableClass = $(obj).parent().siblings(0).is("textarea") ? "editable-area" : "editable";
     editableElem = $(obj).closest('[class="' + editableClass + '"]');
+    spanClass = $(obj).parent().siblings(0).is("textarea") ? "textarea" : "";
 
     if (!cancel) {
        $(editableElem).find('span.active-inline div').replaceWith('<em class="ajax">Saving...<em>');
@@ -814,7 +815,7 @@ function saveChanges(obj, cancel) {
         ) 
     } else {                    
         $('span.active-inline')
-            .replaceWith('<span>' + t + '</span>');
+            .replaceWith('<span class="' + spanClass + '">' + t + '</span>');
     }
     
     setClickable();
@@ -845,7 +846,7 @@ function setClickable() {
                         return;
                     }
                     inputarea ='<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
-                    textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="30" >' + $(this).html() + '</textarea>';
+                    textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="30" class="click-inline">' + $(this).html() + '</textarea>';
                     button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
                     revert = $(this).html();                  
                     contents = $.trim($editable.html().replace(/\/p>/g,"/p>/p>\n\n"));
@@ -858,28 +859,30 @@ function setClickable() {
                         editElement =  inputarea+button;
                         $(editElement).appendTo($editable);
                         $('input.click-inline').val(contents);
-                        editElement = $('editable input.click-inline');
+                        editElement = $('.editable input.click-inline');
                         $(editElement).focus();
                     } else {
                         editElement = textarea+button;
                         $(editElement).appendTo($editable);
-                        editElement = $('editable-area .textarea')
+ /*                       editElement = $('.editable-area span.textarea.active-inline div.ie_div_txtarea textarea.click-inline');   */
+                        editElement = $('textarea.click-inline');                        
                         $(editElement).focus();                        
                     }
-
+                       
                     $('.saveButton')
                         .click(function(){
                             saveChanges(this, false);                            
                         });
                             
-                    $('.cancelButton')
-                        .on ({
-                            "click": function(){
-                                saveChanges(this, revert);
-                            }        
+                    $('.cancelButton')                        
+                        .click(function(){
+                            saveChanges(this, revert);
+                                   
                         });
+                        
  
                 });
+                 
  }
  
 // fxn called by list nuts html page - which requester determines api
