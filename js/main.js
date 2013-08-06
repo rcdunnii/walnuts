@@ -679,7 +679,7 @@ function displayTable(requester, nutEntries) {
             numBrks = 0;
 
             if (nutEntries[i].Notes.length) { // if noteStr longer than 30 chars, format for display
-                noteStr = wordWrap(nutEntries[i].Notes, 40, '<br>', true);
+                noteStr = wordWrap(nutEntries[i].Notes, 40, '\n', true);
                 numBrks = (noteStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
             // format any Notes to fit in our listNuts display properly - always print 4 newlines            
             }
@@ -701,7 +701,7 @@ function displayTable(requester, nutEntries) {
             numBrks = 0;
             
             if (nutEntries[i + 1].Notes.length) { // if noteStr longer than 30 chars, format for display
-                noteStr = wordWrap(nutEntries[i + 1].Notes, 40, '<br>', true);
+                noteStr = wordWrap(nutEntries[i + 1].Notes, 40, '\n', true);
                 numBrks = (noteStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
             // format any Notes to fit in our listNuts display properly - always print 4 newlines            
             }
@@ -747,7 +747,7 @@ function displayTable(requester, nutEntries) {
             numBrks = 0;
 
             if (nutEntries[i].Notes.length) { // if noteStr longer than 40 chars, format for display
-                noteStr = wordWrap(nutEntries[i].Notes, 40, '<br>', true);
+                noteStr = wordWrap(nutEntries[i].Notes, 40, '\n', true);
                 numBrks = (noteStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
             // format any Notes to fit in our listNuts display properly - always print 4 newlines            
             }
@@ -793,23 +793,24 @@ function saveChanges(obj, cancel) {
     var t, editableClass, editableElem, spanClass;
 
     if (!cancel) {
-        t = $(obj).parent().siblings(0).val();
+        t = $.trim($(obj).parent().siblings(0).val());
     } else {
         t = cancel;
     }    
     editableClass = $(obj).parent().siblings(0).is("textarea") ? "editable-area" : "editable";
     editableElem = $(obj).closest('[class="' + editableClass + '"]');
     spanClass = $(obj).parent().siblings(0).is("textarea") ? "textarea" : "";
-
+    
     if (!cancel) {
        $(editableElem).find('span.active-inline div').replaceWith('<em class="ajax">Saving...<em>');
+       
      // post new value to the server                          
         $.post('save.php', {id: $(editableElem).attr('walnutID'), name: $(editableElem).attr('name'), value: t},
             function(data) {
               $(editableElem)
                 .find('.ajax')
-                .replaceWith(t ? wordWrap(t, 40, '\n', true) : "                              ");
-              $('span.active-inline').removeClass('active-inline over-inline');
+                .replaceWith(t ? wordWrap(t, 40, '<br>', true) : "                              "); 
+                $('span.active-inline').removeClass('active-inline over-inline');
 /*                        alert(data);      */
            } 
         ) 
@@ -822,6 +823,7 @@ function saveChanges(obj, cancel) {
 } 
 
 function setClickable() {
+ 
   // put spaces in empty spans to allow in-line edits
             $('.editable span, .editable-area span.textarea').each(function(){
                 if ((!$(this).text().trim().length)){ 
@@ -848,7 +850,7 @@ function setClickable() {
                     inputarea ='<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
                     textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="30" class="click-inline">' + $(this).html() + '</textarea>';
                     button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
-                    revert = $(this).html();                  
+                    revert = $(this).html(); // no trim since contents pasted back on screen only - not to db                
                     contents = $.trim($editable.html().replace(/\/p>/g,"/p>/p>\n\n"));
                     $editable
                         .addClass('active-inline')
@@ -864,7 +866,7 @@ function setClickable() {
                     } else {
                         editElement = textarea+button;
                         $(editElement).appendTo($editable);
- /*                       editElement = $('.editable-area span.textarea.active-inline div.ie_div_txtarea textarea.click-inline');   */
+                    // full selector $('.editable-area span.textarea.active-inline div.ie_div_txtarea textarea.click-inline'); 
                         editElement = $('textarea.click-inline');                        
                         $(editElement).focus();                        
                     }
@@ -876,13 +878,12 @@ function setClickable() {
                             
                     $('.cancelButton')                        
                         .click(function(){
-                            saveChanges(this, revert);
-                                   
+                            saveChanges(this, revert);                                  
                         });
                         
  
                 });
-                 
+
  }
  
 // fxn called by list nuts html page - which requester determines api
@@ -891,7 +892,7 @@ function setClickable() {
 function ajaxListNutsTable(requester, nutID) {
     'use strict';
 
-    var walnutEntries = [], jqxhr;
+    var walnutEntries = [], jqxhr, nutIdentifier;
 
     jqxhr = $.ajax({
         type: "GET",
@@ -912,11 +913,16 @@ function ajaxListNutsTable(requester, nutID) {
                 scrollButtons: {
                     enable: true
                 },
-                theme: "light-thick",                
+                theme: "light-thick",
+                advanced:{
+                    autoScrollOnFocus: false,
+                    updateOnContentResize: true,
+                    updateOnBrowserResize: true
+                }                
             });
             
             setClickable();   // inline edit code          
-            
+           
             $(".content").hover(function(){
 					$(document).data({"keyboard-input":"enabled"});
 					$(this).addClass("keyboard-input");
@@ -924,6 +930,7 @@ function ajaxListNutsTable(requester, nutID) {
 					$(document).data({"keyboard-input":"disabled"});
 					$(this).removeClass("keyboard-input");
 				});
+                
             $(document).keydown(function(e){
                 if($(this).data("keyboard-input")==="enabled"){
                     var activeElem=$(".keyboard-input"),
@@ -941,8 +948,9 @@ function ajaxListNutsTable(requester, nutID) {
                         activeElem.mCustomScrollbar("scrollTo",(activeElemPos+pixelsToScroll),{scrollInertia:400,scrollEasing:"easeOutCirc"});
                     }
                 }
-            }); 
+            });
             
+          
             if (requester === 'Foxy') {
                 $("#mainMenu").css('display', 'block');
             } else { // only 2 possible requesters - Foxy and Walnut
@@ -951,12 +959,13 @@ function ajaxListNutsTable(requester, nutID) {
             }
             var numStr = walnutEntries.length;
             $(".numNuts").text(numStr);
+            
             if (nutID) {
                var position = '#' + nutID;
                 $(".content").mCustomScrollbar("scrollTo", position); 
             } else {
                 $(".content").mCustomScrollbar("scrollTo", "top");
-            }
+            }         
         })
         .fail(function () {
             alert("List Nuts failed");

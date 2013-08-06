@@ -314,6 +314,7 @@ textarea {
     }
       
    #Notes {
+        vertical-align: top;
         font: normal 18px serif;
     }
         
@@ -573,6 +574,8 @@ textarea {
         font-size: 1em;        
     }
     
+ 
+    
      .ie_div_span {
         position: relative;
         top: -21px;
@@ -580,13 +583,19 @@ textarea {
      }
      
      .ie_div_txtarea {
-           position: relative;
+       position: relative;
     }           
     
-     .ie_div_txtarea textarea {
-        background-color: green;    
+   .ie_div_txtarea textarea,     
+     span.textarea {
+        font: normal 18px serif;
+        width: 250px;
+        height: 75px;
      }
      
+    .ie_div_txtarea textarea {
+        background-color: green;    
+     }    
      .saveButton,
      .cancelButton {
        font:2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;
