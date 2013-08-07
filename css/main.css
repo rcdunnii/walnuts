@@ -125,6 +125,7 @@ textarea {
         padding: 30px;        
     }
     
+          
     #walnutTable {
         border-collapse:collapse;
         width:100%;
@@ -135,11 +136,7 @@ textarea {
         font-size: 1em;
         white-space: pre;
     }
- /*   
-    #walnutTable  tr td {
-        width: 100px;
-    }
- */   
+  
     .walnutContainer {
 		position: relative;
 		margin:0;
@@ -870,7 +867,15 @@ textarea {
         color: #FFF;
    }
 
-
+.help { /* html div to link to tinybox lightbox help screen */
+    color: red;
+    position: relative;
+    top: 190px;
+    left: 145px;
+    z-index: 1;
+    left: 111px;
+    cursor: pointer;
+}   
 
 
 

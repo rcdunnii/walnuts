@@ -1,0 +1,59 @@
+
+
+ html, body {
+        position: static;
+        height: 800px;
+        width: 1341px; 
+/*		background-image: url("/images/walnut-wood.jpg");  */
+        background: url("/images/walnut-wood.jpg") no-repeat center center fixed; 
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+        background-size: cover !important;                
+        padding: 0;
+        margin: 0;
+    }
+    
+h1.helpH1{
+    position: absolute;
+    width: 470px;
+    top: 0;
+    left: 50%;
+    margin-left: -210px;
+    color: gold;
+}
+
+.helpDiv {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    width: 220px;
+    margin-left: -106px;
+}
+
+.helpTable {
+    border-collapse: separate;
+    -khtml-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -ms-border-radius: 4px 4px 4px 4px;
+    -o-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+    border: solid 3px gold;
+    font-family:"Times New Roman",Georgia,Serif;
+}
+    
+.helpTable td {
+    padding: 10px;
+    color: gold;
+    font: normal normal normal 1em Georgia, serif;
+}  
+
+.helpTable th {
+    color: red;
+    font: normal normal bold 20px Georgia, serif;
+}
+
+#mask {
+    background-color: black;
+}    

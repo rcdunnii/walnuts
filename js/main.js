@@ -884,8 +884,8 @@ function setClickable() {
  
                 });
 
- }
- 
+ }    
+    
 // fxn called by list nuts html page - which requester determines api
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
@@ -908,6 +908,7 @@ function ajaxListNutsTable(requester, nutID) {
             $("#spinner").hide();
             walnutEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
             displayTable(requester, walnutEntries);
+  
             $(".content").mCustomScrollbar({
                 mouseWheel: true,
                 scrollButtons: {
@@ -921,8 +922,14 @@ function ajaxListNutsTable(requester, nutID) {
                 }                
             });
             
-            setClickable();   // inline edit code          
-           
+            setClickable();   // inline edit code 
+
+            $("div.help").click(function() {
+ /*                TINY.box.show({html:'<div class="helpDiv"><table class="helpTable"><tr><th>Function</th><th>Key</th></tr><tr><td>Go to Top</td><td>"T" or "t"</td></tr><tr><td>Go to Bottom</td><td>"B" or "b"</td></tr><tr><td>Add a Nut</td><td>"A" or "a"</td></tr><tr><td>Search</td><td>"S" or "s"</td></tr></table></div>',width:300,height:150, opacity:100}); */
+                TINY.box.show({url:'help.html',width:500,height:240, opacity:100, mask:true, maskid:"nutFrame", maskopacity:100});
+            });
+            
+ /*           $(".content").tooltip( {position: { my: "bottom left", at: "right center" } });   */
             $(".content").hover(function(){
 					$(document).data({"keyboard-input":"enabled"});
 					$(this).addClass("keyboard-input");
