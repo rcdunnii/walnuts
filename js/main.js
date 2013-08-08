@@ -776,24 +776,7 @@ function displayTable(requester, nutEntries) {
     document.getElementById("walnutTable").innerHTML = "<table>" + nutTable + "</table>";
     return;
 }
-/*
-var rapture = function (which) {
-    'use strict';
-    $(which).contents().filter(function () {
-        return this.nodeType === 3;
-    })
-        .wrap('<p></p>')
-        .end()
-            .filter('br')
-                .remove()
-            .end()
-            .children().filter(function () {
-            $(this).html($.trim($(this).html().replace(/(\t|\n)/g, "")));
-            return !$(this).text().length
-        })
-        .remove();
-}
-*/
+
 function saveChanges(obj, cancel) {
     'use strict';
     var t, editableClass, editableElem, spanClass;
@@ -815,7 +798,7 @@ function saveChanges(obj, cancel) {
             function (data) {
                 $(editableElem)
                     .find('.ajax')
-                    .replaceWith(t ? wordWrap(t, 40, '<br>', true) : "                              ");
+                    .replaceWith(t ? wordWrap(t, 40, '<br>', true) : "                    ");
                 $('span.active-inline').removeClass('active-inline over-inline');
 /*                        alert(data);      */
             }
@@ -833,7 +816,7 @@ function setClickable() {
   // put spaces in empty spans to allow in-line edits
     $('.editable span, .editable-area span.textarea').each(function () {
         if ((!$(this).text().trim().length)) {
-            $(this).text("                              ");
+            $(this).text("                    ");
         }
     });
  /*              .css('background-color', 'rgba(66,30,0,0.5)');   */
@@ -955,11 +938,12 @@ function ajaxListNutsTable(requester, nutID) {
                     case 9:    // TAB
                     case 83:   //"S"
                     case 115:  //"s"
-                        $("#nutSearch").focus;
+                        e.preventDefault(); 
+                        $("input#nutSearch").focus();
                         break;
                     }
                 }
- /*                   event.preventDefault();    */
+   
             });
 
             $(".content").hover(function () {

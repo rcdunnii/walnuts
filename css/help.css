@@ -27,8 +27,9 @@ h1.helpH1{
     position: absolute;
     top: 80px;
     left: 50%;
-    width: 220px;
-    margin-left: -106px;
+    width: 240px;
+    height: 168px;
+    margin-left: -120px;
 }
 
 .helpTable {
@@ -46,12 +47,14 @@ h1.helpH1{
 .helpTable td {
     padding: 10px;
     color: gold;
-    font: normal normal normal 1em Georgia, serif;
+    font: normal normal normal 1.1em Georgia, serif;
 }  
 
 .helpTable th {
     color: red;
     font: normal normal bold 20px Georgia, serif;
+    vertical-align: bottom;
+    padding-top: 5px;
 }
 
 #mask {

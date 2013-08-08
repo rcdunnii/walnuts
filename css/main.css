@@ -117,13 +117,13 @@ textarea {
         top: -80px;
         margin-left: -473px;  
 */
- width:1139px;
- height:800px;
- position:absolute;
- left:50%;
- top:50%;
- margin-left:-569px;
- margin-top:-400px;        
+         width:1139px;
+         height:800px;
+         position:absolute;
+         left:50%;
+         top:50%;
+         margin-left:-569px;
+         margin-top:-400px;        
         -moz-border-radius-topleft: 30px;
         -moz-border-radius-topright: 0px;
         -moz-border-radius-bottomright: 30px;
@@ -369,14 +369,14 @@ textarea {
         border: none;
         outline: none;
         padding-left: 18px;
-        width: 168px;
+        width: 160px;
    }
    
- /*   #searchLink input#nutSearch:focus {
+    #searchLink input#nutSearch:focus {
         background-color: gold;
         color:#000;
      }
-*/     
+     
     #searchLink input#nutSearch.redText {
         position: relative;
         top: 0px;
