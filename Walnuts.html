@@ -14,7 +14,6 @@
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/tinybox.css"/>
         <link rel="stylesheet" href="/css/main.css">  <!-- includes old Walnut.css -->
- 
         <link rel="stylesheet" href="/css/jquery.mCustomScrollbar.css" type="text/css" />       
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
@@ -49,10 +48,10 @@
 
         <!-- Add your site or application content here -->
     <div class="frame" id="nutFrame">
-    <div  id="spinner"></div>       <div class="help">?'s</div>   
+    <div  id="spinner"></div>       <div class="help"><img src="/images/Fragezeichen.png" alt="" height="25" width="25"></div>   
     <div id="searchLink">
         <form  action="#" id="searchForm" onsubmit="searchNut(); return false;" >
-            <input type="text" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder ="Search" title="Sir Name Lookup" onfocus="this.placeholder = ''" /><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
+            <input type="text" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder ="Search" title="Sir Name Lookup" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'" tabindex="1"  /><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
         </form>
     </div>     
     <div id="bDayLink"><p><a href="listBDays.html?user=Walnut" title="Birthday List">Birthdays</a></p></div>
