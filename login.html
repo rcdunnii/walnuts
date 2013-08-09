@@ -14,16 +14,22 @@
         <link rel="stylesheet" href="/css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script> 
+        
+        <script>
 		$(document).ready(function () {
-            $('form:first *:input[type!=hidden]:first').focus();        
+            $('*:input[type!=hidden]:first').focus();        
 			$("#hintLink").click(function () {
 				$("#popUpImg").toggle();
 			});			
 		});
     </script>
 	</head>
-    <body>
-       <div class="loginWrapper">
+    <body class="login">
+  <!--     <div class="loginWrapper">  -->
             <div class="loginBkGnd">
                 <div id ="popUpLogin">
                     <div id="popUpImg"><img src="/images/Cynthia.png" target="_self" width="143" height="164" alt="" /></div>    
@@ -39,16 +45,12 @@
                            <div id="submitWrapper"><input id="submitID" type="submit" value="Submit" /></div>
                         </p>            
                     </form>
-                    <center><p id="loginError"></p></center>            
+                    <p id="loginError"></p>           
                     <div id="hintWrapper"><a id="hintLink" href="#">Password Hint</a></div>                                   
                 </div>      
             </div>
-       </div>
+  <!--     </div>  -->
        
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

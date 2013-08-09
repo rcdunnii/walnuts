@@ -14,6 +14,12 @@
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/main.css">  <!-- includes old Walnut.css -->
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        
+        <script>
 		$(document).ready(function () {
             $('form:first *:input[type!=hidden]:first').focus();
             $("#hintLink").click(function () {
@@ -22,14 +28,13 @@
 		});
     </script>
 	</head>
-     <body>
+     <body class="login">
       <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-        <div class="loginWrapper">
+ <!--       <div class="loginWrapper">  -->
             <div class="loginBkGndAdm">
                 <div id ="popUpLogin">
-                    <div><p><center><span id="spinner">&nbsp;</span></center></p></div>
                     <div id="popUpImg"><img src="/images/Polky.png" target="_self" width="143" height="214" alt="" /></div>    
                     <form action="" onsubmit="ajaxAuthenticate(this, 'wtdLogin.php', 'post'); return false;">
                         <p> 
@@ -43,16 +48,12 @@
                            <div id="submitWrapper"><input id="submitID" type="submit" value="Submit" /></div>
                         </p>            
                     </form>
-                    <center><p id="loginError"></p></center>            
+                    <p id="loginError"></p>           
                     <div id="hintWrapper"><a id="hintLink" href="#">Password Hint</a></div>                                   
                 </div> 
             </div>
-        </div>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-
+  <!--      </div>   -->
+ 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];
