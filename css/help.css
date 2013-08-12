@@ -19,7 +19,7 @@ h1.helpH1{
     width: 470px;
     top: 0;
     left: 50%;
-    margin-left: -210px;
+    margin-left: -235px;
     color: gold;
 }
 
@@ -27,9 +27,9 @@ h1.helpH1{
     position: absolute;
     top: 80px;
     left: 50%;
-    width: 240px;
+    width: 258x;
     height: 168px;
-    margin-left: -120px;
+    margin-left: -129px;
 }
 
 .helpTable {
@@ -48,6 +48,7 @@ h1.helpH1{
     padding: 10px;
     color: gold;
     font: normal normal normal 1.1em Georgia, serif;
+    text-align: center;
 }  
 
 .helpTable th {
@@ -57,6 +58,17 @@ h1.helpH1{
     padding-top: 5px;
 }
 
+ .helpEdit p{
+    position:relative;
+    width: 300px;
+    color: gold;
+    font: normal normal normal 1.1em Georgia, serif;
+}
+ 
+p.center {
+    text-align: center;
+}
+    
 #mask {
     background-color: black;
 }    

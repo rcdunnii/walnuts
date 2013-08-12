@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Table</title>
+        <meta name="description" content="Testing jquery tale dynamics">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+            var short, long, shortText, longText;
+            shortText = $("p.short").text();
+            short = shortText.length;
+            shortOuterWidth = $("p.short").outerWidth();
+            $(".shortOuterWidth").text(shortOuterWidth);
+            $(".t2td1 div").text(shortText);
+
+            longText = $("p.long").text();
+            long = longText.length;
+            longOuterWidth = $("p.long").outerWidth();
+            $(".longOuterWidth").text(longOuterWidth);            
+            $(".t2td2 div").text(longText);
+           
+            $(".kurtz").text(short);
+            $(".lang").text(long);
+            
+            t1td1OuterWidth = $(".t1td1").outerWidth(true);
+            $(".t1td1span").text(t1td1OuterWidth);
+            t1td2OuterWidth = $(".t1td2").outerWidth(true);
+            $(".t1td2span").text(t1td2OuterWidth);
+
+            t2td1OuterWidth = $(".t2td1").outerWidth(true);
+            t2td2OuterWidth = $(".t2td2").outerWidth(true);
+            $(".t2td3span").text(t2td1OuterWidth);
+            $(".t2td4span").text(t2td2OuterWidth);
+
+            $(".t2td2").width(t2td1OuterWidth);
+ /*
+            $("p.short").text().appendTo($(".one .t1 tr td:first"));        
+            $(".one .t1 tr td:nth-child(1)") = $("p.long").text();
+            $(".kurtz").val(short);
+            $(".lang").val(long);
+*/            
+        });    
+        </script>
+  
+        
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        <p class="short">This is a short text</span></p>
+        <p>It is <span class="kurtz"></span> long</p>
+        <p>Outerwidth of this short text element is <span class = "shortOuterWidth"></span></p>
+        <p class="long">This is a much much longer bit of text for a table cell</p>
+        <p>It is <span class="lang"></span> long</p>
+       <p>Outerwidth of this long text element is <span class = "longOuterWidth"></span></p>
+        <p> Here is the table t1 with one row and two cells </p>
+       <div class="one">
+            <table class"t1" style="border: solid 1px red; border-collapse: separate">
+                <tr>
+                    <td class = "t1td1"> outerWidth is <span class = "t1td1span"></span></td>
+                    <td class = "t1td2"> outerWidth is <span class = "t1td2span"></span></td>
+                </tr>
+            </table>
+        </div>
+      <p> Here is the table t2 with one row and two cells </p>        
+        <div class="two">
+            <table class"t2" style="border: solid 1px blue;">
+                <tr>
+                                   
+                        <td class = "t2td1" style= "overflow:hidden"><div style"height: 20px"></div></td>
+                        <td class = "t2td2" style= "overflow:hidden"><div style"height: 20px"></div></td>
+                    
+                </tr>
+                <tr>
+                    
+                        <td class = "t2td3"> outerWidth of t2d1 is <span class = "t2td3span"><div style"height: 20px"></div></span></td>
+                        <td class = "t2td4"> outerWidth of t2d2 is <span class = "t2td4span"><div style"height: 20px"></div></span></td>
+                    </div>
+            </table>
+        </div>
+     
+        <!-- Add your site or application content here -->
+  
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src='https://www.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+
+    </body>
+</html>

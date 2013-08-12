@@ -662,9 +662,9 @@ function displayTable(requester, nutEntries) {
             // set Children
             replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children: <span>" + nutEntries[i].Children + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Children' id='Children'>"  + "Children: <span>" + nutEntries[i + 1].Children + "</span></td></tr>";
             // set Address line 1
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i].Addr1 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i + 1].Addr1 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i].Addr1 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i + 1].Addr1 + "</span></div></div></td></tr>";
             // set Address line 2
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <span>" + nutEntries[i].Addr2 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <span>" + nutEntries[i + 1].Addr2 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <span>" + nutEntries[i].Addr2 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <span>" + nutEntries[i + 1].Addr2 + "</span></td></div></tr>";
             // set Address line 3
             replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <span>" + nutEntries[i].Addr3 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr3'>" + "         <span>" + nutEntries[i + 1].Addr3 + "</span></td></tr>";
             // set Address line 4
@@ -828,35 +828,50 @@ function setClickable() {
                .on('mouseout.colorize', function () {
             $(this).removeClass('over-inline').removeAttr('title');
         })
-               .on('click', function (event) {
-            var inputarea, textarea, button, revert, contents, editElement, $editable = $(this);
+           .on('click', function (event) {
+            var inputarea,
+                textarea,
+                button, 
+                revert, 
+                contents, 
+                editElement,  
+                $editable = $(this);
 
-            if ($editable.hasClass('active-inline')) {
+            if ($(this).hasClass('active-inline')) {
                 return;
             }
+ 
+            
+            $(this).off(".colorize").removeClass('over-inline').removeAttr('title');
+            
             inputarea = '<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
             textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="30" class="click-inline">' + $(this).html() + '</textarea>';
             button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
             revert = $(this).html(); // no trim since contents pasted back on screen only - not to db
             contents = $.trim($editable.html().replace(/\/p>/g, "/p>/p>\n\n"));
+            
             $editable
-                        .addClass('active-inline')
-                        .empty();
-                    // what form elem needed?
-
+                .addClass('active-inline')
+                .empty();
+            // what form elem needed?
+   /*          $editable.closest('td').prepend("<div class='setTDHgt'></div>");*/
+              
+  
             if ($editable.parents("td").hasClass('editable')) { // input field or textarea field being edited?
                 editElement =  inputarea + button;
-                $(editElement).appendTo($editable);
+                $(editElement).appendTo($editable);                   
+ /*               $(editElement).prependTo(".setTDHgt");     */
                 $('input.click-inline').val(contents);
                 editElement = $('.editable input.click-inline');
-                $(editElement).focus();
             } else {
                 editElement = textarea + button;
-                $(editElement).appendTo($editable);
-                    // full selector $('.editable-area span.textarea.active-inline div.ie_div_txtarea textarea.click-inline');
+              $(editElement).appendTo($editable);   
+  /*                $(editElement).prependTo(".setTDHgt"); */
+                // full selector $('.editable-area span.textarea.active-inline div.ie_div_txtarea textarea.click-inline');
                 editElement = $('textarea.click-inline');
-                $(editElement).focus();
             }
+            
+            $(editElement).focus();
 
             $('.saveButton')
                         .click(function () {
@@ -867,9 +882,14 @@ function setClickable() {
                         .click(function () {
                     saveChanges(this, revert);
                 });
-
-
+ 
+            $(editElement).blur( function () {
+                saveChanges(this, revert);
+                });
+            
         });
+       
+            
 
 }
 
@@ -912,7 +932,7 @@ function ajaxListNutsTable(requester, nutID) {
             setClickable();   // inline edit code
 
             $("div.help img").click(function () {
-                TINY.box.show({url: 'help.html', width : 500, height : 240, opacity : 100, mask : true, maskid : "nutFrame", maskopacity : 100});
+                TINY.box.show({url: 'help.html', width : 500, height : 340, opacity : 100, mask : true, maskid : "nutFrame", maskopacity : 100});
             });
 
             $(document).keypress(function (e) {

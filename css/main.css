@@ -165,6 +165,7 @@ textarea {
     
           
     #walnutTable {
+        table-layout: auto;
         border-collapse:collapse;
         width:100%;
         color: white;
@@ -577,11 +578,14 @@ textarea {
         color: yellow;
     }
     
-     .editable {
+     .editable { /*selects td element */
         border: none;
         background: transparent;
         color: white;
      }
+     
+    /*  sets editable td cell height during edit to accomodate input and submit fields in displayTable fxn main.js */ 
+        
      
      .click-inline {
         border: none;
@@ -599,14 +603,19 @@ textarea {
         _font-family: 'courier new', monospace;
         font-size: 1em;        
     }
-    
- 
-    
+         
      .ie_div_span {
+   /*      display:inline-block; */
         position: relative;
-        top: -21px;
-        left: 95px;
+       top: -21px;
+        left: 80px;
+ /*       top: 0;  
+        left: 20px;  */ 
      }
+     
+    .setTDHgt { 
+         height: 42px;
+     } 
      
      .ie_div_txtarea {
        position: relative;
@@ -638,7 +647,7 @@ textarea {
      }
      
      .saveButton:hover,
-     .cancelButton :hover {
+     .cancelButton:hover {
         background-color:rgba(255,204,0,0.8);
     }
     

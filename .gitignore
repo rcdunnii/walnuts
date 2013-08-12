@@ -5,6 +5,7 @@ ignore/
 build/
 doc/
 obsolete/
+utilities/
 images/walleaf*
 images/walnut
 *.bak
