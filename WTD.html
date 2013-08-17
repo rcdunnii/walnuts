@@ -21,16 +21,40 @@
         <script src="/js/main.js"></script>        
         <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
         <script type="text/javascript">
-	    if (readCookie('foxyCookie') == null) {
-		    window.location.href = "wtdLogin.html";
-        }
-    </script>   
+            $(document).ready(function() {
+              document.getElementById('wtHomePage').className += " js";  
+               function are_cookies_enabled() {
+                    var cookieEnabled = (navigator.cookieEnabled) ? true : false;
+                    if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled)
+                    { 
+                        document.cookie="testcookie";
+                        cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
+                    }
+                    return (cookieEnabled);
+                }
+                var cookies = are_cookies_enabled();
+                if (!cookies) {
+                    $('#noCookies').show();
+                } else {            
+                    if (readCookie('foxyCookie') == null) {
+                        window.location.href = "wtdLogin.html";
+                    }
+                }
+           });
+        </script>   
     </head>
     <body class="list">
+      
+        <div id="noCookies">
+            <div id="noJS">
+               <p>For any functionality of this nutty site <span class="redText">it is necessary to enable Cookies </span><a class="noJSOrCookies" href="http://www.whatarecookies.com/enable.asp" target="_blank">Here are the instructions</a> on how to enable Cookies in your web browser</p>
+            </div>            
+        </div>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-
+                <![endif]-->
+        <noscript><div id="noscript"><div id="noJS"><p>For any functionality of this nutty site <span class="redText">it is necessary to enable JavaScript! </span><a class="noJSOrCookies" href="http://www.enable-javascript.com/" target="_blank">Here are the instructions</a> on how to enable JavaScript in your web browser. Happily you can then return <a class="noJSOrCookies" href="Walnuts.html">here.</a></p></div></div></noscript>
+        
         <!-- Add your site or application content here -->
         <div id="wtHomePage">
         <h1><center>Walnuts Galore!</center></h1>
@@ -45,8 +69,8 @@
                         <input type="radio" name="dashBoardOpts" value="restoreDB"/><span class="wtd">Restore WT Database!</span><br>
                         <input type="radio" name="dashBoardOpts" value="addNut" /><span class="wtd">Add New Walnut</span><br>
                         <input type="radio" name="dashBoardOpts" value="addBDay" /><span class="wtd">Add New Birthday</span><br>                    
-                        <input type="radio" name="dashBoardOpts" value="listNuts" /><span class="wtd">List Walnuts</span><br>
-                        <input type="radio" name="dashBoardOpts" value="listBDays" /><span class="wtd">List Birthdays</span><br>                    
+                        <input type="radio" name="dashBoardOpts" value="listNuts" /><span class="wtd">List/Edit Walnuts</span><br>
+                        <input type="radio" name="dashBoardOpts" value="listBDays" /><span class="wtd">List/Edit Birthdays</span><br>                    
                         <input class="go" type="submit" id="submit" />						
                 </form>
             </div>

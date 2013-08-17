@@ -53,9 +53,10 @@
         $hash = hash('sha256', $hash);
     }
     $hash = $salt . $hash;
+   
     if ( $hash == $row['Walnut'] ) {
         include_once $_SERVER['DOCUMENT_ROOT'] . '/securimage/securimage.php';
-        $securimage = new Securimage();
+        $securimage = new Securimage();      
         if (isset($str_json["captcha_code"])){
             $captcha_code = $str_json["captcha_code"];
             if ($securimage->check($captcha_code) == false) {

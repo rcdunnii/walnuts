@@ -107,7 +107,50 @@ textarea {
         padding: 0;
         margin: 0;
     }
-
+    
+    #noscript {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(80, 0, 25, 0.9);
+        z-index: 100;
+    } 
+   
+    #noCookies {
+        display: none;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(80, 0, 25, 0.9);
+        z-index: 100;        
+    }
+    
+    #noJS {
+        position: absolute;
+        background-color: #421E13;
+        width: 527px;
+        height: 101px;
+        top: 50%;
+        left: 50%;
+        color: gold;
+        border: 2px solid red;
+        margin-top: -50px;
+        margin-left: -263px;
+    }
+    
+    
+    #noJS  p {
+        padding: 10px;
+        margin: 10px;
+        text-align: justify;
+    }
+    
+    #noJS p span.redText {
+        color: red;
+    }    
+    
+    a.noJSOrCookies:link  {color:#FFFF00;}         
+    a.noJSOrCookies:visited  {color:#FFFF00;}
+    a.noJSOrCookies:hover   {color:#FFFFFF;}
+    a.noJSOrCookies:active {color:#FFD700;}
     
     body.login {
         position: absolute;
@@ -138,15 +181,11 @@ textarea {
         left: 50%;
         top: 50%;
     }
-    
+       
+     #nutFrame, #wtHomePage    { display: none  }      /* Hide if JS disabled - ref'd by Walnuts.html and WTD.html*/
+    .js #nutFrame, .js #wtHomePage  { display: block } /* Show if JS enabled -  ref'd by Walnuts.html and WTD.html*/
+  
     .frame {
- /*       position:relative;
-        width:  85%;
-        height: 90%;
-        left: 50%;
-        top: -80px;
-        margin-left: -473px;  
-*/
          width:1139px;
          height:800px;
          position:absolute;
@@ -160,9 +199,8 @@ textarea {
         -moz-border-radius-bottomleft: 30px;
         -webkit-border-radius: 30px 0px 30px 30px;
         border-radius: 30px 0px 30px 30px;
-  /*      padding: 30px;        */
     }
-    
+
           
     #walnutTable {
         table-layout: auto;
@@ -348,7 +386,7 @@ textarea {
        width: 19%; 
        height: 32px;       
        top: 33px;
-       left: 836px;
+       left: 837px;
        background: #421E13;
         -moz-border-radius-topleft: 30px;
         -moz-border-radius-topright: 0;
@@ -361,7 +399,7 @@ textarea {
         width: 19%;
         height: 32px;
         top: 80px;
-        left: 85px;
+        left: 86px;
         background: #421E13;
         -moz-border-radius-topright: 30px;
         -moz-border-radius-topleft: 0;
@@ -568,10 +606,10 @@ textarea {
    }
 
    /* javascript generated class in main line 140 */
-	.oneNut:link {color:#FFFF00;}    /*  unvisited link */
+	.oneNut:link     {color:#FFFF00;}    /*  unvisited link */
     .oneNut:visited {color:#FFFF00;} /* visited link same color for this app as unvisited */
-    .oneNut:hover {color:#FFFFFF;}   /* white on mouse over link */
-    .oneNut:active {color:#FFD700;}  /* yellow on selected link */   
+    .oneNut:hover    {color:#FFFFFF;}   /* white on mouse over link */
+    .oneNut:active  {color:#FFD700;}  /* yellow on selected link */   
 	
     .updated 
        {
@@ -595,6 +633,11 @@ textarea {
         _font-family: 'courier new', monospace;
         font-size: 1em;      
      }
+       
+    .emptyCell {     
+        background-color: rgba(139, 69, 19, 0.5); /* rgba(57, 37, 31, 1);  rgba(94, 46, 42, 1);  rgba(39, 30, 17, 1); #D09242;   #914229;  */
+    }    
+     
      .over-inline {
         border: none;
         color: black;
@@ -603,7 +646,7 @@ textarea {
         _font-family: 'courier new', monospace;
         font-size: 1em;        
     }
-         
+      
      .ie_div_span {
    /*      display:inline-block; */
         position: relative;
