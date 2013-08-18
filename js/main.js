@@ -777,20 +777,26 @@ function displayTable(requester, nutEntries) {
     return;
 }
 
-function saveChanges(obj, cancel) {
+function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save data, or original data in input field if he wants to cancel
     'use strict';
-    var t, editableClass, editableElem, spanClass;
+    var t, editableClass, editableElem, emptyCellClass;
 
-    if (!cancel) {
-        t = $.trim($(obj).parent().siblings(0).val());
+    if (false === cancel) {
+        t = $.trim($(obj).parent().siblings(0).val());  //$(obj) is SAVE or CANCEL button, parent() is div holding buttons, sib is input field
     } else {
         t = cancel;
     }
-    editableClass = $(obj).parent().siblings(0).is("textarea") ? "editable-area" : "editable";
-    editableElem = $(obj).closest('[class="' + editableClass + '"]');
-    spanClass = $(obj).parent().siblings(0).is("textarea") ? "textarea" : "";
+ /*   editableClass = $(obj).parent().siblings(0).is("textarea") ? "editable-area" : "editable"; */
+ 
+  /*  editableElem = $(obj).closest('[class="' + editableClass + '"]');   */
+ /*   spanClass = $(obj).parent().siblings(0).is("textarea") ? "textarea" : "";   */
+  /*  spanClass = $(obj).closest('span').attr('class');   */
 
-    if (!cancel) {
+    if (cancel === false) {
+    
+        editableClass = $(obj).closest('td').hasClass('editable') ? 'editable' : 'editable-area'; 
+        editableElem = $(obj).closest('[class="' + editableClass + '"]');
+    
         $(editableElem).find('span.active-inline div').replaceWith('<em class="ajax">Saving...<em>');
 
      // post new value to the server
@@ -798,14 +804,21 @@ function saveChanges(obj, cancel) {
             function (data) {
                 $(editableElem)
                     .find('.ajax')
-                    .replaceWith(t ? wordWrap(t, 40, '<br>', true) : "                    ");
-                $('span.active-inline').removeClass('active-inline over-inline');
-/*                        alert(data);      */
-            }
-            );
+                    .replaceWith(t.length ? wordWrap(t, 40, '<br>', true) : "                   ");
+
+                if (t.length === 0) {
+                    $('span.active-inline').addClass('emptyCell');
+                    emptyCellClass = ''; //i.e. do not remove this class below
+                } else {
+                    emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
+                }    
+                $('span.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
+/*                        alert(data);   */                 
+            }              
+         );
     } else {
         $('span.active-inline')
-            .replaceWith('<span class="' + spanClass + '">' + t + '</span>');
+            .replaceWith('<span title="Edit">' + t + '</span>');
     }
 
     setClickable();
@@ -902,10 +915,11 @@ function setClickable() {
                         .click(function () {
                     saveChanges(this, revert);
                 });
- 
+ /*
             $(editElement).blur( function () {
                 saveChanges(this, revert);
-                });           
+                }); 
+*/                
         })
 }
 

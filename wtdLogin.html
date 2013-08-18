@@ -18,42 +18,61 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
-        
         <script>
-		$(document).ready(function () {
-            $('form:first *:input[type!=hidden]:first').focus();
-            $("#hintLink").click(function () {
-				$("#popUpImg").toggle();
-			});			
+		$(document).ready(function () {        
+            function are_cookies_enabled() {
+                var cookieEnabled = (navigator.cookieEnabled) ? true : false;
+            
+                if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled) { 
+                    document.cookie="testcookie";
+                    cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
+                }
+                return (cookieEnabled);
+            }
+            
+            var cookies = are_cookies_enabled();
+            if (!cookies) {
+                $('#noCookies').show();
+            } else {
+                $('form:first *:input[type!=hidden]:first').focus();
+                $("#hintLink").click(function () {
+                    $("#popUpImg").toggle();
+                })
+			}		
 		});
     </script>
 	</head>
-     <body class="login">
+    <body class="login">
       <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
  <!--       <div class="loginWrapper">  -->
-            <div class="loginBkGndAdm">
-                <div id ="popUpLogin">
-                    <div id="popUpImg"><img src="/images/Polky.png" target="_self" width="143" height="214" alt="" /></div>    
-                    <form action="" onsubmit="ajaxAuthenticate(this, 'wtdLogin.php', 'post'); return false;">
-                        <p> 
-                            <input type="hidden" name="user" value="Foxy" id="user" />                
-                            <label for="password">Password: </label>
-                            <input type="password" id="password" name="password" /><br /><br />	
-                            <label for="captcha_code">Security Code:</label>                    
-                            <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" value="" /><br /><br /> 
-                            <img id="captcha" src="/securimage/securimage_show.php" alt="CAPTCHA Image" /> <br />                   
-                            <a href="#" class="securityLink" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false">[ Different Security Image ]</a><br /><br />                                
-                           <div id="submitWrapper"><input id="submitID" type="submit" value="Submit" /></div>
-                        </p>            
-                    </form>
-                    <p id="loginError"></p>           
-                    <div id="hintWrapper"><a id="hintLink" href="#">Password Hint</a></div>                                   
-                </div> 
-            </div>
+       <div id="noCookies">
+            <div id="noJS">
+               <p>For any functionality of this nutty site <span class="redText">it is necessary to enable Cookies.  </span><a class="noJSOrCookies" href="http://www.whatarecookies.com/enable.asp" target="_blank">Here are the instructions</a> on how to enable Cookies in your web browser</p>
+            </div>            
+        </div>
+        <div id="loginBkGndAdm">
+            <div id ="popUpLogin">
+                <div id="popUpImg"><img src="/images/Polky.png" target="_self" width="143" height="214" alt="" /></div>    
+                <form action="" onsubmit="ajaxAuthenticate(this, 'wtdLogin.php', 'post'); return false;">
+                    <p> 
+                        <input type="hidden" name="user" value="Foxy" id="user" />                
+                        <label for="password">Password: </label>
+                        <input type="password" id="password" name="password" /><br /><br />	
+                        <label for="captcha_code">Security Code:</label>                    
+                        <input type="text" name="captcha_code" id="captcha_code" size="10" maxlength="6" value="" /><br /><br /> 
+                        <img id="captcha" src="/securimage/securimage_show.php" alt="CAPTCHA Image" /> <br />                   
+                        <a href="#" class="securityLink" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false">[ Different Security Image ]</a><br /><br />                                
+                       <div id="submitWrapper"><input id="submitID" type="submit" value="Submit" /></div>
+                    </p>            
+                </form>
+                <p id="loginError"></p>           
+                <div id="hintWrapper"><a id="hintLink" href="#">Password Hint</a></div>                                   
+            </div> 
+        </div>
   <!--      </div>   -->
- 
+        <script>document.getElementById('loginBkGndAdm').className += " js"</script> 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];

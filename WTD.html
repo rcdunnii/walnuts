@@ -20,36 +20,13 @@
         <script src="/js/plugins.js"></script>
         <script src="/js/main.js"></script>        
         <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-              document.getElementById('wtHomePage').className += " js";  
-               function are_cookies_enabled() {
-                    var cookieEnabled = (navigator.cookieEnabled) ? true : false;
-                    if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled)
-                    { 
-                        document.cookie="testcookie";
-                        cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
-                    }
-                    return (cookieEnabled);
-                }
-                var cookies = are_cookies_enabled();
-                if (!cookies) {
-                    $('#noCookies').show();
-                } else {            
-                    if (readCookie('foxyCookie') == null) {
-                        window.location.href = "wtdLogin.html";
-                    }
-                }
-           });
-        </script>   
+        <script>
+            if (readCookie('foxyCookie') == null) {
+                window.location.href = "wtdLogin.html";
+            }
+        </script>    
     </head>
     <body class="list">
-      
-        <div id="noCookies">
-            <div id="noJS">
-               <p>For any functionality of this nutty site <span class="redText">it is necessary to enable Cookies </span><a class="noJSOrCookies" href="http://www.whatarecookies.com/enable.asp" target="_blank">Here are the instructions</a> on how to enable Cookies in your web browser</p>
-            </div>            
-        </div>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
                 <![endif]-->
@@ -76,7 +53,7 @@
             </div>
             <div id="response"></div>
         </div>
-
+        <script>document.getElementById('wtHomePage').className += " js"</script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];

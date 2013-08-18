@@ -22,34 +22,19 @@
         <script type="text/javascript" src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
         <script type="text/javascript" src="/js/tinybox.js"></script>        
         <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
-        <script type="text/javascript"> document.getElementById('nutFrame').className += " js"</script>
         <script type="text/javascript">
-            $(document).ready(function() {
-               function are_cookies_enabled() {
-                    var cookieEnabled = (navigator.cookieEnabled) ? true : false;
-                    if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled)
-                    { 
-                        document.cookie="testcookie";
-                        cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
-                    }
-                    return (cookieEnabled);
-                }
-                var cookies = are_cookies_enabled();
-                if (!cookies) {
-                    $('#noCookies').show();
-                } else {            
-                    if (readCookie('nutCookie') !== "loggedIn") {
-                        window.location.href = "login.html";
+         if (readCookie('nutCookie') !== "loggedIn") {
+                    window.location.href = "login.html";
+         } else {
+            $(document).ready(function() {             
+                    var nutID = getParameterByName('id');
+                    if (nutID) {
+                        ajaxListNutsTable("Walnut", nutID);  
                     } else {
-                        var nutID = getParameterByName('id');
-                        if (nutID) {
-                            ajaxListNutsTable("Walnut", nutID);  
-                        } else {
-                            ajaxListNutsTable("Walnut");
-                        }  
+                        ajaxListNutsTable("Walnut");
                     }
-                }
-           });
+            });                    
+        }                        
         </script> 
  <!--      <script type="text/javascript">
 	    if (readCookie('nutCookie') !== "loggedIn") {
@@ -63,17 +48,14 @@
         </script> 
  -->       
     </head>
+    
     <body class="list">
-         <div id="noCookies">
-                <div id="noJS">
-                   <p>For any functionality of this nutty site <span class="redText">it is necessary to enable Cookies </span><a class="noJSOrCookies" href="http://www.whatarecookies.com/enable.asp" target="_blank">Here are the instructions</a> on how to enable Cookies in your web browser</p>
-                </div>            
-            </div>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
- 
-        <!-- Add your site or application content here -->
+         
+    <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
      <noscript><div id="noscript"><div id="noJS"><p>For any functionality of this nutty site <span class="redText">it is necessary to enable JavaScript! </span><a class="noJSOrCookies" href="http://www.enable-javascript.com/" target="_blank">Here are the instructions</a> on how to enable JavaScript in your web browser. Happily you can then return <a class="noJSOrCookies" href="Walnuts.html">here.</a></p></div></div></noscript>        
           
     <div class="frame" id="nutFrame">
@@ -94,15 +76,16 @@
        </div>
     </div>
    </div>
-   
+          
+    <script type="text/javascript"> document.getElementById('nutFrame').className += " js"</script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src='//www.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src='//www.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
          
 <!--[if IE]>
 <script type="text/javascript">
