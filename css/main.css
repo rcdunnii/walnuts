@@ -75,7 +75,8 @@ fieldset {
  */
 
 textarea {
-    resize: vertical;
+ /*   resize: vertical;   */
+    resize: none;
 }
 
 /* ==========================================================================
@@ -233,7 +234,7 @@ textarea {
     .walnutContainer {
 		position: relative;
 		margin:0;
-        width: 87%; /* 85%  */
+        width: 94%; /* 85%  */
 		height:96%;
 		top:  0;
 		margin-left: auto;
@@ -421,7 +422,7 @@ textarea {
        width: 19%; 
        height: 32px;       
        top: 33px;
-       left: 849px;
+       left: 888px;
        background: #421E13;
         -moz-border-radius-topleft: 30px;
         -moz-border-radius-topright: 0;
@@ -433,8 +434,8 @@ textarea {
         position: relative;
         width: 19%;
         height: 32px;
-        top: 80px;
-        left: 75px;
+        top: 82px;
+        left: 34px;
         background: #421E13;
         -moz-border-radius-topright: 30px;
         -moz-border-radius-topleft: 0;
@@ -990,7 +991,7 @@ textarea {
     position: relative;
     width: 75px;
     height: 30px;
-    top: 112px;
+    top: 114px;
     z-index: 1;
     left: 50%;
     margin-left: -37px;
@@ -1006,9 +1007,11 @@ textarea {
     position: relative;
     left: 27px;
     top: 5px;
-}    
+}
 
-
+.help img:hover {   
+    background: blue;
+}
 
 
 

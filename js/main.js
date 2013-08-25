@@ -811,12 +811,8 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
                       $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
                     /*                        alert(data);   */ 
                  } else {
-                    $(editableElem)
-/*                       .find('.active-inline .ajax')   */
-                        .find('span.active-inline .ajax')
-                        .replaceWith('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" title="Edit">' + t + '</textarea>');
- /*                      .replaceWith('<textarea class="preEdit" title="Edit"></textarea>'); 
-                    $('.active-inline textarea.preEdit').text(t); */
+                    $(editableElem).find('.active-inline').empty().append('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea>');
+
                     if (t.length === 0) {
                         $('.active-inline').addClass('emptyCell'); 
                         emptyCellClass = ''; //i.e. do not remove this class below
@@ -824,20 +820,20 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
                         emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
                     }    
                     $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
-                 }
+                    setClickable();
+                }
             }              
          );
     } else {  // cancel the edit operation
         if (editableClass === 'editable-area') {
- /*           (editableElem).find('.ie_div_txtarea').replaceWith('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" title="Edit">' + t + '</textarea>').end().find('.active-inline').removeClass('active-inline'); */ 
             $('span.active-inline')
-                .replaceWith('<span class="textarea" title="Edit"><textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" title="Edit">' + t + '</textarea></span>'); 
+                .replaceWith('<span class="textarea" title="Edit"><textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea></span>'); 
         } else {
             $('span.active-inline')
                 .replaceWith('<span class="" title="Edit">' + t + '</span>');              
-        }               
+        }
+        setClickable();        
     }
-    setClickable();
 }
 
 function nl2br (str, is_xhtml) {   
