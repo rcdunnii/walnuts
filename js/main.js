@@ -133,24 +133,25 @@ function readCookie(name) {
     return null;
 }
 
-//called from login.html on submit
+//called from login.html and wtdLogin.html on submit
 function ajaxAuthenticate(form, fxn, method) {
     'use strict';
-    var xhr,
+    var currentUser,
         data,
-        queryVars,
-        i,
-        pair,
-        currentUser,
-        url = "",
-        pw = false,
         data_json = "",
-        send_data = "",
         errorElem = document.getElementById("loginError"),
+        hintLinkElem = document.getElementById("hintLink"),
+        i,
+        jqxhr,
+        pair,
         popUpElem = document.getElementById("popUpImg"),
-        hintLinkElem = document.getElementById("hintLink");
-
-    if (registering) {
+        pw = false,
+        queryVars,
+        registering,
+        send_data = "",
+        url = "";
+        
+    if (typeof registering === true) {
         return;
     }
 
@@ -184,7 +185,40 @@ function ajaxAuthenticate(form, fxn, method) {
 
     data_json += '}';
     send_data = 'value=' + data_json;
-
+    registering = false;
+/* ----------------------------------  */
+    jqxhr = $.ajax({
+        type: method,
+        url: fxn,
+        data:  send_data,
+        dataType: "text",
+        contentType: "application/x-www-form-urlencoded"
+    });    
+    jqxhr.done(function (msg) {
+        if (jqxhr.responseText === 'ok') {
+             if (currentUser === "Walnut") {
+                        createCookie('nutCookie', 'loggedIn', '60000', '', '', 1);
+                        window.location.href = "Walnuts.html";
+             } else if (currentUser === "Foxy") {
+                 createCookie('foxyCookie', 'loggedIn', '60000', '', '', 1);
+                 window.location.href = "WTD.html";
+             } else {
+                 alert("Unknown User Error");
+                 return false;
+             }
+        } else {
+            errorElem.innerHTML = jqxhr.responseText;
+            popUpElem.style.display = "none";
+            hintLinkElem.style.display = "block";
+        }
+    });
+     jqxhr.fail(function (msg) {
+         alert("An error occurred: " + msg);
+     });
+        
+  /* ---------------------------------------- */
+  
+  /*  
     xhr = createXHR();
 
     if (!xhr) {
@@ -198,7 +232,7 @@ function ajaxAuthenticate(form, fxn, method) {
             xhr.onreadystatechange = null;
 
             if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || xhr.status === 1223)) {
-                if (xhr.responseText === "ok") {    // login is successful - redirection is required
+                if (xhr.responseText === "ok") {   
                     if (currentUser === "Walnut") {
                         createCookie('nutCookie', 'loggedIn', '60000', '', '', 1);
                         window.location.href = "Walnuts.html";
@@ -221,16 +255,15 @@ function ajaxAuthenticate(form, fxn, method) {
     };
 
     try {
-/*        url = 'https://' + location.host + '/walnuts/' + fxn;   */
         url =  fxn;
-        xhr.open(method, url, true);   // true means asynchron, where url is login.php and method is POST
+        xhr.open(method, url, true);  
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.send(send_data);
     } catch (e) {
         alert("Cannot connect to the server!");
         return;
     }
-
+*/
     registering = true;
 }
 
@@ -416,6 +449,9 @@ function getParameterByName(name) {
 /* called by displayPage to format the notes entered in addNut form */
 function wordWrap(str, width, brk, cut) {
     'use strict';
+    
+    // remove duplicate newlines
+    str = str.replace(/\n{2,}/g, '\n');
     brk = brk || '\n';
     width = width || 30;
     cut = cut || false;
@@ -633,7 +669,7 @@ function displayTable(requester, nutEntries) {
     'use strict';
     var numNuts, i = 0,
         replacementStr = "", nutTable = "",
-        noteStr = "", b = 0, numBrks = 0, brksNeeded = 5, theHost = "";
+        theHost = "";
 // development or production ?
     theHost = location.host;
 // get # entries in database into var numNuts
@@ -677,50 +713,27 @@ function displayTable(requester, nutEntries) {
             replacementStr += "<tr><td   class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i].Phone1 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i + 1].Phone1 + "</span></td></tr>";
             // set Phone  2
             replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <span>" + nutEntries[i].Phone2 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <span>" + nutEntries[i + 1].Phone2 + "</span></td></tr>";
-            // set Notes
-            noteStr = ""; //  inits after each loop
-            numBrks = 0;
-
-            if (nutEntries[i].Notes.length) { // if noteStr longer than 30 chars, format for display
-                noteStr = wordWrap(nutEntries[i].Notes, 40, '\n', true);
-                numBrks = (noteStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
-            // format any Notes to fit in our listNuts display properly - always print 4 newlines
-            }
-
-            if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
-                noteStr = "<span class=\"updated\"> Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</span><br>" + "<span class='textarea'>" + noteStr + "</span>";
-                numBrks += 1; // because we've added 1 <br> in line above...
+            
+           if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
+                replacementStr += "<tr><td>Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</td>";
             } else {
-                noteStr = "<br><span class='textarea'>" + noteStr + "</span>";
+                replacementStr += "<tr><td>Last Update: " + nutEntries[i].Created.split(" ", 1) + "</td>";
             }
-
-            for (b = numBrks; b < brksNeeded; b += 1) {
-                noteStr += "<br>";
-            }
-
-            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes: " + noteStr + "</td><td class='editable-area' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Notes' id='Notes'>";
-
-            noteStr = "";
-            numBrks = 0;
-
-            if (nutEntries[i + 1].Notes.length) { // if noteStr longer than 30 chars, format for display
-                noteStr = wordWrap(nutEntries[i + 1].Notes, 40, '\n', true);
-                numBrks = (noteStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
-            // format any Notes to fit in our listNuts display properly - always print 4 newlines
-            }
-
-            if ((Date.parse(nutEntries[i + 1].Created)) < (Date.parse(nutEntries[i + 1].Updated))) {
-                noteStr = "<span class=\"updated\"> Last Update: " + nutEntries[i + 1].Updated.split(" ", 1) + "</span><br>" + "<span class='textarea'>" + noteStr + "</span>";
-                numBrks += 1; // because we've added 1 <br> in line above...
+            
+           if ((Date.parse(nutEntries[i + 1].Created)) < (Date.parse(nutEntries[i + 1].Updated))) {
+                replacementStr += "<td>Last Update: " + nutEntries[i + 1].Updated.split(" ", 1) + "</td></tr>";
             } else {
-                noteStr = "<br><span class='textarea'>" + noteStr + "</span>";
+                replacementStr += "<td>Last Update: " + nutEntries[i + 1].Created.split(" ", 1) + "</td></tr>";
             }
+            
+            /* wordWrap(nutEntries[i].Notes, 30, '\n', false)   */
+            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes: <br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></span></td><td class='editable-area' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Notes' id='Notes'>";
 
-            for (b = numBrks; b < brksNeeded; b += 1) {
-                noteStr += "<br>";
-            }
-
-            replacementStr += "Notes: " + noteStr + "</td></tr>";
+            /* wordWrap(nutEntries[i + 1].Notes, 30, '\n', false)      */
+            replacementStr += "Notes:<br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i + 1].Notes + "</textarea></span></td></tr>";
+            
+            // empty row to separate entries
+            replacementStr += "<tr><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td></tr>";
 
             nutTable += replacementStr;
 
@@ -746,27 +759,17 @@ function displayTable(requester, nutEntries) {
             replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <span class = 'mailToLink'>" + nutEntries[i].Email2 + "</span></td></tr>";
             replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i].Phone1 + "</span></td></tr>";
             replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <span>" + nutEntries[i].Phone2 + "</span></td></tr>";
-            noteStr = ""; //  inits after each loop
-            numBrks = 0;
-
-            if (nutEntries[i].Notes.length) { // if noteStr longer than 40 chars, format for display
-                noteStr = wordWrap(nutEntries[i].Notes, 40, '\n', true);
-                numBrks = (noteStr.split(/<br.*?>/gi).length - 1);  // grab # <br>'s in note string
-            // format any Notes to fit in our listNuts display properly - always print 4 newlines
-            }
-
-            if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
-                noteStr = "<span class=\"updated\"> Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</span><br>" + "<span class='textarea'>" + noteStr + "</span>";
-                numBrks += 1; // because we've added 1 <br> in line above...
+           // put out last update 
+           if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
+                replacementStr += "<tr><td>Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</td></tr>";
             } else {
-                noteStr = "<br><span class='textarea'>" + noteStr + "</span>";
+                replacementStr += "<tr><td>Last Update: " + nutEntries[i].Created.split(" ", 1) + "</td></tr>";
             }
-
-            for (b = numBrks; b < brksNeeded; b += 1) {
-                noteStr += "<br>";
-            }
-
-            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes: " + noteStr + "</td><tr>";
+            /* wordWrap(nutEntries[i].Notes, 30, '\n', false)       */
+            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes:<br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></span></td><tr>";
+            
+            // empty row to separate entries
+            replacementStr += "<tr><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td></tr>";
         }
 
         nutTable += replacementStr;
@@ -786,55 +789,81 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
     } else {
         t = cancel;
     }
- /*   editableClass = $(obj).parent().siblings(0).is("textarea") ? "editable-area" : "editable"; */
- 
-  /*  editableElem = $(obj).closest('[class="' + editableClass + '"]');   */
- /*   spanClass = $(obj).parent().siblings(0).is("textarea") ? "textarea" : "";   */
-  /*  spanClass = $(obj).closest('span').attr('class');   */
-
+    editableClass = $(obj).closest('td').hasClass('editable') ? 'editable' : 'editable-area'; 
+    editableElem = $(obj).closest('[class="' + editableClass + '"]');
+    
     if (cancel === false) {
     
-        editableClass = $(obj).closest('td').hasClass('editable') ? 'editable' : 'editable-area'; 
-        editableElem = $(obj).closest('[class="' + editableClass + '"]');
-    
-        $(editableElem).find('span.active-inline div').replaceWith('<em class="ajax">Saving...<em>');
-
+        $(editableElem).find('.active-inline div').replaceWith('<em class="ajax">Saving...<em>');
      // post new value to the server
         $.post('save.php', {id: $(editableElem).attr('walnutID'), name: $(editableElem).attr('name'), value: t},
             function (data) {
-                $(editableElem)
-                    .find('.ajax')
-                    .replaceWith(t.length ? wordWrap(t, 40, '<br>', true) : "                   ");
-
-                if (t.length === 0) {
-                    $('span.active-inline').addClass('emptyCell');
-                    emptyCellClass = ''; //i.e. do not remove this class below
-                } else {
-                    emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
-                }    
-                $('span.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
-/*                        alert(data);   */                 
+                if (editableClass === 'editable') {
+                    $(editableElem)
+                       .find('.active-inline .ajax')
+                       .replaceWith(t.length ? t : "                   ");  
+                    if (t.length === 0) {
+                        $('.active-inline').addClass('emptyCell'); 
+                        emptyCellClass = ''; //i.e. do not remove this class below
+                    } else {
+                        emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
+                    }    
+                      $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
+                    /*                        alert(data);   */ 
+                 } else {
+                    $(editableElem)
+/*                       .find('.active-inline .ajax')   */
+                        .find('span.active-inline .ajax')
+                        .replaceWith('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" title="Edit">' + t + '</textarea>');
+ /*                      .replaceWith('<textarea class="preEdit" title="Edit"></textarea>'); 
+                    $('.active-inline textarea.preEdit').text(t); */
+                    if (t.length === 0) {
+                        $('.active-inline').addClass('emptyCell'); 
+                        emptyCellClass = ''; //i.e. do not remove this class below
+                    } else {
+                        emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
+                    }    
+                    $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
+                 }
             }              
          );
-    } else {
-        $('span.active-inline')
-            .replaceWith('<span title="Edit">' + t + '</span>');
+    } else {  // cancel the edit operation
+        if (editableClass === 'editable-area') {
+ /*           (editableElem).find('.ie_div_txtarea').replaceWith('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" title="Edit">' + t + '</textarea>').end().find('.active-inline').removeClass('active-inline'); */ 
+            $('span.active-inline')
+                .replaceWith('<span class="textarea" title="Edit"><textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" title="Edit">' + t + '</textarea></span>'); 
+        } else {
+            $('span.active-inline')
+                .replaceWith('<span class="" title="Edit">' + t + '</span>');              
+        }               
     }
-
     setClickable();
+}
+
+function nl2br (str, is_xhtml) {   
+    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';    
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+}
+
+function br2nl (str) {   
+    return (str + '').replace(/<br\s*[\/]?>/gi, "\n");
 }
 
 function setClickable() {
     'use strict';
   // put spaces in empty spans to allow in-line edits
-    $('.editable span, .editable-area span.textarea').each(function () {
-    /*(css({'background-color':'#521402' /*, 'color':'#914229''#B85435' */ 
+    var $editableFields = $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit'); 
+  /*    var $editableFields = $('.editable span,.editable-area span.textarea textarea.preEdit');   */ 
+/*    $('.editable span, .editable-area span.textarea').each(function () { */
+      $editableFields.each(function () {
         if ((!$(this).text().trim().length)) {
                 $(this).text("                    ").addClass("emptyCell"); 
         }
      });           
 
-    $('.editable span, .editable-area span.textarea')
+/*    $('.editable span, .editable-area span.textarea')  */
+ /*     $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit') */
+        $editableFields
            .on('mouseover.colorize', function () {
                 $(this).addClass('over-inline').attr('title', 'Edit');
   /*              
@@ -857,33 +886,20 @@ function setClickable() {
                 button, 
                 revert, 
                 contents, 
-                editElement,
-                emailAddr,
-                hrefAttr,
-                cssColor,
+                editElement,                
                 $editable = $(this);
 
             if ($(this).hasClass('active-inline')) {
                 return;
             }
- /*
-            if ( ($(this).hasClass(".mailToLink"))) {
-                if (event.which === 1) {
-                    event.preventDefault();
-                } else {
-                    emailAddr = $(this).html();
-                    hrefAttr = $($(this) + ' a.emailAnchor').attr('href');
-                    window.location.href = hrefAttr;
-                }
-            }
- */           
+           
             $(this).off(".colorize").removeClass('over-inline').removeAttr('title');
             
             inputarea = '<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
-            textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="30" class="click-inline">' + $(this).html() + '</textarea>';
+            textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="20" class="click-inline" wrap="hard" maxlength="60">' + $(this).text() + '</textarea>';
             button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
-            revert = $(this).html(); // no trim since contents pasted back on screen only - not to db
-            contents = $.trim($editable.html().replace(/\/p>/g, "/p>/p>\n\n"));
+            revert = $(this).text(); // no trim since contents pasted back on screen only - not to db
+            contents = $.trim($editable.text().replace(/\/p>/g, "/p>/p>\n\n"));
             
             $editable
                 .addClass('active-inline')
@@ -900,7 +916,7 @@ function setClickable() {
                 editElement = textarea + button;
               $(editElement).appendTo($editable);   
   /*                $(editElement).prependTo(".setTDHgt"); */
-                // full selector $('.editable-area span.textarea.active-inline div.ie_div_txtarea textarea.click-inline');
+                // ??? full selector $('.editable-area span.textarea.active-inline div.ie_div_txtarea textarea.click-inline');
                 editElement = $('textarea.click-inline');
             }
             

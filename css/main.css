@@ -95,11 +95,10 @@ textarea {
 /* Walnut Tally Style Sheet */
   
    body.list {
-        position: static;
-        height: 800px;
-        width: 1341px; 
-		background-image: url("/images/walnut-wood.jpg");  
-        background: url("/images/walnut-wood.jpg") no-repeat center center fixed; 
+        position: fixed;
+        height: 100%;
+        width: 100%;  
+        background: url("/images/walnut-wood.jpg") no-repeat center center fixed;   
         -webkit-background-size: cover !important;
         -moz-background-size: cover !important;
         -o-background-size: cover !important;
@@ -107,7 +106,23 @@ textarea {
         padding: 0;
         margin: 0;
     }
-    
+/*
+   body.list {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-image: url("/images/walnut-wood.jpg");
+    background: url("/images/walnut-wood.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    background-size: cover !important;
+    padding: 0;
+    margin: 0; 
+   }
+  */ 
     #noscript {
         width: 100%;
         height: 100%;
@@ -182,9 +197,7 @@ textarea {
         left: 50%;
         top: 50%;
     }
-       
-     #nutFrame, #wtHomePage, #loginBkGnd, #loginBkGndAdm  { display: none  }      /* Hide if JS disabled - ref'd by Walnuts.html and WTD.html*/
-    .js #nutFrame, .js #wtHomePage, .js  #loginBkGnd, .js #loginBkGndAdm { display: block } /* Show if JS enabled -  ref'd by Walnuts.html and WTD.html*/
+ 
   
     .frame {
          width:1139px;
@@ -201,7 +214,9 @@ textarea {
         -webkit-border-radius: 30px 0px 30px 30px;
         border-radius: 30px 0px 30px 30px;
     }
-
+      
+     #nutFrame, #wtHomePage, #loginBkGnd, #loginBkGndAdm  { display: none  }      /* Hide if JS disabled - ref'd by Walnuts.html and WTD.html*/
+    .js #nutFrame, .js #wtHomePage, .js  #loginBkGnd, .js #loginBkGndAdm { display: block } /* Show if JS enabled -  ref'd by Walnuts.html and WTD.html*/
           
     #walnutTable {
         table-layout: auto;
@@ -218,7 +233,7 @@ textarea {
     .walnutContainer {
 		position: relative;
 		margin:0;
-        width: 85%;
+        width: 87%; /* 85%  */
 		height:96%;
 		top:  0;
 		margin-left: auto;
@@ -232,6 +247,25 @@ textarea {
         border-top-right-radius: 0;
         border-bottom-right-radius: 50px;
         border-bottom-left-radius: 50px;
+
+ /*       position: relative;
+        margin: 0;
+        width: 85%;
+        height: 96%;
+        top: 50%;
+        left: 50%;
+        margin-left: -42%;
+        margin-top: -48%;
+        background: #421E13;
+        -moz-border-top-left-radius: 0;
+        -moz-border-top-right-radius: 0;
+        -moz-border-bottom-right-radius: 50px;
+        -moz-border-bottom-left-radius: 50px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 50px;
+        border-bottom-left-radius: 50px;
+*/        
     }
         
     #editNutPage ,
@@ -387,7 +421,7 @@ textarea {
        width: 19%; 
        height: 32px;       
        top: 33px;
-       left: 837px;
+       left: 849px;
        background: #421E13;
         -moz-border-radius-topleft: 30px;
         -moz-border-radius-topright: 0;
@@ -400,7 +434,7 @@ textarea {
         width: 19%;
         height: 32px;
         top: 80px;
-        left: 86px;
+        left: 75px;
         background: #421E13;
         -moz-border-radius-topright: 30px;
         -moz-border-radius-topleft: 0;
@@ -616,7 +650,16 @@ textarea {
        {
         color: yellow;
     }
-    
+     .preEdit {   /* selects textarea filled by db (or empty) before clicked */
+        border: none;
+        background: transparent;
+        color: white;
+        overflow: hidden;
+        font-family: serif, monospace;
+        _font-family: 'courier new', monospace;
+        font-size: 1em;   
+     }
+     
      .editable { /*selects td element */
         border: none;
         background: transparent;
@@ -644,8 +687,8 @@ textarea {
         color: black;
         background-color: yellow;
         font-family: monospace, serif;
-        _font-family: 'courier new', monospace;
-        font-size: 1em;        
+       _font-family: 'courier new', monospace;   
+        font-size: 1em;     
     }
       
      .ie_div_span {
@@ -670,6 +713,8 @@ textarea {
         font: normal 18px serif;
         width: 250px;
         height: 75px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
      }
      
     .ie_div_txtarea textarea {
