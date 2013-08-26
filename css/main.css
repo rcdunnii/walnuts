@@ -202,12 +202,12 @@ textarea {
   
     .frame {
          width:1139px;
-         height:800px;
+         height: 650px;          /* 800px;   */
          position:absolute;
          left:50%;
-         top:50%;
+         top: 44%;              /* 50%; */
          margin-left:-569px;
-         margin-top:-400px;        
+         margin-top:-395px;     /* -400px */     
         -moz-border-radius-topleft: 30px;
         -moz-border-radius-topright: 0px;
         -moz-border-radius-bottomright: 30px;
@@ -366,7 +366,7 @@ textarea {
         
 	#editHint {
 		position: relative;
-		width: 26%;
+		width: 25%;
 		margin-right: auto;
         margin-left: auto;	
 		padding: 5px;
@@ -540,7 +540,7 @@ textarea {
        background-color: transparent;
        color: #FFFF00;
        font: normal bold 1em "Times New Roman", Georgia, serif;
-       margin-bottom: 5px;                
+       margin-bottom: 5px;
     }
     
      input#nutSearch:focus:-ms-input-placeholder {  
@@ -552,13 +552,13 @@ textarea {
          background-color: gold;
          color:#000;
     }
- /*   
+   
     [type="search"] {
     -moz-appearance:    textfield;
     -webkit-appearance: textfield;
     appearance: textfield;
     }
- */   
+    
     #mainMenu p,
     #bDayLink p {
         width: 50%;
@@ -583,7 +583,7 @@ textarea {
      .content {
         position:relative;
         width:  90%;
-        max-height: 500px;
+        max-height: 424px;        /* 500px;   */
         bottom: 4%;
         margin-left: auto;
         margin-right: auto;

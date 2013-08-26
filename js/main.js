@@ -1,20 +1,3 @@
-/*global XMLHttpRequest:true,ActiveXObject:true,document:true,confirm:true*/
-/*global window:true,$,alert:true, location,escape */
-//fxn to create XMLHttpRequest objects
-
-function createXHR() {
-    'use strict';
-    try {
-        return new XMLHttpRequest();
-    } catch (e) {
-        try {
-            return new ActiveXObject("Microsoft.XMLHTTP");
-        } catch (e1) {
-            return new ActiveXObject("Msxml2.XMLHTTP");
-        }
-    }
-}
-
 // called by listNuts.html and Walnuts.html
 function searchNut() {
     'use strict';
@@ -40,8 +23,6 @@ function searchNut() {
         }
     });
 }
-
-
 
 function getMessageBody(form) {
     'use strict';
@@ -147,7 +128,6 @@ function ajaxAuthenticate(form, fxn, method) {
         popUpElem = document.getElementById("popUpImg"),
         pw = false,
         queryVars,
-        registering,
         send_data = "",
         url = "";
         
@@ -176,6 +156,7 @@ function ajaxAuthenticate(form, fxn, method) {
             currentUser = decodeURIComponent(pair[1]);
         }
     }
+    
     if (!pw) {
         errorElem.innerHTML = "Password incorrect!";
         popUpElem.style.display = "none";
@@ -186,7 +167,7 @@ function ajaxAuthenticate(form, fxn, method) {
     data_json += '}';
     send_data = 'value=' + data_json;
     registering = false;
-/* ----------------------------------  */
+
     jqxhr = $.ajax({
         type: method,
         url: fxn,
@@ -215,55 +196,7 @@ function ajaxAuthenticate(form, fxn, method) {
      jqxhr.fail(function (msg) {
          alert("An error occurred: " + msg);
      });
-        
-  /* ---------------------------------------- */
-  
-  /*  
-    xhr = createXHR();
 
-    if (!xhr) {
-        return false;
-    }
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 0 || xhr.readyState === 4) {
-            registering = false;
-        // prevent memory leaks
-            xhr.onreadystatechange = null;
-
-            if ((xhr.status === 0 || (xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 || xhr.status === 1223)) {
-                if (xhr.responseText === "ok") {   
-                    if (currentUser === "Walnut") {
-                        createCookie('nutCookie', 'loggedIn', '60000', '', '', 1);
-                        window.location.href = "Walnuts.html";
-                    } else if (currentUser === "Foxy") {
-                        createCookie('foxyCookie', 'loggedIn', '60000', '', '', 1);
-                        window.location.href = "WTD.html";
-                    } else {
-                        alert("Unknown User Error");
-                        return false;
-                    }
-                } else {
-                    errorElem.innerHTML = xhr.responseText;
-                    popUpElem.style.display = "none";
-                    hintLinkElem.style.display = "block";
-                }
-            } else {
-                alert("An error occurred while logging in. Please try it again.");
-            }
-        }
-    };
-
-    try {
-        url =  fxn;
-        xhr.open(method, url, true);  
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send(send_data);
-    } catch (e) {
-        alert("Cannot connect to the server!");
-        return;
-    }
-*/
     registering = true;
 }
 
@@ -444,20 +377,6 @@ function getParameterByName(name) {
     } else {
         return decodeURIComponent(results[1].replace(/\+/g, " "));
     }
-}
-
-/* called by displayPage to format the notes entered in addNut form */
-function wordWrap(str, width, brk, cut) {
-    'use strict';
-    
-    // remove duplicate newlines
-    str = str.replace(/\n{2,}/g, '\n');
-    brk = brk || '\n';
-    width = width || 30;
-    cut = cut || false;
-    if (!str) { return str; }
-    var regex = '.{1,' + width + '}(\\s|$)' + (cut ? '|.{' + width + '}|.+$' : '|\\S+?(\\s|$)');
-    return str.match(new RegExp(regex, 'g')).join(brk);
 }
 
 function isEven(value) {
@@ -726,10 +645,8 @@ function displayTable(requester, nutEntries) {
                 replacementStr += "<td>Last Update: " + nutEntries[i + 1].Created.split(" ", 1) + "</td></tr>";
             }
             
-            /* wordWrap(nutEntries[i].Notes, 30, '\n', false)   */
             replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes: <br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></span></td><td class='editable-area' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Notes' id='Notes'>";
 
-            /* wordWrap(nutEntries[i + 1].Notes, 30, '\n', false)      */
             replacementStr += "Notes:<br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i + 1].Notes + "</textarea></span></td></tr>";
             
             // empty row to separate entries
@@ -765,7 +682,7 @@ function displayTable(requester, nutEntries) {
             } else {
                 replacementStr += "<tr><td>Last Update: " + nutEntries[i].Created.split(" ", 1) + "</td></tr>";
             }
-            /* wordWrap(nutEntries[i].Notes, 30, '\n', false)       */
+ 
             replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes:<br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></span></td><tr>";
             
             // empty row to separate entries
@@ -836,29 +753,16 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
     }
 }
 
-function nl2br (str, is_xhtml) {   
-    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';    
-    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
-}
-
-function br2nl (str) {   
-    return (str + '').replace(/<br\s*[\/]?>/gi, "\n");
-}
-
 function setClickable() {
     'use strict';
   // put spaces in empty spans to allow in-line edits
-    var $editableFields = $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit'); 
-  /*    var $editableFields = $('.editable span,.editable-area span.textarea textarea.preEdit');   */ 
-/*    $('.editable span, .editable-area span.textarea').each(function () { */
-      $editableFields.each(function () {
+    var $editableFields = $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit');
+    $editableFields.each(function () {
         if ((!$(this).text().trim().length)) {
                 $(this).text("                    ").addClass("emptyCell"); 
         }
-     });           
+    });           
 
-/*    $('.editable span, .editable-area span.textarea')  */
- /*     $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit') */
         $editableFields
            .on('mouseover.colorize', function () {
                 $(this).addClass('over-inline').attr('title', 'Edit');
@@ -905,14 +809,11 @@ function setClickable() {
             if ($editable.parents("td").hasClass('editable')) { // input field or textarea field being edited?
                 editElement =  inputarea + button;
                 $(editElement).appendTo($editable);                   
- /*               $(editElement).prependTo(".setTDHgt");     */
                 $('input.click-inline').val(contents);
                 editElement = $('.editable input.click-inline');
             } else {
                 editElement = textarea + button;
-              $(editElement).appendTo($editable);   
-  /*                $(editElement).prependTo(".setTDHgt"); */
-                // ??? full selector $('.editable-area span.textarea.active-inline div.ie_div_txtarea textarea.click-inline');
+                $(editElement).appendTo($editable);   
                 editElement = $('textarea.click-inline');
             }
             
@@ -926,13 +827,8 @@ function setClickable() {
             $('.cancelButton')
                         .click(function () {
                     saveChanges(this, revert);
-                });
- /*
-            $(editElement).blur( function () {
-                saveChanges(this, revert);
-                }); 
-*/                
-        })
+                });               
+        });
 }
 
 // fxn called by list nuts html page - which requester determines api
@@ -989,7 +885,7 @@ function ajaxListNutsTable(requester, nutID) {
             $(document).keypress(function (e) {
                 var code = (e.keyCode ? e.keyCode : e.which), theHost, tag;
                 tag = e.target.tagName.toLowerCase();
-                if ( tag != 'input' && tag != 'textarea') { 
+                if ( tag !== 'input' && tag !== 'textarea') { 
                     switch (code) {
                     case 65:   //"A"
                     case 97:   //"a"
@@ -1044,7 +940,6 @@ function ajaxListNutsTable(requester, nutID) {
                 }
             });
 
-
             if (requester === 'Foxy') {
                 $("#mainMenu").css('display', 'block');
             } else { // only 2 possible requesters - Foxy and Walnut
@@ -1057,10 +952,10 @@ function ajaxListNutsTable(requester, nutID) {
             if (nutID) {
                 position = '#' + nutID;
                 $(".content").mCustomScrollbar("scrollTo", position);
-                $('#nutSearch').val("").attr("placeholder", "Search");                                
+ /*               $('#nutSearch').val("").attr("placeholder", "Search");                                */
             } else {
                 $(".content").mCustomScrollbar("scrollTo", "top");
-                $('#nutSearch').val("").attr("placeholder", "Search");                
+ /*               $('#nutSearch').val("").attr("placeholder", "Search");                */
             }
             
         })
@@ -1149,11 +1044,6 @@ function ajaxEditNut() {
         .fail(function () {
             $('#editNutResponse').text("Update failed").slideDown('slow');
         });
-   /*     .always(function () {
-            setTimeout(function () {
-                $('#editNutResponse').slideUp('slow');
-            }, 8000);
-        }); */
 }
 
 // called by editBDay.html on submit of form
