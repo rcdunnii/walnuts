@@ -47,47 +47,13 @@
     <script src="/js/vendor/modernizr-2.6.2.min.js"></script>           
 	<script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="/js/tinybox.js"></script>        
-   <!-- load the page with ajax call -->
-<!--[if IE]>
-<script type="text/javascript">
-// A no-dependancy quick and dirty method of adding basic
-// placeholder functionality to Internet Explorer 5.5+
-// Author: Jay Williams <myd3.com>
-// License: MIT License
-// Link: https://gist.github.com/1105055
  
-function add_placeholder (id, placeholder)
-{
-	var el = document.getElementById(id);
-	el.placeholder = placeholder;
- 
-    el.onfocus = function ()
-    {
-		if(this.value == this.placeholder)
-		{
-			this.value = '';
-			el.style.cssText  = '';
-		}
-    };
- 
-    el.onblur = function ()
-    {
-		if(this.value.length == 0)
-		{
-			this.value = this.placeholder;
-			el.style.cssText = 'color:#FFFF00;';
-		}
-    };
- 
-	el.onblur();
-}
- 
-// Add right before </body> or inside a DOMReady wrapper
-add_placeholder('nutSearch', 'Search');
- 
-</script>
-<![endif]-->
-   
+    <script>
+        if (!isPlaceholderSupported()){
+            add_placeholder('nutSearch', 'Search');
+        }
+    </script>
+    
     <script type="text/javascript">
        <!-- this page can be called de novo or after an edit of a specific nut in which case it is called with query string of ?id=nutID -->    
         var nutID = getParameterByName('id');

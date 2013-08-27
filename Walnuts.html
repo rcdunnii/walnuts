@@ -51,7 +51,7 @@
     <div  id="spinner"></div>       <div class="help"><img src="/images/q.png" alt="" height="25" width="25"></div>   
     <div id="searchLink">
         <form  action="#" id="searchForm" onsubmit="searchNut(); return false;" >
-            <input  type="text" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder="Search" title="Sir Name Lookup"  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'"/><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
+            <input  type="text" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder="Search" title="Sir Name Lookup"/><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
             <!--  onfocus="this.placeholder = ''" onblur="this.placeholder ='Search'"   -->
         </form>
     </div>     
@@ -68,46 +68,13 @@
    </div>
           
     <script type="text/javascript"> document.getElementById('nutFrame').className += " js"</script>
-    <!--[if IE]>
-<script type="text/javascript">
-// A no-dependancy quick and dirty method of adding basic
-// placeholder functionality to Internet Explorer 5.5+
-// Author: Jay Williams <myd3.com>
-// License: MIT License
-// Link: https://gist.github.com/1105055
- 
-function add_placeholder (id, placeholder)
-{
-	var el = document.getElementById(id);
-	el.placeholder = placeholder;
- 
-    el.onfocus = function ()
-    {
-		if(this.value == this.placeholder)
-		{
-			this.value = '';
-			el.style.cssText  = '';
-		}
-    };
- 
-    el.onblur = function ()
-    {
-		if(this.value.length == 0)
-		{
-			this.value = this.placeholder;
-			el.style.cssText = 'color:#FFFF00;';
-		}
-    };
- 
-	el.onblur();
-}
- 
-// Add right before </body> or inside a DOMReady wrapper
-add_placeholder('nutSearch', 'Search');
- 
-</script>
-<![endif]-->
-   
+
+    <script>
+        if (!isPlaceholderSupported()){
+            add_placeholder('nutSearch', 'Search');
+        }
+    </script>
+    
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
         var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];

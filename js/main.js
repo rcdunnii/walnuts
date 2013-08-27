@@ -1,28 +1,87 @@
+// see if placeholder supported by browser
+function isPlaceholderSupported() 
+{
+    var input = document.createElement("input");
+    return ('placeholder' in input); 
+}
+
+// A no-dependancy quick and dirty method of adding basic
+// placeholder functionality to Internet Explorer 5.5+
+// Author: Jay Williams <myd3.com>
+// License: MIT License
+// Link: https://gist.github.com/1105055
+ 
+function add_placeholder (id, placeholder)
+{
+    
+	var el = $("#" + id);    /*;document.getElementById(id); */
+	$(el).val('').attr('placeholder', placeholder);  /* el.placeholder = placeholder;   */
+ 
+    $(el).focus (function () {
+/*		if ($(el).val() == $(el).attr('placeholder')) { */
+			$(el).val('');
+			$(el).css('background-color: gold; color: #000;');
+/*		} */
+    })
+    .blur (function () {
+		if ($(el).val() == 0) {
+            $(el).val($(el).attr('placeholder'));
+			$(el).css('background-color: transparent; color: #FFFF00;font: normal bold 21px "Times New Roman", Georgia, serif;');
+		} else {
+            if ( $(el).val() !== 'Search' ) {
+                $(el).attr('placeholder', 'Search');
+            }
+        }
+    });
+ 
+	$(el).trigger('blur');
+}
+
 // called by listNuts.html and Walnuts.html
 function searchNut() {
     'use strict';
-    var searchData = $("#searchForm").serialize(), jqxhr, status;
+    var searchData = $("#searchForm").serialize(), jqxhr, searchElem;
     jqxhr = $.ajax({
         type: "POST",
         url: "nutSearch.php",
         data:  searchData, // search form single input name is 'nutSearch' so this produces "nutSearch=user_input"
-        success: function (nutID) {
+        })
+        .done (function (nutID) {
+            searchElem = $('#nutSearch');        
             if (nutID === "No Match") {
-                $('#nutSearch').val("").attr("placeholder", nutID);
-                $(".content").mCustomScrollbar("scrollTo", "top");
+                if (!isPlaceholderSupported()) {
+                    add_placeholder('nutSearch', nutID);
+                } else {                
+ /*                  $('#nutSearch').val("").attr("placeholder", nutID);   */
+                 $(searchElem)
+                   .val("")
+                   .attr("placeholder", nutID);
+                 $(searchElem).focus(function() {
+                      $(searchElem).attr('placeholder', '');
+                   })
+                   .blur(function() {
+                       $(searchElem).attr('placeholder', 'Search');
+                    });                 
+/*                $(".content").mCustomScrollbar("scrollTo", "top");   */
+              }  
             } else {
                 var position = "#nutID_" + nutID;
                 $(".content").mCustomScrollbar("scrollTo", position);
-                $('#nutSearch').val("").attr("placeholder", "Search");
-            }
-        },
-        error: function (jqxhr, status, error) {
+                if (!isPlaceholderSupported()) {
+                    add_placeholder('nutSearch', "Search");
+                } else {                
+                     $(searchElem).val("").attr("placeholder", "Search");
+                }                
+            }            
+        })
+        .fail ( function (jqxhr, status, error) {
     /*        var err = eval("(" + jqxhr.responseText + ")");
             alert(err.Message); */
             alert(jqxhr.responseText);
-        }
-    });
+        });    
 }
+
+
 
 function getMessageBody(form) {
     'use strict';
