@@ -51,7 +51,7 @@
     <div  id="spinner"></div>       <div class="help"><img src="/images/q.png" alt="" height="25" width="25"></div>   
     <div id="searchLink">
         <form  action="#" id="searchForm" onsubmit="searchNut(); return false;" >
-            <input  type="text" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder="Search" title="Sir Name Lookup"/><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
+            <input  type="text" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder="Search" title="Sir Name Lookup" onfocus="this.placeholder = ''" onblur="this.placeholder ='Search'" /><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
             <!--  onfocus="this.placeholder = ''" onblur="this.placeholder ='Search'"   -->
         </form>
     </div>     
@@ -60,7 +60,7 @@
  
        <div id="galore"><h1 class="listH1">Walnuts Galore!</h1></div>
        <div class="numNutsDiv"><span># Nuts: <span class="numNuts"></span></span></div>
-       <div id="editHint"><p>Click on Family Name to Edit</p></div> 			
+       <div id="editHint"><p>Click Family Name to Edit</p></div> 			
        <div class="content">
            <div ><p id="walnutTable"></p></div>                
        </div>
