@@ -796,8 +796,10 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
                         emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
                     }    
                     $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
-                    setClickable();
+                    
                 }
+				$.walnutNameSpace.inLineEditing = false;
+				setClickable();
             }              
          );
     } else {  // cancel the edit operation
@@ -808,14 +810,26 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
             $('span.active-inline')
                 .replaceWith('<span class="" title="Edit">' + t + '</span>');              
         }
+		$.walnutNameSpace.inLineEditing = false;
         setClickable();        
     }
 }
+
+jQuery.fn.exists = function(){
+if(this.length>0) 
+    return this;
+return false; };
+
+$.walnutNameSpace = {   // global flag to limit one edit at a  time
+    inLineEditing : false, 
+}; 
 
 function setClickable() {
     'use strict';
   // put spaces in empty spans to allow in-line edits
     var $editableFields = $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit');
+
+				
     $editableFields.each(function () {
         if ((!$(this).text().trim().length)) {
                 $(this).text("                    ").addClass("emptyCell"); 
@@ -838,61 +852,80 @@ function setClickable() {
                 $(this).removeClass('over-inline').removeAttr('title');
             })
             
-           .on('click', function (event) {
-               
+           .on('click.inlineEdit', function(event) {
+/*		   
+				if ($.walnutNameSpace.inLineEditing) {
+					return;
+				} else {
+					$.walnutNameSpace.inLineEditing = true;
+				}
+*/		   	
                 var inputarea,
                 textarea,
                 button, 
                 revert, 
                 contents, 
-                editElement,                
-                $editable = $(this);
+                editElement,
+				$editable;
+				
+				if ($(this).parent().is('.textarea.over-inline') ) {
+					$editable = $(this).parent();
+				} else {
+					$editable = $(this);
+				}
 
-            if ($(this).hasClass('active-inline')) {
-                return;
-            }
-           
-            $(this).off(".colorize").removeClass('over-inline').removeAttr('title');
-            
-            inputarea = '<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
-            textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="20" class="click-inline" wrap="hard" maxlength="60">' + $(this).text() + '</textarea>';
-            button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
-            revert = $(this).text(); // no trim since contents pasted back on screen only - not to db
-            contents = $.trim($editable.text().replace(/\/p>/g, "/p>/p>\n\n"));
-            
-            $editable
-                .addClass('active-inline')
-                .empty();
- 
-            // what form elem needed?              
-            if ($editable.parents("td").hasClass('editable')) { // input field or textarea field being edited?
-                editElement =  inputarea + button;
-                $(editElement).appendTo($editable);                   
-                $('input.click-inline').val(contents);
-                editElement = $('.editable input.click-inline');
-            } else {
-                editElement = textarea + button;
-                $(editElement).appendTo($editable);   
-                editElement = $('textarea.click-inline');
-            }
-            
-            $(editElement).focus();
+				if ($(this).hasClass('active-inline')) {
+					return;
+				}
+			   
+				
+				if ($.walnutNameSpace.inLineEditing) {
+					$editable.off(".inLineEdit");
+					return;
+				} else {
+					$.walnutNameSpace.inLineEditing = true;
+				}
 
+				$(this).off(".colorize").removeClass('over-inline').removeAttr('title');				
+				
+				inputarea = '<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
+				textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="20" class="click-inline" wrap="hard" maxlength="60">' + $(this).text() + '</textarea>';
+				button = '<div><input type="button" value="SAVE" class="btn saveButton" />&nbsp;<input type="button" value="CANCEL" class="btn cancelButton" /></div></div>';
+				revert = $(this).text(); // no trim since contents pasted back on screen only - not to db
+				contents = $.trim($editable.text().replace(/\/p>/g, "/p>/p>\n\n"));
+				
+				$editable
+					.addClass('active-inline')
+					.empty();
+	 
+				// what form elem needed?              
+				if ($editable.parents("td").hasClass('editable')) { // input field or textarea field being edited?
+					editElement =  inputarea + button;
+					$(editElement).appendTo($editable);                   
+					$('input.click-inline').val(contents);
+					editElement = $('.editable input.click-inline');
+				} else {
+					editElement = textarea + button;
+					$(editElement).appendTo($editable);   
+					editElement = $('textarea.click-inline');
+				}
+				
+				$(editElement)
+					.focus();
+				
+			
             $('.saveButton')
                         .click(function () {
-                    saveChanges(this, false);
+                    saveChanges(this, false);			
                 });
 
             $('.cancelButton')
-                        .click(function () {
+                        .click(function () {						
                     saveChanges(this, revert);
-                });               
-        });
+                });						
+        })
 }
 
-// fxn called by list nuts html page - which requester determines api
-/*jslint browser: true*/
-/*global $, jQuery, createXHR, displayPage*/
 function ajaxListNutsTable(requester, nutID) {
     'use strict';
 
