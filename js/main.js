@@ -799,6 +799,7 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
                     
                 }
 				$.walnutNameSpace.inLineEditing = false;
+				$.walnutNameSpace.inLineConflicts = 0;
 				setClickable();
             }              
          );
@@ -811,6 +812,7 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
                 .replaceWith('<span class="" title="Edit">' + t + '</span>');              
         }
 		$.walnutNameSpace.inLineEditing = false;
+		$.walnutNameSpace.inLineConflicts = 0;		
         setClickable();        
     }
 }
@@ -821,7 +823,8 @@ if(this.length>0)
 return false; };
 
 $.walnutNameSpace = {   // global flag to limit one edit at a  time
-    inLineEditing : false, 
+    inLineEditing : false,
+	inLineConflicts : 0
 }; 
 
 function setClickable() {
@@ -853,13 +856,7 @@ function setClickable() {
             })
             
            .on('click.inlineEdit', function(event) {
-/*		   
-				if ($.walnutNameSpace.inLineEditing) {
-					return;
-				} else {
-					$.walnutNameSpace.inLineEditing = true;
-				}
-*/		   	
+		   	
                 var inputarea,
                 textarea,
                 button, 
@@ -880,10 +877,19 @@ function setClickable() {
 			   
 				
 				if ($.walnutNameSpace.inLineEditing) {
-					$editable.off(".inLineEdit");
+					console.trace();
+					$.walnutNameSpace.inLineConflicts += 1;
+					$.gritter.add({
+						// (string | mandatory) the heading of the notification
+						title: 'Hey Walnut!',
+						// (string | mandatory) the text inside the notification
+						text: 'Finish up your other edit please...\nConflict #' + $.walnutNameSpace.inLineConflicts
+					});
 					return;
 				} else {
 					$.walnutNameSpace.inLineEditing = true;
+					$.walnutNameSpace.inLineConflicts = 0;
+					$editableFields.off("click.inLineEdit");
 				}
 
 				$(this).off(".colorize").removeClass('over-inline').removeAttr('title');				
