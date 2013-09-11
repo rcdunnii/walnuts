@@ -52,7 +52,6 @@ function searchNut() {
                 if (!isPlaceholderSupported()) {
                     add_placeholder('nutSearch', nutID);
                 } else {                
- /*                  $('#nutSearch').val("").attr("placeholder", nutID);   */
                  $(searchElem)
                    .val("")
                    .attr("placeholder", nutID);
@@ -61,9 +60,8 @@ function searchNut() {
                    })
                    .blur(function() {
                        $(searchElem).attr('placeholder', 'Search');
-                    });                 
-/*                $(".content").mCustomScrollbar("scrollTo", "top");   */
-              }  
+                    });
+              }
             } else {
                 var position = "#nutID_" + nutID;
                 $(".content").mCustomScrollbar("scrollTo", position);
@@ -75,8 +73,6 @@ function searchNut() {
             }            
         })
         .fail ( function (jqxhr, status, error) {
-    /*        var err = eval("(" + jqxhr.responseText + ")");
-            alert(err.Message); */
             alert(jqxhr.responseText);
         });    
 }
@@ -812,6 +808,20 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
     }
 }
 
+// use closure to see if editing already in process
+function editingNut() {
+    'use strict';
+
+    var editing = false;
+    return {
+        set: function () { editing = true;/* return editing; */},
+        get: function () { return editing; },
+        unset: function () { editing = false; /* return editing; */}
+    };
+}
+
+var editFlag = editingNut(); // set inline edit flags to prevent 2 at a time edits - uses closures
+
 function setClickable() {
     'use strict';
   // put spaces in empty spans to allow in-line edits
@@ -847,10 +857,17 @@ function setClickable() {
                 contents, 
                 editElement,                
                 $editable = $(this);
-
+                
             if ($(this).hasClass('active-inline')) {
                 return;
             }
+            
+            if (editFlag.get() === false) {
+                editFlag.set();
+            } else {
+                TINY.box.show({html:'One Edit at a time!'});
+                return;
+            }    
            
             $(this).off(".colorize").removeClass('over-inline').removeAttr('title');
             
@@ -880,11 +897,13 @@ function setClickable() {
 
             $('.saveButton')
                         .click(function () {
+                    editFlag.unset();
                     saveChanges(this, false);
                 });
 
             $('.cancelButton')
                         .click(function () {
+                    editFlag.unset();                        
                     saveChanges(this, revert);
                 });               
         });
@@ -896,8 +915,11 @@ function setClickable() {
 function ajaxListNutsTable(requester, nutID) {
     'use strict';
 
-    var walnutEntries = [], jqxhr, nutIdentifier, emailAddr;
-
+    var walnutEntries = [],
+        jqxhr,
+        nutIdentifier,
+        emailAddr;
+       
     jqxhr = $.ajax({
         type: "GET",
         url: "listNuts.php",
@@ -908,7 +930,7 @@ function ajaxListNutsTable(requester, nutID) {
             }
         }
     })
-        .done(function (dataReturned) {
+        .done(function (dataReturned) {            
             $("#spinner").hide();
             walnutEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
             displayTable(requester, walnutEntries);
