@@ -1,48 +1,89 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title>List the Walnuts</title>
-    <link rel="stylesheet" href="/css/main.css" type="text/css" />
-    <link rel="stylesheet" href="/css/jquery.mCustomScrollbar.css" type="text/css" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
-    <script type="text/javascript">
-	    if (readCookie('nutCookie') !== "loggedIn") {
-		    window.location.href = "login.html";
-        } else {
-             $( document ).ready(function() {
-                    ajaxListNuts("Walnut");
-                });        
-        }
-    </script>    
-</head>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Walnuts</title>
+        <meta name="description" content="Walnut Tally Online">
+        <meta name="viewport" content="width=device-width">
 
-<body>
- 
-   <div class="frame">
-
-        <div class="walnutContainer">
-
-            <h1 class="listH1"><center>Walnuts Galore!</center></h1>
-            <h2 class="listH2"><center>Reviewing Our WT Database</center></h2>  
-                           <p><center><span id="spinner">&nbsp;</span></center></p>
-
-                <div class="content">
-                    <div class="col1"><p id="replaceLt"></p></div>
-                    <div class="col2"><p id="replaceRt"></p> </div>
-                </div>
-           <div id="editHint"><p><center>Click on <span class="gold">Family Name</span> to Edit</center></p></div>
-     </div>
-
-  </div>
- <!-- <script type="text/javascript">
-    $( document ).ready(function() {
-        ajaxListNuts("Walnut");
-    });
-  </script> -->
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/tinybox.css">
+        <link rel="stylesheet" href="/css/main.css">  <!-- includes old Walnut.css -->
+        <link rel="stylesheet" href="/css/jquery.mCustomScrollbar.css" type="text/css" >	
+		<link rel="stylesheet" type="text/css" href="/css/jquery.gritter.css" />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        <script src="/js/main.js"></script>
+        <script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="/js/tinybox.js"></script>        
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.gritter.js"></script>		
+        <script type="text/javascript">
+         if (readCookie('nutCookie') !== "loggedIn") {
+                    window.location.href = "login.html";
+         } else {
+            $(document).ready(function() {
+                var nutID = getParameterByName('id');
+                if (nutID) {
+                    ajaxListNutsTable("Walnut", nutID);  
+                } else {
+                    ajaxListNutsTable("Walnut");
+                }
+            });                    
+        }                        
+        </script> 
+      
+    </head>
     
-</body>
+    <body class="list">
+         
+    <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
 
+    <!-- Add your site or application content here -->
+     <noscript><div id="noscript"><div id="noJS"><p>For any functionality of this nutty site <span class="redText">it is necessary to enable JavaScript! </span><a class="noJSOrCookies" href="http://www.enable-javascript.com/" target="_blank">Here are the instructions</a> on how to enable JavaScript in your web browser. Happily you can then return <a class="noJSOrCookies" href="Walnuts.html">here.</a></p></div></div></noscript>        
+          
+    <div class="frame" id="nutFrame">
+    <div  id="spinner"></div>       <div class="help"><img src="/images/q.png" alt="" height="25" width="25"></div>   
+    <div id="searchLink">
+        <form  action="#" id="searchForm" onsubmit="searchNut(); return false;" >
+            <input  type="text" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder="Search" title="Sir Name Lookup" onfocus="this.placeholder = ''" onblur="this.placeholder ='Search'" /><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
+            <!--  onfocus="this.placeholder = ''" onblur="this.placeholder ='Search'"   -->
+        </form>
+    </div>     
+    <div id="bDayLink"><p><a href="listBDays.html?user=Walnut" title="Birthday List">Birthdays</a></p></div>
+    <div class="walnutContainer">
+ 
+       <div id="galore"><h1 class="listH1">Walnuts Galore!</h1></div>
+       <div class="numNutsDiv"><span># Nuts: <span class="numNuts"></span></span></div>
+       <div id="editHint"><p>Click Family Name to Edit</p></div> 			
+       <div class="content">
+           <div ><p id="walnutTable"></p></div>                
+       </div>
+    </div>
+   </div>
+          
+    <script type="text/javascript"> document.getElementById('nutFrame').className += " js"</script>
+
+    <script>
+        if (!isPlaceholderSupported()){
+            add_placeholder('nutSearch', 'Search');
+        }
+    </script>
+    
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src='//www.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+
+    </body>
 </html>

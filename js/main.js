@@ -1,8 +1,8 @@
 // see if placeholder supported by browser
-function isPlaceholderSupported() 
-{
+function isPlaceholderSupported() {
+    'use strict';
     var input = document.createElement("input");
-    return ('placeholder' in input); 
+    return ('placeholder' in input);
 }
 
 // A no-dependancy quick and dirty method of adding basic
@@ -10,24 +10,24 @@ function isPlaceholderSupported()
 // Author: Jay Williams <myd3.com>
 // License: MIT License
 // Link: https://gist.github.com/1105055
- 
-function add_placeholder (id, placeholder)
-{
-    
-	var el = $("#" + id);    /*;document.getElementById(id); */
-	$(el).val('').attr('placeholder', placeholder);  /* el.placeholder = placeholder;   */
- 
-    $(el).focus (function () {
-/*		if ($(el).val() == $(el).attr('placeholder')) { */
-			$(el).val('');
+
+function add_placeholder(id, placeholder) {
+    'use strict';
+
+    var el = $("#" + id);    /*;document.getElementById(id); */
+    $(el).val('').attr('placeholder', placeholder);  /* el.placeholder = placeholder;   */
+
+    $(el).focus(function () {
+/*	if ($(el).val() == $(el).attr('placeholder')) { */
+        $(el).val('');
 			$(el).css('background-color: gold; color: #000;');
-/*		} */
+/*    } */
     })
-    .blur (function () {
-		if ($(el).val() == 0) {
+    .blur(function () {
+        if ($(el).val() === 0) {
             $(el).val($(el).attr('placeholder'));
-			$(el).css('background-color: transparent; color: #FFFF00;font: normal bold 21px "Times New Roman", Georgia, serif;');
-		} else {
+            $(el).css('background-color: transparent; color: #FFFF00;font: normal bold 21px "Times New Roman", Georgia, serif;');
+        } else {
             if ( $(el).val() !== 'Search' ) {
                 $(el).attr('placeholder', 'Search');
             }
@@ -44,7 +44,7 @@ function searchNut() {
     jqxhr = $.ajax({
         type: "POST",
         url: "nutSearch.php",
-        data:  searchData, // search form single input name is 'nutSearch' so this produces "nutSearch=user_input"
+        data:  searchData // search form single input name is 'nutSearch' so this produces "nutSearch=user_input"
         })
         .done (function (nutID) {
             searchElem = $('#nutSearch');        
@@ -792,8 +792,9 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
                         emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
                     }    
                     $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
-                    setClickable();
+                    
                 }
+				setClickable();
             }              
          );
     } else {  // cancel the edit operation
@@ -803,7 +804,7 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
         } else {
             $('span.active-inline')
                 .replaceWith('<span class="" title="Edit">' + t + '</span>');              
-        }
+        }		
         setClickable();        
     }
 }
@@ -826,6 +827,8 @@ function setClickable() {
     'use strict';
   // put spaces in empty spans to allow in-line edits
     var $editableFields = $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit');
+
+				
     $editableFields.each(function () {
         if ((!$(this).text().trim().length)) {
                 $(this).text("                    ").addClass("emptyCell"); 
@@ -848,8 +851,8 @@ function setClickable() {
                 $(this).removeClass('over-inline').removeAttr('title');
             })
             
-           .on('click', function (event) {
-               
+           .on('click.inlineEdit', function(event) {
+		   	
                 var inputarea,
                 textarea,
                 button, 
@@ -905,13 +908,10 @@ function setClickable() {
                         .click(function () {
                     editFlag.unset();                        
                     saveChanges(this, revert);
-                });               
-        });
+                });						
+        })
 }
 
-// fxn called by list nuts html page - which requester determines api
-/*jslint browser: true*/
-/*global $, jQuery, createXHR, displayPage*/
 function ajaxListNutsTable(requester, nutID) {
     'use strict';
 

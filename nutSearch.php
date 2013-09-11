@@ -9,8 +9,13 @@
         printf("Connect failed: %s\n", $mysqli->connect_error);
         exit();
     }
-    
-    $f =($_POST['nutSearch']);
+	
+    if (!isset($_POST['nutSearch']) || trim($_POST['nutSearch']) === '') {
+		echo "No Match";
+		return;
+	}
+	
+	$f =($_POST['nutSearch']);	
     
  /*   $sql = "SELECT walnutID FROM nuts WHERE SirName LIKE CONCAT(?,'%') LIMIT 1";  */
 	
