@@ -868,7 +868,7 @@ function setClickable() {
             if (editFlag.get() === false) {
                 editFlag.set();
             } else {
-                TINY.box.show({html:'One Edit at a time!'});
+                TINY.box.show({html:'One Edit at a time!', width: 200});
                 return;
             }    
            

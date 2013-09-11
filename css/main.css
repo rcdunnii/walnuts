@@ -411,8 +411,8 @@ textarea {
         display: none;
         position: relative;
         width: 22%;       
-        top: 33px;
-        left: 803px;
+        top: 32px;
+        left: 853px;
         background:#421E13;  
         -moz-border-radius-topleft: 30px;
         -moz-border-radius-topright: 0;
@@ -424,7 +424,7 @@ textarea {
        position: relative;
        width: 19%; 
        height: 32px;       
-       top: 33px;
+       top: 32px;
        left: 888px;
        background: #421E13;
         -moz-border-radius-topleft: 30px;
