@@ -774,39 +774,30 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
                     $(editableElem)
                        .find('.active-inline .ajax')
                        .replaceWith(t.length ? t : "                   ");  
-                    if (t.length === 0) {
-                        $('.active-inline').addClass('emptyCell'); 
-                        emptyCellClass = ''; //i.e. do not remove this class below
-                    } else {
-                        emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
-                    }    
-                      $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
                     /*                        alert(data);   */ 
                  } else {
-                    $(editableElem).find('.active-inline').empty().append('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea>');
-
-                    if (t.length === 0) {
-                        $('.active-inline').addClass('emptyCell'); 
-                        emptyCellClass = ''; //i.e. do not remove this class below
-                    } else {
-                        emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
-                    }    
-                    $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
-                    
+                    $(editableElem).find('.active-inline').empty().append('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea>'); 
                 }
-				setClickable();
+                if (t.length === 0) {
+                    $('.active-inline').addClass('emptyCell'); 
+                    emptyCellClass = ''; //i.e. do not remove this class below
+                } else {
+                    emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
+                }    
+                $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
             }              
          );
     } else {  // cancel the edit operation
         if (editableClass === 'editable-area') {
-            $('span.active-inline')
+            $(obj).closest('span.active-inline')
                 .replaceWith('<span class="textarea" title="Edit"><textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea></span>'); 
         } else {
-            $('span.active-inline')
-                .replaceWith('<span class="" title="Edit">' + t + '</span>');              
+            $(obj).closest('span.active-inline')
+                .replaceWith('<span title="Edit">' + t + '</span>');              
         }		
-        setClickable();        
+
     }
+     setClickable();
 }
 
 // use closure to see if editing already in process
@@ -815,9 +806,8 @@ function editingNut() {
 
     var editing = false;
     return {
-        set: function () { editing = true;/* return editing; */},
-        get: function () { return editing; },
-        unset: function () { editing = false; /* return editing; */}
+        set: function (newVal) {editing = newVal;},
+        get: function () { return editing;},
     };
 }
 
@@ -825,91 +815,118 @@ var editFlag = editingNut(); // set inline edit flags to prevent 2 at a time edi
 
 function setClickable() {
     'use strict';
-  // put spaces in empty spans to allow in-line edits
+    // select editable fields, some input fields, other textareas; both empty and filled are editable
+    // class = 'editable' are input fields (with and without content)
+    // class = 'editable-area' are textareas (with and without content), and textarea class= 'preEdit' have content
     var $editableFields = $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit');
-
-				
+    
+    // put spaces in empty spans to allow in-line edits - add class emptyCell to empty fields        				
     $editableFields.each(function () {
         if ((!$(this).text().trim().length)) {
                 $(this).text("                    ").addClass("emptyCell"); 
         }
     });           
 
-        $editableFields
-           .on('mouseover.colorize', function () {
-                $(this).addClass('over-inline').attr('title', 'Edit');
-  /*              
-                if ($(this).hasClass('mailToLink') && ($.trim($(this).html()).length)) {
-                    $(this).attr('title', 'Left Click to Edit or Email');
-                } else {
-                   $(this).attr('title', 'Edit');            
-                }
- */
-            })
-            
-           .on('mouseout.colorize', function () {
-                $(this).removeClass('over-inline').removeAttr('title');
-            })
-            
-           .on('click.inlineEdit', function(event) {
-		   	
-                var inputarea,
-                textarea,
-                button, 
-                revert, 
-                contents, 
-                editElement,                
-                $editable = $(this);
-                
-            if ($(this).hasClass('active-inline')) {
-                return;
+    var $clickableFields = $('.editable span, .editable-area span.textarea');
+    
+    $clickableFields
+    
+        .on('mouseover.colorize', function () {
+            if ( $(this).hasClass('textarea') && !$(this).hasClass('emptyCell')) {
+                $(this)
+                    .find('textarea')
+                    .addClass('over-inline')
+                    .attr('title', 'Edit');
+            } else {        
+                $(this)
+                    .addClass('over-inline')
+                    .attr('title', 'Edit');
             }
-            
-            if (editFlag.get() === false) {
-                editFlag.set();
+/*              
+            if ($(this).hasClass('mailToLink') && ($.trim($(this).html()).length)) {
+                $(this).attr('title', 'Left Click to Edit or Email');
             } else {
-                TINY.box.show({html:'One Edit at a time!', width: 200});
-                return;
-            }    
-           
-            $(this).off(".colorize").removeClass('over-inline').removeAttr('title');
-            
-            inputarea = '<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
-            textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="20" class="click-inline" wrap="hard" maxlength="60">' + $(this).text() + '</textarea>';
-            button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
-            revert = $(this).text(); // no trim since contents pasted back on screen only - not to db
-            contents = $.trim($editable.text().replace(/\/p>/g, "/p>/p>\n\n"));
-            
-            $editable
-                .addClass('active-inline')
-                .empty();
- 
-            // what form elem needed?              
-            if ($editable.parents("td").hasClass('editable')) { // input field or textarea field being edited?
-                editElement =  inputarea + button;
-                $(editElement).appendTo($editable);                   
-                $('input.click-inline').val(contents);
-                editElement = $('.editable input.click-inline');
-            } else {
-                editElement = textarea + button;
-                $(editElement).appendTo($editable);   
-                editElement = $('textarea.click-inline');
+               $(this).attr('title', 'Edit');            
             }
-            
-            $(editElement).focus();
-
-            $('.saveButton')
-                        .click(function () {
-                    editFlag.unset();
-                    saveChanges(this, false);
-                });
-
-            $('.cancelButton')
-                        .click(function () {
-                    editFlag.unset();                        
-                    saveChanges(this, revert);
-                });						
+*/
         })
+        
+        .on('mouseout.colorize', function () {
+            if ( $(this).hasClass('textarea') && !$(this).hasClass('emptyCell')) {
+                $(this)
+                    .find('textarea')
+                    .removeClass('over-inline')
+                    .removeAttr('title');
+            } else {        
+                $(this)
+                    .removeClass('over-inline')
+                    .removeAttr('title');
+            }
+        })
+    
+       .on('click.inlineEdit', function(event) {
+        
+            var inputarea,
+            textarea,
+            button, 
+            revert, 
+            contents, 
+            editElement;
+          
+         editElement = $(this);
+         
+         //ignore clicks on element now being edited - has class = 'active-inline' 
+        if ($(editElement).hasClass('active-inline')) {
+            return;
+        } else {
+            $(editElement).addClass('active-inline');
+        }
+        
+        // editFlag global object declared/defined above in this file main.js - prevents 2 concurrent edits 
+        if (editFlag.get() === false) {
+            editFlag.set(true);
+        } else {
+            TINY.box.show({html:'One Edit at a time!', width: 200});
+            $(editElement).removeClass('active-inline');
+            return;
+        }
+        
+        // turn off hilite and title while editing field
+        $(editElement).off(".colorize").removeClass('over-inline').removeAttr('title');
+        
+        // create html elements for the inline edits, either an input or textarea element, each wrapped in an inline edit (ie) div
+        inputarea = '<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
+        textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="20" class="click-inline" wrap="hard" maxlength="60">' + $(editElement).text() + '</textarea>';
+        button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
+        revert = $(editElement).text(); // no trim since contents pasted back on screen only - not to db
+        contents = $.trim($(editElement).text().replace(/\/p>/g, "/p>/p>\n\n"));
+
+        // what form elem needed?              
+         if ($(editElement).parent().hasClass('editable')) { // dealing with input field rather than textarea field
+            $(editElement)
+                .html(inputarea + button)
+                .find('input.click-inline')
+                .val(contents)
+                .focus();
+        } else {    // dealing with textarea field 
+            $(editElement)
+                .html(textarea + button)
+                .find('textarea')
+                .focus();
+        }   
+ 
+        $('.saveButton')
+                    .click(function () {
+                editFlag.set(false);    
+                saveChanges(this, false);
+            });
+
+        $('.cancelButton')
+                    .click(function () {
+                editFlag.set(false);                                                
+                saveChanges(this, revert);
+            });              
+    })
 }
 
 function ajaxListNutsTable(requester, nutID) {
