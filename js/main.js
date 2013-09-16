@@ -1,3 +1,4 @@
+/*
 // see if placeholder supported by browser
 function isPlaceholderSupported() {
     'use strict';
@@ -14,14 +15,14 @@ function isPlaceholderSupported() {
 function add_placeholder(id, placeholder) {
     'use strict';
 
-    var el = $("#" + id);    /*;document.getElementById(id); */
-    $(el).val('').attr('placeholder', placeholder);  /* el.placeholder = placeholder;   */
+    var el = $("#" + id);   
+    $(el).val('').attr('placeholder', placeholder);  
 
     $(el).focus(function () {
-/*	if ($(el).val() == $(el).attr('placeholder')) { */
+
         $(el).val('');
 			$(el).css('background-color: gold; color: #000;');
-/*    } */
+
     })
     .blur(function () {
         if ($(el).val() === 0) {
@@ -36,12 +37,14 @@ function add_placeholder(id, placeholder) {
  
 	$(el).trigger('blur');
 }
-
+*/
 // called by listNuts.html and Walnuts.html
 function searchNut() {
     'use strict';
+       
     var searchData = $("#searchForm").serialize(), jqxhr, searchElem;
     jqxhr = $.ajax({
+   
         type: "POST",
         url: "nutSearch.php",
         data:  searchData // search form single input name is 'nutSearch' so this produces "nutSearch=user_input"
@@ -49,32 +52,27 @@ function searchNut() {
         .done (function (nutID) {
             searchElem = $('#nutSearch');        
             if (nutID === "No Match") {
-                if (!isPlaceholderSupported()) {
-                    add_placeholder('nutSearch', nutID);
-                } else {                
-                 $(searchElem)
-                   .val("")
-                   .attr("placeholder", nutID);
-                 $(searchElem).focus(function() {
-                      $(searchElem).attr('placeholder', '');
-                   })
-                   .blur(function() {
-                       $(searchElem).attr('placeholder', 'Search');
-                    });
-              }
+                TINY.box.show({html:'No match for " ' + $("#nutSearch").val() + ' "', width: 200});
+                $(searchElem)
+                    .val($(searchElem).attr('placeholder'))
+                    .focus();
             } else {
                 var position = "#nutID_" + nutID;
                 $(".content").mCustomScrollbar("scrollTo", position);
-                if (!isPlaceholderSupported()) {
-                    add_placeholder('nutSearch', "Search");
-                } else {                
-                     $(searchElem).val("").attr("placeholder", "Search");
-                }                
-            }            
-        })
+                $(searchElem)               
+                    .val($(searchElem).attr('placeholder'))
+            }           
+            $('input[placeholder]').focus(function(ev){ 
+              var $this = $(this);
+              if ($this.val() === $this.attr('placeholder')) $this.val('');
+            }).blur(function(ev){
+              var $this = $(this);      
+              if ($this.val() === '') $this.val($this.attr('placeholder'));
+            })
+        })    
         .fail ( function (jqxhr, status, error) {
             alert(jqxhr.responseText);
-        });    
+        });       
 }
 
 

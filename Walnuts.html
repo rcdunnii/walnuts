@@ -14,24 +14,28 @@
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/tinybox.css">
         <link rel="stylesheet" href="/css/main.css">  <!-- includes old Walnut.css -->
-        <link rel="stylesheet" href="/css/jquery.mCustomScrollbar.css" type="text/css" >	
+        <link rel="stylesheet" href="/css/jquery.mCustomScrollbar.css">	
+        <link rel="stylesheet" href="/css/jquery.placeholder.css">	        
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-        <script src="/js/main.js"></script>
+
         <script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
         <script src="/js/tinybox.js"></script>        
         <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/jquery.placeholder.js"></script>
         <script type="text/javascript">
          if (readCookie('nutCookie') !== "loggedIn") {
                     window.location.href = "login.html";
          } else {
             $(document).ready(function() {
+               $(":input[placeholder]").placeholder();
                 var nutID = getParameterByName('id');
                 if (nutID) {
                     ajaxListNutsTable("Walnut", nutID);  
                 } else {
                     ajaxListNutsTable("Walnut");
-                }
+                }            
             });                    
         }                        
         </script> 
@@ -50,8 +54,8 @@
     <div class="frame" id="nutFrame">
     <div  id="spinner"></div>       <div class="help"><img src="/images/q.png" alt="" height="25" width="25"></div>   
     <div id="searchLink">
-        <form  action="#" id="searchForm" onsubmit="searchNut(); return false;" >
-            <input  type="text" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder="Search" title="Sir Name Lookup" onfocus="this.placeholder = ''" onblur="this.placeholder ='Search'" /><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
+        <form  action="" id="searchForm"  onsubmit="searchNut(); return false;"  >
+            <input  type="search" id="nutSearch" name="nutSearch" size="25" maxlength="25" placeholder="Search" title="Sir Name Lookup" /><input type="image" id="searchImg" src="/images/searchtool.png" name="submit" alt="submit" />
             <!--  onfocus="this.placeholder = ''" onblur="this.placeholder ='Search'"   -->
         </form>
     </div>     
@@ -69,12 +73,7 @@
           
     <script type="text/javascript"> document.getElementById('nutFrame').className += " js"</script>
 
-    <script>
-        if (!isPlaceholderSupported()){
-            add_placeholder('nutSearch', 'Search');
-        }
-    </script>
-    
+  
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
         var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];

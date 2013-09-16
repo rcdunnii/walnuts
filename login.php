@@ -60,7 +60,7 @@
         if (isset($str_json["captcha_code"])){
             $captcha_code = $str_json["captcha_code"];
             if ($securimage->check($captcha_code) == false) {
-                $response = "Incorrect security code.<br />";
+                $response = "Incorrect Security Code.<br />";
             } else {
                 $response = "ok";
             }
@@ -69,7 +69,7 @@
         }
     } else {
        // this would destroy the session variables
-        $response = "Password incorrect - try again.";
+        $response = "Password incorrect";
     }
     echo ($response);
 ?>

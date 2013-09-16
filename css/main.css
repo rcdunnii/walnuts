@@ -327,12 +327,11 @@ textarea {
     #loginError  {
         position:relative;
         text-align: left;
-        font-size: 1.2em;
         color: red;
         bottom: 30px;
-        left: 9px;
+        left: 35px;
         width: 195px;
- /*       margin: 10px;   */
+
     }
     
     #hintWrapper {
@@ -424,7 +423,7 @@ textarea {
        position: relative;
        width: 19%; 
        height: 32px;       
-       top: 32px;
+       top: 33px;
        left: 888px;
        background: #421E13;
         -moz-border-radius-topleft: 30px;
@@ -454,9 +453,9 @@ textarea {
 		font: normal bold 1.3em "Times New Roman", Georgia, serif;
 		border: 1px solid #FFFF00;
 		outline: none;
-		padding: 1px;
-		width: 157px;
-		text-align: center;
+		padding-left: 11px;
+		width: 130px;
+		text-align: left;
    }
    
     #searchLink input#nutSearch:focus {
