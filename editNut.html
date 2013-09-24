@@ -24,12 +24,11 @@
         document.forms[0].user.value = userNut;
         document.forms[0].walnutID.value = targetNut;
         getOrigNut(targetNut); // populate page with original nut data        
-       $('#editNutForm input:text, textarea').focus(function() { 
+         $('#editNutForm input:text, #editNutForm textarea#Notes').hover(function() { 
              $(this).addClass('highlight');
-         });
-       $('#editNutForm input:text, textarea').blur(function() { 
+         }, function() { 
              $(this).removeClass('highlight');
-         });    
+         });   
         $('form:first *:input[type!=hidden]:first').focus();                    
          $('textarea').wChar({
             position: 'bc',
@@ -90,7 +89,7 @@
 
     </script>
 </head>
-<body>
+<body class="list">
 
     <!-- this page is called by javascript function main line # 86 as editNut.html?value=walnutID&user=requester -->
 

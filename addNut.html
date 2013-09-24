@@ -26,11 +26,13 @@
 
     <script type="text/javascript">
      $(document).ready (function() {
-         $('form:first *:input[type!=hidden]:first').focus();
-         $('#addNutForm input:text').focus(function() { 
+ /*        $('form:first *:input[type!=hidden]:first').focus() {
+            $(this).addClass('highlight');
+         }
+*/         
+         $('#addNutForm input:text, #addNutForm textarea#Notes').hover(function() { 
              $(this).addClass('highlight');
-         });
-         $('#addNutForm input:text').blur(function() { 
+         }, function() { 
              $(this).removeClass('highlight');
          });
          $('textarea').wChar({
@@ -93,7 +95,7 @@
     </script>
 
 </head>
-<body>
+<body class="list">
  
         <div id="addNutPage">
             <h1 class="listH1">Walnuts Galore!</h1>

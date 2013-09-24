@@ -52,7 +52,7 @@ function searchNut() {
         .done (function (nutID) {
             searchElem = $('#nutSearch');        
             if (nutID === "No Match") {
-                TINY.box.show({html:'No match for " ' + $("#nutSearch").val() + ' "', width: 200});
+                TINY.box.show({html:'No match for Sir Name " ' + $("#nutSearch").val() + ' "', width: 300});
                 $(searchElem)
                     .val($(searchElem).attr('placeholder'))
                     .focus();
@@ -788,10 +788,10 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
     } else {  // cancel the edit operation
         if (editableClass === 'editable-area') {
             $(obj).closest('span.active-inline')
-                .replaceWith('<span class="textarea" title="Edit"><textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea></span>'); 
+                .replaceWith('<span class="textarea" title="Quick Edit"><textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea></span>'); 
         } else {
             $(obj).closest('span.active-inline')
-                .replaceWith('<span title="Edit">' + t + '</span>');              
+                .replaceWith('<span title="Quick Edit">' + t + '</span>');              
         }		
 
     }
@@ -834,11 +834,11 @@ function setClickable() {
                 $(this)
                     .find('textarea')
                     .addClass('over-inline')
-                    .attr('title', 'Edit');
+                    .attr('title', 'Quick Edit');
             } else {        
                 $(this)
                     .addClass('over-inline')
-                    .attr('title', 'Edit');
+                    .attr('title', 'Quick Edit');
             }
 /*              
             if ($(this).hasClass('mailToLink') && ($.trim($(this).html()).length)) {
