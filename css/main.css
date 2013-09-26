@@ -718,20 +718,20 @@ textarea {
        _font-family: 'courier new', monospace;   
         font-size: 1em;     
     }
-      
-     .ie_div_span {
-   /*      display:inline-block; */
-        position: relative;
-       top: -21px;
-        left: 80px;
- /*       top: 0;  
-        left: 20px;  */ 
+  
+    .inlineEditDiv {
+        position: relative; 
      }
      
     .setTDHgt { 
          height: 42px;
      } 
-     
+    
+     .inlineDiv {
+        display: inline-block;
+    }
+    
+    
      .ie_div_txtarea {
        position: relative;
     }           
@@ -754,13 +754,16 @@ textarea {
        font-size:70%;
        background-color: yellow;
        cursor:pointer;
+
     }
      .saveButton {
          color: green;
+         margin-left:5px;
      }
 
      .cancelButton {
         color: red;
+        margin: 0 5px;
      }
      
      .saveButton:hover,

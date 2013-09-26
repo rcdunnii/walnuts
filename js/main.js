@@ -1,7 +1,7 @@
 /*
 // see if placeholder supported by browser
 function isPlaceholderSupported() {
-    'use strict';
+     'use strict';
     var input = document.createElement("input");
     return ('placeholder' in input);
 }
@@ -40,7 +40,7 @@ function add_placeholder(id, placeholder) {
 */
 // called by listNuts.html and Walnuts.html
 function searchNut() {
-    'use strict';
+    /* 'use strict';*/
        
     var searchData = $("#searchForm").serialize(), jqxhr, searchElem;
     jqxhr = $.ajax({
@@ -78,7 +78,7 @@ function searchNut() {
 
 
 function getMessageBody(form) {
-    'use strict';
+    /* 'use strict';*/
     var data = "", i, j, option, elem, param, nodeName, type, valueAttr, value;
     for (i = 0; i < form.elements.length; i += 1) {
         elem = form.elements[i];
@@ -123,14 +123,14 @@ function getMessageBody(form) {
 var registering = false;
 
 function setExpiration(cookieLife) {
-    'use strict';
+    /* 'use strict';*/
     var today = new Date(), expr;
     expr = new Date(today.getTime() + cookieLife * 24 * 60 * 60 * 1000);
     return expr.toGMTString();
 }
 
 function createCookie(name, value, expires, path, domain, secure) {
-    'use strict';
+    /* 'use strict';*/
 /*    var date = new Date(); */
     document.cookie = name + "=" + escape(value) + "; ";
 
@@ -150,7 +150,7 @@ function createCookie(name, value, expires, path, domain, secure) {
 }
 
 function readCookie(name) {
-    'use strict';
+    /* 'use strict';*/
     var nameEQ, ca, i, c;
 
     nameEQ = name + "=";
@@ -169,7 +169,7 @@ function readCookie(name) {
 
 //called from login.html and wtdLogin.html on submit
 function ajaxAuthenticate(form, fxn, method) {
-    'use strict';
+    /* 'use strict';*/
     var currentUser,
         data,
         data_json = "",
@@ -255,7 +255,7 @@ function ajaxAuthenticate(form, fxn, method) {
 
 // fxn called by primary html page WTD.html - only run by Foxy
 function ajaxWalnutFunction(requester) {
-    'use strict';
+    /* 'use strict';*/
     var result,
         user_input,
         jqxhr,
@@ -345,7 +345,7 @@ function ajaxWalnutFunction(requester) {
 
 // called by ajaxAddNuts(), ajaxEditNut(), ajaxAddBDay()
 function getPostDataJSON(theForm) {
-    'use strict';
+    /* 'use strict';*/
     var data_json = "";
 
     $.fn.serializeObject = function () {
@@ -372,7 +372,7 @@ function getPostDataJSON(theForm) {
 }
 
 function ajaxAddNuts() {
-    'use strict';
+    /* 'use strict';*/
 
     var addData;
     addData = getPostDataJSON("addNutForm");
@@ -395,7 +395,7 @@ function ajaxAddNuts() {
 }
 
 function ajaxAddBDay() {
-    'use strict';
+    /* 'use strict';*/
 
     var addBDayData;
     addBDayData = getPostDataJSON("addBDayForm");
@@ -417,7 +417,7 @@ function ajaxAddBDay() {
     });
 }
 function getParameterByName(name) {
-    'use strict';
+    /* 'use strict';*/
     var regexS, regex, results;
 
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -433,14 +433,14 @@ function getParameterByName(name) {
 }
 
 function isEven(value) {
-    'use strict';
+    /* 'use strict';*/
     var x;
     x = ((value % 2 === 0) ? true : false);
     return x;
 }
 
 function getMonth(numStr) {
-    'use strict';
+    /* 'use strict';*/
     var monStr = "";
 
     switch (numStr) {
@@ -485,7 +485,7 @@ function getMonth(numStr) {
 }
 
 function displayBDays(requester, nutEntries, idxBy) {
-    'use strict';
+    /* 'use strict';*/
     var dateStr = "",
         i = 0,
         idx = 0,   // str len counter up to xCol
@@ -586,7 +586,7 @@ var scrollBar = false; // gobal scrollbar exists/nonexists flag
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
 function ajaxListBDays(requester, indexedBy) {
-    'use strict';
+    /* 'use strict';*/
 
     var bDayEntries = [], jqxhr;
 
@@ -638,7 +638,7 @@ function ajaxListBDays(requester, indexedBy) {
 
 
 function displayTable(requester, nutEntries) {
-    'use strict';
+    /* 'use strict';*/
     var numNuts, i = 0,
         replacementStr = "", nutTable = "",
         theHost = "";
@@ -668,23 +668,23 @@ function displayTable(requester, nutEntries) {
             // set Formal Names
             replacementStr += "<tr><td>" + nutEntries[i].FormalNames + "</td><td>" + nutEntries[i + 1].FormalNames + "</td></tr>";
             // set Children
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children:<span>" + nutEntries[i].Children + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Children' id='Children'>"  + "Children:<span>" + nutEntries[i + 1].Children + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children:<div class='inlineDiv'>" + nutEntries[i].Children + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Children' id='Children'>"  + "Children:<div class='inlineDiv'>" + nutEntries[i + 1].Children + "</div></td></tr>";
             // set Address line 1
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i].Addr1 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i + 1].Addr1 + "</span></div></div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[i].Addr1 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[i + 1].Addr1 + "</div></div></div></td></tr>";
             // set Address line 2
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <span>" + nutEntries[i].Addr2 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <span>" + nutEntries[i + 1].Addr2 + "</span></td></div></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr2 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[i + 1].Addr2 + "</div></td></div></tr>";
             // set Address line 3
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <span>" + nutEntries[i].Addr3 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr3'>" + "         <span>" + nutEntries[i + 1].Addr3 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr3 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[i + 1].Addr3 + "</div></td></tr>";
             // set Address line 4
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <span>" + nutEntries[i].Addr4 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <span>" + nutEntries[i + 1].Addr4 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr4 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[i + 1].Addr4 + "</div></td></tr>";
             // set Email 1
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <span class = 'mailToLink'>" + nutEntries[i].Email1 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <span class = 'mailToLink'>" + nutEntries[i + 1].Email1 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email1 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[i + 1].Email1 + "</div></td></tr>";
             // set Email  2
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <span class = 'mailToLink'>" + nutEntries[i].Email2 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <span class = 'mailToLink'>" + nutEntries[i + 1].Email2 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email2 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[i + 1].Email2 + "</div></td></tr>";
             // set Phone  1
-            replacementStr += "<tr><td   class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i].Phone1 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i + 1].Phone1 + "</span></td></tr>";
+            replacementStr += "<tr><td   class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[i].Phone1 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[i + 1].Phone1 + "</div></td></tr>";
             // set Phone  2
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <span>" + nutEntries[i].Phone2 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <span>" + nutEntries[i + 1].Phone2 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[i].Phone2 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[i + 1].Phone2 + "</div></td></tr>";
             
            if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
                 replacementStr += "<tr><td>Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</td>";
@@ -698,9 +698,9 @@ function displayTable(requester, nutEntries) {
                 replacementStr += "<td>Last Update: " + nutEntries[i + 1].Created.split(" ", 1) + "</td></tr>";
             }
             
-            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes: <br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></span></td><td class='editable-area' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Notes' id='Notes'>";
+            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes: <br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></div></td><td class='editable-area' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Notes' id='Notes'>";
 
-            replacementStr += "Notes:<br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i + 1].Notes + "</textarea></span></td></tr>";
+            replacementStr += "Notes:<br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i + 1].Notes + "</textarea></div></td></tr>";
             
             // empty row to separate entries
             replacementStr += "<tr><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td></tr>";
@@ -720,15 +720,15 @@ function displayTable(requester, nutEntries) {
 
             replacementStr += "<tr><td>" + nutEntries[i].Names + "</td></tr>";
             replacementStr += "<tr><td>" + nutEntries[i].FormalNames + "</td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children:<span>" + nutEntries[i].Children + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i].Addr1 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <span>" + nutEntries[i].Addr2 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <span>" + nutEntries[i].Addr3 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <span>" + nutEntries[i].Addr4 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <span class = 'mailToLink'>" + nutEntries[i].Email1 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <span class = 'mailToLink'>" + nutEntries[i].Email2 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i].Phone1 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <span>" + nutEntries[i].Phone2 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children: <div class='inlineDiv'>" + nutEntries[i].Children + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[i].Addr1 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr2 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr3 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr4 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email1 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email2 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[i].Phone1 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[i].Phone2 + "</div></td></tr>";
            // put out last update 
            if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
                 replacementStr += "<tr><td>Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</td></tr>";
@@ -736,7 +736,7 @@ function displayTable(requester, nutEntries) {
                 replacementStr += "<tr><td>Last Update: " + nutEntries[i].Created.split(" ", 1) + "</td></tr>";
             }
  
-            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes:<br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></span></td><tr>";
+            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes:<br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></div></td><tr>";
             
             // empty row to separate entries
             replacementStr += "<tr><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td></tr>";
@@ -751,11 +751,11 @@ function displayTable(requester, nutEntries) {
 }
 
 function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save data, or original data in input field if he wants to cancel
-    'use strict';
+    /* 'use strict';*/
     var t, editableClass, editableElem, emptyCellClass;
 
     if (false === cancel) {
-        t = $.trim($(obj).parent().siblings(0).val());  //$(obj) is SAVE or CANCEL button, parent() is div holding buttons, sib is input field
+        t = $.trim($(obj).parent().children(':first').val());  //$(obj)=SAVE/CANCEL, parent()=inlinEditDiv,1st child=input field
     } else {
         t = cancel;
     }
@@ -764,7 +764,8 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
     
     if (cancel === false) {
     
-        $(editableElem).find('.active-inline div').replaceWith('<em class="ajax">Saving...<em>');
+        $(editableElem).find('.active-inline div').replaceWith('<em class="ajax">Saving...<em>');  
+
      // post new value to the server
         $.post('save.php', {id: $(editableElem).attr('walnutID'), name: $(editableElem).attr('name'), value: t},
             function (data) {
@@ -772,7 +773,7 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
                     $(editableElem)
                        .find('.active-inline .ajax')
                        .replaceWith(t.length ? t : "                   ");  
-                    /*                        alert(data);   */ 
+  /*                                          alert(data);   */ 
                  } else {
                     $(editableElem).find('.active-inline').empty().append('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea>'); 
                 }
@@ -787,11 +788,11 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
          );
     } else {  // cancel the edit operation
         if (editableClass === 'editable-area') {
-            $(obj).closest('span.active-inline')
-                .replaceWith('<span class="textarea" title="Quick Edit"><textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea></span>'); 
+            $(obj).closest('div.active-inline')
+                .replaceWith('<div class="inlineDiv textarea" title="Quick Edit"><textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea></div>'); 
         } else {
-            $(obj).closest('span.active-inline')
-                .replaceWith('<span title="Quick Edit">' + t + '</span>');              
+            $(obj).closest('div.active-inline')
+                .replaceWith('<div class="inlineDiv" title="Quick Edit">' + t + '</div>');              
         }		
 
     }
@@ -800,7 +801,7 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
 
 // use closure to see if editing already in process
 function editingNut() {
-    'use strict';
+    /* 'use strict';*/
 
     var editing = false;
     return {
@@ -812,11 +813,11 @@ function editingNut() {
 var editFlag = editingNut(); // set inline edit flags to prevent 2 at a time edits - uses closures
 
 function setClickable() {
-    'use strict';
+    /* 'use strict';*/
     // select editable fields, some input fields, other textareas; both empty and filled are editable
     // class = 'editable' are input fields (with and without content)
     // class = 'editable-area' are textareas (with and without content), and textarea class= 'preEdit' have content
-    var $editableFields = $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit');
+    var $editableFields = $('.editable div, .editable-area div.textarea, .editable-area div.textarea textarea.preEdit');
     
     // put spaces in empty spans to allow in-line edits - add class emptyCell to empty fields        				
     $editableFields.each(function () {
@@ -825,7 +826,7 @@ function setClickable() {
         }
     });           
 
-    var $clickableFields = $('.editable span, .editable-area span.textarea');
+    var $clickableFields = $('.editable div, .editable-area div.textarea');
     
     $clickableFields
     
@@ -890,12 +891,12 @@ function setClickable() {
         }
         
         // turn off hilite and title while editing field
-        $(editElement).off(".colorize").removeClass('over-inline').removeAttr('title');
+        $(editElement).off(".colorize").removeClass('over-inline').removeClass('emptyCell').removeAttr('title');
         
         // create html elements for the inline edits, either an input or textarea element, each wrapped in an inline edit (ie) div
-        inputarea = '<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
+        inputarea = '<div class="inlineEditDiv"><input type="text" class="click-inline" size="25" maxlength="50"/>';
         textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="20" class="click-inline" wrap="hard" maxlength="60">' + $(editElement).text() + '</textarea>';
-        button = '<div><input type="button" value="SAVE" class="saveButton" />&nbsp;<input type="button" value="CANCEL" class="cancelButton" /></div></div>';
+        button = '<input type="button" value="SAVE" class="saveButton" /><input type="button" value="CANCEL" class="cancelButton" /></div>';
         revert = $(editElement).text(); // no trim since contents pasted back on screen only - not to db
         contents = $.trim($(editElement).text().replace(/\/p>/g, "/p>/p>\n\n"));
 
@@ -908,7 +909,7 @@ function setClickable() {
                 .focus();
         } else {    // dealing with textarea field 
             $(editElement)
-                .html(textarea + button)
+                .html(textarea + '<br>' + button)
                 .find('textarea')
                 .focus();
         }   
@@ -928,7 +929,7 @@ function setClickable() {
 }
 
 function ajaxListNutsTable(requester, nutID) {
-    'use strict';
+    /* 'use strict';*/
 
     var walnutEntries = [],
         jqxhr,
@@ -1062,7 +1063,7 @@ function ajaxListNutsTable(requester, nutID) {
 
 
 function confirmDel(nutId, Name, dataBase, requester) {
-    'use strict';
+    /* 'use strict';*/
 
     var jqxhr, thisURL, thisHTML, r = confirm("Really delete " + Name + "?");
     if (dataBase === "walnuts") {
@@ -1089,7 +1090,7 @@ function confirmDel(nutId, Name, dataBase, requester) {
 
 // next 2 fxns called by editNut.html page
 function getOrigNut(nutID) {
-    'use strict';
+    /* 'use strict';*/
 
     var jqxhr,
 	    key,
@@ -1116,7 +1117,7 @@ function getOrigNut(nutID) {
 
 // called by editNut.html on submit of form
 function ajaxEditNut() {
-    'use strict';
+    /* 'use strict';*/
 
     var editData, requester, nutID;
     editData = getPostDataJSON("editNutForm");
@@ -1144,7 +1145,7 @@ function ajaxEditNut() {
 
 // called by editBDay.html on submit of form
 function ajaxEditBDay() {
-    'use strict';
+    /* 'use strict';*/
 
     var editData, requester;
     editData = getPostDataJSON("editBDayForm");
@@ -1169,7 +1170,7 @@ function ajaxEditBDay() {
 }
 
 function getOrigBDay(nutID) {
-    'use strict';
+    /* 'use strict';*/
 
     var key,
 	    valOfKey,
@@ -1195,7 +1196,7 @@ function getOrigBDay(nutID) {
 }
 
 function ajaxRestoreDBs(sql) {
-    'use strict';
+    /* 'use strict';*/
 
     var  jqxhr;
 
