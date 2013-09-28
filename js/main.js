@@ -925,7 +925,7 @@ function Popup(data)
     {
         var mywindow;
         
-        mywindow = chrome.windows.create('', 'my window', 'height=400,width=600');
+        mywindow = window.open('', 'my window', 'height=400,width=600');
         mywindow.document.write('<html><head><title>my div</title>');
         /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
         mywindow.document.write('</head><body >');
