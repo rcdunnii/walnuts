@@ -747,7 +747,29 @@ textarea {
      
     .ie_div_txtarea textarea {
         background-color: green;    
-     }    
+     }
+    .toPrint {
+        display: none;
+    }
+    
+    input[type="checkbox"] {
+        display:none;
+    }
+        
+    input[type="checkbox"] + label span {
+        display:inline-block;
+        width:19px;
+        height:19px;
+        margin:-1px 4px 0 0;
+        vertical-align:middle;
+        background:url(/images/check_radio_sheet1.png) left top no-repeat;
+        cursor:pointer;
+    }
+    
+    input[type="checkbox"]:checked + label span {
+            background:url(/images/check_radio_sheet1.png) -19px top no-repeat;
+    }
+    
      .saveButton,
      .cancelButton {
        font:2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;

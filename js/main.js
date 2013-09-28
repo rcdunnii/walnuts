@@ -1,43 +1,3 @@
-/*
-// see if placeholder supported by browser
-function isPlaceholderSupported() {
-     'use strict';
-    var input = document.createElement("input");
-    return ('placeholder' in input);
-}
-
-// A no-dependancy quick and dirty method of adding basic
-// placeholder functionality to Internet Explorer 5.5+
-// Author: Jay Williams <myd3.com>
-// License: MIT License
-// Link: https://gist.github.com/1105055
-
-function add_placeholder(id, placeholder) {
-    'use strict';
-
-    var el = $("#" + id);   
-    $(el).val('').attr('placeholder', placeholder);  
-
-    $(el).focus(function () {
-
-        $(el).val('');
-			$(el).css('background-color: gold; color: #000;');
-
-    })
-    .blur(function () {
-        if ($(el).val() === 0) {
-            $(el).val($(el).attr('placeholder'));
-            $(el).css('background-color: transparent; color: #FFFF00;font: normal bold 21px "Times New Roman", Georgia, serif;');
-        } else {
-            if ( $(el).val() !== 'Search' ) {
-                $(el).attr('placeholder', 'Search');
-            }
-        }
-    });
- 
-	$(el).trigger('blur');
-}
-*/
 // called by listNuts.html and Walnuts.html
 function searchNut() {
     /* 'use strict';*/
@@ -120,7 +80,7 @@ function getMessageBody(form) {
     return data;
 }
 
-var registering = false;
+var registering = new Boolean(0);
 
 function setExpiration(cookieLife) {
     /* 'use strict';*/
@@ -184,7 +144,7 @@ function ajaxAuthenticate(form, fxn, method) {
         send_data = "",
         url = "";
         
-    if (typeof registering === true) {
+    if (registering === true) {
         return;
     }
 
@@ -582,9 +542,8 @@ function displayBDays(requester, nutEntries, idxBy) {
 }
 
 var scrollBar = false; // gobal scrollbar exists/nonexists flag
+
 // fxn called by list nuts html page - which requester determines api
-/*jslint browser: true*/
-/*global $, jQuery, createXHR, displayPage*/
 function ajaxListBDays(requester, indexedBy) {
     /* 'use strict';*/
 
@@ -649,8 +608,8 @@ function displayTable(requester, nutEntries) {
 
     for (i = 0; i < numNuts; i += 2) {
         if (((i + 1) < numNuts)) {
-            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
-
+            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "'><span></span>Print</label></span>";
+   /*         <a onclick='printNut("+ nutEntries[i].walnutID + ")' title='Print'><span class='oneNut'>          P</span></a>";  */
             if (requester === 'Foxy') {
                 replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
             } else {
@@ -773,7 +732,6 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
                     $(editableElem)
                        .find('.active-inline .ajax')
                        .replaceWith(t.length ? t : "                   ");  
-  /*                                          alert(data);   */ 
                  } else {
                     $(editableElem).find('.active-inline').empty().append('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea>'); 
                 }
@@ -806,7 +764,7 @@ function editingNut() {
     var editing = false;
     return {
         set: function (newVal) {editing = newVal;},
-        get: function () { return editing;},
+        get: function () { return editing;}
     };
 }
 
@@ -928,6 +886,71 @@ function setClickable() {
     })
 }
 
+function doPrint(nuts) {
+    var numItems = nuts.length, i, j, printString ='';
+    
+    printString = "<h1><b><center>Walnuts Directory Listings</center></b></h1>";
+    
+    for (i=0; i < numItems; i++) {
+        printString += "\t<b>" + nuts[i].SirName + "</b><br>";
+        printString += "\tInformal: " + nuts[i].Names + "<br>";
+        printString += "\tFormal  : " + nuts[i].FormalNames + "<br>";
+        printString += "\tChildren: " + nuts[i].Children + "<br>";
+        printString += "\tAddress : " + nuts[i].Addr1 + "<br>";        
+        printString += "\t        : " + nuts[i].Addr2 + "<br>";
+        printString += "\t        : " + nuts[i].Addr3 + "<br>";
+        printString += "\t        : " + nuts[i].Addr4 + "<br>";
+        printString += "\tEmail 1 : " + nuts[i].Email1 + "<br>";
+        printString += "\t      2 : " + nuts[i].Email2 + "<br>";
+        printString += "\t:     3 : " + nuts[i].Email3 + "<br>";
+        printString += "\tPhone 1 : " + nuts[i].Phone1 + "<br>";
+        printString += "\t      2 : " + nuts[i].Phone2 + "<br>";
+        printString += "\t      3 : " + nuts[i].Phone3 + "<br>";
+        printString += "\t   Notes: " + nuts[i].Notes + "<br>";
+        printString += "<br><br>";
+    
+        if (!(i % 4) ) {
+            printString = "<p style='page-break-after: always'></p>";
+         }
+     }
+     window.print(printString);
+     return;
+}     
+        
+
+function printNuts() {
+    var nutsToPrint = $(".toPrint").find("input:checked");
+    var nutArray = [], nutID,jqxhr, nutPrintObj, printEntries;
+    
+    if ($(nutsToPrint).length) {
+        $(nutsToPrint).each( function() {
+            nutID = $(this).attr('id');
+            nutArray.push(nutID);
+        });
+        
+        nutPrintObj = { data : nutArray };
+        
+        jqxhr = $.ajax({
+            type: "POST",
+            url: "printNuts.php",
+            data: nutPrintObj,
+            beforeSend: function () {
+                $("#spinner").show();
+            }
+        })
+            .done(function (dataReturned) {
+                $("#spinner").hide();
+                printEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
+                doPrint(printEntries);
+            })
+            .fail(function () {
+                alert("List Nuts failed");
+            });            
+    } else {
+       TINY.box.show({html:'No Nuts to Print!', width: 200});
+    }
+}
+    
 function ajaxListNutsTable(requester, nutID) {
     /* 'use strict';*/
 
@@ -995,9 +1018,17 @@ function ajaxListNutsTable(requester, nutID) {
                     case 116:  //"t"
                         $(".content").mCustomScrollbar("scrollTo", "top", {scrollInertia: 200}); //scroll to top
                         break;
+                    
                     case 66:   //"B"
                     case 98:   //"b"
                         $(".content").mCustomScrollbar("scrollTo", "bottom", {scrollInertia: 200}); //scroll to bottom
+                        break;
+                    case 80:   //"P"
+                    case 112:   //"p"
+                        if ($('.toPrint').is(':visible')) {
+                            printNuts();
+                        }    
+                        $(".toPrint").toggle(); // show hide print checkboxes
                         break;
                     case 9:    // TAB
                     case 83:   //"S"
