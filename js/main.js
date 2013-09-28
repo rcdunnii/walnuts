@@ -889,38 +889,58 @@ function setClickable() {
 function doPrint(nuts) {
     var numItems = nuts.length, i, j, printString ='';
     
-    printString = "<h1><b><center>Walnuts Directory Listings</center></b></h1>";
+    printString = "<p><h1><b><center>Walnuts Directory Listings</center></b></h1></p>";
     
     for (i=0; i < numItems; i++) {
-        printString += "\t<b>" + nuts[i].SirName + "</b><br>";
-        printString += "\tInformal: " + nuts[i].Names + "<br>";
-        printString += "\tFormal  : " + nuts[i].FormalNames + "<br>";
-        printString += "\tChildren: " + nuts[i].Children + "<br>";
-        printString += "\tAddress : " + nuts[i].Addr1 + "<br>";        
-        printString += "\t        : " + nuts[i].Addr2 + "<br>";
-        printString += "\t        : " + nuts[i].Addr3 + "<br>";
-        printString += "\t        : " + nuts[i].Addr4 + "<br>";
-        printString += "\tEmail 1 : " + nuts[i].Email1 + "<br>";
-        printString += "\t      2 : " + nuts[i].Email2 + "<br>";
-        printString += "\t:     3 : " + nuts[i].Email3 + "<br>";
-        printString += "\tPhone 1 : " + nuts[i].Phone1 + "<br>";
-        printString += "\t      2 : " + nuts[i].Phone2 + "<br>";
-        printString += "\t      3 : " + nuts[i].Phone3 + "<br>";
-        printString += "\t   Notes: " + nuts[i].Notes + "<br>";
-        printString += "<br><br>";
+        printString += "<p>\t<b>" + nuts[i].SirName + "</b></p>";
+        printString += "<p>\tInformal: " + nuts[i].Names + "</p>";
+        printString += "<p>\tFormal  : " + nuts[i].FormalNames + "</p>";
+        printString += "<p>\tChildren: " + nuts[i].Children + "</p>";
+        printString += "<p>\tAddress : " + nuts[i].Addr1 + "</p>";        
+        printString += "<p>\t        : " + nuts[i].Addr2 + "</p>";
+        printString += "<p>\t        : " + nuts[i].Addr3 + "</p>";
+        printString += "<p>\t        : " + nuts[i].Addr4 + "</p>";
+        printString += "<p>\tEmail 1 : " + nuts[i].Email1 + "</p>";
+        printString += "<p>\t      2 : " + nuts[i].Email2 + "</p>";
+        printString += "<p>\t:     3 : " + nuts[i].Email3 + "</p>";
+        printString += "<p>\tPhone 1 : " + nuts[i].Phone1 + "</p>";
+        printString += "<p>\t      2 : " + nuts[i].Phone2 + "</p>";
+        printString += "<p>\t      3 : " + nuts[i].Phone3 + "</p>";
+        printString += "<p>\t   Notes: " + nuts[i].Notes + "</p>";
+        printString += "<p><p></p></p>";
     
         if (!(i % 4) ) {
-            printString = "<p style='page-break-after: always'></p>";
+            printString += "<p style='page-break-after: always'></p>";
          }
      }
-     window.print(printString);
-     return;
+     return(printString);
 }     
         
+function printElem(elem)
+    {
+        Popup($(elem).html());
+    }
+    
+function Popup(data) 
+    {
+        var mywindow;
+        
+        mywindow = chrome.windows.create('', 'my window', 'height=400,width=600');
+        mywindow.document.write('<html><head><title>my div</title>');
+        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
 
+        mywindow.print();
+        mywindow.close();
+
+        return true;
+    }
+    
 function printNuts() {
     var nutsToPrint = $(".toPrint").find("input:checked");
-    var nutArray = [], nutID,jqxhr, nutPrintObj, printEntries;
+    var nutArray = [], nutID,jqxhr, nutPrintObj, printEntries, printResult;
     
     if ($(nutsToPrint).length) {
         $(nutsToPrint).each( function() {
@@ -941,7 +961,10 @@ function printNuts() {
             .done(function (dataReturned) {
                 $("#spinner").hide();
                 printEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
-                doPrint(printEntries);
+                printResult = doPrint(printEntries);
+                $('#printDiv')
+                    .html(printResult);
+                printElem('#printDiv');
             })
             .fail(function () {
                 alert("List Nuts failed");
