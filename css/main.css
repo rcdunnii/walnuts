@@ -296,10 +296,12 @@ textarea {
     }    
    
 
+ /* replaced below with more specific highlight selector
     input.highlight {
         background-color: yellow;
     }
-    
+ */
+ 
     input#submit.go {
         margin: 0.5em;
     }
@@ -327,12 +329,11 @@ textarea {
     #loginError  {
         position:relative;
         text-align: left;
-        font-size: 1.2em;
         color: red;
         bottom: 30px;
-        left: 9px;
+        left: 35px;
         width: 195px;
- /*       margin: 10px;   */
+
     }
     
     #hintWrapper {
@@ -411,8 +412,8 @@ textarea {
         display: none;
         position: relative;
         width: 22%;       
-        top: 33px;
-        left: 803px;
+        top: 32px;
+        left: 853px;
         background:#421E13;  
         -moz-border-radius-topleft: 30px;
         -moz-border-radius-topright: 0;
@@ -423,7 +424,7 @@ textarea {
        display: block;
        position: relative;
        width: 19%; 
-       height: 32px;       
+       height: 35px;       
        top: 33px;
        left: 888px;
        background: #421E13;
@@ -436,8 +437,8 @@ textarea {
         display: block;
         position: relative;
         width: 19%;
-        height: 32px;
-        top: 85px;
+        height: 35px;
+        top: 88px;
         left: 34px;
         background: #421E13;
         -moz-border-radius-topright: 30px;
@@ -450,20 +451,22 @@ textarea {
 		display: inline-block;
 		position: relative;    
         background-color: transparent;
-		color: #FFFF00;
+		color: rgba(255, 255, 0, 1);            /* in hex this is #FFFF00; */
 		font: normal bold 1.3em "Times New Roman", Georgia, serif;
-		border: 1px solid #FFFF00;
+		border: 1px solid  rgba(255, 255, 0, 1);             /*  #FFFF00;  */
 		outline: none;
-		padding: 1px;
-		width: 157px;
-		text-align: center;
+		padding-left: 11px;
+		width: 130px;
+		text-align: left;
+        cursor: pointer;
    }
    
     #searchLink input#nutSearch:focus {
-        background-color: gold;
-        color:#000;
-     }
-     
+         background-color: green;
+         color:gold;
+         cursor: auto;
+    }         
+    
     #searchLink input#nutSearch.redText {
         position: relative;
         top: 0px;
@@ -498,15 +501,19 @@ textarea {
         font: normal bold 1em "Times New Roman", Georgia, serif;
         margin-bottom: 5px;
     }
+
     input:hover::-webkit-input-placeholder {
          background-color: gold;
          color:#000;
+         border: 2px solid white;
+         cursor: pointer;
     } 
+    
     input:focus::-webkit-input-placeholder {
-         background-color: gold;
-         color:#000;
-    } 
-   
+         background-color: green;
+         color:#000;       
+    }
+    
     /* Firefox 18-  */
     input -moz-placeholder { 
        background-color: transparent;
@@ -521,9 +528,9 @@ textarea {
     }
 
     input:focus:-moz-placeholder { 
-         background-color: gold;
-         color:#000; 
-    }
+         background-color: green;
+         color:#000;
+    } 
     
      /* Firefox 19+ */   
     input::-moz-placeholder {  
@@ -538,7 +545,7 @@ textarea {
     }
  
     input:focus::-moz-placeholder {   
-         background-color: gold;
+         background-color: green;
          color:#000;
     }
     
@@ -550,16 +557,16 @@ textarea {
        margin-bottom: 5px;
     }
     
-     input#nutSearch:focus:-ms-input-placeholder {  
-         background-color: gold;
-         color:#000;
-    }
-    
      input#nutSearch:hover:-ms-input-placeholder {  
          background-color: gold;
          color:#000;
     }
-   
+
+    input#nutSearch:focus:-ms-input-placeholder {  
+         background-color: green;
+         color:#000;
+    }
+    
     [type="search"] {
     -moz-appearance:    textfield;
     -webkit-appearance: textfield;
@@ -707,24 +714,24 @@ textarea {
         border: none;
         color: black;
         background-color: yellow;
-        font-family: monospace, serif;
+ /*       font-family: monospace, serif; */
        _font-family: 'courier new', monospace;   
         font-size: 1em;     
     }
-      
-     .ie_div_span {
-   /*      display:inline-block; */
-        position: relative;
-       top: -21px;
-        left: 80px;
- /*       top: 0;  
-        left: 20px;  */ 
+  
+    .inlineEditDiv {
+        position: relative; 
      }
      
     .setTDHgt { 
          height: 42px;
      } 
-     
+    
+     .inlineDiv {
+        display: inline-block;
+    }
+    
+    
      .ie_div_txtarea {
        position: relative;
     }           
@@ -740,20 +747,45 @@ textarea {
      
     .ie_div_txtarea textarea {
         background-color: green;    
-     }    
+     }
+    .toPrint {
+        display: none;
+    }
+    
+    input[type="checkbox"] {
+        display:none;
+    }
+        
+    input[type="checkbox"] + label span {
+        display:inline-block;
+        width:19px;
+        height:19px;
+        margin:-1px 4px 0 0;
+        vertical-align:middle;
+        background:url(/images/check_radio_sheet1.png) left top no-repeat;
+        cursor:pointer;
+    }
+    
+    input[type="checkbox"]:checked + label span {
+            background:url(/images/check_radio_sheet1.png) -19px top no-repeat;
+    }
+    
      .saveButton,
      .cancelButton {
        font:2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;
        font-size:70%;
        background-color: yellow;
        cursor:pointer;
+
     }
      .saveButton {
          color: green;
+         margin-left:5px;
      }
 
      .cancelButton {
         color: red;
+        margin: 0 5px;
      }
      
      .saveButton:hover,
@@ -946,10 +978,20 @@ textarea {
    ul.nonav  li.nonavli input.valid {
        border: 2px inset;
       background-color: white;
-    } 
+    }
+
+   ul.nonav  li.nonavli input.highlight {
+        background-color: yellow;
+    }    
+    
     #Notes  
       {
         margin-left:0;
+    }
+    
+    #Notes.highlight
+      {
+        background-color: yellow;
     }
    
     ul.navul {
@@ -1007,11 +1049,11 @@ textarea {
    }
 
 .help { /* html div to link to tinybox lightbox help screen */
-    color: red;
+/*    color: red;   */
     position: relative;
     width: 75px;
-    height: 30px;
-    top: 119px;
+    height: 33px;
+    top: 123px;
     z-index: 1;
     left: 50%;
     margin-left: -37px;

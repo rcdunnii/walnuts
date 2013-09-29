@@ -1,90 +1,47 @@
-// see if placeholder supported by browser
-function isPlaceholderSupported() 
-{
-    var input = document.createElement("input");
-    return ('placeholder' in input); 
-}
-
-// A no-dependancy quick and dirty method of adding basic
-// placeholder functionality to Internet Explorer 5.5+
-// Author: Jay Williams <myd3.com>
-// License: MIT License
-// Link: https://gist.github.com/1105055
- 
-function add_placeholder (id, placeholder)
-{
-    
-	var el = $("#" + id);    /*;document.getElementById(id); */
-	$(el).val('').attr('placeholder', placeholder);  /* el.placeholder = placeholder;   */
- 
-    $(el).focus (function () {
-/*		if ($(el).val() == $(el).attr('placeholder')) { */
-			$(el).val('');
-			$(el).css('background-color: gold; color: #000;');
-/*		} */
-    })
-    .blur (function () {
-		if ($(el).val() == 0) {
-            $(el).val($(el).attr('placeholder'));
-			$(el).css('background-color: transparent; color: #FFFF00;font: normal bold 21px "Times New Roman", Georgia, serif;');
-		} else {
-            if ( $(el).val() !== 'Search' ) {
-                $(el).attr('placeholder', 'Search');
-            }
-        }
-    });
- 
-	$(el).trigger('blur');
-}
-
 // called by listNuts.html and Walnuts.html
 function searchNut() {
+
    /*  'use strict';  */
+
     var searchData = $("#searchForm").serialize(), jqxhr, searchElem;
     jqxhr = $.ajax({
+   
         type: "POST",
         url: "nutSearch.php",
-        data:  searchData, // search form single input name is 'nutSearch' so this produces "nutSearch=user_input"
+        data:  searchData // search form single input name is 'nutSearch' so this produces "nutSearch=user_input"
         })
         .done (function (nutID) {
             searchElem = $('#nutSearch');        
             if (nutID === "No Match") {
-                if (!isPlaceholderSupported()) {
-                    add_placeholder('nutSearch', nutID);
-                } else {                
- /*                  $('#nutSearch').val("").attr("placeholder", nutID);   */
-                 $(searchElem)
-                   .val("")
-                   .attr("placeholder", nutID);
-                 $(searchElem).focus(function() {
-                      $(searchElem).attr('placeholder', '');
-                   })
-                   .blur(function() {
-                       $(searchElem).attr('placeholder', 'Search');
-                    });                 
-/*                $(".content").mCustomScrollbar("scrollTo", "top");   */
-              }  
+                TINY.box.show({html:'No match for Sir Name " ' + $("#nutSearch").val() + ' "', width: 300});
+                $(searchElem)
+                    .val($(searchElem).attr('placeholder'))
+                    .focus();
             } else {
                 var position = "#nutID_" + nutID;
                 $(".content").mCustomScrollbar("scrollTo", position);
-                if (!isPlaceholderSupported()) {
-                    add_placeholder('nutSearch', "Search");
-                } else {                
-                     $(searchElem).val("").attr("placeholder", "Search");
-                }                
-            }            
-        })
+                $(searchElem)               
+                    .val($(searchElem).attr('placeholder'))
+            }           
+            $('input[placeholder]').focus(function(ev){ 
+              var $this = $(this);
+              if ($this.val() === $this.attr('placeholder')) $this.val('');
+            }).blur(function(ev){
+              var $this = $(this);      
+              if ($this.val() === '') $this.val($this.attr('placeholder'));
+            })
+        })    
         .fail ( function (jqxhr, status, error) {
-    /*        var err = eval("(" + jqxhr.responseText + ")");
-            alert(err.Message); */
             alert(jqxhr.responseText);
-        });    
+        });       
 }
 
 
 
 function getMessageBody(form) {
+
    /*  'use strict';  */
+
     var data = "", i, j, option, elem, param, nodeName, type, valueAttr, value;
     for (i = 0; i < form.elements.length; i += 1) {
         elem = form.elements[i];
@@ -126,17 +83,21 @@ function getMessageBody(form) {
     return data;
 }
 
-var registering = false;
+var registering = new Boolean(0);
 
 function setExpiration(cookieLife) {
+
    /*  'use strict';  */
+
     var today = new Date(), expr;
     expr = new Date(today.getTime() + cookieLife * 24 * 60 * 60 * 1000);
     return expr.toGMTString();
 }
 
 function createCookie(name, value, expires, path, domain, secure) {
+
    /*  'use strict';  */
+
 /*    var date = new Date(); */
     document.cookie = name + "=" + escape(value) + "; ";
 
@@ -156,7 +117,9 @@ function createCookie(name, value, expires, path, domain, secure) {
 }
 
 function readCookie(name) {
+
    /*  'use strict';  */
+
     var nameEQ, ca, i, c;
 
     nameEQ = name + "=";
@@ -175,7 +138,9 @@ function readCookie(name) {
 
 //called from login.html and wtdLogin.html on submit
 function ajaxAuthenticate(form, fxn, method) {
+
    /*  'use strict';  */
+
     var currentUser,
         data,
         data_json = "",
@@ -190,7 +155,7 @@ function ajaxAuthenticate(form, fxn, method) {
         send_data = "",
         url = "";
         
-    if (typeof registering === true) {
+    if (registering === true) {
         return;
     }
 
@@ -261,7 +226,9 @@ function ajaxAuthenticate(form, fxn, method) {
 
 // fxn called by primary html page WTD.html - only run by Foxy
 function ajaxWalnutFunction(requester) {
+
    /*  'use strict';  */
+
     var result,
         user_input,
         jqxhr,
@@ -351,7 +318,9 @@ function ajaxWalnutFunction(requester) {
 
 // called by ajaxAddNuts(), ajaxEditNut(), ajaxAddBDay()
 function getPostDataJSON(theForm) {
+
    /*  'use strict';  */
+
     var data_json = "";
 
     $.fn.serializeObject = function () {
@@ -378,6 +347,7 @@ function getPostDataJSON(theForm) {
 }
 
 function ajaxAddNuts() {
+
    /*  'use strict';  */
 
     var addData;
@@ -401,6 +371,7 @@ function ajaxAddNuts() {
 }
 
 function ajaxAddBDay() {
+
    /*  'use strict';  */
 
     var addBDayData;
@@ -423,7 +394,9 @@ function ajaxAddBDay() {
     });
 }
 function getParameterByName(name) {
+
    /*  'use strict';  */
+
     var regexS, regex, results;
 
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -439,14 +412,18 @@ function getParameterByName(name) {
 }
 
 function isEven(value) {
+
    /*  'use strict';  */
+
     var x;
     x = ((value % 2 === 0) ? true : false);
     return x;
 }
 
 function getMonth(numStr) {
+
    /*  'use strict';  */
+
     var monStr = "";
 
     switch (numStr) {
@@ -491,7 +468,9 @@ function getMonth(numStr) {
 }
 
 function displayBDays(requester, nutEntries, idxBy) {
+
    /*  'use strict';  */
+
     var dateStr = "",
         i = 0,
         idx = 0,   // str len counter up to xCol
@@ -588,11 +567,12 @@ function displayBDays(requester, nutEntries, idxBy) {
 }
 
 var scrollBar = false; // gobal scrollbar exists/nonexists flag
+
 // fxn called by list nuts html page - which requester determines api
-/*jslint browser: true*/
-/*global $, jQuery, createXHR, displayPage*/
 function ajaxListBDays(requester, indexedBy) {
+
    /*  'use strict';  */
+
 
     var bDayEntries = [], jqxhr;
 
@@ -644,7 +624,9 @@ function ajaxListBDays(requester, indexedBy) {
 
 
 function displayTable(requester, nutEntries) {
+
    /*  'use strict';  */
+
     var numNuts, i = 0,
         replacementStr = "", nutTable = "",
         theHost = "";
@@ -655,8 +637,8 @@ function displayTable(requester, nutEntries) {
 
     for (i = 0; i < numNuts; i += 2) {
         if (((i + 1) < numNuts)) {
-            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>";
-
+            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "'><span></span>Print</label></span>";
+   /*         <a onclick='printNut("+ nutEntries[i].walnutID + ")' title='Print'><span class='oneNut'>          P</span></a>";  */
             if (requester === 'Foxy') {
                 replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
             } else {
@@ -674,23 +656,23 @@ function displayTable(requester, nutEntries) {
             // set Formal Names
             replacementStr += "<tr><td>" + nutEntries[i].FormalNames + "</td><td>" + nutEntries[i + 1].FormalNames + "</td></tr>";
             // set Children
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children:<span>" + nutEntries[i].Children + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Children' id='Children'>"  + "Children:<span>" + nutEntries[i + 1].Children + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children:<div class='inlineDiv'>" + nutEntries[i].Children + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Children' id='Children'>"  + "Children:<div class='inlineDiv'>" + nutEntries[i + 1].Children + "</div></td></tr>";
             // set Address line 1
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i].Addr1 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i + 1].Addr1 + "</span></div></div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[i].Addr1 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[i + 1].Addr1 + "</div></div></div></td></tr>";
             // set Address line 2
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <span>" + nutEntries[i].Addr2 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <span>" + nutEntries[i + 1].Addr2 + "</span></td></div></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr2 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[i + 1].Addr2 + "</div></td></div></tr>";
             // set Address line 3
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <span>" + nutEntries[i].Addr3 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr3'>" + "         <span>" + nutEntries[i + 1].Addr3 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr3 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[i + 1].Addr3 + "</div></td></tr>";
             // set Address line 4
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <span>" + nutEntries[i].Addr4 + "</span></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <span>" + nutEntries[i + 1].Addr4 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr4 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[i + 1].Addr4 + "</div></td></tr>";
             // set Email 1
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <span class = 'mailToLink'>" + nutEntries[i].Email1 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <span class = 'mailToLink'>" + nutEntries[i + 1].Email1 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email1 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[i + 1].Email1 + "</div></td></tr>";
             // set Email  2
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <span class = 'mailToLink'>" + nutEntries[i].Email2 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <span class = 'mailToLink'>" + nutEntries[i + 1].Email2 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email2 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[i + 1].Email2 + "</div></td></tr>";
             // set Phone  1
-            replacementStr += "<tr><td   class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i].Phone1 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i + 1].Phone1 + "</span></td></tr>";
+            replacementStr += "<tr><td   class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[i].Phone1 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[i + 1].Phone1 + "</div></td></tr>";
             // set Phone  2
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <span>" + nutEntries[i].Phone2 + "</span></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <span>" + nutEntries[i + 1].Phone2 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[i].Phone2 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[i + 1].Phone2 + "</div></td></tr>";
             
            if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
                 replacementStr += "<tr><td>Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</td>";
@@ -704,9 +686,9 @@ function displayTable(requester, nutEntries) {
                 replacementStr += "<td>Last Update: " + nutEntries[i + 1].Created.split(" ", 1) + "</td></tr>";
             }
             
-            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes: <br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></span></td><td class='editable-area' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Notes' id='Notes'>";
+            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes: <br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></div></td><td class='editable-area' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Notes' id='Notes'>";
 
-            replacementStr += "Notes:<br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i + 1].Notes + "</textarea></span></td></tr>";
+            replacementStr += "Notes:<br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i + 1].Notes + "</textarea></div></td></tr>";
             
             // empty row to separate entries
             replacementStr += "<tr><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td></tr>";
@@ -726,15 +708,15 @@ function displayTable(requester, nutEntries) {
 
             replacementStr += "<tr><td>" + nutEntries[i].Names + "</td></tr>";
             replacementStr += "<tr><td>" + nutEntries[i].FormalNames + "</td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children:<span>" + nutEntries[i].Children + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <span>" + nutEntries[i].Addr1 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <span>" + nutEntries[i].Addr2 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <span>" + nutEntries[i].Addr3 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <span>" + nutEntries[i].Addr4 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <span class = 'mailToLink'>" + nutEntries[i].Email1 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <span class = 'mailToLink'>" + nutEntries[i].Email2 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <span>" + nutEntries[i].Phone1 + "</span></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <span>" + nutEntries[i].Phone2 + "</span></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children: <div class='inlineDiv'>" + nutEntries[i].Children + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[i].Addr1 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr2 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr3 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr4 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email1 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email2 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[i].Phone1 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[i].Phone2 + "</div></td></tr>";
            // put out last update 
            if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
                 replacementStr += "<tr><td>Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</td></tr>";
@@ -742,7 +724,7 @@ function displayTable(requester, nutEntries) {
                 replacementStr += "<tr><td>Last Update: " + nutEntries[i].Created.split(" ", 1) + "</td></tr>";
             }
  
-            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes:<br><span class='textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></span></td><tr>";
+            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes:<br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></div></td><tr>";
             
             // empty row to separate entries
             replacementStr += "<tr><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td></tr>";
@@ -757,11 +739,11 @@ function displayTable(requester, nutEntries) {
 }
 
 function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save data, or original data in input field if he wants to cancel
-   /*  'use strict';  */
+
     var t, editableClass, editableElem, emptyCellClass;
 
     if (false === cancel) {
-        t = $.trim($(obj).parent().siblings(0).val());  //$(obj) is SAVE or CANCEL button, parent() is div holding buttons, sib is input field
+        t = $.trim($(obj).parent().children(':first').val());  //$(obj)=SAVE/CANCEL, parent()=inlinEditDiv,1st child=input field
     } else {
         t = cancel;
     }
@@ -770,175 +752,267 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
     
     if (cancel === false) {
     
-       $(editableElem).find('.active-inline div').replaceWith('<em class="ajax">Saving...<em>');	 
-  /*       $(editableElem).find('.active-inline div').html('<em class="ajax">Saving...<em>');	*/
+        $(editableElem).find('.active-inline div').replaceWith('<em class="ajax">Saving...<em>');  
+
      // post new value to the server
         $.post('save.php', {id: $(editableElem).attr('walnutID'), name: $(editableElem).attr('name'), value: t},
             function (data) {
                 if (editableClass === 'editable') {
                     $(editableElem)
                        .find('.active-inline .ajax')
-                       .replaceWith(t.length ? t : "                   "); 
-/*						.text(t.length ? t : "                   ");	 */
-                    if (t.length === 0) {
-                        $('.active-inline').addClass('emptyCell'); 
-                        emptyCellClass = ''; //i.e. do not remove this class below
-                    } else {
-                        emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
-                    }    
-                      $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
-                    /*                        alert(data);   */ 
+                       .replaceWith(t.length ? t : "                   ");
                  } else {
-                    $(editableElem).find('.active-inline').empty().append('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea>');
-
-                    if (t.length === 0) {
-                        $('.active-inline').addClass('emptyCell'); 
-                        emptyCellClass = ''; //i.e. do not remove this class below
-                    } else {
-                        emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
-                    }    
-                    $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
-                    
+                    $(editableElem).find('.active-inline').empty().append('<textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea>'); 
                 }
-				$.walnutNameSpace.inLineEditing = false;
-				$.walnutNameSpace.inLineConflicts = 0;
-				setClickable();
+                if (t.length === 0) {
+                    $('.active-inline').addClass('emptyCell'); 
+                    emptyCellClass = ''; //i.e. do not remove this class below
+                } else {
+                    emptyCellClass = 'emptyCell'; // yes include this class for removal below since t not empty
+                }    
+                $('.active-inline').removeClass('active-inline over-inline ' + emptyCellClass);
             }              
          );
     } else {  // cancel the edit operation
         if (editableClass === 'editable-area') {
-            $('span.active-inline')
-                .replaceWith('<span class="textarea" title="Edit"><textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea></span>'); 
+            $(obj).closest('div.active-inline')
+                .replaceWith('<div class="inlineDiv textarea" title="Quick Edit"><textarea class="preEdit" rows="3" cols="30" wrap="hard" maxlength="60" >' + t + '</textarea></div>'); 
         } else {
-            $('span.active-inline')
-                .replaceWith('<span class="" title="Edit">' + t + '</span>');              
-        }
-		$.walnutNameSpace.inLineEditing = false;
-		$.walnutNameSpace.inLineConflicts = 0;		
-        setClickable();        
+            $(obj).closest('div.active-inline')
+                .replaceWith('<div class="inlineDiv" title="Quick Edit">' + t + '</div>');              
+        }		
+
     }
+     setClickable();
 }
 
-jQuery.fn.exists = function(){
-if(this.length>0) 
-    return this;
-return false; };
+// use closure to see if editing already in process
+function editingNut() {
+    /* 'use strict';*/
 
-$.walnutNameSpace = {   // global flag to limit one edit at a  time
-    inLineEditing : false,
-	inLineConflicts : 0
-}; 
+    var editing = false;
+    return {
+        set: function (newVal) {editing = newVal;},
+        get: function () { return editing;}
+    };
+}
+
+var editFlag = editingNut(); // set inline edit flags to prevent 2 at a time edits - uses closures
 
 function setClickable() {
-   /*  'use strict';  */
-  // put spaces in empty spans to allow in-line edits
-    var $editableFields = $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit');
 
-				
+    /* 'use strict';*/
+    // select editable fields, some input fields, other textareas; both empty and filled are editable
+    // class = 'editable' are input fields (with and without content)
+    // class = 'editable-area' are textareas (with and without content), and textarea class= 'preEdit' have content
+    var $editableFields = $('.editable div, .editable-area div.textarea, .editable-area div.textarea textarea.preEdit');
+    
+    // put spaces in empty spans to allow in-line edits - add class emptyCell to empty fields        				
+
     $editableFields.each(function () {
         if ((!$(this).text().trim().length)) {
                 $(this).text("                    ").addClass("emptyCell"); 
         }
     });           
 
-        $editableFields
-           .on('mouseover.colorize', function () {
-                $(this).addClass('over-inline').attr('title', 'Edit');
-  /*              
-                if ($(this).hasClass('mailToLink') && ($.trim($(this).html()).length)) {
-                    $(this).attr('title', 'Left Click to Edit or Email');
-                } else {
-                   $(this).attr('title', 'Edit');            
-                }
- */
-            })
-            
-           .on('mouseout.colorize', function () {
-                $(this).removeClass('over-inline').removeAttr('title');
-            })
-            
-           .on('click.inlineEdit', function(event) {
-		   	
-                var inputarea,
-                textarea,
-                button, 
-                revert, 
-                contents, 
-                editElement,
-				$editable;
-				
-				if ($(this).parent().is('.textarea.over-inline') ) {
-					$editable = $(this).parent();
-				} else {
-					$editable = $(this);
-				}
-
-				if ($(this).hasClass('active-inline')) {
-					return;
-				}
-			   
-				
-				if ($.walnutNameSpace.inLineEditing) {
-					console.trace();
-					$.walnutNameSpace.inLineConflicts += 1;
-					$.gritter.add({
-						// (string | mandatory) the heading of the notification
-						title: 'Hey Walnut!',
-						// (string | mandatory) the text inside the notification
-						text: 'Finish up your other edit please...\nConflict #' + $.walnutNameSpace.inLineConflicts
-					});
-					return;
-				} else {
-					$.walnutNameSpace.inLineEditing = true;
-					$.walnutNameSpace.inLineConflicts = 0;
-					$editableFields.off("click.inLineEdit");
-				}
-
-				$(this).off(".colorize").removeClass('over-inline').removeAttr('title');				
-				
-				inputarea = '<div class="ie_div_span"><input type="text" class="click-inline" size="30" />';
-				textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="20" class="click-inline" wrap="hard" maxlength="60">' + $(this).text() + '</textarea>';
-				button = '<div><input type="button" value="SAVE" class="btn saveButton" />&nbsp;<input type="button" value="CANCEL" class="btn cancelButton" /></div></div>';
-				revert = $(this).text(); // no trim since contents pasted back on screen only - not to db
-				contents = $.trim($editable.text().replace(/\/p>/g, "/p>/p>\n\n"));
-				
-				$editable
-					.addClass('active-inline')
-					.empty();
-	 
-				// what form elem needed?              
-				if ($editable.parents("td").hasClass('editable')) { // input field or textarea field being edited?
-					editElement =  inputarea + button;
-					$(editElement).appendTo($editable);                   
-					$('input.click-inline').val(contents);
-					editElement = $('.editable input.click-inline');
-				} else {
-					editElement = textarea + button;
-					$(editElement).appendTo($editable);   
-					editElement = $('textarea.click-inline');
-				}
-				
-				$(editElement)
-					.focus();
-				
-			
-            $('.saveButton')
-                        .click(function () {
-                    saveChanges(this, false);			
-                });
-
-            $('.cancelButton')
-                        .click(function () {						
-                    saveChanges(this, revert);
-                });						
+    var $clickableFields = $('.editable div, .editable-area div.textarea');
+    
+    $clickableFields
+    
+        .on('mouseover.colorize', function () {
+            if ( $(this).hasClass('textarea') && !$(this).hasClass('emptyCell')) {
+                $(this)
+                    .find('textarea')
+                    .addClass('over-inline')
+                    .attr('title', 'Quick Edit');
+            } else {        
+                $(this)
+                    .addClass('over-inline')
+                    .attr('title', 'Quick Edit');
+            }
+/*              
+            if ($(this).hasClass('mailToLink') && ($.trim($(this).html()).length)) {
+                $(this).attr('title', 'Left Click to Edit or Email');
+            } else {
+               $(this).attr('title', 'Edit');            
+            }
+*/
         })
+        
+        .on('mouseout.colorize', function () {
+            if ( $(this).hasClass('textarea') && !$(this).hasClass('emptyCell')) {
+                $(this)
+                    .find('textarea')
+                    .removeClass('over-inline')
+                    .removeAttr('title');
+            } else {        
+                $(this)
+                    .removeClass('over-inline')
+                    .removeAttr('title');
+            }
+        })
+    
+       .on('click.inlineEdit', function(event) {
+        
+            var inputarea,
+            textarea,
+            button, 
+            revert, 
+            contents, 
+            editElement;
+          
+         editElement = $(this);
+         
+         //ignore clicks on element now being edited - has class = 'active-inline' 
+        if ($(editElement).hasClass('active-inline')) {
+            return;
+        } else {
+            $(editElement).addClass('active-inline');
+        }
+        
+        // editFlag global object declared/defined above in this file main.js - prevents 2 concurrent edits 
+        if (editFlag.get() === false) {
+            editFlag.set(true);
+        } else {
+            TINY.box.show({html:'One Edit at a time!', width: 200});
+            $(editElement).removeClass('active-inline');
+            return;
+        }
+        
+        // turn off hilite and title while editing field
+        $(editElement).off(".colorize").removeClass('over-inline').removeClass('emptyCell').removeAttr('title');
+        
+        // create html elements for the inline edits, either an input or textarea element, each wrapped in an inline edit (ie) div
+        inputarea = '<div class="inlineEditDiv"><input type="text" class="click-inline" size="25" maxlength="50"/>';
+        textarea = '<div class="ie_div_txtarea"><textarea rows="3" cols="20" class="click-inline" wrap="hard" maxlength="60">' + $(editElement).text() + '</textarea>';
+        button = '<input type="button" value="SAVE" class="saveButton" /><input type="button" value="CANCEL" class="cancelButton" /></div>';
+        revert = $(editElement).text(); // no trim since contents pasted back on screen only - not to db
+        contents = $.trim($(editElement).text().replace(/\/p>/g, "/p>/p>\n\n"));
+
+        // what form elem needed?              
+         if ($(editElement).parent().hasClass('editable')) { // dealing with input field rather than textarea field
+            $(editElement)
+                .html(inputarea + button)
+                .find('input.click-inline')
+                .val(contents)
+                .focus();
+        } else {    // dealing with textarea field 
+            $(editElement)
+                .html(textarea + '<br>' + button)
+                .find('textarea')
+                .focus();
+        }   
+ 
+        $('.saveButton')
+                    .click(function () {
+                editFlag.set(false);    
+                saveChanges(this, false);
+            });
+
+        $('.cancelButton')
+                    .click(function () {
+                editFlag.set(false);                                                
+                saveChanges(this, revert);
+            });              
+    })
 }
 
+
+function doPrint(nuts) {
+    var numItems = nuts.length, i, j, printString ='';
+    
+    printString = "<p><h1><b><center>Walnuts Directory Listings</center></b></h1></p>";
+    
+    for (i=0; i < numItems; i++) {
+        printString += "<p>\t<b>" + nuts[i].SirName + "</b></p>";
+        printString += "<p>\tInformal: " + nuts[i].Names + "</p>";
+        printString += "<p>\tFormal  : " + nuts[i].FormalNames + "</p>";
+        printString += "<p>\tChildren: " + nuts[i].Children + "</p>";
+        printString += "<p>\tAddress : " + nuts[i].Addr1 + "</p>";        
+        printString += "<p>\t        : " + nuts[i].Addr2 + "</p>";
+        printString += "<p>\t        : " + nuts[i].Addr3 + "</p>";
+        printString += "<p>\t        : " + nuts[i].Addr4 + "</p>";
+        printString += "<p>\tEmail 1 : " + nuts[i].Email1 + "</p>";
+        printString += "<p>\t      2 : " + nuts[i].Email2 + "</p>";
+        printString += "<p>\t:     3 : " + nuts[i].Email3 + "</p>";
+        printString += "<p>\tPhone 1 : " + nuts[i].Phone1 + "</p>";
+        printString += "<p>\t      2 : " + nuts[i].Phone2 + "</p>";
+        printString += "<p>\t      3 : " + nuts[i].Phone3 + "</p>";
+        printString += "<p>\t   Notes: " + nuts[i].Notes + "</p>";
+        printString += "<p><p></p></p>";
+    
+        if ( i && (i % 4 == 0 )) {
+            printString += "<p style='page-break-after: always'></p>";
+         }
+     }
+     return(printString);
+}     
+        
+function printElem(elem)
+    {
+        Popup($(elem).html());
+    }
+    
+function Popup(data) 
+    {
+        var mywindow;
+        
+        mywindow = window.open('', 'my window', 'height=400,width=600');
+        mywindow.document.write('<html><head><title>my div</title>');
+        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+        mywindow.print();
+        mywindow.close();
+
+        return true;
+    }
+    
+function printNuts() {
+    var nutsToPrint = $(".toPrint").find("input:checked");
+    var nutArray = [], nutID,jqxhr, nutPrintObj, printEntries, printResult;
+    
+    if ($(nutsToPrint).length) {
+        $(nutsToPrint).each( function() {
+            nutID = $(this).attr('id');
+            nutArray.push(nutID);
+        });
+        
+        nutPrintObj = { data : nutArray };
+        
+        jqxhr = $.ajax({
+            type: "POST",
+            url: "printNuts.php",
+            data: nutPrintObj,
+            beforeSend: function () {
+                $("#spinner").show();
+            }
+        })
+            .done(function (dataReturned) {
+                $("#spinner").hide();
+                printEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
+                printResult = doPrint(printEntries);
+                $('#printDiv')
+                    .html(printResult);
+                printElem('#printDiv');
+            })
+            .fail(function () {
+                alert("List Nuts failed");
+            });            
+    } else {
+       TINY.box.show({html:'No Nuts to Print!', width: 200});
+    }
+}
+    
 function ajaxListNutsTable(requester, nutID) {
-   /*  'use strict';  */
+    /* 'use strict';*/
 
-    var walnutEntries = [], jqxhr, nutIdentifier, emailAddr;
-
+    var walnutEntries = [],
+        jqxhr,
+        nutIdentifier,
+        emailAddr;
+       
     jqxhr = $.ajax({
         type: "GET",
         url: "listNuts.php",
@@ -949,7 +1023,7 @@ function ajaxListNutsTable(requester, nutID) {
             }
         }
     })
-        .done(function (dataReturned) {
+        .done(function (dataReturned) {            
             $("#spinner").hide();
             walnutEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
             displayTable(requester, walnutEntries);
@@ -998,9 +1072,17 @@ function ajaxListNutsTable(requester, nutID) {
                     case 116:  //"t"
                         $(".content").mCustomScrollbar("scrollTo", "top", {scrollInertia: 200}); //scroll to top
                         break;
+                    
                     case 66:   //"B"
                     case 98:   //"b"
                         $(".content").mCustomScrollbar("scrollTo", "bottom", {scrollInertia: 200}); //scroll to bottom
+                        break;
+                    case 80:   //"P"
+                    case 112:   //"p"
+                        if ($('.toPrint').is(':visible')) {
+                            printNuts();
+                        }    
+                        $(".toPrint").toggle(); // show hide print checkboxes
                         break;
                     case 9:    // TAB
                     case 83:   //"S"
@@ -1066,6 +1148,7 @@ function ajaxListNutsTable(requester, nutID) {
 
 
 function confirmDel(nutId, Name, dataBase, requester) {
+
    /*  'use strict';  */
 
     var jqxhr, thisURL, thisHTML, r = confirm("Really delete " + Name + "?");
@@ -1093,6 +1176,7 @@ function confirmDel(nutId, Name, dataBase, requester) {
 
 // next 2 fxns called by editNut.html page
 function getOrigNut(nutID) {
+
    /*  'use strict';  */
 
     var jqxhr,
@@ -1120,6 +1204,7 @@ function getOrigNut(nutID) {
 
 // called by editNut.html on submit of form
 function ajaxEditNut() {
+
    /*  'use strict';  */
 
     var editData, requester, nutID;
@@ -1148,6 +1233,7 @@ function ajaxEditNut() {
 
 // called by editBDay.html on submit of form
 function ajaxEditBDay() {
+
    /*  'use strict';  */
 
     var editData, requester;
@@ -1173,6 +1259,7 @@ function ajaxEditBDay() {
 }
 
 function getOrigBDay(nutID) {
+
    /*  'use strict';  */
 
     var key,
@@ -1199,6 +1286,7 @@ function getOrigBDay(nutID) {
 }
 
 function ajaxRestoreDBs(sql) {
+
    /*  'use strict';  */
 
     var  jqxhr;
