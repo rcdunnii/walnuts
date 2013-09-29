@@ -39,7 +39,7 @@ function add_placeholder (id, placeholder)
 
 // called by listNuts.html and Walnuts.html
 function searchNut() {
-    'use strict';
+   /*  'use strict';  */
     var searchData = $("#searchForm").serialize(), jqxhr, searchElem;
     jqxhr = $.ajax({
         type: "POST",
@@ -84,7 +84,7 @@ function searchNut() {
 
 
 function getMessageBody(form) {
-    'use strict';
+   /*  'use strict';  */
     var data = "", i, j, option, elem, param, nodeName, type, valueAttr, value;
     for (i = 0; i < form.elements.length; i += 1) {
         elem = form.elements[i];
@@ -129,14 +129,14 @@ function getMessageBody(form) {
 var registering = false;
 
 function setExpiration(cookieLife) {
-    'use strict';
+   /*  'use strict';  */
     var today = new Date(), expr;
     expr = new Date(today.getTime() + cookieLife * 24 * 60 * 60 * 1000);
     return expr.toGMTString();
 }
 
 function createCookie(name, value, expires, path, domain, secure) {
-    'use strict';
+   /*  'use strict';  */
 /*    var date = new Date(); */
     document.cookie = name + "=" + escape(value) + "; ";
 
@@ -156,7 +156,7 @@ function createCookie(name, value, expires, path, domain, secure) {
 }
 
 function readCookie(name) {
-    'use strict';
+   /*  'use strict';  */
     var nameEQ, ca, i, c;
 
     nameEQ = name + "=";
@@ -175,7 +175,7 @@ function readCookie(name) {
 
 //called from login.html and wtdLogin.html on submit
 function ajaxAuthenticate(form, fxn, method) {
-    'use strict';
+   /*  'use strict';  */
     var currentUser,
         data,
         data_json = "",
@@ -261,7 +261,7 @@ function ajaxAuthenticate(form, fxn, method) {
 
 // fxn called by primary html page WTD.html - only run by Foxy
 function ajaxWalnutFunction(requester) {
-    'use strict';
+   /*  'use strict';  */
     var result,
         user_input,
         jqxhr,
@@ -351,7 +351,7 @@ function ajaxWalnutFunction(requester) {
 
 // called by ajaxAddNuts(), ajaxEditNut(), ajaxAddBDay()
 function getPostDataJSON(theForm) {
-    'use strict';
+   /*  'use strict';  */
     var data_json = "";
 
     $.fn.serializeObject = function () {
@@ -378,7 +378,7 @@ function getPostDataJSON(theForm) {
 }
 
 function ajaxAddNuts() {
-    'use strict';
+   /*  'use strict';  */
 
     var addData;
     addData = getPostDataJSON("addNutForm");
@@ -401,7 +401,7 @@ function ajaxAddNuts() {
 }
 
 function ajaxAddBDay() {
-    'use strict';
+   /*  'use strict';  */
 
     var addBDayData;
     addBDayData = getPostDataJSON("addBDayForm");
@@ -423,7 +423,7 @@ function ajaxAddBDay() {
     });
 }
 function getParameterByName(name) {
-    'use strict';
+   /*  'use strict';  */
     var regexS, regex, results;
 
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -439,14 +439,14 @@ function getParameterByName(name) {
 }
 
 function isEven(value) {
-    'use strict';
+   /*  'use strict';  */
     var x;
     x = ((value % 2 === 0) ? true : false);
     return x;
 }
 
 function getMonth(numStr) {
-    'use strict';
+   /*  'use strict';  */
     var monStr = "";
 
     switch (numStr) {
@@ -491,7 +491,7 @@ function getMonth(numStr) {
 }
 
 function displayBDays(requester, nutEntries, idxBy) {
-    'use strict';
+   /*  'use strict';  */
     var dateStr = "",
         i = 0,
         idx = 0,   // str len counter up to xCol
@@ -592,7 +592,7 @@ var scrollBar = false; // gobal scrollbar exists/nonexists flag
 /*jslint browser: true*/
 /*global $, jQuery, createXHR, displayPage*/
 function ajaxListBDays(requester, indexedBy) {
-    'use strict';
+   /*  'use strict';  */
 
     var bDayEntries = [], jqxhr;
 
@@ -644,7 +644,7 @@ function ajaxListBDays(requester, indexedBy) {
 
 
 function displayTable(requester, nutEntries) {
-    'use strict';
+   /*  'use strict';  */
     var numNuts, i = 0,
         replacementStr = "", nutTable = "",
         theHost = "";
@@ -757,7 +757,7 @@ function displayTable(requester, nutEntries) {
 }
 
 function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save data, or original data in input field if he wants to cancel
-    'use strict';
+   /*  'use strict';  */
     var t, editableClass, editableElem, emptyCellClass;
 
     if (false === cancel) {
@@ -770,14 +770,16 @@ function saveChanges(obj, cancel) { // cancel is 'false' if user wants to save d
     
     if (cancel === false) {
     
-        $(editableElem).find('.active-inline div').replaceWith('<em class="ajax">Saving...<em>');
+       $(editableElem).find('.active-inline div').replaceWith('<em class="ajax">Saving...<em>');	 
+  /*       $(editableElem).find('.active-inline div').html('<em class="ajax">Saving...<em>');	*/
      // post new value to the server
         $.post('save.php', {id: $(editableElem).attr('walnutID'), name: $(editableElem).attr('name'), value: t},
             function (data) {
                 if (editableClass === 'editable') {
                     $(editableElem)
                        .find('.active-inline .ajax')
-                       .replaceWith(t.length ? t : "                   ");  
+                       .replaceWith(t.length ? t : "                   "); 
+/*						.text(t.length ? t : "                   ");	 */
                     if (t.length === 0) {
                         $('.active-inline').addClass('emptyCell'); 
                         emptyCellClass = ''; //i.e. do not remove this class below
@@ -828,7 +830,7 @@ $.walnutNameSpace = {   // global flag to limit one edit at a  time
 }; 
 
 function setClickable() {
-    'use strict';
+   /*  'use strict';  */
   // put spaces in empty spans to allow in-line edits
     var $editableFields = $('.editable span, .editable-area span.textarea, .editable-area span.textarea textarea.preEdit');
 
@@ -933,7 +935,7 @@ function setClickable() {
 }
 
 function ajaxListNutsTable(requester, nutID) {
-    'use strict';
+   /*  'use strict';  */
 
     var walnutEntries = [], jqxhr, nutIdentifier, emailAddr;
 
@@ -1064,7 +1066,7 @@ function ajaxListNutsTable(requester, nutID) {
 
 
 function confirmDel(nutId, Name, dataBase, requester) {
-    'use strict';
+   /*  'use strict';  */
 
     var jqxhr, thisURL, thisHTML, r = confirm("Really delete " + Name + "?");
     if (dataBase === "walnuts") {
@@ -1091,7 +1093,7 @@ function confirmDel(nutId, Name, dataBase, requester) {
 
 // next 2 fxns called by editNut.html page
 function getOrigNut(nutID) {
-    'use strict';
+   /*  'use strict';  */
 
     var jqxhr,
 	    key,
@@ -1118,7 +1120,7 @@ function getOrigNut(nutID) {
 
 // called by editNut.html on submit of form
 function ajaxEditNut() {
-    'use strict';
+   /*  'use strict';  */
 
     var editData, requester, nutID;
     editData = getPostDataJSON("editNutForm");
@@ -1146,7 +1148,7 @@ function ajaxEditNut() {
 
 // called by editBDay.html on submit of form
 function ajaxEditBDay() {
-    'use strict';
+   /*  'use strict';  */
 
     var editData, requester;
     editData = getPostDataJSON("editBDayForm");
@@ -1171,7 +1173,7 @@ function ajaxEditBDay() {
 }
 
 function getOrigBDay(nutID) {
-    'use strict';
+   /*  'use strict';  */
 
     var key,
 	    valOfKey,
@@ -1197,7 +1199,7 @@ function getOrigBDay(nutID) {
 }
 
 function ajaxRestoreDBs(sql) {
-    'use strict';
+   /*  'use strict';  */
 
     var  jqxhr;
 
