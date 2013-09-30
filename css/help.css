@@ -42,8 +42,20 @@ h1.helpH1{
     border-radius: 4px 4px 4px 4px;
     border: solid 3px gold;
     font-family:"Times New Roman",Georgia,Serif;
+    position: relative;
+    width: 642px;
+    height: 400px;
+    left: 50%;
+    top: 50%;
+    margin-left: -340px;
+    margin-top: -100px;
 }
-    
+ 
+.helpTable tr {
+    height:20px;
+    margin: 0 15px;
+}
+
 .helpTable td {
     padding: 10px;
     color: gold;
@@ -65,6 +77,23 @@ h1.helpH1{
     font: normal normal normal 1.1em Georgia, serif;
 }
  
+.tinner {
+padding:15px;
+ -moz-border-radius:5px;
+ border-radius:5px;
+ background:maroon;
+ url(images/preload.gif) no-repeat 50% 50%;
+ border-right:1px solid #333;
+ border-bottom:1px solid #333;
+ color:gold;
+}
+
+/* moved these def's from tinybox.css */
+.tbox {position:absolute; display:none; padding:14px 17px; z-index:900} 
+.tclose {position:absolute; top:0px; right:0px; width:30px; height:30px; cursor:pointer; background:url(images/close.png) no-repeat}
+.tclose:hover {background-position:0 -30px}
+.tmask {position:absolute; display:none; top:0px; left:0px; height:100%; width:100%; background:#421E13; z-index:800}
+  
 p.center {
     text-align: center;
 }

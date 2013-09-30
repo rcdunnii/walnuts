@@ -1039,7 +1039,7 @@ function ajaxListNutsTable(requester, nutID) {
             setClickable();   // inline edit code
 
             $("div.help img").click(function () {
-                TINY.box.show({url: 'help.html', width : 500, height : 340, opacity : 100, mask : true, maskid : "nutFrame", maskopacity : 100});
+                TINY.box.show({url: 'help.html', width : 750, height : 450, opacity : 100, mask : true, maskid : "nutFrame", maskopacity : 100});
             });
 
             $(document).keypress(function (e) {
