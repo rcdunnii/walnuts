@@ -1080,7 +1080,7 @@ function ajaxListNutsTable(requester, nutID) {
    
             });
 
-           $('input.toPrintBox').change (function ()
+           $('input.toPrintBox:checkbox').change (function (event)
             {
                 var thisID = $(this).attr('id');
  
