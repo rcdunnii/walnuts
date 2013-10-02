@@ -983,8 +983,9 @@ function printElem(data)
         mywindow.document.write('</head><body >');
         mywindow.document.write(data);
         mywindow.document.write('</body></html>');
-        mywindow.print();
-        mywindow.close();
+        mywindow.print();		
+/*		setTimeout('window.close()', 10); // chrome crashes without this???	 */
+		window.close();
 
         return true;
     }
@@ -1013,7 +1014,7 @@ function printNuts() {
                 $("#spinner").hide();
                 printEntries  = (JSON && JSON.parse(dataReturned)) || $.parseJSON(dataReturned);
                 printResult = doPrint(printEntries);                   
-                printElem(printResult);
+                printElem(printResult); // line 976 or thereabouts
             })
             .fail(function () {
                 alert("List Nuts failed");
@@ -1095,13 +1096,16 @@ function ajaxListNutsTable(requester, nutID) {
                     case 98:   //"b"
                         $(".content").mCustomScrollbar("scrollTo", "bottom", {scrollInertia: 200}); //scroll to bottom
                         break;
-                    case 80:   //"P"
-                    case 112:   //"p"
-                        if ($('.toPrint').is(':visible') && $('input.toPrintBox').prop('checked')) {                            
-                            printNuts();
-                        }    
+                    case 112:   //"p" - lowercase
                         $(".toPrint").toggle(); // show hide print checkboxes
-                        break;                    
+                        break;					
+                    case 80:   //"P" - upper case
+                        if ($('.toPrint').is(':visible') && $('.toPrintBox').is(":checked")) {                            
+                            printNuts();	// line 992 or thereabouts					
+					    } else {
+							TINY.box.show({html:'No nuts to print!', width:200});
+						}
+                        break;
                     case 83:   //"S"
                     case 115:  //"s"
                         e.preventDefault(); 
