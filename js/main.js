@@ -1121,10 +1121,10 @@ function ajaxListNutsTable(requester, nutID) {
                 var thisID = $(this).attr('id');
  
                 if ($('#' + thisID).prop('checked')) {
-                    $(this).siblings().contents().eq(0).wrap("<p />").parent().html("(Hit 'p' to Print)").contents().unwrap();
+                    $(this).siblings().contents().eq(0).wrap('<p class="wrapped" />').parents().find('.wrapped').html('Hit <b>"P"</b> to Print ').contents().unwrap();
                     $("label[for=" + thisID + "]").css('color', 'red');
                 } else {
-                     $(this).siblings().contents().eq(0).wrap("<p />").parent().html("(&#x2713; to Print)&#x21E8;").contents().unwrap();
+                     $(this).siblings().contents().eq(0).wrap('<p class="wrapped" />').parents().find('.wrapped').html().html("(&#x2713; to Print)&#x21E8;").contents().unwrap();;
                      $("label[for=" + thisID + "]").css('color', 'green');
                 }                   
             });
