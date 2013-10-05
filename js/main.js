@@ -637,14 +637,14 @@ function displayTable(requester, nutEntries) {
 
     for (i = 0; i < numNuts; i += 2) {
         if (((i + 1) < numNuts)) {
-            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>(&#x2713; to Print)&#x21E8;<span class='printID_" + nutEntries[i].walnutID + "'></span></label></span>";
+            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>(&#x2713; Add to Print List)&#x21E8;<span class='printID_" + nutEntries[i].walnutID + "'></span></label></span>";
   
             if (requester === 'Foxy') {
                 replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
             } else {
                 replacementStr += "</td><td>";
             }
-            replacementStr += "<a class='oneNut' id='nutID_" + nutEntries[i + 1].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i + 1].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i + 1].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i + 1].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i + 1].walnutID + "' style='color:green'>(&#x2713; to Print)&#x21E8;<span class='printID_" + nutEntries[i + 1].walnutID + "'></span></label></span>";
+            replacementStr += "<a class='oneNut' id='nutID_" + nutEntries[i + 1].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i + 1].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i + 1].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i + 1].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i + 1].walnutID + "' style='color:green'>(&#x2713; Add to Print List)&#x21E8;<span class='printID_" + nutEntries[i + 1].walnutID + "'></span></label></span>";
 
             if (requester === 'Foxy') {
                 replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i + 1].walnutID + " , \"" + nutEntries[i + 1].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td></tr>";
@@ -697,7 +697,7 @@ function displayTable(requester, nutEntries) {
 
             replacementStr = "";
         } else { // if on last nut item
-            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>(&#x2713; to Print)&#x21E8;<span class='printID_" + nutEntries[i].walnutID + "'></span></label></span>";
+            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>(&#x2713; Add to Print List)&#x21E8;<span class='printID_" + nutEntries[i].walnutID + "'></span></label></span>";
 
             if (requester === 'Foxy') {
                 replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
@@ -930,10 +930,10 @@ function doPrint(nuts) {
             printString += "&nbsp;" + nuts[i].FormalNames + "<br>";
         }
         if (nuts[i].Children) {
-            printString += "&nbsp;Children:<br>" + nuts[i].Children + "<br>";
+            printString += "&nbsp;Children:<br>&nbsp;" + nuts[i].Children + "<br>";
         }
         if (nuts[i].Addr1) {
-            printString += "&nbsp;Address:<br>" + nuts[i].Addr1 + "<br>";        
+            printString += "&nbsp;" + nuts[i].Addr1 + "<br>";        
         }
         if (nuts[i].Addr2) {
             printString += "&nbsp;" + nuts[i].Addr2 + "<br>";
@@ -945,7 +945,7 @@ function doPrint(nuts) {
             printString += "&nbsp;" + nuts[i].Addr4 + "<br>";
         }
         if (nuts[i].Email1) {
-             printString += "&nbsp;Email:<br> " + nuts[i].Email1 + "<br>";
+             printString += "&nbsp;" + nuts[i].Email1 + "<br>";
         }
         if (nuts[i].Email2) {
              printString += "&nbsp;" + nuts[i].Email2 + "<br>";
@@ -954,13 +954,13 @@ function doPrint(nuts) {
              printString += "&nbsp;" + nuts[i].Email3 + "<br>";
         }
         if (nuts[i].Phone1) {
-             printString += "&nbsp;Phones:<br>" + nuts[i].Phone1 + "<br>";
+             printString += "&nbsp;" + nuts[i].Phone1 + "<br>";
         }
         if (nuts[i].Phone2) {
              printString += "&nbsp;" + nuts[i].Phone2 + "<br>";
         }
         if (nuts[i].Notes) {
-            printString += "&nbsp;Notes:<br>" + nuts[i].Notes + "<br>";
+            printString += "&nbsp;Notes:<br>&nbsp;" + nuts[i].Notes + "<br>";
         }
         printString += "<br><br></p>";
     
@@ -977,16 +977,20 @@ function printElem(data)
     {
         var mywindow;
         
-        mywindow = window.open('', 'walnut print window', 'height=400,width=600');
+        mywindow = window.open('', 'walnutprintwindow', 'height=400,width=600');
         mywindow.document.write('<html><head><title>walnut printout</title>');
         mywindow.document.write('<link rel="stylesheet" href="/css/print.css" type="text/css" media="print"/>');
         mywindow.document.write('</head><body >');
         mywindow.document.write(data);
         mywindow.document.write('</body></html>');
-        mywindow.print();		
-/*		setTimeout('window.close()', 10); // chrome crashes without this???	 */
-		window.close();
-
+        if (navigator.appName == 'Microsoft Internet Explorer') {
+            window.print();
+        } else {
+            mywindow.print();
+        }
+        setTimeout(mywindow.onfocus=function(){
+            mywindow.close(); // closes window after print/cancel when window regains focus
+        }, 1000); 
         return true;
     }
     
@@ -1121,11 +1125,11 @@ function ajaxListNutsTable(requester, nutID) {
                 var thisID = $(this).attr('id');
  
                 if ($('#' + thisID).prop('checked')) {
-                    $(this).siblings().contents().eq(0).wrap('<p class="wrapped" />').parents().find('.wrapped').html('Hit <b>"P"</b> to Print ').contents().unwrap();
+                   $(this).siblings().contents().eq(0).wrap('<p class="wrapped" />').parents().find('.wrapped').html("(&#39;P&#39; to Print List)").contents().unwrap();
                     $("label[for=" + thisID + "]").css('color', 'red');
                 } else {
-                     $(this).siblings().contents().eq(0).wrap('<p class="wrapped" />').parents().find('.wrapped').html().html("(&#x2713; to Print)&#x21E8;").contents().unwrap();;
-                     $("label[for=" + thisID + "]").css('color', 'green');
+                   $(this).siblings().contents().eq(0).wrap('<p class="wrapped" />').parents().find('.wrapped').html("(&#x2713; Add to Print List)&#x21E8;").contents().unwrap();
+                   $("label[for=" + thisID + "]").css('color', 'green');
                 }                   
             });
             
