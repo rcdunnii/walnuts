@@ -637,17 +637,17 @@ function displayTable(requester, nutEntries) {
 
     for (i = 0; i < numNuts; i += 2) {
         if (((i + 1) < numNuts)) {
-            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>(&#x2713; Add to Print List)&#x21E8;<span class='printID_" + nutEntries[i].walnutID + "'></span></label></span>";
+            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>(&#x2713; Add to Print List)&#x21E8;<span class='printID_" + nutEntries[i].walnutID + "' title='Add to Print Queue'></span></label></span>";
   
             if (requester === 'Foxy') {
-                replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
+                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
             } else {
                 replacementStr += "</td><td>";
             }
-            replacementStr += "<a class='oneNut' id='nutID_" + nutEntries[i + 1].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i + 1].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i + 1].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i + 1].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i + 1].walnutID + "' style='color:green'>(&#x2713; Add to Print List)&#x21E8;<span class='printID_" + nutEntries[i + 1].walnutID + "'></span></label></span>";
+            replacementStr += "<a class='oneNut' id='nutID_" + nutEntries[i + 1].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i + 1].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i + 1].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i + 1].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i + 1].walnutID + "' style='color:green'>(&#x2713; Add to Print List)&#x21E8;<span class='printID_" + nutEntries[i + 1].walnutID + "'title='Add to Print Queue'></span></label></span>";
 
             if (requester === 'Foxy') {
-                replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i + 1].walnutID + " , \"" + nutEntries[i + 1].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td></tr>";
+                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i + 1].walnutID + " , \"" + nutEntries[i + 1].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td></tr>";
             } else {
                 replacementStr += "</td></tr>";
             }
@@ -697,10 +697,10 @@ function displayTable(requester, nutEntries) {
 
             replacementStr = "";
         } else { // if on last nut item
-            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>(&#x2713; Add to Print List)&#x21E8;<span class='printID_" + nutEntries[i].walnutID + "'></span></label></span>";
+            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>(&#x2713; Add to Print List)&#x21E8;<span class='printID_" + nutEntries[i].walnutID + "'title='Add to Print Queue'></span></label></span>";
 
             if (requester === 'Foxy') {
-                replacementStr += "                    <a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
+                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
             } else {
                 replacementStr += "</td><tr>";
             }
