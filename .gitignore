@@ -4,6 +4,8 @@ custom-scrollbar-plugin-old/
 ignore/
 build/
 doc/
+nd/
+node_modules/
 obsolete/
 utilities/
 images/walleaf*
@@ -17,6 +19,7 @@ js/jquery.animate.colors.js
 js/input_lineedit.js
 js/jquery.lint.js
 js/jquery.modern-blink.js
+js/nutSession1
 css/test*
 css/cmx*.css
 css/reset.css
