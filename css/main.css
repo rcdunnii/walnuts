@@ -864,7 +864,24 @@ textarea {
        background-color: #421E13;
        text-align: center;
      }
-     
+    
+	#maint_status 
+	{
+		position: relative;
+		width: 350px;
+		top: 30px;
+		margin-left: auto;
+        margin-right: auto;
+        font: normal bold 16px sans-serif;
+    }
+	
+	#maint_status .redText
+       {
+       color: red;
+       background-color: #421E13;
+       text-align: center;
+     }
+	 
      a.downLoad 
        {
        color: orange;

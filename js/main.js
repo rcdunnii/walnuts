@@ -310,9 +310,14 @@ function ajaxWalnutFunction(requester) {
                         $(".redText").remove();
                     });
             }
+			if (user_input === "maintMode") {
+				$("#maint_status")
+                    .addClass("redText")
+                    .html(responseData);                  
+            }
         })
         .fail(function () {
-            alert("Error: " + jqxhr.responseText);
+            alert("Error: " + jqxhr.responseData);
         });
 }
 

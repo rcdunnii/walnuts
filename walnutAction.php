@@ -1,5 +1,111 @@
 <?php
-   
+   function maintMode() {
+		require_once('dbFoxy.inc'); 
+		
+		// find out from database if maintenance mode is on or off
+
+		$mysqli = new mysqli($server, $user, $password, $database);
+
+		/* check connection */
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", $mysqli->connect_error);
+			exit();
+		}
+		
+		if (!($stmt = $mysqli->prepare("select * from `website_mode` where `id` = '".mysql_real_escape_string("1")."'"))) {
+			echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+		}
+		
+		if (!$stmt->execute()) {
+			 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		}
+
+		if (!($result = $stmt->get_result())) {
+			echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
+		}
+
+		if (! ($row = $result->fetch_assoc())) { /*If nothing has previously been inserted into the website maintentance table */
+		
+			$id = '1'; // admin user id
+			$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
+			$maintenance_mode = "on";
+			$date =  date('d-m-Y');
+           
+			// create a prepared statement 
+			if (!$stmt = $mysqli->prepare("INSERT INTO website_mode(id, maintenance_mode, admin_ip_address, date) VALUES (?,?,?,?)")) {
+				 echo "Prepare failed - walnutAction.php line 31: (" . $mysqli->errno . ") " . $mysqli->error;
+				return;
+			}
+
+			if (!$stmt->bind_param('ssss', $id, $maintenance_mode, $admin_ip_address, $date ) ) {
+				// bind error
+				printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
+				return;
+			}
+			
+			if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+			}		
+			
+		} else {
+		
+			if ($row['maintenance_mode'] == 'off') {
+						
+				$id = '1'; // admin user id
+				$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
+				$maintenance_mode = "on";
+				$date =  date('d-m-Y');
+				
+				// find out current status, 'on' or 'off' of $vpb_
+				// create a prepared statement to set maintenance mode to 'on'
+				
+				if (!$stmt = $mysqli->prepare("UPDATE website_mode SET id = ?, maintenance_mode = ?, admin_ip_address = ?, date = ?")) {
+					 echo "Prepare failed - walnutAction.php line 31: (" . $mysqli->errno . ") " . $mysqli->error;
+					return;
+				}
+
+				if (!$stmt->bind_param('ssss', $id, $maintenance_mode, $admin_ip_address,  $date) ) {
+					// bind error
+					printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
+					return;
+				}
+				
+				if (!$stmt->execute()) {
+					echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+				}
+			
+			} else if($row['maintenance_mode'] == 'on') {
+			
+				$id = '1'; // admin user id
+				$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
+				$maintenance_mode = "off";
+				$date =  date('d-m-Y');
+				
+				// find out current status, 'on' or 'off' of $vpb_
+				// create a prepared statement to set maintenance mode to 'on'
+				
+				if (!$stmt = $mysqli->prepare("UPDATE website_mode SET id = ?, maintenance_mode = ?, admin_ip_address = ?, date = ?")) {
+					 echo "Prepare failed - walnutAction.php line 31: (" . $mysqli->errno . ") " . $mysqli->error;
+					return;
+				}
+
+				if (!$stmt->bind_param('ssss', $id, $maintenance_mode, $admin_ip_address,  $date) ) {
+					// bind error
+					printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
+					return;
+				}
+				
+				if (!$stmt->execute()) {
+					echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+				}
+			}
+
+		}
+		echo ("Maintenance mode set to " . $maintenance_mode);
+		$mysqli->close();
+		return;
+	}
+	
    function createNutsDBs() {
         require_once('dbFoxy.inc');  // database info
         /* create database   */
@@ -210,8 +316,8 @@
            createNutsDBs();
 	   } elseif ($whichDashBoardOpt == "deleteNutsDBs") {				
 		   deleteNutsDBs();
-	   } elseif ($whichDashBoardOpt == "bkUpDB") {      
-           backUpDB();          
+	   } elseif ($whichDashBoardOpt == "maintMode") {      
+          maintMode();          
        } else {
 		   echo "Uh oh...";			   
 	   }  

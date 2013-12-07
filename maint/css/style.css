@@ -1,0 +1,57 @@
+/********************************************************************************************************************
+* Set Website To and From Maintenance Mode using Ajax, Jquery and PHP
+* This script is brought to you by Vasplus Programming Blog by whom all copyrights are reserved.
+* Website: www.vasplus.info
+* Email: vasplusblog@gmail.com or info@vasplus.info
+*********************************************************************************************************************/
+
+
+/*Main Form Wrapper*/
+.vasplus_programming_blog_wrapper 
+{
+	width:470px;
+	margin: 0 auto;
+	border: solid 1px #cbcbcb;
+	 background-color: #FFF;
+	 box-shadow: 0 0px 10px #cbcbcb;
+	-moz-box-shadow: 0 0px 10px #cbcbcb;
+	-webkit-box-shadow: 0 0px 10px #cbcbcb;
+	-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px
+	text-align:center;
+	
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:11px;
+	padding-top:12px;
+	padding-bottom:12px;
+}
+
+
+
+.vpb_switch_button
+{
+	border:none;
+	background:left no-repeat;
+	width:106px;
+	height:40px;
+	padding:0;
+	margin:0;
+}
+.on, .off
+{
+	display:inline-block;
+	width:50px;
+	height:40px;
+	cursor:pointer;
+}
+
+
+.vpb_response_class
+{
+	width:400px;
+	margin-bottom:7px;
+	font-family:Verdana, Geneva, sans-serif; 
+	font-size:12px; 
+	padding:6px; 
+	background:#FFFFD2; 
+	border:1px solid #FFFF95;
+}
