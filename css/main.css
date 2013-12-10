@@ -107,23 +107,7 @@ textarea {
         padding: 0;
         margin: 0;
     }
-/*
-   body.list {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    background-image: url("/images/walnut-wood.jpg");
-    background: url("/images/walnut-wood.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover !important;
-    -moz-background-size: cover !important;
-    -o-background-size: cover !important;
-    background-size: cover !important;
-    padding: 0;
-    margin: 0; 
-   }
-  */ 
+ 
     #noscript {
         width: 100%;
         height: 100%;
@@ -215,7 +199,16 @@ textarea {
         -webkit-border-radius: 30px 0px 30px 30px;
         border-radius: 30px 0px 30px 30px;
     }
-      
+  
+     #inMaint {
+         display: block;
+        width: 270px;
+        margin-left: auto;
+        margin-right: auto;
+        color: red;
+        font: normal bold 20px sans-serif;
+    }
+        
      #nutFrame, #wtHomePage, #loginBkGnd, #loginBkGndAdm  { display: none  }      /* Hide if JS disabled - ref'd by Walnuts.html and WTD.html*/
     .js #nutFrame, .js #wtHomePage, .js  #loginBkGnd, .js #loginBkGndAdm { display: block } /* Show if JS enabled -  ref'd by Walnuts.html and WTD.html*/
           
@@ -248,30 +241,11 @@ textarea {
         border-top-right-radius: 0;
         border-bottom-right-radius: 50px;
         border-bottom-left-radius: 50px;
-
- /*       position: relative;
-        margin: 0;
-        width: 85%;
-        height: 96%;
-        top: 50%;
-        left: 50%;
-        margin-left: -42%;
-        margin-top: -48%;
-        background: #421E13;
-        -moz-border-top-left-radius: 0;
-        -moz-border-top-right-radius: 0;
-        -moz-border-bottom-right-radius: 50px;
-        -moz-border-bottom-left-radius: 50px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 50px;
-        border-bottom-left-radius: 50px;
-*/        
-    }
+ }       
         
-    #editNutPage ,
+    #editNutPage,
     #addNutPage
-      {
+    {
         position: relative;
         margin-left: auto;
         margin-right: auto;
@@ -294,13 +268,6 @@ textarea {
         color: gold;
         text-align: center;
     }    
-   
-
- /* replaced below with more specific highlight selector
-    input.highlight {
-        background-color: yellow;
-    }
- */
  
     input#submit.go {
         margin: 0.5em;
@@ -875,7 +842,7 @@ textarea {
         font: normal bold 16px sans-serif;
     }
 	
-	#maint_status .redText
+	#maint_status.redText
        {
        color: red;
        background-color: #421E13;

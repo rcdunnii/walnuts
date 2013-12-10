@@ -1,4 +1,5 @@
 <?php
+    
    function maintMode() {
 		require_once('dbFoxy.inc'); 
 		
@@ -11,7 +12,7 @@
 			printf("Connect failed: %s\n", $mysqli->connect_error);
 			exit();
 		}
-		
+        
 		if (!($stmt = $mysqli->prepare("select * from `website_mode` where `id` = '".mysql_real_escape_string("1")."'"))) {
 			echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
@@ -55,8 +56,7 @@
 				$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
 				$maintenance_mode = "on";
 				$date =  date('d-m-Y');
-				
-				// find out current status, 'on' or 'off' of $vpb_
+								
 				// create a prepared statement to set maintenance mode to 'on'
 				
 				if (!$stmt = $mysqli->prepare("UPDATE website_mode SET id = ?, maintenance_mode = ?, admin_ip_address = ?, date = ?")) {
@@ -81,7 +81,6 @@
 				$maintenance_mode = "off";
 				$date =  date('d-m-Y');
 				
-				// find out current status, 'on' or 'off' of $vpb_
 				// create a prepared statement to set maintenance mode to 'on'
 				
 				if (!$stmt = $mysqli->prepare("UPDATE website_mode SET id = ?, maintenance_mode = ?, admin_ip_address = ?, date = ?")) {
