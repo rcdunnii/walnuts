@@ -26,10 +26,17 @@
         <script src="/js/main.js"></script>
         <script src="/js/jquery.placeholder.js"></script>
         <script type="text/javascript">
-        // check if in maintenance mode
-
         if (readCookie('nutCookie') !== "loggedIn") {
+            var result = $.ajax({
+            type: "GET",
+            url: "maintenance_mode.php",
+            async: false
+            }).responseText;
+            if (result == 'notOk') {
+                    window.location.href = "website_is_on_maintenance.php";
+            } else {
                     window.location.href = "login.html";
+            }        
         } else {
             $(document).ready(function() {
                $(":input[placeholder]").placeholder();
@@ -75,7 +82,7 @@
    </div>
           
     <script type="text/javascript"> document.getElementById('nutFrame').className += " js"</script>
-     <script>
+    <script>
         var result = $.ajax({
             type: "GET",
             url: "maintenance_mode.php",
@@ -89,8 +96,7 @@
         }
         if (result == 'okForAll') {
             $("#inMaint").empty();
-        } 
-        
+        }        
     </script>
     
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
