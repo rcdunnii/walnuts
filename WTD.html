@@ -14,11 +14,18 @@
 
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/main.css">  <!-- includes old Walnut.css -->
-
+        <link rel="stylesheet" href="/css/tinybox.css"/>
+        <style>
+        .tableList {
+            width: 250px;
+            border: 1px solid red;
+        }
+        </style>  
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="/js/plugins.js"></script>
-        <script src="/js/main.js"></script>        
+        <script src="/js/main.js"></script>
+        <script type="text/javascript" src="/js/tinybox.js"></script>
         <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
         <script>
             if (readCookie('foxyCookie') == null) {
@@ -40,13 +47,15 @@
            <div >
            <!-- ajaxWalnutFunction is in js file called main.js; user here is Foxy, the admin user  -->
                 <form id="WTForm" action="" onSubmit= "ajaxWalnutFunction('Foxy'); return false;">						
-                    <input type="radio" name="dashBoardOpts" value="createNutsDBs"/><span class="wtd">Create WT Database!</span><br>			
-                    <input type="radio" name="dashBoardOpts" value="deleteNutsDBs"/><span class="wtd">Delete WT Database!</span><br> 
-                    <input type="radio" name="dashBoardOpts" value="bkUpDB"/><span class="wtd">Back Up WT Database!</span><br>
-                    <input type="radio" name="dashBoardOpts" value="restoreDB"/><span class="wtd">Restore WT Database!</span><br>
-                    <input type="radio" name="dashBoardOpts" value="addNut" /><span class="wtd">Add New Walnut</span><br>
+                    <input type="radio" name="dashBoardOpts" value="createNutsDBs"/><span class="wtd">Create Contacts Database</span><br>			
+                    <input type="radio" name="dashBoardOpts" value="deleteNutsDBs"/><span class="wtd">Delete Contact Database</span><br> 
+                    <input type="radio" name="dashBoardOpts" value="bkUpDB"/><span class="wtd">Back Up Contacts Database</span><br>
+                    <input type="radio" name="dashBoardOpts" value="restoreDB"/><span class="wtd">Restore Contacts Database</span><br>
+                    <input type="radio" name="dashBoardOpts" value="addTable"/><span class="wtd">Create New Contact Group</span><br>
+                    <input type="radio" name="dashBoardOpts" value="listTables"/><span class="wtd">List Contact Groups</span><br>
+                    <input type="radio" name="dashBoardOpts" value="addNut" /><span class="wtd">Add New Contact</span><br>
                     <input type="radio" name="dashBoardOpts" value="addBDay" /><span class="wtd">Add New Birthday</span><br>                    
-                    <input type="radio" name="dashBoardOpts" value="listNuts" /><span class="wtd">List/Edit Walnuts</span><br>
+                    <input type="radio" name="dashBoardOpts" value="listNuts" /><span class="wtd">List/Edit Contacts</span><br>
                     <input type="radio" name="dashBoardOpts" value="listBDays" /><span class="wtd">List/Edit Birthdays</span><br>
                     <input type="radio" name="dashBoardOpts" value="maintMode" /><span class="wtd">On/Off Maintenance Mode</span><br>
                     <input class="go" type="submit" id="submit" />						
