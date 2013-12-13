@@ -377,7 +377,7 @@
 		}
         
 		// Set a trigger to set a time value for 'Created' field of nuts table whenever a new nut is added to the db
-        $sql = "CREATE TRIGGER GROUP_CREATED BEFORE INSERT ON $tableName FOR EACH ROW SET NEW.Created = NOW()";
+        $sql = "CREATE TRIGGER $tableName BEFORE INSERT ON $tableName FOR EACH ROW SET NEW.Created = NOW()";
      		
 		$res = $mysqli->query($sql);
         
@@ -392,8 +392,34 @@
 			return;
 		}
         
-        echo "$tableName group successfully created!";		
+        echo ($tableName . " group successfully created!");
+		
+		// add new table name to tabletags table with access set to public
+		$id = null; // admin user id - auto incremented by mysql
+		$newTableName = $tableName;
+		$access = "public";
+		$notes = "family table";
+           
+		// create a prepared statement 
+		if (!$stmt = $mysqli->prepare("INSERT INTO tabletags(id, tableName, access, notes) VALUES (?,?,?,?)")) {
+			echo "Prepare failed - walnutAction.php line 31: (" . $mysqli->errno . ") " . $mysqli->error;
+			return;
+		}
+
+		if (!$stmt->bind_param('isss', $id, $newTableName, $access, $notes ) ) {
+			// bind error
+			printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
+			return;
+		}
+		
+		if (!$stmt->execute()) {
+				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+		}	
+
+		echo  ("\n" . $tableName . " added to tabletags table, access set to public.");
+		
         $mysqli->close();
+		
         return;		
     }
     
