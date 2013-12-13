@@ -313,7 +313,7 @@ function ajaxWalnutFunction(requester) {
 			if (user_input === "maintMode") {
 				$("#maint_status")
                     .addClass("redText")
-                    .html(responseData);                  
+                    .html(responseData);
             }
         })
         .fail(function () {
