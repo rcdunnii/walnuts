@@ -1,5 +1,5 @@
 <?php
-    
+
    function maintMode() {
 		require_once('dbFoxy.inc'); 
 		
@@ -416,6 +416,7 @@
            access       text ('admin' or 'public')
            notes        text
         */
+        
         $query = "SELECT * from tabletags";
         
         $result = $mysqli->query($query);
@@ -426,10 +427,7 @@
         while ($row = $result->fetch_assoc()) {
             $tableTagsRows[$row["tableName"]] =  $row["access"];    /* want to create assoc array of tablename => access value */
         }
-/*        
-        var_dump($tableTagsRows);
-        return;
-*/        
+       
         $result->close();
         
         $mysqli->close();
@@ -465,6 +463,7 @@
              for ($i = 0; $i < $nr; $i++) {
                 $row = $res->fetch_row();
                 if ($tableAccessArray[$row[0]] == "public") {
+                // $row[0] from SHOW TABLES query has table name which is the index to the access value in $tableAccessArray
                     printf ("<li>%s - %s table</li>", $row[0], $tableAccessArray[$row[0]]); 
                 }
             }
