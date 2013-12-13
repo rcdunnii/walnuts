@@ -7,12 +7,12 @@
 *********************************************************************************************************************/
 
 
-//INCLUDE THIS PAGE AT THE TOP SIDE OF ALL YOUR WEBSITE PAGES THAT YOU WANT TO CHECK FOR MAINTENANCE
-
+//INCLUDE THIS PAGE AT THE TOP SIDE OF ALL YOUR WEBSITE PAGES THAT YOU WANT TO CHECK FOR MAINTENANCE 
 include "dbFoxy.inc"; //Include the database connection file
 
 // Your Current IP Address being the admin of the website provided it has not changed from the saved IP Address
-$current_admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR'])); 
+
+$current_admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
 
 $mysqli = new mysqli($server, $user, $password, $database);
 
@@ -37,19 +37,25 @@ if (!($result = $stmt->get_result())) {
 $row = $result->fetch_array(MYSQLI_ASSOC);
 
 $maintenance_mode = trim(strip_tags($row["maintenance_mode"])); //Maintenance Status
+
 $allow_admin_ip_address = trim(strip_tags($row["admin_ip_address"])); //Saved Admin IP Address
 
 if($maintenance_mode == strip_tags("on"))
 {
 	if($allow_admin_ip_address == $current_admin_ip_address)
-	{
+	{ 
+        echo "okForAdmin"; 
 		//Allow the admin of this website alone to continue on the website with his or her maintenance process and this is cool guys
 	}
 	else //Otherwise
 	{
 		//Take every other user or visitor that accessed the website to the maintenance page to tell them that the website is currently under maintenance
-		?><script type="text/javascript"> window.location.replace("/maint/website_is_on_maintenance.php"); </script><?php
+		echo "notOk";
 	}
+} else { // maint mode is off
+    echo "okForAll"; // ok to proceed to site
 }
-else{ /* Do nothing since the website maintenance mode is turned Off */ }
+    
+return;
+
 ?>

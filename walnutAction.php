@@ -1,4 +1,5 @@
 <?php
+
    function maintMode() {
 		require_once('dbFoxy.inc'); 
 		
@@ -11,7 +12,7 @@
 			printf("Connect failed: %s\n", $mysqli->connect_error);
 			exit();
 		}
-		
+        
 		if (!($stmt = $mysqli->prepare("select * from `website_mode` where `id` = '".mysql_real_escape_string("1")."'"))) {
 			echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
 		}
@@ -55,8 +56,7 @@
 				$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
 				$maintenance_mode = "on";
 				$date =  date('d-m-Y');
-				
-				// find out current status, 'on' or 'off' of $vpb_
+								
 				// create a prepared statement to set maintenance mode to 'on'
 				
 				if (!$stmt = $mysqli->prepare("UPDATE website_mode SET id = ?, maintenance_mode = ?, admin_ip_address = ?, date = ?")) {
@@ -81,7 +81,6 @@
 				$maintenance_mode = "off";
 				$date =  date('d-m-Y');
 				
-				// find out current status, 'on' or 'off' of $vpb_
 				// create a prepared statement to set maintenance mode to 'on'
 				
 				if (!$stmt = $mysqli->prepare("UPDATE website_mode SET id = ?, maintenance_mode = ?, admin_ip_address = ?, date = ?")) {
@@ -308,14 +307,189 @@
         }
 }
 
-/*    require_once('dbFoxy.inc');  // database info  */
+    function addTable($tableName) {
+
+        // check tableName param was set in the query string
+       if(empty($_GET['tableName']))
+       {
+         // query string had param set to nothing ie ?param=&param2=something
+         echo "Must specify group name!";
+         return;
+       }
+        require_once('dbFoxy.inc');  // database info
+    
+        $mysqli = @ new mysqli($server, $user, $password, $database);
+		
+		/* check connection */
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", $mysqli->connect_error);
+			exit();
+		}
+
+        /* see if tableName already exists, if not create, if so notify user */
+        
+        $res = $mysqli->query("select 1 from $tableName");
+
+        if($res !== FALSE)
+        {
+           //notify $tableName EXISTS!
+           echo "$tableName already exists!";
+           return;
+        }
+        else
+        {
+            //create new table $tableName
+            $sql = "CREATE TABLE $tableName 
+                (
+                walnutID int NOT NULL AUTO_INCREMENT, 	/* numeric key for this record */
+                PRIMARY KEY(walnutID),                	/* make it primary key */
+                SirName varchar(20),					/* Generic Sirname - e.g. Dunn */	
+                Names varchar(50),						/* Names - e.g. Bob and Sarah Skinner Dunn	*/
+                FormalNames varchar(50),				/* Letter Address - e.g. Dr. and Mrs Robert C Dunn Jr */
+                Children varchar(50),					/* Children's Names, ages etc */
+                Addr1 varchar(35),						/* Street */
+                Addr2 varchar(35),						/* Apt, business */
+                Addr3 varchar(35),						/* Country, State, Zip */
+                Addr4 varchar(35),						/* Misc */			
+                Email1 varchar(30),						/* Email addresses */
+                Email2 varchar(30),
+                Email3 varchar(30),
+                Phone1 varchar(30),						/* Phone 1 */
+                Phone2 varchar(30),						/* Phone 2 */
+                Notes varchar(50),						/* Notes */			
+                Created DATETIME NOT NULL DEFAULT '1900-01-01 00:00:00',                          /* column to set date created   */
+                Updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  /* column set to date updated   */
+                )"; 
+                
+        }
+		// Performs the $sql query on the server to create the table
+		$res = $mysqli->query($sql);
+		
+		if ($mysqli->error) {
+			try {    
+				throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);    
+			} catch(Exception $e ) {
+				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+				echo nl2br($e->getTraceAsString());
+				}
+			$mysqli->close();
+			return;
+		}
+        
+		// Set a trigger to set a time value for 'Created' field of nuts table whenever a new nut is added to the db
+        $sql = "CREATE TRIGGER GROUP_CREATED BEFORE INSERT ON $tableName FOR EACH ROW SET NEW.Created = NOW()";
+     		
+		$res = $mysqli->query($sql);
+        
+        if ($mysqli->error) {
+			try {    
+				throw new Exception("MySQL error $mysqli->error <br> Query:<br> $sql", $mysqli->errno);    
+			} catch(Exception $e ) {
+				echo "Error No: ".$e->getCode(). " - ". $e->getMessage() . "<br >";
+				echo nl2br($e->getTraceAsString());
+				}
+			$mysqli->close();
+			return;
+		}
+        
+        echo "$tableName group successfully created!";		
+        $mysqli->close();
+        return;		
+    }
+    
+    function getTableTagsArray() {
+    
+      require('dbFoxy.inc');  // database info
+    
+        $mysqli = new mysqli($server, $user, $password, $database);
+		
+		/* check connection */
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", $mysqli->connect_error);
+			exit();
+		}
+        
+        /* get all tables and their accessibility from tabletags table 
+           structure of tabletags is
+           id           int
+           tableName    text
+           access       text ('admin' or 'public')
+           notes        text
+        */
+        
+        $query = "SELECT * from tabletags";
+        
+        $result = $mysqli->query($query);
+
+        // assoc array of tableName=>access
+        $tableTagsRows = array();
+        
+        while ($row = $result->fetch_assoc()) {
+            $tableTagsRows[$row["tableName"]] =  $row["access"];    /* want to create assoc array of tablename => access value */
+        }
+       
+        $result->close();
+        
+        $mysqli->close();
+        
+        return $tableTagsRows;
+    }
+            
+    
+    function listTables() {
+    
+        require_once('dbFoxy.inc');  // database info
+    
+        $mysqli = @ new mysqli($server, $user, $password, $database);
+		
+		/* check connection */
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", $mysqli->connect_error);
+			exit();
+		}
+        // get assoc array of tables with key of table name, value of admin or public visibility
+        $tableAccessArray = getTableTagsArray();
+     
+        $res = $mysqli->query("SHOW TABLES");
+
+        $nr = $res->num_rows;
+
+        printf ("<p>There are %d tables in %s database<br>Here are public ones...</p>", $nr, $database); 
+        
+        if ($nr > 0) {
+        
+            printf('<ul style="text-align: left">');
+             /* fetch enumerated array - fetch_row */
+             for ($i = 0; $i < $nr; $i++) {
+                $row = $res->fetch_row();
+                if ($tableAccessArray[$row[0]] == "public") {
+                // $row[0] from SHOW TABLES query has table name which is the index to the access value in $tableAccessArray
+                    printf ("<li>%s - %s table</li>", $row[0], $tableAccessArray[$row[0]]); 
+                }
+            }
+            printf("</ul>"); 
+        }
+        
+        /* free result set */
+        $res->close();    
+
+        /* close connection */
+        $mysqli->close();        
+
+        return;
+    } 
+
     
 	if (($_REQUEST['value']) != "") {
 	   $whichDashBoardOpt = $_REQUEST['value'];
 	   if ($whichDashBoardOpt == "createNutsDBs") {
            createNutsDBs();
-	   } elseif ($whichDashBoardOpt == "deleteNutsDBs") {				
+       } elseif ($whichDashBoardOpt == "deleteNutsDBs") {				
 		   deleteNutsDBs();
+	   } elseif ($whichDashBoardOpt == "listTables") {				
+		   listTables();
+ 	   } elseif ($whichDashBoardOpt == "addTable") {				
+		   addTable($_REQUEST['tableName']);          
 	   } elseif ($whichDashBoardOpt == "maintMode") {      
           maintMode();          
        } else {

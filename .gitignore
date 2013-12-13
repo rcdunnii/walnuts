@@ -8,6 +8,7 @@ nd/
 node_modules/
 obsolete/
 utilities/
+maint/
 images/walleaf*
 images/walnut
 *.bak
