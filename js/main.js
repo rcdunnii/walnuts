@@ -655,13 +655,18 @@ function displayTable(requester, nutEntries) {
     theHost = location.host;
 // get # entries in database into var numNuts
     numNuts = nutEntries.length;
-
+// cycle thru nuts and display them in 2 columns 
     for (i = 0; i < numNuts; i += 2) {
+// don't display if visibility set to 0 unless it's Foxy running the listTable via Walnut Tally Dashboard         
+        if (requester !== 'Foxy' && nutEntries[i].visibility === 0) {
+            i -= 1;
+            continue;
+        }    
         if (((i + 1) < numNuts)) {
             replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[i].walnutID + "' title='Add to Print Queue'></span></label></span>";
   
             if (requester === 'Foxy') {
-                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
+                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[i].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[i].walnutID + "'><img src='/images/vis.png'></span></a></td><td>";
             } else {
                 replacementStr += "</td><td>";
             }
