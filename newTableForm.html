@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Get New Table Name</title>
   
-<!-- <link href="css/popup.css" rel="stylesheet" type="text/css" media="all" />  -->
+<link href="css/popup.css" rel="stylesheet" type="text/css" media="all" />
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"> </script>
 <!-- <script type="text/javascript" src="js/popup.js"></script> -->
 <script>
@@ -20,9 +20,13 @@ function makeTable() {
     })
        .done (function(data){
             $("#response").text(data).css("color", "blue"); // show response from the php script.
-            alert(data);
-          // similar behavior as an HTTP redirect        
-            window.location.replace("https://" + theHost + "/WTD.html", "_self"); 
+			$("#return").show();
+				//alert(data);
+/*			$("#return").on("click", function() {				
+			  // similar behavior as an HTTP redirect        
+				window.location.replace("https://" + theHost + "/WTD.html", "_self"); 
+			});
+*/			
        })
        .fail (function(data) {
            $("#response").text(data).css("color", "gold");
@@ -45,6 +49,7 @@ function makeTable() {
                 <input type="submit" value="Submit">
             </form>
         <center><div id="response"></div></center>
+		<center><div id="return" style="display: none"><a href="WTD.html">Back</a></div></center>
         </div> <!--your content end-->
 
     </div> <!--toPopup end-->
