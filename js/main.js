@@ -649,8 +649,10 @@ function displayTable(requester, nutEntries) {
    /*  'use strict';  */
 
     var numNuts, i = 0,
-        replacementStr = "", nutTable = "",
-        theHost = "";
+        replacementStr = "",
+		nutTable = "",
+        theHost = "",
+		visImageStr = "";
 // development or production ?
     theHost = location.host;
 // get # entries in database into var numNuts
@@ -663,17 +665,19 @@ function displayTable(requester, nutEntries) {
             continue;
         }    
         if (((i + 1) < numNuts)) {
-            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[i].walnutID + "' title='Add to Print Queue'></span></label></span>";
+            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" + "(" + parseInt(i) + ")" + nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[i].walnutID + "' title='Add to Print Queue'></span></label></span>";
   
             if (requester === 'Foxy') {
-                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[i].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[i].walnutID + "'><img src='/images/vis.png'></span></a></td><td>";
+			    visImageStr = nutEntries[i].visibility ? "<img src='/images/vis.png'>" : "<img src='/images/noVis.png'>";
+                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[i].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[i].walnutID + "'>" + visImageStr + "</span></a></td><td>";
             } else {
                 replacementStr += "</td><td>";
             }
-            replacementStr += "<a class='oneNut' id='nutID_" + nutEntries[i + 1].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i + 1].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i + 1].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i + 1].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i + 1].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[i + 1].walnutID + "'title='Add to Print Queue'></span></label></span>";
+            replacementStr += "<a class='oneNut' id='nutID_" + nutEntries[i + 1].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i + 1].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  "(" + parseInt(i+1) + ")" + nutEntries[i + 1].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i + 1].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i + 1].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[i + 1].walnutID + "'title='Add to Print Queue'></span></label></span>";
 
             if (requester === 'Foxy') {
-                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i + 1].walnutID + " , \"" + nutEntries[i + 1].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td></tr>";
+			    visImageStr = nutEntries[i + 1].visibility ? "<img src='/images/vis.png'>" : "<img src='/images/noVis.png'>";
+                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i + 1].walnutID + " , \"" + nutEntries[i + 1].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[i].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[i].walnutID + "'>" + visImageStr + "</span></a></td></tr>";
             } else {
                 replacementStr += "</td></tr>";
             }
@@ -723,12 +727,13 @@ function displayTable(requester, nutEntries) {
 
             replacementStr = "";
         } else { // if on last nut item
-            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[i].walnutID + "'title='Add to Print Queue'></span></label></span>";
+            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" + "(" + parseInt(i) + ")" + nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[i].walnutID + "'title='Add to Print Queue'></span></label></span>";
 
             if (requester === 'Foxy') {
-                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a></td><td>";
+				 visImageStr = nutEntries[i].visibility ? "<img src='/images/vis.png'>" : "<img src='/images/noVis.png'>";
+                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[i].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[i].walnutID + "'>" + visImageStr + "</span></a></td></tr>";
             } else {
-                replacementStr += "</td><tr>";
+                replacementStr += "</td></tr>";
             }
 
 
@@ -1262,6 +1267,28 @@ function confirmDel(nutId, Name, dataBase, requester) {
     }
 }
 
+// function to control visibility of a given nut
+function setVisibility(nutID) {
+	var jqxhr;
+	 jqxhr = $.ajax({
+            type : "GET",
+            url : "toggleVis.php",
+            data : "value= " + nutID
+        })
+		.done(function(dataReturned) {
+			if (dataReturned == 'nowVisible') {
+				$(".visID_" + nutID).html('<img src="/images/vis.png" >');
+		    } else if (dataReturned == 'nowInvisible') {
+				$(".visID_" + nutID).html('<img src="/images/noVis.png" >');
+			} else {
+				$(".visID_" + nutID).text('Error: ' + dataReturned).css("color", "red");
+			}		
+		})
+		.fail(function(dataReturned) {
+			alert("Visibility Change Error: " + dataReturned);
+		});
+}
+		
 // next 2 fxns called by editNut.html page
 function getOrigNut(nutID) {
 
