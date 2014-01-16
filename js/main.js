@@ -648,77 +648,99 @@ function displayTable(requester, nutEntries) {
 
    /*  'use strict';  */
 
-    var numNuts, i = 0,
+    var numNuts = 0,
+        i = 0,
+        nut = 0,
         replacementStr = "",
 		nutTable = "",
         theHost = "",
-		visImageStr = "";
+		visImageStr = "",
+        thisIndex = 0,
+        nextIndex = 0;
 // development or production ?
     theHost = location.host;
 // get # entries in database into var numNuts
     numNuts = nutEntries.length;
 // cycle thru nuts and display them in 2 columns 
-    for (i = 0; i < numNuts; i += 2) {
-// don't display if visibility set to 0 unless it's Foxy running the listTable via Walnut Tally Dashboard         
-        if (requester !== 'Foxy' && nutEntries[i].visibility === 0) {
-            i -= 1;
-            continue;
-        }    
-        if (((i + 1) < numNuts)) {
-            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" + "(" + parseInt(i) + ")" + nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[i].walnutID + "' title='Add to Print Queue'></span></label></span>";
+    for (i = 0; i < numNuts; i += 1) {
+        thisIndex = i;
+        nextIndex = ++i;
+        // don't display if visibility set to 0 unless it's admin (Foxy) running the listTable via Walnut Tally Dashboard 
+        // for general nonadmin user, we need 2 records, one for each column, thisIndex and nextIndex
+        if (requester !== 'Foxy') {
+            // find first visible record
+            while ((i < numNuts) && (nutEntries[thisIndex].visibility === 0) ) {                    
+                thisIndex += 1;
+                i = nextIndex = thisIndex + 1;                    
+            }
+            // then find next visible record
+            while ((i < numNuts) && (nutEntries[nextIndex].visibility === 0)) {
+                nextIndex += 1;
+                i = nextIndex;
+            }
+            // if here visibility ==  0 despite above 2 while blocks, so on last record which is 0 vis ???
+            if (nutEntries[thisIndex].visibility === 0) {
+                break;
+            }    
+            
+        }
+        // this finds when we are at last record   
+        if (((nextIndex) < numNuts)) {            
+            
+            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[thisIndex].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[thisIndex].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" + "(" + parseInt(++nut) + ") " + nutEntries[thisIndex].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[thisIndex].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[thisIndex].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[thisIndex].walnutID + "' title='Add to Print Queue'></span></label></span>";
   
             if (requester === 'Foxy') {
-			    visImageStr = nutEntries[i].visibility ? "<img src='/images/vis.png'>" : "<img src='/images/noVis.png'>";
-                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[i].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[i].walnutID + "'>" + visImageStr + "</span></a></td><td>";
+			    visImageStr = nutEntries[thisIndex].visibility ? "<img src='/images/vis.png'>" : "<img src='/images/noVis.png'>";
+                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[thisIndex].walnutID + " , \"" + nutEntries[thisIndex].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[thisIndex].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[thisIndex].walnutID + "'>" + visImageStr + "</span></a></td><td>";
             } else {
                 replacementStr += "</td><td>";
             }
-            replacementStr += "<a class='oneNut' id='nutID_" + nutEntries[i + 1].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i + 1].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  "(" + parseInt(i+1) + ")" + nutEntries[i + 1].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i + 1].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i + 1].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[i + 1].walnutID + "'title='Add to Print Queue'></span></label></span>";
+            replacementStr += "<a class='oneNut' id='nutID_" + nutEntries[nextIndex].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[nextIndex].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" +  "(" + parseInt(++nut) + ") " + nutEntries[nextIndex].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[nextIndex].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[nextIndex].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[nextIndex].walnutID + "'title='Add to Print Queue'></span></label></span>";
 
             if (requester === 'Foxy') {
-			    visImageStr = nutEntries[i + 1].visibility ? "<img src='/images/vis.png'>" : "<img src='/images/noVis.png'>";
-                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i + 1].walnutID + " , \"" + nutEntries[i + 1].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[i].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[i].walnutID + "'>" + visImageStr + "</span></a></td></tr>";
+			    visImageStr = nutEntries[nextIndex].visibility ? "<img src='/images/vis.png'>" : "<img src='/images/noVis.png'>";
+                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[nextIndex].walnutID + " , \"" + nutEntries[nextIndex].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[nextIndex].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[nextIndex].walnutID + "'>" + visImageStr + "</span></a></td></tr>";
             } else {
                 replacementStr += "</td></tr>";
             }
             // set Names
-            replacementStr += "<tr><td>" + nutEntries[i].Names + "</td><td>" + nutEntries[i + 1].Names + "</td></tr>";
+            replacementStr += "<tr><td>" + nutEntries[thisIndex].Names + "</td><td>" + nutEntries[nextIndex].Names + "</td></tr>";
             // set Formal Names
-            replacementStr += "<tr><td>" + nutEntries[i].FormalNames + "</td><td>" + nutEntries[i + 1].FormalNames + "</td></tr>";
+            replacementStr += "<tr><td>" + nutEntries[thisIndex].FormalNames + "</td><td>" + nutEntries[nextIndex].FormalNames + "</td></tr>";
             // set Children
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children:<div class='inlineDiv'>" + nutEntries[i].Children + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Children' id='Children'>"  + "Children:<div class='inlineDiv'>" + nutEntries[i + 1].Children + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Children' id='Children'>" + "Children:<div class='inlineDiv'>" + nutEntries[thisIndex].Children + "</div></td><td class='editable' walnutID='" + nutEntries[nextIndex].walnutID + "'" + "name='Children' id='Children'>"  + "Children:<div class='inlineDiv'>" + nutEntries[nextIndex].Children + "</div></td></tr>";
             // set Address line 1
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[i].Addr1 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[i + 1].Addr1 + "</div></div></div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[thisIndex].Addr1 + "</div></td><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[nextIndex].Addr1 + "</div></div></div></td></tr>";
             // set Address line 2
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr2 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[i + 1].Addr2 + "</div></td></div></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[thisIndex].Addr2 + "</div></td><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[nextIndex].Addr2 + "</div></td></div></tr>";
             // set Address line 3
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr3 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[i + 1].Addr3 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[thisIndex].Addr3 + "</div></td><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr2' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[nextIndex].Addr3 + "</div></td></tr>";
             // set Address line 4
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr4 + "</div></td><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[i + 1].Addr4 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[thisIndex].Addr4 + "</div></td><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[nextIndex].Addr4 + "</div></td></tr>";
             // set Email 1
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email1 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[i + 1].Email1 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[thisIndex].Email1 + "</div></td><td class='editable' walnutID='" + nutEntries[nextIndex].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[nextIndex].Email1 + "</div></td></tr>";
             // set Email  2
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email2 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[i + 1].Email2 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[thisIndex].Email2 + "</div></td><td class='editable' walnutID='" + nutEntries[nextIndex].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[nextIndex].Email2 + "</div></td></tr>";
             // set Phone  1
-            replacementStr += "<tr><td   class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[i].Phone1 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[i + 1].Phone1 + "</div></td></tr>";
+            replacementStr += "<tr><td   class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[thisIndex].Phone1 + "</div></td><td class='editable' walnutID='" + nutEntries[nextIndex].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[nextIndex].Phone1 + "</div></td></tr>";
             // set Phone  2
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[i].Phone2 + "</div></td><td class='editable' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[i + 1].Phone2 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[thisIndex].Phone2 + "</div></td><td class='editable' walnutID='" + nutEntries[nextIndex].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[nextIndex].Phone2 + "</div></td></tr>";
             
-           if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
-                replacementStr += "<tr><td>Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</td>";
+           if ((Date.parse(nutEntries[thisIndex].Created)) < (Date.parse(nutEntries[thisIndex].Updated))) {
+                replacementStr += "<tr><td>Last Update: " + nutEntries[thisIndex].Updated.split(" ", 1) + "</td>";
             } else {
-                replacementStr += "<tr><td>Last Update: " + nutEntries[i].Created.split(" ", 1) + "</td>";
+                replacementStr += "<tr><td>Last Update: " + nutEntries[thisIndex].Created.split(" ", 1) + "</td>";
             }
             
-           if ((Date.parse(nutEntries[i + 1].Created)) < (Date.parse(nutEntries[i + 1].Updated))) {
-                replacementStr += "<td>Last Update: " + nutEntries[i + 1].Updated.split(" ", 1) + "</td></tr>";
+           if ((Date.parse(nutEntries[nextIndex].Created)) < (Date.parse(nutEntries[nextIndex].Updated))) {
+                replacementStr += "<td>Last Update: " + nutEntries[nextIndex].Updated.split(" ", 1) + "</td></tr>";
             } else {
-                replacementStr += "<td>Last Update: " + nutEntries[i + 1].Created.split(" ", 1) + "</td></tr>";
+                replacementStr += "<td>Last Update: " + nutEntries[nextIndex].Created.split(" ", 1) + "</td></tr>";
             }
             
-            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes: <br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></div></td><td class='editable-area' walnutID='" + nutEntries[i + 1].walnutID + "'" + "name='Notes' id='Notes'>";
+            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes: <br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[thisIndex].Notes + "</textarea></div></td><td class='editable-area' walnutID='" + nutEntries[nextIndex].walnutID + "'" + "name='Notes' id='Notes'>";
 
-            replacementStr += "Notes:<br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i + 1].Notes + "</textarea></div></td></tr>";
+            replacementStr += "Notes:<br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[nextIndex].Notes + "</textarea></div></td></tr>";
             
             // empty row to separate entries
             replacementStr += "<tr><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td></tr>";
@@ -727,35 +749,35 @@ function displayTable(requester, nutEntries) {
 
             replacementStr = "";
         } else { // if on last nut item
-            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[i].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[i].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" + "(" + parseInt(i) + ")" + nutEntries[i].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[i].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[i].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[i].walnutID + "'title='Add to Print Queue'></span></label></span>";
+            replacementStr = "<tr><td><a class='oneNut' id='nutID_" + nutEntries[thisIndex].walnutID + "' onclick= \"window.location.href='https://" + theHost + "/editNut.html?value=" + nutEntries[thisIndex].walnutID + "&user=" + requester + "'\" title = 'Update this Walnut'>" + "(" + parseInt(++nut) + ") " + nutEntries[thisIndex].SirName + "</a>    <span class='toPrint'><input type='checkbox' class='toPrintBox' id='"+ nutEntries[thisIndex].walnutID + "' title='Print Nut' name='cc'><label for='"+ nutEntries[thisIndex].walnutID + "' style='color:green'>Add to Print List<span class='printID_" + nutEntries[thisIndex].walnutID + "'title='Add to Print Queue'></span></label></span>";
 
             if (requester === 'Foxy') {
-				 visImageStr = nutEntries[i].visibility ? "<img src='/images/vis.png'>" : "<img src='/images/noVis.png'>";
-                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[i].walnutID + " , \"" + nutEntries[i].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[i].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[i].walnutID + "'>" + visImageStr + "</span></a></td></tr>";
+				 visImageStr = nutEntries[thisIndex].visibility ? "<img src='/images/vis.png'>" : "<img src='/images/noVis.png'>";
+                replacementStr += "<a class='oneNut' href='#' onclick='confirmDel(" + nutEntries[thisIndex].walnutID + " , \"" + nutEntries[thisIndex].SirName + "\", \"walnuts\", \"Foxy\");' title='Delete'>" + "&times;</a>&nbsp;&nbsp;<a href='#' onclick='setVisibility(" + nutEntries[thisIndex].walnutID + " );' title='Change Visibility'><span class='visID_" + nutEntries[thisIndex].walnutID + "'>" + visImageStr + "</span></a></td></tr>";
             } else {
                 replacementStr += "</td></tr>";
             }
 
 
-            replacementStr += "<tr><td>" + nutEntries[i].Names + "</td></tr>";
-            replacementStr += "<tr><td>" + nutEntries[i].FormalNames + "</td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Children' id='Children'>" + "Children: <div class='inlineDiv'>" + nutEntries[i].Children + "</div></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[i].Addr1 + "</div></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr2 + "</div></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr3 + "</div></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[i].Addr4 + "</div></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email1 + "</div></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[i].Email2 + "</div></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[i].Phone1 + "</div></td></tr>";
-            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[i].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[i].Phone2 + "</div></td></tr>";
+            replacementStr += "<tr><td>" + nutEntries[thisIndex].Names + "</td></tr>";
+            replacementStr += "<tr><td>" + nutEntries[thisIndex].FormalNames + "</td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Children' id='Children'>" + "Children: <div class='inlineDiv'>" + nutEntries[thisIndex].Children + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr1' id='Addr1'>" + "Address: <div class='inlineDiv'>" + nutEntries[thisIndex].Addr1 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr2' id='Addr2'>" + "         <div class='inlineDiv'>" + nutEntries[thisIndex].Addr2 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr3' id='Addr3'>" + "         <div class='inlineDiv'>" + nutEntries[thisIndex].Addr3 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Addr4' id='Addr4'>" + "         <div class='inlineDiv'>" + nutEntries[thisIndex].Addr4 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Email1' id='Email1'>" + "Email 1: <div class = 'inlineDiv mailToLink'>" + nutEntries[thisIndex].Email1 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Email2' id='Email2'>" + "      2: <div class = 'inlineDiv mailToLink'>" + nutEntries[thisIndex].Email2 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Phone1' id='Phone1'>" + "Phone 1: <div class='inlineDiv'>" + nutEntries[thisIndex].Phone1 + "</div></td></tr>";
+            replacementStr += "<tr><td class='editable' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Phone2' id='Phone2'>" + "      2: <div class='inlineDiv'>" + nutEntries[thisIndex].Phone2 + "</div></td></tr>";
            // put out last update 
-           if ((Date.parse(nutEntries[i].Created)) < (Date.parse(nutEntries[i].Updated))) {
-                replacementStr += "<tr><td>Last Update: " + nutEntries[i].Updated.split(" ", 1) + "</td></tr>";
+           if ((Date.parse(nutEntries[thisIndex].Created)) < (Date.parse(nutEntries[thisIndex].Updated))) {
+                replacementStr += "<tr><td>Last Update: " + nutEntries[thisIndex].Updated.split(" ", 1) + "</td></tr>";
             } else {
-                replacementStr += "<tr><td>Last Update: " + nutEntries[i].Created.split(" ", 1) + "</td></tr>";
+                replacementStr += "<tr><td>Last Update: " + nutEntries[thisIndex].Created.split(" ", 1) + "</td></tr>";
             }
  
-            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[i].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes:<br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[i].Notes + "</textarea></div></td><tr>";
+            replacementStr += "<tr><td class='editable-area' walnutID='" + nutEntries[thisIndex].walnutID + "'" + "name='Notes' id='Notes'>" + "Notes:<br><div class='inlineDiv textarea'><textarea class='preEdit' rows='3' cols='30' wrap='hard' maxlength='60'>" + nutEntries[thisIndex].Notes + "</textarea></div></td><tr>";
             
             // empty row to separate entries
             replacementStr += "<tr><td>&nbsp;&nbsp;</td><td>&nbsp;&nbsp;</td></tr>";
