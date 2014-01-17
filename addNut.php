@@ -14,15 +14,15 @@
         $f =($_POST['data']);         
                   
 		// create a prepared statement 
-		if (false === ($stmt = $mysqli->prepare("INSERT INTO nuts VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"))) {
-			 echo "Prepare failed - addNut.php line 22: (" . $mysqli->errno . ") " . $mysqli->error;
+		if (false === ($stmt = $mysqli->prepare("INSERT INTO nuts VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"))) {
+			 echo "Prepare failed - addNut.php line 17: (" . $mysqli->errno . ") " . $mysqli->error;
 			return;
 		}
 
 		// Bind parameters (an integer and a string). 'is' tells MySQL you're passing an integer(i) and a string(s)
         // No values are set for the last two fields - field 16 = Created, field 17 = Updated
 
-		$rc = $stmt->bind_param('issssssssssssssss', $f["walnutID"],$f["SirName"],$f["Names"],$f["FormalNames"],$f["Children"],$f["Addr1"],$f["Addr2"],$f["Addr3"],$f["Addr4"],$f["Email1"],$f["Email2"],$f["Email3"],$f["Phone1"],$f["Phone2"],$f["Notes"],$f["Created"],$f["Updated"]); 
+		$rc = $stmt->bind_param('iissssssssssssssss', $f["walnutID"],$f["visibility"],$f["SirName"],$f["Names"],$f["FormalNames"],$f["Children"],$f["Addr1"],$f["Addr2"],$f["Addr3"],$f["Addr4"],$f["Email1"],$f["Email2"],$f["Email3"],$f["Phone1"],$f["Phone2"],$f["Notes"],$f["Created"],$f["Updated"]); 
 
 		if (false === $rc) 
 		{ // bind error
