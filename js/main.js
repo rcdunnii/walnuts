@@ -271,7 +271,7 @@ function ajaxWalnutFunction(requester) {
  /*         TINY.box.show({url: 'newTableForm.html'}); can't figure how to submit form within tiny box - aborted effort */   
             window.open("https://" + theHost + "/newTableForm.html", "_self"); 
             return false;   // do not remove - otherwise goes to ajax... 
-        }
+        }    
     } else {
         $("<div />")
             .addClass("redText")

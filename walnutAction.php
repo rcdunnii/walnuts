@@ -172,6 +172,7 @@
 			(
 			walnutID int NOT NULL AUTO_INCREMENT, 	/* numeric key for this record */
 			PRIMARY KEY(walnutID),                	/* make it primary key */
+            visibility tinyint(1) NOT NULL DEFAULT 1, /* set visibility of each member with this val, 1==vis, 0==invis  */            
 			SirName varchar(20),					/* Generic Sirname - e.g. Dunn */	
 			Names varchar(50),						/* Names - e.g. Bob and Sarah Skinner Dunn	*/
 			FormalNames varchar(50),				/* Letter Address - e.g. Dr. and Mrs Robert C Dunn Jr */
@@ -327,6 +328,7 @@
 		}
 
         /* see if tableName already exists, if not create, if so notify user */
+        $tableName = strtolower($tableName);
         
         $res = $mysqli->query("select 1 from $tableName");
 
@@ -343,6 +345,7 @@
                 (
                 walnutID int NOT NULL AUTO_INCREMENT, 	/* numeric key for this record */
                 PRIMARY KEY(walnutID),                	/* make it primary key */
+                visibility tinyint(1) NOT NULL DEFAULT 1, /* set visibility of each member with this val, 1==vis, 0==invis  */
                 SirName varchar(20),					/* Generic Sirname - e.g. Dunn */	
                 Names varchar(50),						/* Names - e.g. Bob and Sarah Skinner Dunn	*/
                 FormalNames varchar(50),				/* Letter Address - e.g. Dr. and Mrs Robert C Dunn Jr */
@@ -462,7 +465,7 @@
     }
             
     
-    function listTables() {
+    function listTables($returnArr) { // if $returnArr, return array of tables, else simply print tables list
     
         require_once('dbFoxy.inc');  // database info
     
@@ -479,22 +482,34 @@
         $res = $mysqli->query("SHOW TABLES");
 
         $nr = $res->num_rows;
-
-        printf ("<p>There are %d tables in %s database<br>Here are public ones...</p>", $nr, $database); 
         
         if ($nr > 0) {
-        
-            printf('<ul style="text-align: left">');
-             /* fetch enumerated array - fetch_row */
-             for ($i = 0; $i < $nr; $i++) {
-                $row = $res->fetch_row();
-                if ($tableAccessArray[$row[0]] == "public") {
-                // $row[0] from SHOW TABLES query has table name which is the index to the access value in $tableAccessArray
-                    printf ("<li>%s - %s table</li>", $row[0], $tableAccessArray[$row[0]]); 
+            if ($returnArr == false) {
+                printf ("<p>There are %d tables in %s database<br>Here are public ones...</p>", $nr, $database); 
+                printf('<ul style="text-align: left">');
+                 /* fetch enumerated array - fetch_row */
+                 for ($i = 0; $i < $nr; $i++) {
+                    $row = $res->fetch_row();
+                    if ($tableAccessArray[$row[0]] == "public") {
+                    // $row[0] from SHOW TABLES query has table name which is the index to the access value in $tableAccessArray
+                        printf ("<li>%s - %s table</li>", $row[0], $tableAccessArray[$row[0]]); 
+                    }
                 }
+                printf("</ul>");
+            } else {
+                $tablesArr = array();
+                 for ($i = 0, $j = 0; $i < $nr; $i++) {
+                    $row = $res->fetch_row();
+                    // put public contact tables into an integer indexed array
+                    if ($tableAccessArray[$row[0]] == "public") {
+                        $tablesArr[$j++] = $row[0];
+                    // $row[0] from SHOW TABLES query has table name which is the index to the access value in $tableAccessArray
+                    }
+                }             
             }
-            printf("</ul>"); 
-        }
+        } else {
+            printf ("<p>There are 0 tables in %s database!</p>", $database); 
+        }    
         
         /* free result set */
         $res->close();    
@@ -502,9 +517,20 @@
         /* close connection */
         $mysqli->close();        
 
-        return;
+        if ($returnArr) {
+            return $tablesArr;
+        } else {
+            return;
+        }
     } 
 
+    function delTable() {
+    // first list available tables, then user to select one, verify intent, and delete it
+        $tablesArr = listTables(true); // arg true signifies need to return array of tables to caller
+   continue here.....! 
+    }
+    
+    
     
 	if (($_REQUEST['value']) != "") {
 	   $whichDashBoardOpt = $_REQUEST['value'];
@@ -513,9 +539,11 @@
        } elseif ($whichDashBoardOpt == "deleteNutsDBs") {				
 		   deleteNutsDBs();
 	   } elseif ($whichDashBoardOpt == "listTables") {				
-		   listTables();
+		   listTables(false);
  	   } elseif ($whichDashBoardOpt == "addTable") {				
-		   addTable($_REQUEST['tableName']);          
+		   addTable($_REQUEST['tableName']);
+       } elseif ($whichDashBoardOpt == "delTable") {
+           delTable();
 	   } elseif ($whichDashBoardOpt == "maintMode") {      
           maintMode();          
        } else {
