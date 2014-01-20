@@ -266,6 +266,9 @@ function ajaxWalnutFunction(requester) {
     user_input = $("input:checked").val();
 // production or development ?
     theHost = location.host;
+	$("input[name='dashBoardOpts']").change(function() {
+		$("#response").empty();
+	});
     if (user_input) {
         if (user_input === "deleteNutsDBs") {
             result = (confirm("Are you sure you REALLY want to delete walnuts database?"));
@@ -359,9 +362,9 @@ function ajaxWalnutFunction(requester) {
                     .html(responseData)
                     .appendTo("#response")
                     .addClass("tableList")
-                    .fadeOut(10000, function () {
+   /*                 .fadeOut(10000, function () {
                         $(".redText").remove(); 
-                    }); 
+                    }) */; 
             }
 			if (user_input === "maintMode") {
 				$("#maint_status")

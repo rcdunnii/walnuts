@@ -270,8 +270,19 @@ textarea {
     }    
  
     input#submit.go {
-        margin: 0.5em;
-    }
+		margin: 0.5em;
+		position: relative;
+		width: 100px;
+		left: 50%;
+		margin-left: -50px;
+		color: gold;
+		background-color: transparent;
+		font: bold 20px Garamond, serif;
+	}
+	
+    input#submit.go:hover {
+	    background: #800000;
+	}
     
     #popUpLogin {
         position: relative;
