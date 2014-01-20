@@ -199,7 +199,7 @@ function ajaxAuthenticate(form, fxn, method) {
         dataType: "text",
         contentType: "application/x-www-form-urlencoded"
     });    
-    jqxhr.done(function (msg) {
+    jqxhr.done(function () {
         if (jqxhr.responseText === 'ok') {
              if (currentUser === "Walnut") {
                         createCookie('nutCookie', 'loggedIn', '60000', '', '', 1);
@@ -217,13 +217,40 @@ function ajaxAuthenticate(form, fxn, method) {
             hintLinkElem.style.display = "block";
         }
     });
-     jqxhr.fail(function (msg) {
-         alert("An error occurred: " + msg);
-     });
+    jqxhr.fail(function (msg) {
+        alert("An error occurred: " + msg);
+    });
 
     registering = true;
 }
 
+function deleteTable(tableName) {
+    var jqxhr, 
+	r = confirm("Really delete table " + tableName + "?");
+    
+    if (r === true) {
+		jqxhr = $.ajax({  
+			type: "GET",
+			url: "deleteTable.php",
+			data: "value=" + tableName
+		})
+		jqxhr.done(function (msg) {
+			$("<div />")
+				.addClass("redText")
+				.html(msg)
+				.appendTo("#response")
+				.addClass("tableList")
+	            .fadeOut(10000, function () {
+					$(".redText").remove(); 
+				})   ;
+		})
+		jqxhr.fail(function () {
+			alert("Error: " + jqxhr.responseData);
+		});
+	}
+	return;
+}
+	
 // fxn called by primary html page WTD.html - only run by Foxy
 function ajaxWalnutFunction(requester) {
 
@@ -322,10 +349,20 @@ function ajaxWalnutFunction(requester) {
                     .html(responseData)
                     .appendTo("#response")
                     .addClass("tableList")
- /*                  .fadeOut(10000, function () {
+ /*                   .fadeOut(10000, function () {
                         $(".redText").remove(); 
-                    })  */  ; 
-            }           
+                    }) */ ; 
+            }
+			if (user_input === "delTable") {   
+                $("<div />")
+                    .addClass("redText")
+                    .html(responseData)
+                    .appendTo("#response")
+                    .addClass("tableList")
+                    .fadeOut(10000, function () {
+                        $(".redText").remove(); 
+                    }); 
+            }
 			if (user_input === "maintMode") {
 				$("#maint_status")
                     .addClass("redText")
@@ -666,20 +703,20 @@ function displayTable(requester, nutEntries) {
         thisIndex = i;
         nextIndex = ++i;
         // don't display if visibility set to 0 unless it's admin (Foxy) running the listTable via Walnut Tally Dashboard 
-        // for general nonadmin user, we need 2 records, one for each column, thisIndex and nextIndex
+        // we need 2 records, one for each column, thisIndex for left col, and nextIndex for right
         if (requester !== 'Foxy') {
-            // find first visible record
+            // find first column's visible record, skipping over those with visibility of 0
             while ((i < numNuts) && (nutEntries[thisIndex].visibility === 0) ) {                    
                 thisIndex += 1;
                 i = nextIndex = thisIndex + 1;                    
             }
-            // then find next visible record
+            // then find next column's visible record
             while ((i < numNuts) && (nutEntries[nextIndex].visibility === 0)) {
                 nextIndex += 1;
                 i = nextIndex;
             }
-            // if here visibility ==  0 despite above 2 while blocks, so on last record which is 0 vis ???
             if (nutEntries[thisIndex].visibility === 0) {
+			    // if here, we are on last record and this has vis of 0 so skip out of Dodge
                 break;
             }    
             

@@ -465,7 +465,7 @@
     }
             
     
-    function listTables($returnArr) { // if $returnArr, return array of tables, else simply print tables list
+    function listTables() { // if $returnArr, return array of tables, else simply print tables list
     
         require_once('dbFoxy.inc');  // database info
     
@@ -483,30 +483,18 @@
 
         $nr = $res->num_rows;
         
-        if ($nr > 0) {
-            if ($returnArr == false) {
-                printf ("<p>There are %d tables in %s database<br>Here are public ones...</p>", $nr, $database); 
-                printf('<ul style="text-align: left">');
-                 /* fetch enumerated array - fetch_row */
-                 for ($i = 0; $i < $nr; $i++) {
-                    $row = $res->fetch_row();
-                    if ($tableAccessArray[$row[0]] == "public") {
-                    // $row[0] from SHOW TABLES query has table name which is the index to the access value in $tableAccessArray
-                        printf ("<li>%s - %s table</li>", $row[0], $tableAccessArray[$row[0]]); 
-                    }
-                }
-                printf("</ul>");
-            } else {
-                $tablesArr = array();
-                 for ($i = 0, $j = 0; $i < $nr; $i++) {
-                    $row = $res->fetch_row();
-                    // put public contact tables into an integer indexed array
-                    if ($tableAccessArray[$row[0]] == "public") {
-                        $tablesArr[$j++] = $row[0];
-                    // $row[0] from SHOW TABLES query has table name which is the index to the access value in $tableAccessArray
-                    }
-                }             
-            }
+        if ($nr > 0) {        
+			printf ("<p>There are %d tables in %s database<br>Here are public ones...</p>", $nr, $database); 
+			printf('<ul style="text-align: left">');
+			 /* fetch enumerated array - fetch_row */
+			 for ($i = 0; $i < $nr; $i++) {
+				$row = $res->fetch_row();
+				if ($tableAccessArray[$row[0]] == "public") {
+				// $row[0] from SHOW TABLES query has table name which is the index to the access value in $tableAccessArray
+					printf ("<li>%s - %s table</li>", $row[0], $tableAccessArray[$row[0]]); 
+				}
+			}
+			printf("</ul>");                             
         } else {
             printf ("<p>There are 0 tables in %s database!</p>", $database); 
         }    
@@ -517,19 +505,54 @@
         /* close connection */
         $mysqli->close();        
 
-        if ($returnArr) {
-            return $tablesArr;
-        } else {
-            return;
-        }
+        return;
     } 
 
-    function delTable() {
-    // first list available tables, then user to select one, verify intent, and delete it
-        $tablesArr = listTables(true); // arg true signifies need to return array of tables to caller
-   continue here.....! 
-    }
+    function selectTable() {
+		require_once('dbFoxy.inc');  // database info
     
+        $mysqli = @ new mysqli($server, $user, $password, $database);
+		
+		/* check connection */
+		if ($mysqli->connect_errno) {
+			printf("Connect failed: %s\n", $mysqli->connect_error);
+			exit();
+		}
+        // get assoc array of tables with key of table name, value of visibility (admin or public)
+        $tableAccessArray = getTableTagsArray();
+     
+        $res = $mysqli->query("SHOW TABLES");
+
+        $nr = $res->num_rows;
+        
+        if ($nr > 0) {            
+			$pubTablesArr = array();
+			 for ($i = 0, $j = 0; $i < $nr; $i++) {
+				$row = $res->fetch_row();
+				// put public contact tables into an integer indexed array
+				if ($tableAccessArray[$row[0]] == "public") {
+					$pubTablesArr[$j++] = $row[0];
+				// $row[0] from SHOW TABLES query has table name which is the index to the access value in $tableAccessArray
+				}
+			}	
+			printf ("<p>There are %d tables in %s database<br>Here are public ones...</p>", $nr, $database); 
+			printf('<ul style="text-align: left">');
+			foreach ($pubTablesArr as $table) {
+				printf("<li><a href='#' onclick='deleteTable(\"%s\")' title='Delete'>%s</a></li>", $table, $table);
+			}
+			printf("</ul>");         
+        } else {
+            printf ("<p>There are 0 tables in %s database!</p>", $database); 
+        }    
+        
+        /* free result set */
+        $res->close();    
+
+        /* close connection */
+        $mysqli->close();
+        
+        return;
+    } 
     
     
 	if (($_REQUEST['value']) != "") {
@@ -539,11 +562,11 @@
        } elseif ($whichDashBoardOpt == "deleteNutsDBs") {				
 		   deleteNutsDBs();
 	   } elseif ($whichDashBoardOpt == "listTables") {				
-		   listTables(false);
+		   listTables();
  	   } elseif ($whichDashBoardOpt == "addTable") {				
 		   addTable($_REQUEST['tableName']);
        } elseif ($whichDashBoardOpt == "delTable") {
-           delTable();
+           selectTable(); // select table to delete
 	   } elseif ($whichDashBoardOpt == "maintMode") {      
           maintMode();          
        } else {
