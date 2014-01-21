@@ -328,7 +328,7 @@
 		}
 
         /* see if tableName already exists, if not create, if so notify user */
-        $tableName = strtolower($tableName);
+        $tableName = preg_replace("/[^A-Za-z0-9 ]/", '', (strtolower($tableName)));
         
         $res = $mysqli->query("select 1 from $tableName");
 

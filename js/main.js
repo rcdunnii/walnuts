@@ -235,14 +235,15 @@ function deleteTable(tableName) {
 			data: "value=" + tableName
 		})
 		jqxhr.done(function (msg) {
+			$("#response").empty();
 			$("<div />")
 				.addClass("redText")
 				.html(msg)
 				.appendTo("#response")
 				.addClass("tableList")
-	            .fadeOut(10000, function () {
+	/*            .fadeOut(10000, function () {
 					$(".redText").remove(); 
-				})   ;
+				}) */  ;
 		})
 		jqxhr.fail(function () {
 			alert("Error: " + jqxhr.responseData);

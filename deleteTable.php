@@ -18,10 +18,23 @@
         $tableName = strtolower($tableName);
         
         $res = $mysqli->query("DROP TABLE IF EXISTS $tableName");
+		if ($res === false) {
+			printf("DROP TABLE error: %s", $mysqli->error);
+			$mysqli->close();
+			return;
+		}
+		
+		$res = $mysqli->query("DELETE  FROM tabletags WHERE tableName=\"$tableName\"");
+		if ($res === false) {
+			printf("DELETE row FROM tabletags table,  error: %s", $mysqli->error);
+			$mysqli->close();
+			return;
+		}
 		
 		$mysqli->close();
 		
-		printf("$tableName dropped from $database database");
+		printf("$tableName table dropped from $database database<br>");
+		printf("$tableName row dropped from tabletag table");
 		
 		return;
 ?>
