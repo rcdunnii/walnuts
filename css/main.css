@@ -153,15 +153,25 @@ textarea {
     a.noJSOrCookies:hover   {color:#FFFFFF;}
     a.noJSOrCookies:active {color:#FFD700;}
     
-    body.login {
+
+   body.login {
+        position: fixed;
+        background-color:  #421E13;
+        width: 100%;
+        height:100%;
+        margin: 0;
+        
+    }  
+
+ /*  body.login {
         position: absolute;
         background-color:  #421E13;
         width: 1341px;
         height: 800px;
         margin: 0;
         
-    }    
- 
+    }   
+ */
     .loginWrapper {
         position: absolute;
         width: 1300px;     /*1300px;*/
@@ -308,6 +318,7 @@ textarea {
         position:relative;
         text-align: left;
         color: red;
+		font-size: 1.1em;
         bottom: 30px;
         left: 35px;
         width: 195px;
