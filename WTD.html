@@ -32,6 +32,11 @@
 		.tableList a:visited {color:#00FF00;}   /* visited link */
 		.tableList a:hover {color:#FF00FF;}     /* mouse over link */
 		.tableList a:active {color:#0000FF;}    /* selected link */
+		
+		.wideCell {
+			text-align: center;
+		}
+		
         </style>  
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
@@ -46,7 +51,7 @@
         </script>    
     </head>
     <body class="list">
-        <div id="inMaint"></div>
+  <!--      <div id="inMaint"></div>  -->
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
                 <![endif]-->
@@ -64,28 +69,22 @@
 						<tr>
 							<td><input type="radio" name="dashBoardOpts" value="createNutsDBs"/><span class="wtd">Create Contacts Database</span></td>
 							<td><input type="radio" name="dashBoardOpts" value="deleteNutsDBs"/><span class="wtd">Delete Contact Database</span></td>
-						</tr>
-						
+						</tr>						
 						<tr>
 							<td><input type="radio" name="dashBoardOpts" value="bkUpDB"/><span class="wtd">Back Up Contacts Database</span></td>
 							<td><input type="radio" name="dashBoardOpts" value="restoreDB"/><span class="wtd">Restore Contacts Database</span></td>
-						</tr>							
-						<tr>							
-							<td><input type="radio" name="dashBoardOpts" value="addTable"/><span class="wtd">Add New Contact Group</span></td>
-							<td><input type="radio" name="dashBoardOpts" value="delTable"/><span class="wtd">Delete Contact Group</span></td>
-						</tr>							
-						<tr>							
-							<td><input type="radio" name="dashBoardOpts" value="listTables"/><span class="wtd">List Contact Groups</span></td>
-							<td><input type="radio" name="dashBoardOpts" value="addNut" /><span class="wtd">Add New Contact to Group</span></td>
-						</tr>							
-						<tr>							
-							<td><input type="radio" name="dashBoardOpts" value="addBDay" /><span class="wtd">Add New Birthday</span></td>                    
-							<td><input type="radio" name="dashBoardOpts" value="listNuts" /><span class="wtd">List/Edit Contacts in a Group</span></td>
-						</tr>							
-						<tr>							
-							<td><input type="radio" name="dashBoardOpts" value="listBDays" /><span class="wtd">List/Edit Birthdays</span></td>
-							<td><input type="radio" name="dashBoardOpts" value="maintMode" /><span class="wtd">On/Off Maintenance Mode</span></td>
+						</tr>																					
+						<tr>
+							<td><input type="radio" name="dashBoardOpts" value="addNut" /><span class="wtd">Add New Contact</span></td>						
+							<td><input type="radio" name="dashBoardOpts" value="listNuts" /><span class="wtd">List/Edit Contacts</span></td>						
 						</tr>
+						<tr>							
+							<td><input type="radio" name="dashBoardOpts" value="addBDay" /><span class="wtd">Add New Birthday</span></td>
+							<td><input type="radio" name="dashBoardOpts" value="listBDays" /><span class="wtd">List/Edit Birthdays</span></td>							
+						</tr>						
+						<tr>							
+							<td class="wideCell" colspan="2"><input type="radio" name="dashBoardOpts" value="maintMode" /><span class="wtd">Toggle Maintenance Mode</span></td>
+						</tr>						
 					</table>																			
 							<input class="go" type="submit" id="submit" />						
                 </form>
@@ -93,9 +92,33 @@
             <div id="response"></div>
 			<div id="maint_status"></div>
         </div>
+		
         <script>
 			document.getElementById('wtHomePage').className += " js";
 		</script>
+		
+		<script>
+        var jqxhr = $.ajax({
+            type: "GET",
+            url: "maintenance_mode.php",
+            async: false
+            })
+		.done(function (responseData) {
+			if (responseData == "okForAll") {
+				$("#maint_status")
+					.addClass("redText")
+					.text("Maintenance Mode is set to off")
+			} else {
+				$("#maint_status")
+					.addClass("redText")
+					.text("Maintenance Mode is set to on")
+			}
+		})
+		.fail(function () {
+            alert("Error: " + jqxhr.responseData);
+        });
+		</script>
+		
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             var _gaq=[['_setAccount','UA-42055272-1'],['_trackPageview']];

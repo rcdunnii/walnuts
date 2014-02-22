@@ -308,7 +308,8 @@
         }
 }
 
-    function addTable($tableName) {
+// not used in single table (i.e. single contact group) mode - eventually may code program to handle multiple separate contact groups
+     function addTable($tableName) {
 
         // check tableName param was set in the query string
        if(empty($_GET['tableName']))
@@ -321,13 +322,13 @@
     
         $mysqli = @ new mysqli($server, $user, $password, $database);
 		
-		/* check connection */
+		// check connection
 		if ($mysqli->connect_errno) {
 			printf("Connect failed: %s\n", $mysqli->connect_error);
 			exit();
 		}
 
-        /* see if tableName already exists, if not create, if so notify user */
+       // see if tableName already exists, if not create, if so notify user
         $tableName = preg_replace("/[^A-Za-z0-9 ]/", '', (strtolower($tableName)));
         
         $res = $mysqli->query("select 1 from $tableName");
@@ -343,25 +344,25 @@
             //create new table $tableName
             $sql = "CREATE TABLE $tableName 
                 (
-                walnutID int NOT NULL AUTO_INCREMENT, 	/* numeric key for this record */
-                PRIMARY KEY(walnutID),                	/* make it primary key */
-                visibility tinyint(1) NOT NULL DEFAULT 1, /* set visibility of each member with this val, 1==vis, 0==invis  */
-                SirName varchar(20),					/* Generic Sirname - e.g. Dunn */	
-                Names varchar(50),						/* Names - e.g. Bob and Sarah Skinner Dunn	*/
-                FormalNames varchar(50),				/* Letter Address - e.g. Dr. and Mrs Robert C Dunn Jr */
-                Children varchar(50),					/* Children's Names, ages etc */
-                Addr1 varchar(35),						/* Street */
-                Addr2 varchar(35),						/* Apt, business */
-                Addr3 varchar(35),						/* Country, State, Zip */
-                Addr4 varchar(35),						/* Misc */			
-                Email1 varchar(30),						/* Email addresses */
+                walnutID int NOT NULL AUTO_INCREMENT, 	// numeric key for this record
+                PRIMARY KEY(walnutID),                	// make it primary key
+                visibility tinyint(1) NOT NULL DEFAULT 1, /* set visibility of each member with this val, 1==vis, 0==invis
+                SirName varchar(20),					// Generic Sirname - e.g. Dunn	
+                Names varchar(50),						// Names - e.g. Bob and Sarah Skinner Dunn
+                FormalNames varchar(50),				// Letter Address - e.g. Dr. and Mrs Robert C Dunn Jr
+                Children varchar(50),					// Children's Names, ages etc
+                Addr1 varchar(35),						// Street
+                Addr2 varchar(35),						// Apt, business
+                Addr3 varchar(35),						// Country, State, Zip
+                Addr4 varchar(35),						// Misc 			
+                Email1 varchar(30),						// Email addresses 
                 Email2 varchar(30),
                 Email3 varchar(30),
-                Phone1 varchar(30),						/* Phone 1 */
-                Phone2 varchar(30),						/* Phone 2 */
-                Notes varchar(50),						/* Notes */			
-                Created DATETIME NOT NULL DEFAULT '1900-01-01 00:00:00',                          /* column to set date created   */
-                Updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  /* column set to date updated   */
+                Phone1 varchar(30),						// Phone 1 
+                Phone2 varchar(30),						// Phone 2 
+                Notes varchar(50),						// Notes		
+                Created DATETIME NOT NULL DEFAULT '1900-01-01 00:00:00',                         // column to set date created   
+                Updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP // column set to date updated   
                 )"; 
                 
         }
@@ -425,7 +426,8 @@
 		
         return;		
     }
-    
+
+ // not used in single table (i.e. single contact group) mode - eventually may code program to handle multiple separate contact groups in which case can use this function to list these groups   
     function getTableTagsArray() {
     
       require('dbFoxy.inc');  // database info
@@ -464,7 +466,7 @@
         return $tableTagsRows;
     }
             
-    
+  // not used in single table (i.e. single contact group) mode - eventually may code program to handle multiple separate contact groups in which case can use this function to list these groups     
     function listTables() { // if $returnArr, return array of tables, else simply print tables list
     
         require_once('dbFoxy.inc');  // database info
@@ -508,6 +510,7 @@
         return;
     } 
 
+ // not used in single table (i.e. single contact group) mode - eventually may code program to handle multiple separate contact groups in which case can use this function to select a specific table(group)
     function selectTable() {
 		require_once('dbFoxy.inc');  // database info
     
@@ -561,11 +564,11 @@
            createNutsDBs();
        } elseif ($whichDashBoardOpt == "deleteNutsDBs") {				
 		   deleteNutsDBs();
-	   } elseif ($whichDashBoardOpt == "listTables") {				
+	   } elseif ($whichDashBoardOpt == "listTables") {		// not currently used		
 		   listTables();
- 	   } elseif ($whichDashBoardOpt == "addTable") {				
+ 	   } elseif ($whichDashBoardOpt == "addTable") {		// not currently used				
 		   addTable($_REQUEST['tableName']);
-       } elseif ($whichDashBoardOpt == "delTable") {
+       } elseif ($whichDashBoardOpt == "delTable") {		// not currently used
            selectTable(); // select table to delete
 	   } elseif ($whichDashBoardOpt == "maintMode") {      
           maintMode();          

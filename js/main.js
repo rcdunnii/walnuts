@@ -224,6 +224,7 @@ function ajaxAuthenticate(form, fxn, method) {
     registering = true;
 }
 
+/*
 function deleteTable(tableName) {
     var jqxhr, 
 	r = confirm("Really delete table " + tableName + "?");
@@ -241,9 +242,9 @@ function deleteTable(tableName) {
 				.html(msg)
 				.appendTo("#response")
 				.addClass("tableList")
-	/*            .fadeOut(10000, function () {
-					$(".redText").remove(); 
-				}) */  ;
+//	           .fadeOut(10000, function () {
+//					$(".redText").remove(); 
+//				});
 		})
 		jqxhr.fail(function () {
 			alert("Error: " + jqxhr.responseData);
@@ -251,6 +252,7 @@ function deleteTable(tableName) {
 	}
 	return;
 }
+*/
 	
 // fxn called by primary html page WTD.html - only run by Foxy
 function ajaxWalnutFunction(requester) {
@@ -297,12 +299,13 @@ function ajaxWalnutFunction(requester) {
             window.open("https://" + theHost + "/restoreDB.html", "_self");
             return false;   // do not remove - otherwise goes to ajax...
         }      
-        if (user_input === "addTable") {
+/*      if (user_input === "addTable") {
         // open popup and get name of new table
- /*         TINY.box.show({url: 'newTableForm.html'}); can't figure how to submit form within tiny box - aborted effort */   
+        // TINY.box.show({url: 'newTableForm.html'}); can't figure how to submit form within tiny box - aborted effort    
             window.open("https://" + theHost + "/newTableForm.html", "_self"); 
             return false;   // do not remove - otherwise goes to ajax... 
-        }    
+        }
+*/		
     } else {
         $("<div />")
             .addClass("redText")
@@ -347,26 +350,29 @@ function ajaxWalnutFunction(requester) {
                         $(".redText").remove();
                     });
             }
-            if (user_input === "listTables") {   
+/*            if (user_input === "listTables") {   
                 $("<div />")
                     .addClass("redText")
                     .html(responseData)
                     .appendTo("#response")
                     .addClass("tableList")
- /*                   .fadeOut(10000, function () {
-                        $(".redText").remove(); 
-                    }) */ ; 
+//                   .fadeOut(10000, function () {
+//                        $(".redText").remove(); 
+//                    }) ; 
             }
-			if (user_input === "delTable") {   
+*/
+			
+/*			if (user_input === "delTable") {   
                 $("<div />")
                     .addClass("redText")
                     .html(responseData)
                     .appendTo("#response")
                     .addClass("tableList")
-   /*                 .fadeOut(10000, function () {
-                        $(".redText").remove(); 
-                    }) */; 
+//                  .fadeOut(10000, function () {
+//                      $(".redText").remove(); 
+//                  }) ; 
             }
+*/			
 			if (user_input === "maintMode") {
 				$("#maint_status")
                     .addClass("redText")
