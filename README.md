@@ -1,4 +1,4 @@
 walnuts
 =======
 
-Repo for our Walnut Tally app
+Repo for our Walnuts app

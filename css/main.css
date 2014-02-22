@@ -93,7 +93,7 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-/* Walnut Tally Style Sheet */
+/* Walnut Style Sheet */
   
    body.list {
         position: fixed;
@@ -181,8 +181,7 @@ textarea {
         top: 50%;
     }   
   
-    #loginBkGnd ,
-    #loginBkGndAdm{
+    #loginBkGnd {
         position: absolute;    
         background:  url("/images/WalnutOpener.gif") no-repeat center; 
         width: 800px;
@@ -193,7 +192,17 @@ textarea {
         top: 50%;
     }
  
-  
+    #loginBkGndAdm {
+        position: absolute;    
+        background:  url("/images/WalnutAdminOpener.gif") no-repeat center; 
+        width: 800px;
+        height: 520px;
+        margin-top: -263px;
+        margin-left: -400px;
+        left: 50%;
+        top: 50%;
+    }
+    
     .frame {
          width:1139px;
          height: 650px;          /* 800px;   */

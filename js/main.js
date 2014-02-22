@@ -267,6 +267,8 @@ function ajaxWalnutFunction(requester) {
 // first get user radio button choice
 
     user_input = $("input:checked").val();
+// clear checked radio button
+   $("input:checked").prop('checked', false);
 // production or development ?
     theHost = location.host;
 	$("input[name='dashBoardOpts']").change(function() {
@@ -712,7 +714,7 @@ function displayTable(requester, nutEntries) {
     for (i = 0; i < numNuts; i += 1) {
         thisIndex = i;
         nextIndex = ++i;
-        // don't display if visibility set to 0 unless it's admin (Foxy) running the listTable via Walnut Tally Dashboard 
+        // don't display if visibility set to 0 unless it's admin (Foxy) running the listTable via Walnuts Dashboard 
         // we need 2 records, one for each column, thisIndex for left col, and nextIndex for right
         if (requester !== 'Foxy') {
             // find first column's visible record, skipping over those with visibility of 0
