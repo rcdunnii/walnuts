@@ -11,17 +11,22 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/main.css">  <!-- includes old Walnut.css -->
-    <link rel="Stylesheet" type="text/css" href="/css/wChar.css" />        
-    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-    
+    <link rel="Stylesheet" type="text/css" href="/css/wChar.css" />
+    <style type="text/css">
+        .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+        .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+        .autocomplete-selected { background: #F0F0F0; }
+        .autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+    </style>
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
     <script src="/js/plugins.js"></script>
     <script src="/js/main.js"></script>
-    <script src="/js/main.js"></script>
-    <script type="text/javascript" src="/js/vendor/./wChar.js"></script>    
-    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>    
-    <script src="/js/jquery.validate.js" type="text/javascript"></script>  
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script> <!-- may not need this -->
+    <script type="text/javascript" src="/js/vendor/./wChar.js"></script>
+    <script src="/js/jquery.validate.js" type="text/javascript"></script>
+    <script src="/js/jquery.autocomplete.min.js" type="text/javascript"></script>    
     <script>
       $(function() {
         var availableCountry = [
@@ -39,23 +44,38 @@
           source: availableCountry
         });
       });
-    </script>
+
     <script type="text/javascript">
      $(document).ready (function() {
- /*        $('form:first *:input[type!=hidden]:first').focus() {
-            $(this).addClass('highlight');
-         }
-*/         
+          var countries = [
+             { value: 'United Kingdom', data: 'UK' },
+               // ...
+             { value: 'United States', data: 'US' }
+          ];
+          var cities = [
+              'St Louis MO'
+          ];
+         $('#Addr3').autocomplete({
+            lookup: cities,         
+         });
+         $('#Addr4').autocomplete({
+            lookup: countries,        
+         });
+        
          $('#addNutForm input:text, #addNutForm textarea#Notes').hover(function() { 
              $(this).addClass('highlight');
          }, function() { 
              $(this).removeClass('highlight');
          });
+         
+         $('form:first *:input[type!=hidden]:first').focus();
+         
          $('textarea').wChar({
             position: 'bc',
             max: 90,
             message: 'chars left'
-            });         
+            });
+
          // Handler for .ready() called.
          var validator = $("#addNutForm").validate({ 
            rules: {
@@ -120,6 +140,7 @@
             <form action="" id="addNutForm" autocomplete="on">
                 <fieldset>
                     <ul class="nonav">
+<<<<<<< HEAD
                         <li class="nonavli"><input type="hidden" name="walnutID" id="walnutID"></input></li>
                         <li class="nonavli"><input type="hidden" name="visibility" id="visibility"></input></li>                        
                         <li class="nonavli"><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName"  size="40" /><label for="Names">Informal List</label><input type="text" name="Names" id="Names" maxlength="40" size="40" /></li>
@@ -129,13 +150,24 @@
                         <li class="nonavli"><label for="Email1">Email 1</label><input type="text" name="Email1" id="Email1" size="40" /><label for="Email2">Email 2</label><input type="text" name="Email2" id="Email2" size="40" /></li> 
                         <li class="nonavli"><label for="Email3">Email 3</label><input type="text" name="Email3" id="Email3" size="40" /><label for="Phone1">Phone 1</label><input type="text" name="Phone1" id="Phone1" maxlength="30" size="40" /></li>
                         <li class="nonavli"><label for="Phone2">Phone 2</label><input type="text" name="Phone2" id="Phone2" maxlength="30" size="40" /><label for="Notes">Notes</label><textarea name="Notes" id="Notes" cols="40" rows="3"></textarea></li>
+=======
+                        <li class="nonavli"><input type="hidden" name="walnutID" id="walnutID" tabindex="-1"></input></li>
+                        <li class="nonavli"><input type="hidden" name="visibility" id="visibility" tabindex="-1"></input></li>                        
+                        <li class="nonavli"><label for="SirName">Family Name</label><input type="text" name="SirName" id="SirName"  size="40"  /><label for="Names" >Informal List</label><input type="text" name="Names" id="Names" maxlength="40" size="40" /></li>
+                        <li class="nonavli"><label for="FormalNames" >Formal List</label><input type="text" name="FormalNames" id="FormalNames" maxlength="40" size="40"  /><label for="Children" >Children</label><input type="text" name="Children" id="Children" maxlength="40" size="40" /></li>
+                        <li class="nonavli"><label for="Addr1" >Street Address</label><input type="text" name="Addr1" id="Addr1" maxlength="30" size="40" /><label for="Addr2" >Apt/Suite</label><input type="text" name="Addr2" id="Addr2" maxlength="10" size="11" /></li>
+                        <li class="nonavli"><label for="Addr3" >City,State</label><input type="text" name="Addr3" id="Addr3" maxlength="30" size="40" /><label for="Addr4" >Country</label><input type="text" name="Addr4" id="Addr4" maxlength="30" size="40" /></li>
+                        <li class="nonavli"><label for="Email1" >Email 1</label><input type="text" name="Email1" id="Email1" size="40" /><label for="Email2" >Email 2</label><input type="text" name="Email2" id="Email2" size="40" /></li> 
+                        <li class="nonavli"><label for="Email3" >Email 3</label><input type="text" name="Email3" id="Email3" size="40" /><label for="Phone1"  >Phone 1</label><input type="text" name="Phone1" id="Phone1" maxlength="30" size="40" /></li>
+                        <li class="nonavli"><label for="Phone2" >Phone 2</label><input type="text" name="Phone2" id="Phone2" maxlength="30" size="40" /><label for="Notes" >Notes</label><textarea name="Notes" id="Notes" cols="40" rows="3" ></textarea></li>
+>>>>>>> 9d1408d63c700fcf0d6e4c6926ac527a406f781e
                      </ul>
                      <ul class="navul">
-                        <li class="navli"><input type="submit" name="btn" id="submit" value="Submit"/></li>
+                        <li class="navli"><input type="submit" name="btn" id="submit" value="Submit" /></li>
                         <li class="navli" ><input type="button" name="btn" id="reset" value="Clear" onclick="document.location.reload(true)" /></li>                                           
                         <li class="navli"><input type="button" name="btn" id="home" value="Main Menu" onclick="window.location.href ='WTD.html';" /></li> 
    <!--                     <li class="navli"><input type="button" name="btn" id="home" value="Back" onclick="window.location.href = document.referrer" /></li> -->
-                        <li class="navli"><input type="button" name="btn" id="again" value="Add Another" onclick="document.location.reload(true)"/></li>                        
+                        <li class="navli"><input type="button" name="btn" id="again" value="Add Another" onclick="document.location.reload(true)" /></li>                        
                     </ul>                    
                 </fieldset>
             </form>
