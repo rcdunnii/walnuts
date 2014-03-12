@@ -16,14 +16,30 @@
     <script src="/js/plugins.js"></script>
     <script src="/js/main.js"></script>
     <script type="text/javascript" src="/js/vendor/./wChar.js"></script>    
-    <script src="/js/jquery.validate.js" type="text/javascript"></script>  
+    <script src="/js/jquery.validate.js" type="text/javascript"></script>
+    <script src="/js/jquery.autocomplete.min.js" type="text/javascript"></script>        
     <script type="text/javascript">
      $(document).ready (function() {
         var targetNut = getParameterByName('value');
         var userNut = getParameterByName('user');
         document.forms[0].user.value = userNut;
         document.forms[0].walnutID.value = targetNut;
-        getOrigNut(targetNut); // populate page with original nut data        
+        getOrigNut(targetNut); // populate page with original nut data
+        var countries = [
+           { value: 'United Kingdom', data: 'UK' },
+              // ...
+           { value: 'United States', data: 'US' }
+         ];
+         var cities = [
+             'St Louis MO'
+         ];
+         $('#Addr3').autocomplete({
+            lookup: cities,         
+         });
+         $('#Addr4').autocomplete({
+            lookup: countries,        
+         });
+                
          $('#editNutForm input:text, #editNutForm textarea#Notes').hover(function() { 
              $(this).addClass('highlight');
          }, function() { 
