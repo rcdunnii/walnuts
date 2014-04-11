@@ -571,7 +571,9 @@
        } elseif ($whichDashBoardOpt == "delTable") {		// not currently used
            selectTable(); // select table to delete
 	   } elseif ($whichDashBoardOpt == "maintMode") {      
-          maintMode();          
+          maintMode();
+       } elseif ($whichDashBoardOpt == "bkUpDB") {      
+          backUpDB();           
        } else {
 		   echo "Uh oh...";			   
 	   }  

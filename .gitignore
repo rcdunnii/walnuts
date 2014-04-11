@@ -16,6 +16,8 @@ images/walnut
 *.orig
 *.sql
 *.txt
+*.sh
+aws_rtmp_code.html
 test*
 js/jquery.animate.colors.js
 js/input_lineedit.js
