@@ -575,7 +575,7 @@
        } elseif ($whichDashBoardOpt == "bkUpDB") {      
           backUpDB();           
        } else {
-		   echo "Uh oh...";			   
+		   printf("No option %s line %i file %s", $whichDashBoardOpt, __LINE__, __FILE__);			   
 	   }  
 	} else {
 		echo "please enter choice before submitting the form!";
