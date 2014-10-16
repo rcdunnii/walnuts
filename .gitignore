@@ -1,4 +1,5 @@
 #what to not git...
+CloudVideos/
 custom-scrollbar-plugin/
 custom-scrollbar-plugin-old/
 ignore/
@@ -15,6 +16,8 @@ images/walnut
 *.orig
 *.sql
 *.txt
+*.sh
+aws_rtmp_code.html
 test*
 js/jquery.animate.colors.js
 js/input_lineedit.js

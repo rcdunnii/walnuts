@@ -571,9 +571,11 @@
        } elseif ($whichDashBoardOpt == "delTable") {		// not currently used
            selectTable(); // select table to delete
 	   } elseif ($whichDashBoardOpt == "maintMode") {      
-          maintMode();          
+          maintMode();
+       } elseif ($whichDashBoardOpt == "bkUpDB") {      
+          backUpDB();           
        } else {
-		   echo "Uh oh...";			   
+		   printf("No option %s line %i file %s", $whichDashBoardOpt, __LINE__, __FILE__);			   
 	   }  
 	} else {
 		echo "please enter choice before submitting the form!";
