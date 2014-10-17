@@ -5,6 +5,7 @@ custom-scrollbar-plugin-old/
 ignore/
 build/
 doc/
+EC2*
 nd/
 node_modules/
 obsolete/
