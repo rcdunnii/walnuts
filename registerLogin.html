@@ -26,7 +26,8 @@
 <meta name="robots" content="NOODP">
 <meta property="og:site_name" content="walnuts.com"/>
 
-<!-- <link rel="stylesheet" href="https://ak-s.ostkcdn.com/css/os-master.1.6.4.min.css"> -->
+<link rel="stylesheet" href="https://ak-s.ostkcdn.com/css/login.1.0.1.min.css">
+<link rel="stylesheet" href="https://ak-s.ostkcdn.com/css/os-master.1.6.4.min.css">
 
 <link rel="shortcut icon" href="https://www.ourwalnuts.com/favicon.ico">
 <script>
@@ -48,7 +49,173 @@ if(os.isTouchDevice) {
     document.getElementsByTagName('html')[0].className += 'is-mobile-device';
 }
 </script>
-<style>
+<style>/* my additions */
+body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+body {
+    height: 100%;
+    font-size: 12px;
+    background: #fff;
+}
+.page-wrapper {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 664px;
+    width: 1213px;
+    max-width: 1900;
+    min-width: 960;
+    position: relative;
+    display: block;
+}
+ 
+.mainContent {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 369px;
+    width: 1213px;
+    display: block;
+}
+
+#login {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 369px;
+    width: 920px;
+    display: block;
+    margin: 0 127px 0 127px;
+    padding: 0 20px 0 20px;
+}
+#loginWrap .grid-container {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 269px;
+    width: 920px;
+    position: relative;
+    clear: both;
+    display: block;
+    margin: 0 127px 0 127px;
+    padding: 50px 0 50px 0;
+    overflow: hidden;
+}
+.sign-in-box {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 269px;
+    width: 322px;    
+    display: block;
+    padding: 0 20px 0 20px;
+}
+.sign-in-box-head {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 33.9px;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 41px;
+    width: 322px;
+    display: block;
+    padding: 0 0 10px 0;
+    transform: none;
+}
+label {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 16px;
+    width: 322px;
+    display: block;
+}
+
+#email #CreatePassword{
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 16px;
+    width: 300px;
+    display: inline-block;
+    border: 1px solid #D3D0CA;
+    margin: 0 0 10px 0;
+    padding: 10px 10px 10px 10px;
+}
+form {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 208px;
+    width: 322px;
+    display: inline-block;
+    border: 1px solid #D3D0CA;    
+}
+#CreateSubmit .half-input-field{
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 37px;
+    width: 168px;
+    display: block;
+    position: absolute;
+    padding: 10px 20px 8px 40px;
+    cursor: pointer;
+}
+#EmailAddress2 #EnterPassword{
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13.999px;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FAFFBD;
+    color: #000000;
+    height: 16px;
+    width: 300px;
+    display: inline-block;
+    border: 1px solid #D3D0CA;
+    margin: 0 0 10px 0;
+    padding: 10px 10px 10px 10px;
+}
+#LoginSubmit {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: left;
+    background-color: #FFFFFF;
+    color: #000000;
+    height: 37px;
+    width: 107px;
+    display: block;
+    position: absolute;
+    padding: 10px 20px 8px 40px;
+    cursor: pointer;    
+}
 /* OVERRIDES THAT NEED TO BE UPDATED TO EXTERNAL STYLESHEET */
 .sign-in-box-wrap.form .field-container input[type="text"],
 .sign-in-box-wrap.form .field-container input[type="password"] {
@@ -233,18 +400,6 @@ if(os.isTouchDevice) {
 	display:none;
 }
 
-/* my additions */
-.mainContent {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
-    height: 382px;
-    width: 1900px;
-    display: block;
-}
     
 </style>
 </head> 
@@ -328,17 +483,7 @@ if(os.isTouchDevice) {
                             
                                 
                              <!-- LGN_01_PASS_STRENGTH -->
-                            <div class="omail-chck-wrap">
-                                <input name="omail_subscribe" type="checkbox" value="checkbox" checked id="Checkforemailsavings" tabindex="4"/>
-                                
-                                <label class="checkbox-label" for="Checkforemailsavings">
-                                    Receive exclusive email savings.
-                                </label>
-                                <a href='https://help.overstock.com/app/answers/detail/a_id/65'
- target="_blank" class="mainNav" >Privacy Policy</a>
-
-                                
-                            </div>
+                            
                             
                         </div>
                         <div class="field-container">
