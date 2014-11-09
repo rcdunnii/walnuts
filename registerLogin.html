@@ -1,37 +1,22 @@
 <!DOCTYPE html>
 
-
-
 <html>
 
 <head>
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-
-
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-<title>Walnuts Register/Login Homepage</title>
-<meta   name="description"
-        Content="Family Directory">
-<meta   name="keywords"
-        Content="email phone address family">
-
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- <!--Begin Element SITE_HEAD_S (contains Site-wide meta data, stylesheets, and javascript) -->
-
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta name="author" content="Walnuts.com">
-
-<meta name="robots" content="NOODP">
-<meta property="og:site_name" content="walnuts.com"/>
-
-<link rel="stylesheet" href="https://ak-s.ostkcdn.com/css/login.1.0.1.min.css">
-<link rel="stylesheet" href="https://ak-s.ostkcdn.com/css/os-master.1.6.4.min.css">
+<meta name="description" content="Family Directory" />
+<meta name="keywords" Content="email phone address family">
+<meta name="author" content="ourwalnuts.com">
+<meta name="robots" content="noindex, nofollow" />
+<meta name="revisit-after" content="3 month" />
+<title>OurChestnuts Directory</title>
 
 <link rel="shortcut icon" href="https://www.ourwalnuts.com/favicon.ico">
+
 <script>
-// SITE_01_TOUCH_JS (default)
+// TOUCH_JS (default)
 // Create os object
 if(typeof os !== 'object'){
 	var os = {};
@@ -49,24 +34,30 @@ if(os.isTouchDevice) {
     document.getElementsByTagName('html')[0].className += 'is-mobile-device';
 }
 </script>
+
 <style>/* my additions */
 body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote, th, td {
+    background-color: #FFFFFF;
+    color: #000000;
     margin: 0;
     padding: 0;
     text-align: left;
-}
-body {
     height: 100%;
     font-size: 12px;
     background: #fff;
+}
+h1 {
+    margin: 10px 0;
+    padding: 10px 0;
+    text-align: left;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 35px;
+    font-weight: 100;
 }
 .page-wrapper {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 12px;
     font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
     height: 664px;
     width: 1213px;
     max-width: 1900;
@@ -74,127 +65,52 @@ body {
     position: relative;
     display: block;
 }
- 
 .mainContent {
-    font-family: Helvetica, Arial, sans-serif;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
     height: 369px;
-    width: 1213px;
+    margin:30px auto;
+    width:800px;
     display: block;
 }
-
-#login {
-    font-family: Helvetica, Arial, sans-serif;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
-    height: 369px;
-    width: 920px;
-    display: block;
-    margin: 0 127px 0 127px;
-    padding: 0 20px 0 20px;
+#loginForm {
+    float: right;
+    width: 325px;
 }
-#loginWrap .grid-container {
-    font-family: Helvetica, Arial, sans-serif;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
-    height: 269px;
-    width: 920px;
-    position: relative;
-    clear: both;
-    display: block;
-    margin: 0 127px 0 127px;
-    padding: 50px 0 50px 0;
-    overflow: hidden;
-}
-.sign-in-box {
-    font-family: Helvetica, Arial, sans-serif;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
-    height: 269px;
-    width: 322px;    
-    display: block;
-    padding: 0 20px 0 20px;
+#registerForm {
+    float:left;
+    width: 325px;
 }
 .sign-in-box-head {
-    font-family: Helvetica, Arial, sans-serif;
     font-size: 33.9px;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
     height: 41px;
     width: 322px;
     display: block;
     padding: 0 0 10px 0;
     transform: none;
 }
-label {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
-    height: 16px;
+.sign-in-box {
+    height: 269px;
     width: 322px;
     display: block;
-}
-
-#email #CreatePassword{
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
-    height: 16px;
-    width: 300px;
-    display: inline-block;
-    border: 1px solid #D3D0CA;
-    margin: 0 0 10px 0;
-    padding: 10px 10px 10px 10px;
+    padding: 0 20px 0 20px;
 }
 form {
-    font-family: Helvetica, Arial, sans-serif;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
     height: 208px;
     width: 322px;
     display: inline-block;
-    border: 1px solid #D3D0CA;    
 }
-#CreateSubmit .half-input-field{
-    font-family: Helvetica, Arial, sans-serif;
+label {
     font-size: 16px;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
-    height: 37px;
-    width: 168px;
+    margin: 0 5px;
+    height: 20px;
+    width: 322px;
     display: block;
-    position: absolute;
-    padding: 10px 20px 8px 40px;
-    cursor: pointer;
 }
-#EmailAddress2 #EnterPassword{
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 13.999px;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FAFFBD;
-    color: #000000;
+input {
+    margin: 10px 5px;
+    font-size: 22px;
+}
+#email, #createPassword, #confirmPassword {
+    font-size: 13px;
     height: 16px;
     width: 300px;
     display: inline-block;
@@ -202,358 +118,177 @@ form {
     margin: 0 0 10px 0;
     padding: 10px 10px 10px 10px;
 }
-#LoginSubmit {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: normal;
-    text-align: left;
-    background-color: #FFFFFF;
-    color: #000000;
-    height: 37px;
-    width: 107px;
-    display: block;
-    position: absolute;
-    padding: 10px 20px 8px 40px;
-    cursor: pointer;    
+#emailAddressRegistered, #emailNotRegistered, #registeredPassword {
+    font-size: 13.999px;
+    height: 16px;
+    width: 300px;
+    display: inline-block;
+    border: 1px solid #D3D0CA;
+    margin: 0 0 10px 0;
+    padding: 10px 10px 10px 10px;
 }
-/* OVERRIDES THAT NEED TO BE UPDATED TO EXTERNAL STYLESHEET */
-.sign-in-box-wrap.form .field-container input[type="text"],
-.sign-in-box-wrap.form .field-container input[type="password"] {
-/*   border: 1px solid #d3d0ca; */
-	-webkit-box-shadow: inset 0px 0px 2px 1px rgba(214, 214, 214, 0.4);
-	box-shadow: inset 0px 0px 2px 1px rgba(214, 214, 214, 0.4);
-}
-.sign-in-box-wrap.form .field-container input[type="text"]:focus,
-.sign-in-box-wrap.form .field-container input[type="password"]:focus,
-.sign-in-box-wrap.form .field-container input[type="text"].has-error:focus,
-.sign-in-box-wrap.form .field-container input[type="password"].has-error:focus {
-
-  -webkit-box-shadow: inset 0px 0px 2px 1px rgba(0, 102, 204, 0.25);
-  box-shadow: inset 0px 0px 2px 1px rgba(0, 102, 204, 0.25);
-}
-
-.sign-in-box-wrap.form .field-container input[type="text"].has-error,
-.sign-in-box-wrap.form .field-container input[type="password"].has-error {
-  -webkit-box-shadow: inset 0px 0px 2px 1px rgba(199, 32, 44, 0.25);
-  box-shadow: inset 0px 0px 2px 1px rgba(199, 32, 44, 0.25);
-}
-
-/* END OVERRIDES */
+/*
 #CreatePassword {
 	width: 125px;
 	padding-right: 14px;
 }
-.password-requirements {
-	color: #777;
+*/
+ .msg {
+    display: none;
 }
-.password-more-info {
-	margin-left: 20px;
-	margin-bottom: 5px;
-	color: #000;
+.error {
+    color: red;
 }
-.sign-in-box-wrap.form .field-container {
-	overflow: inherit;
+.success {
+    color: green;
 }
-.sign-in-box-wrap {
-	overflow: visible;
-}
-.half-input-wrap {
-	position: relative;
-}
-.password-meter {
-	background: url('https://ak-s.ostkcdn.com/img/mxc/20140617_password-meter.png') no-repeat 0 0;
-	height: 25px;
-	width: 9px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	overflow: hidden;
-	display: none;
-	transition: all 0.2s ease;
-}
-.password-tooltip-container {
-	display: none;
-	position: absolute;
-	top: -65px;
-	left: 20px;
-	z-index: 2;
-}
-.password-meter-tooltip {
-	background-color: #FFF;
-	padding: 10px;
-	border: 1px solid #CCC;
-	font-style: normal;
-	width: 185px;
-	font-size: 90%;
-	color: #777;
-}
-.password-tooltip-arrow-border {
-	position: absolute;
-	border: 9px solid rgba(0, 0, 0, 0);
-	margin: -9px;
-	height: 0;
-	width: 0;
-	pointer-events: none;
-	border-right-color: #CCC;
-	border-right-width: 9px;
-	margin-right: 0;
-	border-left-width: 0;
-	border-left-style: dashed;
-	margin-left: 0;
-	left: -8px;
-	top: 77px;
-	z-index: 2;
-}
-.password-tooltip-arrow {
-	position: absolute;
-	border: 8px solid rgba(0, 0, 0, 0);
-	margin: -8px;
-	height: 0;
-	width: 0;
-	pointer-events: none;
-	border-right-color: #FFF;
-	border-right-width: 8px;
-	margin-right: 0;
-	border-left-width: 0;
-	border-left-style: dashed;
-	margin-left: 0;
-	left: -7px;
-	top: 77px;
-	z-index: 3;
-}
-.password-meter-tooltip strong {
-	font-size: 120%;
-}
-.short .pass-status {
-	color: #C40E0E;
-}
-.weak .pass-status {
-	color: #DD6018;
-}
-.fair .pass-status {
-	color: #DDB716;/* #DC7C11; */
-}
-.good .pass-status {
-	color: #C9CB16;
-}
-.strong .pass-status {
-	color: #779F47;
-}
-.password-strength-info {
-	padding-top: 10px;
-	transition: all 0.5s ease;
-}
-.password-strength-info i {
-	opacity: 0;
-	color: #779F47;
-	padding-right: 5px;
-}
-.pass-required-group {
-	padding-bottom: 5px;
-	font-weight: bold;
-	font-size: 120%;
-}
-.pass-extra-content {
-	padding-top: 10px;
-	padding-bottom: 5px;
-	font-weight: bold;
-}
-.state-status {
-	color: #779F47;
-}
-.state-status i {
-	opacity: 1;
-}
-.password-blurb {
-	padding-top: 10px;
-	padding-bottom: 0px;
-}
-.password-meter-wrapper {
-	height: 25px;
-	width: 30px;
-	position: absolute;
-	top: 25px;
-	right: -18px;
-	z-index: 2;
-}
-.password-meter-wrapper:hover .password-tooltip-container {
-	display:block !important;
-}
-.password-more {
-	padding-top: 10px;
-	position: relative;
-}
-.password-more:hover {
-	color: #000;
-}
-.password-more i {
-	position: absolute;
-	font-size: 125%;
-}
-@-moz-document url-prefix() { 
-	.password-meter-wrapper {
-		top: 23px;
-	}
-}
-/* LGN_PASWORD_CSS_TSTA */
-.password-meter-wrapper {
-	display:none;
-}
-
-    
 </style>
-</head> 
-  <body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  // Handler for .ready() called.
+
+       $('form').each(function () { // attach to all form elements on page
+        $(this).validate({ // initialize plugin on each form
+            rules: {
+                emailNotRegistered: {
+                    required: true,
+                    email: true
+                },
+                newPassword1: {
+                    required: true,
+                    minlength: 5
+                },
+                newPassword2: {
+                    required: true,                
+                    equalTo: "#createPassword"
+                },
+                emailAddressRegistered: {
+                    required: true,
+                    email: true
+                },
+                registeredPassword: {
+                    required: true,
+                    minlength: 5
+                }
+            },
+            messages: { // global options for plugin
+                emailNotRegistered: {
+                    required: "Email required",
+                    email: "Valid email address required"
+                },
+                newPassword1: {
+                    required: "Password required",
+                    minlength: "Password must be at least 5 characters"
+                },
+                newPassword2: {
+                    required: "Confirm Password",
+                    equalTo: "Passwords must match"
+                },
+                emailAddressRegistered: {
+                    required: "Email Required",
+                    email: "Valid email address required"
+                },
+                registeredPassword: {
+                    required: "Password required",
+                    minlength: "Enter correct password"
+                }
+            }
+        });
+    });
+});
+ /*
+        $("#registerNutForm").validate({
+			rules : {
+                emailNotRegistered  :  {
+                    required: true,
+                    email: true
+                },
+                createPassword : {
+                    required: true,
+					minlength : 5
+				},
+				confirmPassword : {
+                    required: true,
+					minlength : 5,
+					equalTo : "#password"
+				}
+			}
+		});
+*/        
+</script>
+</head>
+<body>
     <div id="" class="page-wrapper">
-    
-      
- <div class="mainContent">
-   <!-- BuildTopPage end -->
-    
-       <div id="login">
-
-         <!-- BEGIN: Errors coming in from Jamon -->
-         
-
-         <noscript>
-           <div id="noJsErrorSection" >
-             <h1>Errors</h1>
-             <ul>
-               
-             </ul>
-           </div>
-         </noscript>
-         <div id="login-messages" style="display: none;">
-         
-         </div>
-
-         
-       <!-- BEGIN: PAGE_TITLE_LOGIN (0)  -->
-<div class="formTitle">Sign In or Create Account</div>
-<!-- END: PAGE_TITLE_LOGIN (0)  -->     
-
-
-         
-
-         <!-- END: Errors coming in from Jamon -->
-
-           <div id="logInWrap" class="grid-container">
-              <div class="error-container">
-                <div class="error-wrap">
-                    <div class="error">
-                        <div class="login-icon error-icon"></div>
-                        <div class="error-info"></div>
-                    </div>
-                    <div class="error-arrow-border"></div>
-                    <div class="error-arrow"></div>
+        <div class="mainContent">
+            <!-- BuildTopPage end -->
+            <div>
+                <!-- BEGIN: PAGE_TITLE_LOGIN (0) -->
+                <div>
+                    <h1><center>Sign In or Create Account</center></h1>
                 </div>
-             </div>
-            <div class="sign-in-box-wrap form non-checkout">
-                <div class="sign-in-box">
-                    <div class="sign-in-box-head">
-                        Create Account
+                <!-- END: PAGE_TITLE_LOGIN (0) -->
+                <div id="registerForm">
+                    <div class="sign-in-box">
+                        <div class="sign-in-box-head">Create Account</div>
+                        <form method='POST' action="" name="newNut" id="registerNutForm">
+                            <div>
+                                <label for="emailNotRegistered">Email Address</label>
+                                <input type="email" name="emailNotRegistered" value="" id="emailNotRegistered" tabindex="1" maxlength="255" class="required" title="This is a required field" />
+                            </div>
+                            <div>
+                                <div>
+                                    <label for="createPassword">Create Password</label>
+                                    <input name="newPassword1" id="createPassword" type="text" maxlength="70" tabindex="2" autocomplete="off" />
+                                </div>
+                                <div>
+                                    <label for="confirmPassword">Confirm Password</label>
+                                    <input name="newPassword2" id="confirmPassword" type="text" maxlength="70" tabindex="3" autocomplete="off" />
+                                </div>
+                                <div>
+                                    <div>
+                                        <div class="lock-icon-box"></div>
+                                        <input id="createSubmit" alt="Create Account" type="submit" name="submit" value="Create Account" tabindex="8" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <form method='POST' action="https://www.overstock.com/myaccount" name="newCustomer">
-                        <input type="hidden" name="NEWCUSTOMER" value="true">
-                        <input type="hidden" name="loggingin" value="true">
-                        <input type="hidden" name="processnewaccount" value="true">
-                        
-    
-      <input type="hidden" name="bvkey_myacckey" value="myacckey">    
-      <input type="hidden" name="myacckey" value="order_info">
-  
-    
-      <input type="hidden" name="bvkey_TID" value="TID">    
-      <input type="hidden" name="TID" value="SIGNIN">
-  
+                </div>
+                <div id="loginForm">
+                    <div class="sign-in-box">
+                        <div class="sign-in-box-head">Sign In</div>
+                        <form method='POST' action='' name="registeredNut" id="loginNutForm">
+                            <div>
+                                <label for="emailAddressRegistered">Email Address</label>
+                                <input name="emailAddressRegistered" type="email" id="emailAddressRegistered" value="" maxlength="255" tabindex="6" title="This is a required field" />
+                            </div>
+                            <div>
+                                <label for="registeredPassword">Password</label>
+                                <input id="registeredPassword" name="registeredPassword" type="password" maxlength="255" tabindex="7" autocomplete="on" />
+                                <!-- LGN_OMAIL_CHECKBOX --> <a href="https://www.ourwalnuts.com/resetRequest" class="mainNav" target="_blank">Forgot your password?</a>
 
-                        <div class="field-container">
-                            <label for="email">Email Address</label>
-                            <input type="text" name="cst_email" value="" id="email" tabindex="1" maxlength="255" />
-                        </div>
-                        <div class="field-container">
-                            <div class="half-input-wrap">
-                                <label for="CreatePassword">Create Password</label>
-                                <input name="cst_new_password1" id="CreatePassword" type="password" maxlength="70" tabindex="2" autocomplete="off" class="half-input-field" />
                             </div>
-                            <div class="half-input-wrap">
-                              <label for="ConfirmPassword">Confirm Password</label>
-                              <input name="cst_new_password2" id="ConfirmPassword" type="password" maxlength="70" tabindex="3" autocomplete="off" class="half-input-field" />
+                            <div>
+                                <div>
+                                    <div class="lock-icon-box"></div>
+                                    <input id="loginSubmit" alt="Continue Login" type="submit" name="submit" value="Sign In" tabindex="8" />
+                                </div>
                             </div>
-                            
-                                
-                             <!-- LGN_01_PASS_STRENGTH -->
-                            
-                            
-                        </div>
-                        <div class="field-container">
-                            <div class="os-button btn-lg btn-transact create-account-button">
-                                <div class="lock-icon-box"></div>
-                                <input id="createSubmit" alt="Create Account" type="submit" name="submit" value="Create Account" tabindex="8" />
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="sign-in-box-wrap form non-checkout">
-                <div class="sign-in-box">
-                    <div class="sign-in-box-head">
-                        Sign In
-                    </div>
-                    <form method='POST' action='https://www.overstock.com/myaccount' name="oldCustomer">
-                        
-    
-      <input type="hidden" name="bvkey_myacckey" value="myacckey">    
-      <input type="hidden" name="myacckey" value="order_info">
-  
-    
-      <input type="hidden" name="bvkey_TID" value="TID">    
-      <input type="hidden" name="TID" value="SIGNIN">
-  
-
-                        <input type="hidden" name="loggingin" value="true">
-                        <input type="hidden" name="processlogin" value="true">
-                        <div class="field-container">
-                            <label for="EmailAddress2">Email Address</label>
-                            <input name="cst_email" type="text" id="EmailAddress2" value="" maxlength="255" tabindex="6" />
-                        </div>
-                        <div class="field-container">
-                            <label for="EnterPassword">Password</label>
-                            <input id="EnterPassword" name="cst_password" type="password" maxlength="255" tabindex="7" autocomplete="on" />
-                            <!-- LGN_OMAIL_CHECKBOX -->
-                            <a href="https://www.overstock.com/resetRequest" class="mainNav" target="_blank">Forgot your password?</a>
-                        </div>
-                        <div class="field-container">
-                            <div class="os-button btn-lg btn-transact login-button">
-                                <div class="lock-icon-box"></div>
-                                <input id="loginSubmit" alt="Continue Login" type="submit" name="submit" value="Sign In" tabindex="8" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
+            <div class="clear"></div>
         </div>
-
-
-
-         <div class="clear"></div>
-       </div> <!-- End login div -->
-       <script language="javascript">
-         document.getElementById('EmailAddress2').focus();
-       </script>
-   
-</div>
-
+        <!-- End login div -->
+        <script language="javascript">
+            document.getElementById('emailAddressRegistered').focus();
+        </script>
+    </div>
 </body>
-
-  
-  
-
-
-
-  
-    
-  </html>
-	  
+   
+</html>
 
