@@ -172,7 +172,7 @@ form {
     height: 208px;
     width: 322px;
     display: inline-block;
-    border: 1px solid #D3D0CA;    
+/*    border: 1px solid #D3D0CA;    */
 }
 #CreateSubmit .half-input-field{
     font-family: Helvetica, Arial, sans-serif;
@@ -427,16 +427,6 @@ form {
          
          </div>
 
-         
-       <!-- BEGIN: PAGE_TITLE_LOGIN (0)  -->
-<div class="formTitle">Sign In or Create Account</div>
-<!-- END: PAGE_TITLE_LOGIN (0)  -->     
-
-
-         
-
-         <!-- END: Errors coming in from Jamon -->
-
            <div id="logInWrap" class="grid-container">
               <div class="error-container">
                 <div class="error-wrap">
@@ -451,20 +441,20 @@ form {
             <div class="sign-in-box-wrap form non-checkout">
                 <div class="sign-in-box">
                     <div class="sign-in-box-head">
-                        Create Account
+                        Register
                     </div>
-                    <form method='POST' action="https://www.overstock.com/myaccount" name="newCustomer">
+                    <form method='POST' action="" name="newCustomer">
                         <input type="hidden" name="NEWCUSTOMER" value="true">
                         <input type="hidden" name="loggingin" value="true">
                         <input type="hidden" name="processnewaccount" value="true">
                         
     
-      <input type="hidden" name="bvkey_myacckey" value="myacckey">    
-      <input type="hidden" name="myacckey" value="order_info">
+                        <input type="hidden" name="bvkey_myacckey" value="myacckey">    
+                        <input type="hidden" name="myacckey" value="order_info">
   
     
-      <input type="hidden" name="bvkey_TID" value="TID">    
-      <input type="hidden" name="TID" value="SIGNIN">
+                        <input type="hidden" name="bvkey_TID" value="TID">    
+                        <input type="hidden" name="TID" value="SIGNIN">
   
 
                         <div class="field-container">
@@ -480,16 +470,12 @@ form {
                               <label for="ConfirmPassword">Confirm Password</label>
                               <input name="cst_new_password2" id="ConfirmPassword" type="password" maxlength="70" tabindex="3" autocomplete="off" class="half-input-field" />
                             </div>
-                            
-                                
-                             <!-- LGN_01_PASS_STRENGTH -->
-                            
-                            
+                        <div class="omail-chck-wrap"></div>
                         </div>
                         <div class="field-container">
                             <div class="os-button btn-lg btn-transact create-account-button">
                                 <div class="lock-icon-box"></div>
-                                <input id="createSubmit" alt="Create Account" type="submit" name="submit" value="Create Account" tabindex="8" />
+                                <input id="createSubmit" alt="Create Account" type="submit" name="submit" value="Register" tabindex="8" />
                             </div>
                         </div>
                     </form>
@@ -500,7 +486,7 @@ form {
                     <div class="sign-in-box-head">
                         Sign In
                     </div>
-                    <form method='POST' action='https://www.overstock.com/myaccount' name="oldCustomer">
+                    <form method='POST' action="" name="oldCustomer">
                         
     
       <input type="hidden" name="bvkey_myacckey" value="myacckey">    
