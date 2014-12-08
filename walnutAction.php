@@ -15,14 +15,17 @@
         
 		if (!($stmt = $mysqli->prepare("select * from `website_mode` where `id` = '".mysql_real_escape_string("1")."'"))) {
 			echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
+            return;
 		}
 		
 		if (!$stmt->execute()) {
 			 echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+             return;
 		}
 
 		if (!($result = $stmt->get_result())) {
 			echo "Getting result set failed: (" . $stmt->errno . ") " . $stmt->error;
+            return;
 		}
 
 		if (! ($row = $result->fetch_assoc())) { /*If nothing has previously been inserted into the website maintentance table */
@@ -46,6 +49,7 @@
 			
 			if (!$stmt->execute()) {
 				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+                return;
 			}		
 			
 		} else {
@@ -72,6 +76,7 @@
 				
 				if (!$stmt->execute()) {
 					echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+                    return;
 				}
 			
 			} else if($row['maintenance_mode'] == 'on') {
@@ -96,6 +101,7 @@
 				
 				if (!$stmt->execute()) {
 					echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+                    return;
 				}
 			}
 
@@ -418,6 +424,7 @@
 		
 		if (!$stmt->execute()) {
 				echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+                return;
 		}	
 
 		echo  ("\n" . $tableName . " added to tabletags table, access set to public.");

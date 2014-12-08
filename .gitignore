@@ -1,0 +1,24 @@
+ #what to not git...^M
+ .gitignore
+ 4321Finney/
+ CloudVideos/
+ custom-scrollbar-plugin/^M
+ custom-scrollbar-plugin-old/^M
+ ignore/^M
+ build/^M
+ db_backup/
+ doc/^M
+ node/
+ obsolete/^M
+ utilities/^M
+ maint/
+ images/walleaf*^M
+ images/walnut^M
+ *.bak^M
+ *.orig^M
+ *.sql^M
+ *.txt^M
+ *.sh^M
+ aws_rtmp_code.html^M
+ test*^M
+ js/jquery.animate.colors.js^M
