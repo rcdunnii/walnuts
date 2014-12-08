@@ -1,24 +1,24 @@
- #what to not git...^M
+ #what to not git...
  .gitignore
  4321Finney/
  CloudVideos/
- custom-scrollbar-plugin/^M
- custom-scrollbar-plugin-old/^M
- ignore/^M
- build/^M
+ custom-scrollbar-plugin/
+ custom-scrollbar-plugin-old/
+ ignore/
+ build/
  db_backup/
- doc/^M
+ doc/
  node/
- obsolete/^M
- utilities/^M
+ obsolete/
+ utilities/
  maint/
- images/walleaf*^M
- images/walnut^M
- *.bak^M
- *.orig^M
- *.sql^M
- *.txt^M
- *.sh^M
- aws_rtmp_code.html^M
- test*^M
- js/jquery.animate.colors.js^M
+ images/walleaf*
+ images/walnut
+ *.bak
+ *.orig
+ *.sql
+ *.txt
+ *.sh
+ aws_rtmp_code.htmlM
+ test*
+ js/jquery.animate.colors.js
