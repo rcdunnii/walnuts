@@ -312,6 +312,7 @@
         if ($result == 0) {           
            echo ("<p>Backup OK!<br /><a class=\"downLoad\" href=\"$BU\" download>Click to Download</a>&nbsp;&nbsp;&nbsp;<a class= \"downLoad\" href=\"#\" >Skip Download</a></p>");
         } else {
+            echo 'Current script owner: ' . get_current_user();
             echo ("Backup failed with error # " . $result );
         }
 }
