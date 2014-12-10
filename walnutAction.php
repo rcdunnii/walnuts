@@ -307,7 +307,7 @@
 			$mysqldump = "/usr/bin/mysqldump";
 		}
 		
-        exec("$mysqldump --debug-check --log-error='./log-err' --user=$user --password=$password --host=$server  $database  > $BU", $output, $result);
+        exec("$mysqldump  -f --user=$user --password=$password --host=$server  $database  > $BU", $output, $result);
 		
         if ($result == 0) {           
            echo ("<p>Backup OK!<br /><a class=\"downLoad\" href=\"$BU\" download>Click to Download</a>&nbsp;&nbsp;&nbsp;<a class= \"downLoad\" href=\"#\" >Skip Download</a></p>");
