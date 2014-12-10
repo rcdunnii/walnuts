@@ -13,7 +13,8 @@
 			exit();
 		}
         
-		if (!($stmt = $mysqli->prepare("select * from `website_mode` where `id` = '".mysql_real_escape_string("1")."'"))) {
+/*		if (!($stmt = $mysqli->prepare("select * from `website_mode` where `id` = '".mysql_real_escape_string("1")."'"))) {     */
+        if (!($stmt = $mysqli->prepare("select * from `website_mode` where `id` = 1"))) {        
 			echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
             return;
 		}
@@ -30,7 +31,7 @@
 
 		if (!($row = $result->fetch_assoc())) { /*If nothing has previously been inserted into the website maintentance table */
 		
-			$id = '1'; // admin user id
+			$id = 1; // admin user id
 			$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
 			$maintenance_mode = "on";
 			$date =  date('d-m-Y');
@@ -41,13 +42,12 @@
 				return;
 			}
 
-			if (!$stmt->bind_param('ssss', $id, $maintenance_mode, $admin_ip_address, $date ) ) {
+			if (!$stmt->bind_param('isss', $id, $maintenance_mode, $admin_ip_address, $date ) ) {
 				// bind error
 				printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
 				return;
 			}
-			var_dump($row);
-            return;
+			
             
 			if (!$stmt->execute()) {
 			    echo "Execute failed: (" . $stmt->errno . "), line ". __LINE__ .", file ". __FILE__ .", " . $stmt->error;
@@ -58,7 +58,7 @@
 		
 			if ($row['maintenance_mode'] == 'off') {
 						
-				$id = '1'; // admin user id
+				$id = 1; // admin user id
 				$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
 				$maintenance_mode = "on";
 				$date =  date('d-m-Y');
@@ -70,7 +70,7 @@
 					return;
 				}
 
-				if (!$stmt->bind_param('ssss', $id, $maintenance_mode, $admin_ip_address,  $date) ) {
+				if (!$stmt->bind_param('isss', $id, $maintenance_mode, $admin_ip_address,  $date) ) {
 					// bind error
 					printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
 					return;
@@ -83,7 +83,7 @@
 			
 			} else if($row['maintenance_mode'] == 'on') {
 			
-				$id = '1'; // admin user id
+				$id = 1; // admin user id
 				$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
 				$maintenance_mode = "off";
 				$date =  date('d-m-Y');
@@ -95,7 +95,7 @@
 					return;
 				}
 
-				if (!$stmt->bind_param('ssss', $id, $maintenance_mode, $admin_ip_address,  $date) ) {
+				if (!$stmt->bind_param('isss', $id, $maintenance_mode, $admin_ip_address,  $date) ) {
 					// bind error
 					printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
 					return;
