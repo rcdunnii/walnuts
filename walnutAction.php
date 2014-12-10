@@ -307,12 +307,12 @@
 			$mysqldump = "/usr/bin/mysqldump";
 		}
 		
-        exec("$mysqldump --user=$user --password=$password --host=$server  $database  > $BU", $output, $result);
+        exec("$mysqldump --debug='d:f:i:o,/tmp/mysql_debug.log' --user=$user --password=$password --host=$server  $database  > $BU", $output, $result);
 		
         if ($result == 0) {           
            echo ("<p>Backup OK!<br /><a class=\"downLoad\" href=\"$BU\" download>Click to Download</a>&nbsp;&nbsp;&nbsp;<a class= \"downLoad\" href=\"#\" >Skip Download</a></p>");
         } else {
-            echo ("Backup failed with error # " . $result . " user: ". $user . "password: " . $password . "host: " . $host . "db: " . $database . "bkupdir: " . $BU );
+            echo ("Backup failed with error # " . $result . " see /tmp/mysql_debug.log");
         }
 }
 
