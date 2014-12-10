@@ -28,7 +28,7 @@
             return;
 		}
 
-		if (! ($row = $result->fetch_assoc())) { /*If nothing has previously been inserted into the website maintentance table */
+		if (!($row = $result->fetch_assoc())) { /*If nothing has previously been inserted into the website maintentance table */
 		
 			$id = '1'; // admin user id
 			$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
@@ -46,7 +46,9 @@
 				printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
 				return;
 			}
-			
+			var_dump($row);
+            return;
+            
 			if (!$stmt->execute()) {
 			    echo "Execute failed: (" . $stmt->errno . "), line ". __LINE__ .", file ". __FILE__ .", " . $stmt->error;
                 return;
