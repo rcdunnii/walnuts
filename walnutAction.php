@@ -65,12 +65,13 @@
 								
 				// create a prepared statement to set maintenance mode to 'on'
 				
-				if (!$stmt = $mysqli->prepare("UPDATE website_mode SET id = ?, maintenance_mode = ?, admin_ip_address = ?, date = ?")) {
+	//			if (!$stmt = $mysqli->prepare("UPDATE website_mode SET id = ?, maintenance_mode = ?, admin_ip_address = ?, date = ?")) {
+				if (!$stmt = $mysqli->prepare("UPDATE website_mode SET maintenance_mode = ?, admin_ip_address = ?, date = ? WHERE id = ?")) {                
 					 echo "Prepare failed - walnutAction.php line 31: (" . $mysqli->errno . ") " . $mysqli->error;
 					return;
 				}
 
-				if (!$stmt->bind_param('isss', $id, $maintenance_mode, $admin_ip_address,  $date) ) {
+				if (!$stmt->bind_param('sssi', $maintenance_mode, $admin_ip_address, $date, $id) ) {
 					// bind error
 					printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
 					return;
@@ -90,12 +91,13 @@
 				
 				// create a prepared statement to set maintenance mode to 'on'
 				
-				if (!$stmt = $mysqli->prepare("UPDATE website_mode SET id = ?, maintenance_mode = ?, admin_ip_address = ?, date = ?")) {
-					 echo "Prepare failed - walnutAction.php line 31: (" . $mysqli->errno . ") " . $mysqli->error;
+//				if (!$stmt = $mysqli->prepare("UPDATE website_mode SET id = ?, maintenance_mode = ?, admin_ip_address = ?, date = ?")) {
+                if (!$stmt = $mysqli->prepare("UPDATE website_mode SET maintenance_mode = ?, admin_ip_address = ?, date = ? WHERE id = ?")) {                
+					 echo "Prepare failed at ". __LINE__ . "walnutAction.php: (" . $mysqli->errno . ") " . $mysqli->error;
 					return;
 				}
 
-				if (!$stmt->bind_param('isss', $id, $maintenance_mode, $admin_ip_address,  $date) ) {
+				if (!$stmt->bind_param('sssi', $maintenance_mode, $admin_ip_address, $date, $id ) ) {
 					// bind error
 					printf("bind_param error: %s %d\n",$stmt->error,$stmt->errno);
 					return;
