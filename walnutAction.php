@@ -19,7 +19,7 @@
 		}
 		
 		if (!$stmt->execute()) {
-			 echo "Execute failed: (" . $stmt->errno . "), line ".__LINE__.", file ".__FILE__", " . $stmt->error;
+			 echo "Execute failed: (" . $stmt->errno . "), line ". __LINE__ .", file ". __FILE__ .", " . $stmt->error;
              return;
 		}
 
@@ -48,7 +48,7 @@
 			}
 			
 			if (!$stmt->execute()) {
-			    echo "Execute failed: (" . $stmt->errno . "), line ".__LINE__.", file ".__FILE__", " . $stmt->error;
+			    echo "Execute failed: (" . $stmt->errno . "), line ". __LINE__ .", file ". __FILE__ .", " . $stmt->error;
                 return;
 			}		
 			
@@ -75,7 +75,7 @@
 				}
 				
 				if (!$stmt->execute()) {
-			        echo "Execute failed: (" . $stmt->errno . "), line ".__LINE__.", file ".__FILE__", " . $stmt->error;
+			        echo "Execute failed: (" . $stmt->errno . "), line ". __LINE__ .", file ". __FILE__ .", " . $stmt->error;
                     return;
 				}
 			
@@ -100,7 +100,7 @@
 				}
 				
 				if (!$stmt->execute()) {
-			        echo "Execute failed: (" . $stmt->errno . "), line ".__LINE__.", file ".__FILE__", " . $stmt->error;
+			        echo "Execute failed: (" . $stmt->errno . "), line ". __LINE__ .", file ". __FILE__ .", " . $stmt->error;
                     return;
 				}
 			}
