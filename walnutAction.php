@@ -2,6 +2,12 @@
 
    function maintMode() {
 		require_once('dbFoxy.inc'); 
+        
+        $id = 1; // admin user id
+		$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
+		$maintenance_mode = "";
+		$date =  date('d-m-Y');
+	
 		
 		// find out from database if maintenance mode is on or off
 
@@ -31,10 +37,10 @@
 
 		if (!($row = $result->fetch_assoc())) { /*If nothing has previously been inserted into the website maintentance table */
 		
-			$id = 1; // admin user id
-			$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
+//			$id = 1; // admin user id
+//			$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
 			$maintenance_mode = "on";
-			$date =  date('d-m-Y');
+//			$date =  date('d-m-Y');
            
 			// create a prepared statement 
 			if (!$stmt = $mysqli->prepare("INSERT INTO website_mode(id, maintenance_mode, admin_ip_address, date) VALUES (?,?,?,?)")) {
@@ -58,10 +64,10 @@
 		
 			if ($row['maintenance_mode'] == 'off') {
 						
-				$id = 1; // admin user id
-				$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
+//				$id = 1; // admin user id
+//				$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
 				$maintenance_mode = "on";
-				$date =  date('d-m-Y');
+//				$date =  date('d-m-Y');
 								
 				// create a prepared statement to set maintenance mode to 'on'
 				
@@ -84,10 +90,10 @@
 			
 			} else if($row['maintenance_mode'] == 'on') {
 			
-				$id = 1; // admin user id
-				$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
+//				$id = 1; // admin user id
+//				$admin_ip_address = trim(strip_tags($_SERVER['REMOTE_ADDR']));
 				$maintenance_mode = "off";
-				$date =  date('d-m-Y');
+//				$date =  date('d-m-Y');
 				
 				// create a prepared statement to set maintenance mode to 'on'
 				
